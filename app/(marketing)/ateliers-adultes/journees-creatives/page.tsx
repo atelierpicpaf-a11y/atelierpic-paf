@@ -2,7 +2,7 @@ import { Fee } from '@/components/brand/fee'
 import { Bobines } from '@/components/brand/bobines'
 import { SectionTitle } from '@/components/sections/section-title'
 import { createClient } from '@/lib/supabase/server'
-import { DEFAULT_DATES_JOURNEES, JOURNEES_CONFIG } from '@/lib/data/defaults'
+import { JOURNEES_CONFIG } from '@/lib/data/defaults'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -178,29 +178,13 @@ export default async function JourneesCreativesPage() {
         <div className="container">
           <SectionTitle kicker="Rejoignez-nous" align="center">Prochaines dates</SectionTitle>
           <div style={{ marginTop:50, display:'flex', flexDirection:'column', gap:18, maxWidth:680, margin:'50px auto 0' }}>
-            {!hasDates && DEFAULT_DATES_JOURNEES.map((d) => {
-              const placesLeft = d.placesMax - d.places
-              const complet = placesLeft === 0
-              return (
-                <div key={d.id} className="card" style={{ padding:'24px 28px', display:'flex', alignItems:'center', gap:24, flexWrap:'wrap' }}>
-                  <div style={{ textAlign:'center', minWidth:70 }}>
-                    <div style={{ fontSize:13, color:'var(--framboise)', fontWeight:600 }}>{d.jour}</div>
-                    <div className="h-fredoka" style={{ fontSize:40, color:'var(--framboise)', lineHeight:1 }}>{d.num}</div>
-                    <div style={{ fontSize:13, color:'var(--framboise)', opacity:.8 }}>{d.mois}</div>
-                  </div>
-                  <div style={{ flex:1, minWidth:180 }}>
-                    <div className="h-fredoka" style={{ fontSize:20, color:'var(--ink)' }}>{d.theme}</div>
-                    <div style={{ fontSize:13, opacity:.7, marginTop:4 }}>{JOURNEES_CONFIG.horaire} · {JOURNEES_CONFIG.lieu}</div>
-                  </div>
-                  <div style={{ display:'flex', gap:14, alignItems:'center' }}>
-                    <span className={`badge ${complet ? '' : 'mint'}`} style={complet ? {} : { background:'var(--menthe)', color:'#1a4a42' }}>
-                      {complet ? 'Complet' : `${placesLeft} place${placesLeft > 1 ? 's' : ''}`}
-                    </span>
-                    {!complet && <a href="/contact" className="cta-pill" style={{ padding:'10px 20px', fontSize:14 }}>Réserver</a>}
-                  </div>
-                </div>
-              )
-            })}
+            {!hasDates && (
+              <div style={{ textAlign:'center', padding:'48px 0', opacity:.6 }}>
+                <div style={{ fontSize:40, marginBottom:12 }}>📅</div>
+                <p style={{ fontFamily:'var(--font-fredoka)', fontSize:18, color:'var(--framboise)', marginBottom:16 }}>Aucune date programmée pour le moment.</p>
+                <a href="/contact" className="cta-ghost">Être prévenue des prochaines dates →</a>
+              </div>
+            )}
             {hasDates && sessions!.map((s) => {
               const { jour, num, mois } = formatJourneeDate(s.date_debut)
               const placesLeft = s.places_max - s.places_reservees

@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { AtelierCard } from '@/components/sections/atelier-card'
 import type { AtelierEnfantRow } from '@/types/supabase'
-import { DEFAULT_ATELIERS_ENFANTS } from '@/lib/data/defaults'
 
 const BADGE_COLOR_MAP: Record<string, string> = {
   menthe: 'mint',
@@ -17,6 +16,14 @@ const FILTERS = [
   { id: 'evenement', label: 'Événementiel' },
 ]
 
+function formatDate(iso: string | null): string | null {
+  if (!iso) return null
+  const d = new Date(iso)
+  const jours = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
+  const mois = ['jan', 'fév', 'mar', 'avr', 'mai', 'jun', 'jul', 'aoû', 'sep', 'oct', 'nov', 'déc']
+  return `${jours[d.getDay()]} ${d.getDate()} ${mois[d.getMonth()]}`
+}
+
 interface Props {
   ateliers: AtelierEnfantRow[]
 }
@@ -24,31 +31,11 @@ interface Props {
 export function EnfantsFilters({ ateliers }: Props) {
   const [filter, setFilter] = useState('tous')
 
-  // Fallback to static data if Supabase returned nothing
-  const source: AtelierEnfantRow[] = ateliers.length > 0 ? ateliers : DEFAULT_ATELIERS_ENFANTS.map(a => ({
-    id: a.id,
-    titre: a.title,
-    categorie: a.cat,
-    badge_texte: a.badge,
-    badge_couleur: a.badgeColor === 'mint' ? 'menthe' : (a.badgeColor ?? 'menthe'),
-    ville: a.city,
-    description: a.desc,
-    infos: a.meta.join(' | '),
-    prix_texte: a.price,
-    places_max: a.placesMax,
-    places_dispo: a.places,
-    emoji: a.emoji,
-    ordre: 0,
-    actif: true,
-    created_at: '',
-    updated_at: '',
-  }))
-
   const shown = filter === 'tous'
-    ? source
+    ? ateliers
     : filter === 'evenement'
-      ? source.filter(a => ['evenement', 'anniversaire', 'scolaire'].includes(a.categorie))
-      : source.filter(a => a.categorie === filter)
+      ? ateliers.filter(a => ['evenement', 'anniversaire', 'scolaire'].includes(a.categorie))
+      : ateliers.filter(a => a.categorie === filter)
 
   return (
     <>
@@ -61,28 +48,36 @@ export function EnfantsFilters({ ateliers }: Props) {
       </section>
       <section style={{ padding:'60px 0 80px', background:'var(--creme)' }}>
         <div className="container" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))', gap:28 }}>
-          {shown.map((a) => (
-            <AtelierCard
-              key={a.id}
-              badge={a.badge_texte ?? undefined}
-              badgeColor={BADGE_COLOR_MAP[a.badge_couleur] ?? ''}
-              title={a.titre}
-              desc={a.description ?? ''}
-              meta={a.infos ? a.infos.split('|').map(s => s.trim()) : []}
-              price={a.prix_texte ?? undefined}
-              city={a.ville || undefined}
-              emoji={a.emoji}
-              places={a.places_dispo}
-              placesMax={a.places_max}
-              actionLabel="Je m'inscris"
-            />
-          ))}
+          {shown.map((a) => {
+            const dateFormatee = formatDate(a.date_atelier ?? null)
+            const meta = [
+              ...(dateFormatee ? [dateFormatee] : []),
+              ...(a.infos ? a.infos.split('|').map(s => s.trim()) : []),
+            ]
+            return (
+              <AtelierCard
+                key={a.id}
+                badge={a.badge_texte ?? undefined}
+                badgeColor={BADGE_COLOR_MAP[a.badge_couleur] ?? ''}
+                title={a.titre}
+                desc={a.description ?? ''}
+                meta={meta}
+                price={a.prix_texte ?? undefined}
+                city={a.ville || undefined}
+                emoji={a.emoji}
+                places={a.places_dispo}
+                placesMax={a.places_max}
+                actionLabel="Je m'inscris"
+              />
+            )
+          })}
           {shown.length === 0 && (
             <div style={{ gridColumn:'1/-1', textAlign:'center', padding:60, opacity:.6 }}>
               <div style={{ fontSize:40, marginBottom:12 }}>🧵</div>
               <p style={{ fontFamily:"var(--font-fredoka)", fontSize:18, color:'var(--framboise)' }}>
-                Aucun atelier dans cette catégorie pour le moment.
+                Aucun atelier disponible pour le moment. Revenez bientôt !
               </p>
+              <a href="/contact" className="cta-ghost" style={{ marginTop:16, display:'inline-block' }}>Être prévenue des prochains ateliers →</a>
             </div>
           )}
         </div>

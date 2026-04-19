@@ -14,24 +14,40 @@ import {
 type Tab = 'enfants' | 'journees_dates' | 'journees_config' | 'retraites_dates' | 'retraites_config'
 type SaveStatus = 'idle' | 'saving' | 'saved' | 'error'
 
-const CATEGORIES = [
-  { val: 'hebdo', label: 'Hebdo' },
+const CATEGORIES_ENFANT = [
+  { val: 'hebdo', label: 'Atelier ponctuel' },
   { val: 'stage', label: 'Stage vacances' },
   { val: 'anniversaire', label: 'Anniversaire' },
   { val: 'scolaire', label: 'Scolaire' },
   { val: 'evenement', label: "Fête / événement" },
-]
-const BADGE_COLORS = [
-  { val: 'menthe', label: 'Menthe' },
-  { val: 'rose', label: 'Rose' },
-  { val: 'framboise', label: 'Framboise' },
-  { val: 'outline', label: 'Contour' },
 ]
 const STATUTS = [
   { val: 'ouvert', label: 'Ouvert' },
   { val: 'complet', label: 'Complet' },
   { val: 'annule', label: 'Annulé' },
 ]
+
+// ── Styles partagés (statiques, définis hors du composant) ──
+const INPUT_S: React.CSSProperties = {
+  width: '100%', padding: '9px 12px', border: '1.5px solid rgba(200,54,92,.25)',
+  borderRadius: 10, fontSize: 14, outline: 'none', fontFamily: 'inherit', background: '#fafafa',
+}
+const SELECT_S: React.CSSProperties = { ...INPUT_S }
+const TEXTAREA_S: React.CSSProperties = { ...INPUT_S, resize: 'vertical', minHeight: 72 }
+const LABEL_S: React.CSSProperties = {
+  fontSize: 12, fontWeight: 600, color: 'var(--framboise)', marginBottom: 4,
+  display: 'block', fontFamily: "var(--font-fredoka)", letterSpacing: '.3px',
+}
+
+// ── FieldGroup en dehors du composant — évite la perte de focus à chaque frappe ──
+function FieldGroup({ label, children, style }: { label: string; children: React.ReactNode; style?: React.CSSProperties }) {
+  return (
+    <div style={style}>
+      <span style={LABEL_S}>{label}</span>
+      {children}
+    </div>
+  )
+}
 
 interface Props {
   initialEnfants: AtelierEnfantRow[]
@@ -49,7 +65,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
   const [cfgJournees, setCfgJournees] = useState<ConfigAtelier>(initialConfigJournees)
   const [cfgRetraites, setCfgRetraites] = useState<ConfigAtelier>(initialConfigRetraites)
 
-  // Dirty tracking — manual save
+  // Dirty tracking — sauvegarde manuelle
   const [dirtyEnfants, setDirtyEnfants] = useState<Set<string>>(new Set())
   const [dirtyJournees, setDirtyJournees] = useState<Set<string>>(new Set())
   const [dirtyRetraites, setDirtyRetraites] = useState<Set<string>>(new Set())
@@ -61,19 +77,19 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
 
   const hasChanges = dirtyEnfants.size > 0 || dirtyJournees.size > 0 || dirtyRetraites.size > 0 || dirtyCfgJournees || dirtyCfgRetraites
 
-  // ── Save all dirty items ─────────────────────────────────
+  // ── Sauvegarde globale ───────────────────────────────────
   async function handleSave() {
     if (!hasChanges) return
     setSaveStatus('saving')
     try {
-      const enfantsToDirty = enfants.filter(a => dirtyEnfants.has(a.id))
-      const journeesToDirty = journees.filter(j => dirtyJournees.has(j.id))
-      const retraitesToDirty = retraites.filter(r => dirtyRetraites.has(r.id))
+      const toSaveEnfants = enfants.filter(a => dirtyEnfants.has(a.id))
+      const toSaveJournees = journees.filter(j => dirtyJournees.has(j.id))
+      const toSaveRetraites = retraites.filter(r => dirtyRetraites.has(r.id))
 
       await Promise.all([
-        ...enfantsToDirty.map(a => updateAtelierEnfant(a.id, a)),
-        ...journeesToDirty.map(j => updateJournee(j.id, j)),
-        ...retraitesToDirty.map(r => updateRetraite(r.id, r)),
+        ...toSaveEnfants.map(a => updateAtelierEnfant(a.id, a)),
+        ...toSaveJournees.map(j => updateJournee(j.id, j)),
+        ...toSaveRetraites.map(r => updateRetraite(r.id, r)),
         ...(dirtyCfgJournees ? [updateConfig('journees', cfgJournees)] : []),
         ...(dirtyCfgRetraites ? [updateConfig('retraites', cfgRetraites)] : []),
       ])
@@ -91,7 +107,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
   }
 
   // ── Ateliers enfants ─────────────────────────────────────
-  function updateEnfantField(id: string, field: keyof AtelierEnfantRow, value: string | number | null) {
+  function updateEnfantField(id: string, field: keyof AtelierEnfantRow, value: string | number | boolean | null) {
     setEnfants(prev => prev.map(a => a.id === id ? { ...a, [field]: value } : a))
     setDirtyEnfants(prev => new Set(prev).add(id))
   }
@@ -173,7 +189,11 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
     setDirtyCfgRetraites(true)
   }
 
-  // ── Shared styles ────────────────────────────────────────
+  // ── Helpers date ─────────────────────────────────────────
+  function toDateInput(iso: string | null | undefined) { return iso ? iso.split('T')[0] : '' }
+  function fromDateInput(val: string, time = '09:30') { return val ? `${val}T${time}:00+01:00` : '' }
+
+  // ── Styles locaux (dans le composant, pas de composant enfant → pas de bug de focus) ──
   const S = {
     page: { minHeight: '100vh', background: 'var(--creme-pale)', fontFamily: "var(--font-body)" } as React.CSSProperties,
     header: { background: 'var(--framboise)', color: 'var(--creme)', padding: '0 28px', height: 64, display: 'flex', alignItems: 'center', gap: 16 } as React.CSSProperties,
@@ -182,8 +202,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
       padding: '14px 18px', borderRadius: '12px 12px 0 0', border: 'none', cursor: 'pointer',
       fontFamily: "var(--font-fredoka)", fontSize: 15, letterSpacing: '.3px',
       background: active ? 'var(--framboise)' : 'transparent',
-      color: active ? '#fff' : 'var(--ink)',
-      transition: 'all .15s', whiteSpace: 'nowrap' as const,
+      color: active ? '#fff' : 'var(--ink)', transition: 'all .15s', whiteSpace: 'nowrap' as const,
     }),
     content: { padding: '32px 28px', maxWidth: 900, margin: '0 auto' } as React.CSSProperties,
     sectionHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 } as React.CSSProperties,
@@ -194,20 +213,9 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
     titleInput: { flex: 1, fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)', background: 'none', border: '2px solid transparent', borderRadius: 10, padding: '6px 10px', outline: 'none', width: '100%' } as React.CSSProperties,
     deleteBtn: { padding: '7px 16px', borderRadius: 999, border: '1.5px solid var(--framboise)', background: 'none', color: 'var(--framboise)', fontFamily: "var(--font-fredoka)", fontSize: 14, cursor: 'pointer', whiteSpace: 'nowrap' as const } as React.CSSProperties,
     row: { display: 'grid', gap: 12, marginBottom: 12 } as React.CSSProperties,
-    label: { fontSize: 12, fontWeight: 600, color: 'var(--framboise)', marginBottom: 4, display: 'block', fontFamily: "var(--font-fredoka)", letterSpacing: '.3px' } as React.CSSProperties,
-    input: { width: '100%', padding: '9px 12px', border: '1.5px solid rgba(200,54,92,.25)', borderRadius: 10, fontSize: 14, outline: 'none', fontFamily: 'inherit', background: '#fafafa' } as React.CSSProperties,
-    select: { width: '100%', padding: '9px 12px', border: '1.5px solid rgba(200,54,92,.25)', borderRadius: 10, fontSize: 14, outline: 'none', fontFamily: 'inherit', background: '#fafafa' } as React.CSSProperties,
-    textarea: { width: '100%', padding: '9px 12px', border: '1.5px solid rgba(200,54,92,.25)', borderRadius: 10, fontSize: 14, outline: 'none', fontFamily: 'inherit', background: '#fafafa', resize: 'vertical' as const, minHeight: 72 } as React.CSSProperties,
-    bottomBar: { position: 'fixed' as const, bottom: 0, left: 0, right: 0, background: 'var(--creme)', borderTop: '2px solid rgba(200,54,92,.15)', padding: '10px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 30 } as React.CSSProperties,
     addBtn: { fontFamily: "var(--font-fredoka)", fontSize: 15, color: '#fff', background: 'var(--framboise)', padding: '10px 22px', borderRadius: 999, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 } as React.CSSProperties,
+    bottomBar: { position: 'fixed' as const, bottom: 0, left: 0, right: 0, background: 'var(--creme)', borderTop: '2px solid rgba(200,54,92,.15)', padding: '10px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 30 } as React.CSSProperties,
   }
-
-  const FieldGroup = ({ label, children, style }: { label: string; children: React.ReactNode; style?: React.CSSProperties }) => (
-    <div style={style}>
-      <span style={S.label}>{label}</span>
-      {children}
-    </div>
-  )
 
   const tabs: { id: Tab; label: string; count?: number }[] = [
     { id: 'enfants', label: 'Ateliers enfants', count: enfants.length },
@@ -216,9 +224,6 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
     { id: 'retraites_dates', label: 'Dates retraites', count: retraites.length },
     { id: 'retraites_config', label: 'Config retraites' },
   ]
-
-  function toDateInput(iso: string) { return iso ? iso.split('T')[0] : '' }
-  function fromDateInput(val: string, time = '09:30') { return val ? `${val}T${time}:00+01:00` : '' }
 
   return (
     <div style={S.page}>
@@ -257,51 +262,107 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             {enfants.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 0', opacity: .5 }}>
                 <div style={{ fontSize: 48, marginBottom: 12 }}>🧵</div>
-                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>Aucun atelier pour le moment</p>
+                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>Aucun atelier — clique sur &quot;+ Ajouter&quot; pour commencer</p>
               </div>
             )}
             {enfants.map(a => (
               <div key={a.id} style={{ ...S.card, ...(dirtyEnfants.has(a.id) ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
+                {/* Titre + actif + supprimer */}
                 <div style={S.cardTitle}>
-                  <div style={S.emojiBox}>{a.emoji}</div>
-                  <input style={S.titleInput} value={a.titre} onChange={e => updateEnfantField(a.id, 'titre', e.target.value)} onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')} onBlur={e => (e.target.style.borderColor = 'transparent')} />
+                  <div style={S.emojiBox}>{a.emoji || '🧵'}</div>
+                  <input
+                    style={S.titleInput}
+                    value={a.titre}
+                    onChange={e => updateEnfantField(a.id, 'titre', e.target.value)}
+                    onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')}
+                    onBlur={e => (e.target.style.borderColor = 'transparent')}
+                    placeholder="Nom / thème de l'atelier"
+                  />
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', fontFamily: "var(--font-fredoka)", fontSize: 14, color: a.actif ? 'var(--framboise)' : '#999', flexShrink: 0 }}>
+                    <input
+                      type="checkbox"
+                      checked={a.actif}
+                      onChange={e => updateEnfantField(a.id, 'actif', e.target.checked)}
+                      style={{ width: 18, height: 18, accentColor: 'var(--framboise)', cursor: 'pointer' }}
+                    />
+                    Visible
+                  </label>
                   <button style={S.deleteBtn} onClick={() => handleDeleteEnfant(a.id)}>Supprimer</button>
                 </div>
+
+                {/* Date | Lieu | Catégorie | Prix */}
                 <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr' }}>
-                  <FieldGroup label="Catégorie">
-                    <select style={S.select} value={a.categorie} onChange={e => updateEnfantField(a.id, 'categorie', e.target.value)}>
-                      {CATEGORIES.map(c => <option key={c.val} value={c.val}>{c.label}</option>)}
+                  <FieldGroup label="Date de l'atelier">
+                    <input
+                      style={INPUT_S}
+                      type="date"
+                      value={toDateInput(a.date_atelier)}
+                      onChange={e => updateEnfantField(a.id, 'date_atelier', fromDateInput(e.target.value, '14:00'))}
+                    />
+                  </FieldGroup>
+                  <FieldGroup label="Lieu / Ville">
+                    <input
+                      style={INPUT_S}
+                      value={a.ville}
+                      onChange={e => updateEnfantField(a.id, 'ville', e.target.value)}
+                      placeholder="Poitiers"
+                    />
+                  </FieldGroup>
+                  <FieldGroup label="Type">
+                    <select
+                      style={SELECT_S}
+                      value={a.categorie}
+                      onChange={e => updateEnfantField(a.id, 'categorie', e.target.value)}
+                    >
+                      {CATEGORIES_ENFANT.map(c => <option key={c.val} value={c.val}>{c.label}</option>)}
                     </select>
-                  </FieldGroup>
-                  <FieldGroup label="Badge">
-                    <input style={S.input} value={a.badge_texte ?? ''} onChange={e => updateEnfantField(a.id, 'badge_texte', e.target.value)} placeholder="Dès 6 ans" />
-                  </FieldGroup>
-                  <FieldGroup label="Couleur badge">
-                    <select style={S.select} value={a.badge_couleur} onChange={e => updateEnfantField(a.id, 'badge_couleur', e.target.value)}>
-                      {BADGE_COLORS.map(c => <option key={c.val} value={c.val}>{c.label}</option>)}
-                    </select>
-                  </FieldGroup>
-                  <FieldGroup label="Ville">
-                    <input style={S.input} value={a.ville} onChange={e => updateEnfantField(a.id, 'ville', e.target.value)} placeholder="Poitiers" />
-                  </FieldGroup>
-                </div>
-                <FieldGroup label="Description" style={{ marginBottom: 12 }}>
-                  <textarea style={S.textarea} value={a.description ?? ''} onChange={e => updateEnfantField(a.id, 'description', e.target.value)} placeholder="Description de l'atelier..." />
-                </FieldGroup>
-                <div style={{ ...S.row, gridTemplateColumns: '2fr 1fr 1fr 1fr' }}>
-                  <FieldGroup label="Infos (séparées par |)">
-                    <input style={S.input} value={a.infos ?? ''} onChange={e => updateEnfantField(a.id, 'infos', e.target.value)} placeholder="Mercredi 14h-16h | 7-12 enfants | Trimestre" />
                   </FieldGroup>
                   <FieldGroup label="Prix">
-                    <input style={S.input} value={a.prix_texte ?? ''} onChange={e => updateEnfantField(a.id, 'prix_texte', e.target.value)} placeholder="180€ / trimestre" />
-                  </FieldGroup>
-                  <FieldGroup label="Places dispo">
-                    <input style={S.input} type="number" min={0} value={a.places_dispo ?? ''} onChange={e => updateEnfantField(a.id, 'places_dispo', e.target.value === '' ? null : Number(e.target.value))} placeholder="8" />
-                  </FieldGroup>
-                  <FieldGroup label="Places max">
-                    <input style={S.input} type="number" min={1} value={a.places_max ?? ''} onChange={e => updateEnfantField(a.id, 'places_max', e.target.value === '' ? null : Number(e.target.value))} placeholder="10" />
+                    <input
+                      style={INPUT_S}
+                      value={a.prix_texte ?? ''}
+                      onChange={e => updateEnfantField(a.id, 'prix_texte', e.target.value)}
+                      placeholder="25€ / 1h30"
+                    />
                   </FieldGroup>
                 </div>
+
+                {/* Places dispo | Places max */}
+                <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 3fr', marginBottom: 12 }}>
+                  <FieldGroup label="Places dispo">
+                    <input
+                      style={INPUT_S}
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={a.places_dispo ?? ''}
+                      onChange={e => updateEnfantField(a.id, 'places_dispo', e.target.value === '' ? null : Number(e.target.value))}
+                      placeholder="8"
+                    />
+                  </FieldGroup>
+                  <FieldGroup label="Places max (≤ 100)">
+                    <input
+                      style={INPUT_S}
+                      type="number"
+                      min={1}
+                      max={100}
+                      value={a.places_max ?? ''}
+                      onChange={e => updateEnfantField(a.id, 'places_max', e.target.value === '' ? null : Number(e.target.value))}
+                      placeholder="10"
+                    />
+                  </FieldGroup>
+                  <div />
+                </div>
+
+                {/* Description */}
+                <FieldGroup label="Description">
+                  <textarea
+                    style={TEXTAREA_S}
+                    value={a.description ?? ''}
+                    onChange={e => updateEnfantField(a.id, 'description', e.target.value)}
+                    placeholder="Décris l'atelier, ce qu'on va créer..."
+                  />
+                </FieldGroup>
               </div>
             ))}
           </>
@@ -317,31 +378,38 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             {journees.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 0', opacity: .5 }}>
                 <div style={{ fontSize: 48, marginBottom: 12 }}>📅</div>
-                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>Aucune date programmée</p>
+                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>Aucune date — clique sur &quot;+ Ajouter&quot;</p>
               </div>
             )}
             {journees.map(j => (
               <div key={j.id} style={{ ...S.card, ...(dirtyJournees.has(j.id) ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
                 <div style={S.cardTitle}>
                   <div style={S.emojiBox}>📅</div>
-                  <input style={S.titleInput} value={j.titre} onChange={e => updateJourneeField(j.id, 'titre', e.target.value)} onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')} onBlur={e => (e.target.style.borderColor = 'transparent')} placeholder="Thème de la journée" />
+                  <input
+                    style={S.titleInput}
+                    value={j.titre}
+                    onChange={e => updateJourneeField(j.id, 'titre', e.target.value)}
+                    onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')}
+                    onBlur={e => (e.target.style.borderColor = 'transparent')}
+                    placeholder="Thème de la journée"
+                  />
                   <button style={S.deleteBtn} onClick={() => handleDeleteJournee(j.id)}>Supprimer</button>
                 </div>
                 <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr' }}>
                   <FieldGroup label="Date">
-                    <input style={S.input} type="date" value={toDateInput(j.date_debut)} onChange={e => updateJourneeField(j.id, 'date_debut', fromDateInput(e.target.value, '09:30'))} />
+                    <input style={INPUT_S} type="date" value={toDateInput(j.date_debut)} onChange={e => updateJourneeField(j.id, 'date_debut', fromDateInput(e.target.value, '09:30'))} />
                   </FieldGroup>
                   <FieldGroup label="Lieu">
-                    <input style={S.input} value={j.lieu} onChange={e => updateJourneeField(j.id, 'lieu', e.target.value)} placeholder="Fontaine-le-Comte" />
+                    <input style={INPUT_S} value={j.lieu} onChange={e => updateJourneeField(j.id, 'lieu', e.target.value)} placeholder="Fontaine-le-Comte" />
                   </FieldGroup>
                   <FieldGroup label="Places max">
-                    <input style={S.input} type="number" min={1} value={j.places_max} onChange={e => updateJourneeField(j.id, 'places_max', Number(e.target.value))} />
+                    <input style={INPUT_S} type="number" min={1} max={100} value={j.places_max} onChange={e => updateJourneeField(j.id, 'places_max', Number(e.target.value))} />
                   </FieldGroup>
                   <FieldGroup label="Places dispo">
-                    <input style={S.input} type="number" min={0} value={j.places_max - j.places_reservees} onChange={e => updateJourneeField(j.id, 'places_reservees', j.places_max - Number(e.target.value))} />
+                    <input style={INPUT_S} type="number" min={0} value={j.places_max - j.places_reservees} onChange={e => updateJourneeField(j.id, 'places_reservees', j.places_max - Number(e.target.value))} />
                   </FieldGroup>
                   <FieldGroup label="Statut">
-                    <select style={S.select} value={j.statut} onChange={e => updateJourneeField(j.id, 'statut', e.target.value)}>
+                    <select style={SELECT_S} value={j.statut} onChange={e => updateJourneeField(j.id, 'statut', e.target.value)}>
                       {STATUTS.map(s => <option key={s.val} value={s.val}>{s.label}</option>)}
                     </select>
                   </FieldGroup>
@@ -360,20 +428,20 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             <div style={{ ...S.card, ...(dirtyCfgJournees ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
               <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr', marginBottom: 12 }}>
                 <FieldGroup label="Prix affiché">
-                  <input style={S.input} value={cfgJournees.prix_texte ?? ''} onChange={e => updateCfgJournees('prix_texte', e.target.value)} placeholder="90€" />
+                  <input style={INPUT_S} value={cfgJournees.prix_texte ?? ''} onChange={e => updateCfgJournees('prix_texte', e.target.value)} placeholder="90€" />
                 </FieldGroup>
-                <FieldGroup label="Durée">
-                  <input style={S.input} value={cfgJournees.duree ?? ''} onChange={e => updateCfgJournees('duree', e.target.value)} placeholder="9h30 → 17h30" />
+                <FieldGroup label="Durée / horaire">
+                  <input style={INPUT_S} value={cfgJournees.duree ?? ''} onChange={e => updateCfgJournees('duree', e.target.value)} placeholder="10h → 17h" />
                 </FieldGroup>
               </div>
               <FieldGroup label="Lieu par défaut" style={{ marginBottom: 12 }}>
-                <input style={S.input} value={cfgJournees.lieu ?? ''} onChange={e => updateCfgJournees('lieu', e.target.value)} placeholder="Fontaine-le-Comte (86)" />
+                <input style={INPUT_S} value={cfgJournees.lieu ?? ''} onChange={e => updateCfgJournees('lieu', e.target.value)} placeholder="Fontaine-le-Comte (86)" />
               </FieldGroup>
               <FieldGroup label="Description" style={{ marginBottom: 12 }}>
-                <textarea style={S.textarea} value={cfgJournees.description ?? ''} onChange={e => updateCfgJournees('description', e.target.value)} />
+                <textarea style={TEXTAREA_S} value={cfgJournees.description ?? ''} onChange={e => updateCfgJournees('description', e.target.value)} />
               </FieldGroup>
               <FieldGroup label="Ce qui est inclus (séparés par |)">
-                <input style={S.input} value={cfgJournees.inclus ?? ''} onChange={e => updateCfgJournees('inclus', e.target.value)} placeholder="Matériel fourni | Déjeuner | Max 6 personnes" />
+                <input style={INPUT_S} value={cfgJournees.inclus ?? ''} onChange={e => updateCfgJournees('inclus', e.target.value)} placeholder="Matériel fourni | Déjeuner | Max 6 personnes" />
               </FieldGroup>
             </div>
           </>
@@ -389,34 +457,41 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             {retraites.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 0', opacity: .5 }}>
                 <div style={{ fontSize: 48, marginBottom: 12 }}>🏡</div>
-                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>Aucune retraite programmée</p>
+                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>Aucune retraite — clique sur &quot;+ Ajouter&quot;</p>
               </div>
             )}
             {retraites.map(r => (
               <div key={r.id} style={{ ...S.card, ...(dirtyRetraites.has(r.id) ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
                 <div style={S.cardTitle}>
                   <div style={S.emojiBox}>🏡</div>
-                  <input style={S.titleInput} value={r.titre} onChange={e => updateRetraiteField(r.id, 'titre', e.target.value)} onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')} onBlur={e => (e.target.style.borderColor = 'transparent')} placeholder="Titre de la retraite" />
+                  <input
+                    style={S.titleInput}
+                    value={r.titre}
+                    onChange={e => updateRetraiteField(r.id, 'titre', e.target.value)}
+                    onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')}
+                    onBlur={e => (e.target.style.borderColor = 'transparent')}
+                    placeholder="Titre de la retraite"
+                  />
                   <button style={S.deleteBtn} onClick={() => handleDeleteRetraite(r.id)}>Supprimer</button>
                 </div>
                 <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr' }}>
                   <FieldGroup label="Début">
-                    <input style={S.input} type="date" value={toDateInput(r.date_debut)} onChange={e => updateRetraiteField(r.id, 'date_debut', fromDateInput(e.target.value, '18:00'))} />
+                    <input style={INPUT_S} type="date" value={toDateInput(r.date_debut)} onChange={e => updateRetraiteField(r.id, 'date_debut', fromDateInput(e.target.value, '18:00'))} />
                   </FieldGroup>
                   <FieldGroup label="Fin">
-                    <input style={S.input} type="date" value={toDateInput(r.date_fin)} onChange={e => updateRetraiteField(r.id, 'date_fin', fromDateInput(e.target.value, '12:00'))} />
+                    <input style={INPUT_S} type="date" value={toDateInput(r.date_fin)} onChange={e => updateRetraiteField(r.id, 'date_fin', fromDateInput(e.target.value, '16:00'))} />
                   </FieldGroup>
                   <FieldGroup label="Lieu">
-                    <input style={S.input} value={r.lieu} onChange={e => updateRetraiteField(r.id, 'lieu', e.target.value)} placeholder="Gîte, Deux-Sèvres" />
+                    <input style={INPUT_S} value={r.lieu} onChange={e => updateRetraiteField(r.id, 'lieu', e.target.value)} placeholder="Gîte, Deux-Sèvres" />
                   </FieldGroup>
                   <FieldGroup label="Places max">
-                    <input style={S.input} type="number" min={1} value={r.places_max} onChange={e => updateRetraiteField(r.id, 'places_max', Number(e.target.value))} />
+                    <input style={INPUT_S} type="number" min={1} max={100} value={r.places_max} onChange={e => updateRetraiteField(r.id, 'places_max', Number(e.target.value))} />
                   </FieldGroup>
                   <FieldGroup label="Places dispo">
-                    <input style={S.input} type="number" min={0} value={r.places_max - r.places_reservees} onChange={e => updateRetraiteField(r.id, 'places_reservees', r.places_max - Number(e.target.value))} />
+                    <input style={INPUT_S} type="number" min={0} value={r.places_max - r.places_reservees} onChange={e => updateRetraiteField(r.id, 'places_reservees', r.places_max - Number(e.target.value))} />
                   </FieldGroup>
                   <FieldGroup label="Statut">
-                    <select style={S.select} value={r.statut} onChange={e => updateRetraiteField(r.id, 'statut', e.target.value)}>
+                    <select style={SELECT_S} value={r.statut} onChange={e => updateRetraiteField(r.id, 'statut', e.target.value)}>
                       {STATUTS.map(s => <option key={s.val} value={s.val}>{s.label}</option>)}
                     </select>
                   </FieldGroup>
@@ -435,27 +510,27 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             <div style={{ ...S.card, ...(dirtyCfgRetraites ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
               <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr', marginBottom: 12 }}>
                 <FieldGroup label="Prix affiché">
-                  <input style={S.input} value={cfgRetraites.prix_texte ?? ''} onChange={e => updateCfgRetraites('prix_texte', e.target.value)} placeholder="390€" />
+                  <input style={INPUT_S} value={cfgRetraites.prix_texte ?? ''} onChange={e => updateCfgRetraites('prix_texte', e.target.value)} placeholder="390€" />
                 </FieldGroup>
                 <FieldGroup label="Durée">
-                  <input style={S.input} value={cfgRetraites.duree ?? ''} onChange={e => updateCfgRetraites('duree', e.target.value)} placeholder="Vendredi soir → Dimanche midi" />
+                  <input style={INPUT_S} value={cfgRetraites.duree ?? ''} onChange={e => updateCfgRetraites('duree', e.target.value)} placeholder="Vendredi soir → Dimanche 16h" />
                 </FieldGroup>
               </div>
               <FieldGroup label="Lieu" style={{ marginBottom: 12 }}>
-                <input style={S.input} value={cfgRetraites.lieu ?? ''} onChange={e => updateCfgRetraites('lieu', e.target.value)} placeholder="Deux-Sèvres (79)" />
+                <input style={INPUT_S} value={cfgRetraites.lieu ?? ''} onChange={e => updateCfgRetraites('lieu', e.target.value)} placeholder="Deux-Sèvres (79)" />
               </FieldGroup>
               <FieldGroup label="Description" style={{ marginBottom: 12 }}>
-                <textarea style={S.textarea} value={cfgRetraites.description ?? ''} onChange={e => updateCfgRetraites('description', e.target.value)} />
+                <textarea style={TEXTAREA_S} value={cfgRetraites.description ?? ''} onChange={e => updateCfgRetraites('description', e.target.value)} />
               </FieldGroup>
               <FieldGroup label="Ce qui est inclus (séparés par |)">
-                <input style={S.input} value={cfgRetraites.inclus ?? ''} onChange={e => updateCfgRetraites('inclus', e.target.value)} placeholder="Hébergement | Repas | Yoga | Matériel" />
+                <input style={INPUT_S} value={cfgRetraites.inclus ?? ''} onChange={e => updateCfgRetraites('inclus', e.target.value)} placeholder="Hébergement | Repas | Yoga | Matériel" />
               </FieldGroup>
             </div>
           </>
         )}
       </div>
 
-      {/* ── Bottom bar ── */}
+      {/* ── Barre de sauvegarde ── */}
       <div style={S.bottomBar}>
         <span style={{ fontSize: 13, color: 'var(--framboise)', opacity: .8 }}>
           {saveStatus === 'saving' && '⏳ Sauvegarde en cours…'}

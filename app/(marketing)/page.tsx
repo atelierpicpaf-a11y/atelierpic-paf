@@ -5,7 +5,6 @@ import { SectionTitle } from '@/components/sections/section-title'
 import { AtelierCard } from '@/components/sections/atelier-card'
 import { HomeNewsletter } from '@/components/sections/home-newsletter'
 import { createClient } from '@/lib/supabase/server'
-import type { AtelierEnfantRow } from '@/types/supabase'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -17,12 +16,6 @@ const BADGE_COLOR_MAP: Record<string, string> = {
   menthe: 'mint', rose: 'rose', framboise: '', outline: 'outline',
 }
 
-const STATIC_ENFANTS = [
-  { id:'1', badge:'Dès 6 ans', badgeColor:'mint', title:'Couture du mercredi', desc:"Chaque semaine, ma petite troupe découvre une nouvelle pépite à coudre. Trousses, doudous, coussins…", meta:['14h — 16h','1h30 / séance','Trimestre'], price:'18€', city:'Poitiers', emoji:'🧵' },
-  { id:'2', badge:'Stage vacances', badgeColor:'rose', title:'Stages vacances scolaires', desc:"Trois après-midis d'aventure créative pendant les vacances. On coud, on joue, on invente.", meta:['3 séances','3x 2h','Goûter inclus'], price:'65€', city:'Vouillé', emoji:'✂️' },
-  { id:'3', badge:'Anniversaire', badgeColor:'', title:'Anniversaires créatifs', desc:"Une fête pas comme les autres. Les enfants repartent fiers avec leur première création cousue.", meta:['6 à 10 enfants','2h atelier','À domicile'], price:'dès 180€', city:'Vienne 86', emoji:'🎂' },
-]
-
 export default async function HomePage() {
   const supabase = await createClient()
   const { data: ateliers } = await supabase
@@ -32,7 +25,7 @@ export default async function HomePage() {
     .order('ordre')
     .limit(3)
 
-  const enfantsSource: AtelierEnfantRow[] = ateliers && ateliers.length > 0 ? ateliers : []
+  const enfantsSource = ateliers ?? []
 
   return (
     <div>
@@ -73,38 +66,28 @@ export default async function HomePage() {
             Dès 6 ans, vos petits apprennent à créer de leurs mains. Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault.
           </p>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:28 }}>
-            {enfantsSource.length > 0
-              ? enfantsSource.map(a => (
-                  <AtelierCard
-                    key={a.id}
-                    badge={a.badge_texte ?? undefined}
-                    badgeColor={BADGE_COLOR_MAP[a.badge_couleur] ?? ''}
-                    title={a.titre}
-                    desc={a.description ?? ''}
-                    meta={a.infos ? a.infos.split('|').map(s => s.trim()) : []}
-                    price={a.prix_texte ?? undefined}
-                    city={a.ville || undefined}
-                    emoji={a.emoji}
-                    places={a.places_dispo}
-                    placesMax={a.places_max}
-                    actionLabel="Je m'inscris"
-                  />
-                ))
-              : STATIC_ENFANTS.map(a => (
-                  <AtelierCard
-                    key={a.id}
-                    badge={a.badge}
-                    badgeColor={a.badgeColor}
-                    title={a.title}
-                    desc={a.desc}
-                    meta={a.meta}
-                    price={a.price}
-                    city={a.city}
-                    emoji={a.emoji}
-                    actionLabel="Je m'inscris"
-                  />
-                ))
-            }
+            {enfantsSource.map(a => (
+              <AtelierCard
+                key={a.id}
+                badge={a.badge_texte ?? undefined}
+                badgeColor={BADGE_COLOR_MAP[a.badge_couleur] ?? ''}
+                title={a.titre}
+                desc={a.description ?? ''}
+                meta={a.infos ? a.infos.split('|').map(s => s.trim()) : []}
+                price={a.prix_texte ?? undefined}
+                city={a.ville || undefined}
+                emoji={a.emoji}
+                places={a.places_dispo}
+                placesMax={a.places_max}
+                actionLabel="Je m'inscris"
+              />
+            ))}
+            {enfantsSource.length === 0 && (
+              <div style={{ gridColumn:'1/-1', textAlign:'center', padding:'40px 0', opacity:.6 }}>
+                <div style={{ fontSize:36, marginBottom:10 }}>🧵</div>
+                <p style={{ fontFamily:'var(--font-fredoka)', fontSize:17, color:'var(--framboise)' }}>Les prochains ateliers arrivent bientôt !</p>
+              </div>
+            )}
           </div>
           <div style={{ textAlign:'center', marginTop:48, display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap' }}>
             <a href="/ateliers-enfants" className="cta-pill">Voir tous les ateliers enfants</a>
