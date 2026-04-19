@@ -135,7 +135,6 @@ export default async function HomePage() {
                     'Fontaine-le-Comte (86)',
                     '10h → 17h, repas partagé inclus',
                     'Matériel fourni',
-                    'Machines & mercerie fournies',
                   ].map((it,i) => (
                     <li key={i} style={{ display:'flex', gap:10, fontSize:15 }}><span style={{ color:'var(--framboise)' }}>✦</span> {it}</li>
                   ))}
