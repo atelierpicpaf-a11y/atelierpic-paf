@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useTransition, useRef } from 'react'
+import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import type { AtelierEnfantRow, Session, ConfigAtelier } from '@/types/supabase'
 import {
@@ -12,6 +12,7 @@ import {
 } from '@/app/(admin)/admin/actions'
 
 type Tab = 'enfants' | 'journees_dates' | 'journees_config' | 'retraites_dates' | 'retraites_config'
+type SaveStatus = 'idle' | 'saving' | 'saved' | 'error'
 
 const CATEGORIES = [
   { val: 'hebdo', label: 'Hebdo' },
@@ -47,31 +48,52 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
   const [retraites, setRetraites] = useState<Session[]>(initialRetraites)
   const [cfgJournees, setCfgJournees] = useState<ConfigAtelier>(initialConfigJournees)
   const [cfgRetraites, setCfgRetraites] = useState<ConfigAtelier>(initialConfigRetraites)
-  const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'error'>('saved')
+
+  // Dirty tracking — manual save
+  const [dirtyEnfants, setDirtyEnfants] = useState<Set<string>>(new Set())
+  const [dirtyJournees, setDirtyJournees] = useState<Set<string>>(new Set())
+  const [dirtyRetraites, setDirtyRetraites] = useState<Set<string>>(new Set())
+  const [dirtyCfgJournees, setDirtyCfgJournees] = useState(false)
+  const [dirtyCfgRetraites, setDirtyCfgRetraites] = useState(false)
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
   const [isPending, startTransition] = useTransition()
-  const saveTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map())
   const router = useRouter()
 
-  // ── Auto-save helpers ────────────────────────────────────
-  function scheduleSave(key: string, fn: () => Promise<void>) {
-    const existing = saveTimers.current.get(key)
-    if (existing) clearTimeout(existing)
+  const hasChanges = dirtyEnfants.size > 0 || dirtyJournees.size > 0 || dirtyRetraites.size > 0 || dirtyCfgJournees || dirtyCfgRetraites
+
+  // ── Save all dirty items ─────────────────────────────────
+  async function handleSave() {
+    if (!hasChanges) return
     setSaveStatus('saving')
-    const t = setTimeout(async () => {
-      try {
-        await fn()
-        setSaveStatus('saved')
-      } catch {
-        setSaveStatus('error')
-      }
-    }, 1200)
-    saveTimers.current.set(key, t)
+    try {
+      const enfantsToDirty = enfants.filter(a => dirtyEnfants.has(a.id))
+      const journeesToDirty = journees.filter(j => dirtyJournees.has(j.id))
+      const retraitesToDirty = retraites.filter(r => dirtyRetraites.has(r.id))
+
+      await Promise.all([
+        ...enfantsToDirty.map(a => updateAtelierEnfant(a.id, a)),
+        ...journeesToDirty.map(j => updateJournee(j.id, j)),
+        ...retraitesToDirty.map(r => updateRetraite(r.id, r)),
+        ...(dirtyCfgJournees ? [updateConfig('journees', cfgJournees)] : []),
+        ...(dirtyCfgRetraites ? [updateConfig('retraites', cfgRetraites)] : []),
+      ])
+
+      setDirtyEnfants(new Set())
+      setDirtyJournees(new Set())
+      setDirtyRetraites(new Set())
+      setDirtyCfgJournees(false)
+      setDirtyCfgRetraites(false)
+      setSaveStatus('saved')
+      setTimeout(() => setSaveStatus('idle'), 2500)
+    } catch {
+      setSaveStatus('error')
+    }
   }
 
   // ── Ateliers enfants ─────────────────────────────────────
   function updateEnfantField(id: string, field: keyof AtelierEnfantRow, value: string | number | null) {
     setEnfants(prev => prev.map(a => a.id === id ? { ...a, [field]: value } : a))
-    scheduleSave(`enfant-${id}`, () => updateAtelierEnfant(id, { [field]: value }))
+    setDirtyEnfants(prev => new Set(prev).add(id))
   }
 
   function handleAddEnfant() {
@@ -79,7 +101,6 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
       try {
         const newA = await createAtelierEnfant()
         setEnfants(prev => [...prev, newA])
-        setSaveStatus('saved')
       } catch { setSaveStatus('error') }
     })
   }
@@ -89,13 +110,14 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
     startTransition(async () => {
       await deleteAtelierEnfant(id)
       setEnfants(prev => prev.filter(a => a.id !== id))
+      setDirtyEnfants(prev => { const s = new Set(prev); s.delete(id); return s })
     })
   }
 
   // ── Journées ─────────────────────────────────────────────
   function updateJourneeField(id: string, field: keyof Session, value: string | number | null) {
     setJournees(prev => prev.map(j => j.id === id ? { ...j, [field]: value } : j))
-    scheduleSave(`journee-${id}`, () => updateJournee(id, { [field]: value }))
+    setDirtyJournees(prev => new Set(prev).add(id))
   }
 
   function handleAddJournee() {
@@ -103,7 +125,6 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
       try {
         const j = await createJournee()
         setJournees(prev => [...prev, j])
-        setSaveStatus('saved')
       } catch { setSaveStatus('error') }
     })
   }
@@ -113,13 +134,14 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
     startTransition(async () => {
       await deleteJournee(id)
       setJournees(prev => prev.filter(j => j.id !== id))
+      setDirtyJournees(prev => { const s = new Set(prev); s.delete(id); return s })
     })
   }
 
   // ── Retraites ────────────────────────────────────────────
   function updateRetraiteField(id: string, field: keyof Session, value: string | number | null) {
     setRetraites(prev => prev.map(r => r.id === id ? { ...r, [field]: value } : r))
-    scheduleSave(`retraite-${id}`, () => updateRetraite(id, { [field]: value }))
+    setDirtyRetraites(prev => new Set(prev).add(id))
   }
 
   function handleAddRetraite() {
@@ -127,7 +149,6 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
       try {
         const r = await createRetraite()
         setRetraites(prev => [...prev, r])
-        setSaveStatus('saved')
       } catch { setSaveStatus('error') }
     })
   }
@@ -137,18 +158,19 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
     startTransition(async () => {
       await deleteRetraite(id)
       setRetraites(prev => prev.filter(r => r.id !== id))
+      setDirtyRetraites(prev => { const s = new Set(prev); s.delete(id); return s })
     })
   }
 
   // ── Config ───────────────────────────────────────────────
   function updateCfgJournees(field: keyof ConfigAtelier, value: string | number) {
     setCfgJournees(prev => ({ ...prev, [field]: value }))
-    scheduleSave('cfg-journees', () => updateConfig('journees', { [field]: value }))
+    setDirtyCfgJournees(true)
   }
 
   function updateCfgRetraites(field: keyof ConfigAtelier, value: string | number) {
     setCfgRetraites(prev => ({ ...prev, [field]: value }))
-    scheduleSave('cfg-retraites', () => updateConfig('retraites', { [field]: value }))
+    setDirtyCfgRetraites(true)
   }
 
   // ── Shared styles ────────────────────────────────────────
@@ -187,7 +209,6 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
     </div>
   )
 
-  // ── Tabs ─────────────────────────────────────────────────
   const tabs: { id: Tab; label: string; count?: number }[] = [
     { id: 'enfants', label: 'Ateliers enfants', count: enfants.length },
     { id: 'journees_dates', label: 'Dates journées', count: journees.length },
@@ -196,33 +217,22 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
     { id: 'retraites_config', label: 'Config retraites' },
   ]
 
-  // ── Date helper ──────────────────────────────────────────
-  function toDateInput(iso: string) {
-    return iso ? iso.split('T')[0] : ''
-  }
-  function fromDateInput(val: string, time = '09:30') {
-    return val ? `${val}T${time}:00+01:00` : ''
-  }
+  function toDateInput(iso: string) { return iso ? iso.split('T')[0] : '' }
+  function fromDateInput(val: string, time = '09:30') { return val ? `${val}T${time}:00+01:00` : '' }
 
   return (
     <div style={S.page}>
       {/* ── Header ── */}
       <header style={S.header}>
-        <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(255,255,255,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "var(--font-fredoka)", fontSize: 20, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
-          L
-        </div>
+        <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(255,255,255,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "var(--font-fredoka)", fontSize: 20, fontWeight: 700, color: '#fff', flexShrink: 0 }}>L</div>
         <div style={{ flex: 1 }}>
           <div style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, lineHeight: 1.2 }}>Espace Ludivine</div>
           <div style={{ fontSize: 13, opacity: .75 }}>Gérer tes ateliers, dates et disponibilités</div>
         </div>
         <form action={adminLogout}>
-          <button type="submit" style={{ padding: '8px 18px', borderRadius: 999, border: '1.5px solid rgba(255,255,255,.5)', background: 'none', color: '#fff', fontFamily: "var(--font-fredoka)", fontSize: 14, cursor: 'pointer' }}>
-            Déconnexion
-          </button>
+          <button type="submit" style={{ padding: '8px 18px', borderRadius: 999, border: '1.5px solid rgba(255,255,255,.5)', background: 'none', color: '#fff', fontFamily: "var(--font-fredoka)", fontSize: 14, cursor: 'pointer' }}>Déconnexion</button>
         </form>
-        <a href="/" style={{ width: 34, height: 34, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 18, textDecoration: 'none', flexShrink: 0 }}>
-          ×
-        </a>
+        <a href="/" style={{ width: 34, height: 34, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 18, textDecoration: 'none', flexShrink: 0 }}>×</a>
       </header>
 
       {/* ── Tab bar ── */}
@@ -242,33 +252,21 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
           <>
             <div style={S.sectionHeader}>
               <h1 style={S.sectionTitle}>Ateliers enfants ({enfants.length})</h1>
-              <button style={S.addBtn} onClick={handleAddEnfant} disabled={isPending}>
-                + Ajouter un atelier
-              </button>
+              <button style={S.addBtn} onClick={handleAddEnfant} disabled={isPending}>+ Ajouter un atelier</button>
             </div>
             {enfants.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 0', opacity: .5 }}>
                 <div style={{ fontSize: 48, marginBottom: 12 }}>🧵</div>
-                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>
-                  Aucun atelier pour le moment
-                </p>
+                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>Aucun atelier pour le moment</p>
               </div>
             )}
             {enfants.map(a => (
-              <div key={a.id} style={S.card}>
-                {/* Title row */}
+              <div key={a.id} style={{ ...S.card, ...(dirtyEnfants.has(a.id) ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
                 <div style={S.cardTitle}>
                   <div style={S.emojiBox}>{a.emoji}</div>
-                  <input
-                    style={S.titleInput}
-                    value={a.titre}
-                    onChange={e => updateEnfantField(a.id, 'titre', e.target.value)}
-                    onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')}
-                    onBlur={e => (e.target.style.borderColor = 'transparent')}
-                  />
+                  <input style={S.titleInput} value={a.titre} onChange={e => updateEnfantField(a.id, 'titre', e.target.value)} onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')} onBlur={e => (e.target.style.borderColor = 'transparent')} />
                   <button style={S.deleteBtn} onClick={() => handleDeleteEnfant(a.id)}>Supprimer</button>
                 </div>
-                {/* Row 1 */}
                 <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr' }}>
                   <FieldGroup label="Catégorie">
                     <select style={S.select} value={a.categorie} onChange={e => updateEnfantField(a.id, 'categorie', e.target.value)}>
@@ -287,11 +285,9 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                     <input style={S.input} value={a.ville} onChange={e => updateEnfantField(a.id, 'ville', e.target.value)} placeholder="Poitiers" />
                   </FieldGroup>
                 </div>
-                {/* Description */}
                 <FieldGroup label="Description" style={{ marginBottom: 12 }}>
                   <textarea style={S.textarea} value={a.description ?? ''} onChange={e => updateEnfantField(a.id, 'description', e.target.value)} placeholder="Description de l'atelier..." />
                 </FieldGroup>
-                {/* Row 2 */}
                 <div style={{ ...S.row, gridTemplateColumns: '2fr 1fr 1fr 1fr' }}>
                   <FieldGroup label="Infos (séparées par |)">
                     <input style={S.input} value={a.infos ?? ''} onChange={e => updateEnfantField(a.id, 'infos', e.target.value)} placeholder="Mercredi 14h-16h | 7-12 enfants | Trimestre" />
@@ -325,17 +321,10 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
               </div>
             )}
             {journees.map(j => (
-              <div key={j.id} style={S.card}>
+              <div key={j.id} style={{ ...S.card, ...(dirtyJournees.has(j.id) ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
                 <div style={S.cardTitle}>
                   <div style={S.emojiBox}>📅</div>
-                  <input
-                    style={S.titleInput}
-                    value={j.titre}
-                    onChange={e => updateJourneeField(j.id, 'titre', e.target.value)}
-                    onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')}
-                    onBlur={e => (e.target.style.borderColor = 'transparent')}
-                    placeholder="Thème de la journée"
-                  />
+                  <input style={S.titleInput} value={j.titre} onChange={e => updateJourneeField(j.id, 'titre', e.target.value)} onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')} onBlur={e => (e.target.style.borderColor = 'transparent')} placeholder="Thème de la journée" />
                   <button style={S.deleteBtn} onClick={() => handleDeleteJournee(j.id)}>Supprimer</button>
                 </div>
                 <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr' }}>
@@ -368,7 +357,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             <div style={S.sectionHeader}>
               <h1 style={S.sectionTitle}>Config journées créatives</h1>
             </div>
-            <div style={S.card}>
+            <div style={{ ...S.card, ...(dirtyCfgJournees ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
               <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr', marginBottom: 12 }}>
                 <FieldGroup label="Prix affiché">
                   <input style={S.input} value={cfgJournees.prix_texte ?? ''} onChange={e => updateCfgJournees('prix_texte', e.target.value)} placeholder="90€" />
@@ -404,17 +393,10 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
               </div>
             )}
             {retraites.map(r => (
-              <div key={r.id} style={S.card}>
+              <div key={r.id} style={{ ...S.card, ...(dirtyRetraites.has(r.id) ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
                 <div style={S.cardTitle}>
                   <div style={S.emojiBox}>🏡</div>
-                  <input
-                    style={S.titleInput}
-                    value={r.titre}
-                    onChange={e => updateRetraiteField(r.id, 'titre', e.target.value)}
-                    onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')}
-                    onBlur={e => (e.target.style.borderColor = 'transparent')}
-                    placeholder="Titre de la retraite"
-                  />
+                  <input style={S.titleInput} value={r.titre} onChange={e => updateRetraiteField(r.id, 'titre', e.target.value)} onFocus={e => (e.target.style.borderColor = 'rgba(200,54,92,.35)')} onBlur={e => (e.target.style.borderColor = 'transparent')} placeholder="Titre de la retraite" />
                   <button style={S.deleteBtn} onClick={() => handleDeleteRetraite(r.id)}>Supprimer</button>
                 </div>
                 <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr' }}>
@@ -450,7 +432,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             <div style={S.sectionHeader}>
               <h1 style={S.sectionTitle}>Config retraites créatives</h1>
             </div>
-            <div style={S.card}>
+            <div style={{ ...S.card, ...(dirtyCfgRetraites ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
               <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr', marginBottom: 12 }}>
                 <FieldGroup label="Prix affiché">
                   <input style={S.input} value={cfgRetraites.prix_texte ?? ''} onChange={e => updateCfgRetraites('prix_texte', e.target.value)} placeholder="390€" />
@@ -475,17 +457,30 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
 
       {/* ── Bottom bar ── */}
       <div style={S.bottomBar}>
-        <span style={{ fontSize: 13, color: 'var(--framboise)', opacity: .8, display: 'flex', alignItems: 'center', gap: 8 }}>
-          {saveStatus === 'saving' && <><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: 'var(--framboise)', animation: 'floaty 1s ease infinite' }} />Sauvegarde en cours…</>}
-          {saveStatus === 'saved'  && <>✦ Enregistrement automatique · Toutes les modifications sont sauvegardées</>}
-          {saveStatus === 'error'  && <>⚠ Erreur de sauvegarde — vérifier la connexion</>}
+        <span style={{ fontSize: 13, color: 'var(--framboise)', opacity: .8 }}>
+          {saveStatus === 'saving' && '⏳ Sauvegarde en cours…'}
+          {saveStatus === 'saved'  && '✓ Modifications sauvegardées'}
+          {saveStatus === 'error'  && '⚠ Erreur — vérifier la connexion'}
+          {saveStatus === 'idle' && hasChanges && <span style={{ color: '#b05020' }}>● Modifications non sauvegardées</span>}
         </span>
-        <button
-          onClick={() => router.refresh()}
-          style={{ padding: '8px 18px', borderRadius: 999, border: '1.5px dashed var(--framboise)', background: 'none', color: 'var(--framboise)', fontFamily: "var(--font-fredoka)", fontSize: 14, cursor: 'pointer' }}
-        >
-          Actualiser
-        </button>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button onClick={() => router.refresh()} style={{ padding: '8px 18px', borderRadius: 999, border: '1.5px dashed var(--framboise)', background: 'none', color: 'var(--framboise)', fontFamily: "var(--font-fredoka)", fontSize: 14, cursor: 'pointer' }}>
+            Actualiser
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={!hasChanges || saveStatus === 'saving'}
+            style={{
+              padding: '10px 28px', borderRadius: 999, border: 'none',
+              background: hasChanges ? 'var(--framboise)' : 'rgba(200,54,92,.25)',
+              color: '#fff', fontFamily: "var(--font-fredoka)", fontSize: 15,
+              cursor: hasChanges ? 'pointer' : 'default',
+              fontWeight: 600, transition: 'background .15s',
+            }}
+          >
+            {saveStatus === 'saving' ? 'Sauvegarde…' : 'Sauvegarder'}
+          </button>
+        </div>
       </div>
     </div>
   )
