@@ -1,7 +1,7 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { AdminDashboard } from '@/components/admin/admin-dashboard'
+import { AdminDashboard, type ReservationWithAtelier } from '@/components/admin/admin-dashboard'
 import type { Metadata } from 'next'
 import type { ConfigAtelier } from '@/types/supabase'
 
@@ -36,12 +36,26 @@ export default async function AdminPage() {
     { data: journees },
     { data: retraites },
     { data: configs },
+    { data: reservationsRaw },
   ] = await Promise.all([
-    db.from('ateliers_enfants').select('*').eq('actif', true).order('ordre'),
+    db.from('ateliers_enfants').select('*').order('ordre'),
     db.from('sessions').select('*').eq('type', 'journee_creative').order('date_debut'),
     db.from('sessions').select('*').eq('type', 'retraite_creative').order('date_debut'),
     db.from('config_ateliers').select('*'),
+    db.from('reservations').select('*').order('created_at', { ascending: false }).limit(500),
   ])
+
+  // Joindre manuellement le titre/date de l'atelier à chaque résa (pour affichage admin)
+  const ateliersById = new Map((enfants ?? []).map(a => [a.id, a]))
+  const reservations: ReservationWithAtelier[] = (reservationsRaw ?? []).map(r => {
+    const atelier = r.atelier_enfant_id ? ateliersById.get(r.atelier_enfant_id) : null
+    return {
+      ...r,
+      atelier_titre: atelier?.titre ?? null,
+      atelier_date: atelier?.date_atelier ?? null,
+      atelier_ville: atelier?.ville ?? null,
+    }
+  })
 
   const cfgJournees = configs?.find(c => c.type === 'journees') ?? DEFAULT_CFG_JOURNEES
   const cfgRetraites = configs?.find(c => c.type === 'retraites') ?? DEFAULT_CFG_RETRAITES
@@ -53,6 +67,7 @@ export default async function AdminPage() {
       initialRetraites={retraites ?? []}
       initialConfigJournees={cfgJournees}
       initialConfigRetraites={cfgRetraites}
+      initialReservations={reservations}
     />
   )
 }

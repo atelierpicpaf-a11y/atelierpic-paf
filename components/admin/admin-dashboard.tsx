@@ -2,7 +2,13 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import type { AtelierEnfantRow, Session, ConfigAtelier } from '@/types/supabase'
+import type { AtelierEnfantRow, Session, ConfigAtelier, Reservation } from '@/types/supabase'
+
+export type ReservationWithAtelier = Reservation & {
+  atelier_titre: string | null
+  atelier_date: string | null
+  atelier_ville: string | null
+}
 import {
   adminLogout,
   createAtelierEnfant, updateAtelierEnfant, deleteAtelierEnfant,
@@ -11,7 +17,7 @@ import {
   updateConfig,
 } from '@/app/(admin)/admin/actions'
 
-type Tab = 'enfants' | 'journees_dates' | 'journees_config' | 'retraites_dates' | 'retraites_config'
+type Tab = 'reservations' | 'enfants' | 'journees_dates' | 'journees_config' | 'retraites_dates' | 'retraites_config'
 type SaveStatus = 'idle' | 'saving' | 'saved' | 'error'
 
 const CATEGORIES_ENFANT = [
@@ -55,10 +61,12 @@ interface Props {
   initialRetraites: Session[]
   initialConfigJournees: ConfigAtelier
   initialConfigRetraites: ConfigAtelier
+  initialReservations: ReservationWithAtelier[]
 }
 
-export function AdminDashboard({ initialEnfants, initialJournees, initialRetraites, initialConfigJournees, initialConfigRetraites }: Props) {
-  const [activeTab, setActiveTab] = useState<Tab>('enfants')
+export function AdminDashboard({ initialEnfants, initialJournees, initialRetraites, initialConfigJournees, initialConfigRetraites, initialReservations }: Props) {
+  const [activeTab, setActiveTab] = useState<Tab>('reservations')
+  const [reservations] = useState<ReservationWithAtelier[]>(initialReservations)
   const [enfants, setEnfants] = useState<AtelierEnfantRow[]>(initialEnfants)
   const [journees, setJournees] = useState<Session[]>(initialJournees)
   const [retraites, setRetraites] = useState<Session[]>(initialRetraites)
@@ -218,6 +226,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
   }
 
   const tabs: { id: Tab; label: string; count?: number }[] = [
+    { id: 'reservations', label: 'Réservations', count: reservations.length },
     { id: 'enfants', label: 'Ateliers enfants', count: enfants.length },
     { id: 'journees_dates', label: 'Dates journées', count: journees.length },
     { id: 'journees_config', label: 'Config journées' },
@@ -250,7 +259,12 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
       </nav>
 
       {/* ── Content ── */}
-      <div style={{ ...S.content, paddingBottom: 80 }}>
+      <div style={{ ...S.content, paddingBottom: 80, maxWidth: activeTab === 'reservations' ? 1100 : 900 }}>
+
+        {/* ── Réservations ── */}
+        {activeTab === 'reservations' && (
+          <ReservationsPanel reservations={reservations} />
+        )}
 
         {/* ── Ateliers enfants ── */}
         {activeTab === 'enfants' && (
@@ -568,5 +582,103 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
         </div>
       </div>
     </div>
+  )
+}
+
+// ── Panel Réservations (hors composant principal) ────────────
+function formatDateTime(iso: string | null | undefined): string {
+  if (!iso) return '—'
+  const d = new Date(iso)
+  const jours = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam']
+  const mois = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.']
+  const h = d.getHours().toString().padStart(2, '0')
+  const m = d.getMinutes().toString().padStart(2, '0')
+  return `${jours[d.getDay()]} ${d.getDate()} ${mois[d.getMonth()]} ${d.getFullYear()} · ${h}h${m}`
+}
+
+function formatEuros(centimes: number | null | undefined): string {
+  if (centimes == null) return '—'
+  return (centimes / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
+}
+
+const STATUT_COLORS: Record<string, { bg: string; fg: string; label: string }> = {
+  paye_total:   { bg: '#d6f2e3', fg: '#1a6b3a', label: 'Payé' },
+  paye_acompte: { bg: '#fff2c9', fg: '#7a5a00', label: 'Acompte' },
+  en_attente:   { bg: '#f4e4e4', fg: '#8a4c4c', label: 'En attente' },
+  rembourse:    { bg: '#e4e4f4', fg: '#4c4c8a', label: 'Remboursée' },
+  annule:       { bg: '#f0e0e0', fg: '#8a3a3a', label: 'Annulée' },
+}
+
+function ReservationsPanel({ reservations }: { reservations: ReservationWithAtelier[] }) {
+  return (
+    <>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+        <h1 style={{ fontFamily: "var(--font-fredoka)", fontSize: 26, color: 'var(--ink)', margin: 0 }}>
+          Réservations ({reservations.length})
+        </h1>
+      </div>
+
+      {reservations.length === 0 && (
+        <div style={{ textAlign: 'center', padding: '60px 0', opacity: .5 }}>
+          <div style={{ fontSize: 48, marginBottom: 12 }}>🎫</div>
+          <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>
+            Aucune réservation pour le moment
+          </p>
+          <p style={{ fontSize: 14, opacity: .7, marginTop: 6 }}>
+            Les paiements Stripe apparaîtront ici dès qu&apos;un parent réservera.
+          </p>
+        </div>
+      )}
+
+      {reservations.map(r => {
+        const statut = STATUT_COLORS[r.statut_paiement] ?? { bg: '#eee', fg: '#555', label: r.statut_paiement }
+        const enfantInfos = [r.prenom_participant, r.nom_participant].filter(Boolean).join(' ')
+        const age = r.age_participant ? ` (${r.age_participant} ans)` : ''
+        return (
+          <div key={r.id} style={{
+            background: '#fff', border: '2px solid rgba(200,54,92,.15)', borderRadius: 20,
+            padding: '20px 22px', marginBottom: 14,
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, marginBottom: 14, flexWrap: 'wrap' }}>
+              <div style={{ flex: 1, minWidth: 220 }}>
+                <div style={{ fontFamily: "var(--font-fredoka)", fontSize: 18, color: 'var(--framboise)', marginBottom: 4 }}>
+                  {r.prenom} {r.nom}
+                </div>
+                <div style={{ fontSize: 13, opacity: .75, lineHeight: 1.5 }}>
+                  <a href={`mailto:${r.email}`} style={{ color: 'inherit' }}>{r.email}</a>
+                  {r.telephone && <> · <a href={`tel:${r.telephone}`} style={{ color: 'inherit' }}>{r.telephone}</a></>}
+                </div>
+                <div style={{ fontSize: 12, opacity: .55, marginTop: 4 }}>
+                  Réservé le {formatDateTime(r.created_at)}
+                </div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>
+                  {formatEuros(r.montant_paye_centimes)}
+                </div>
+                <span style={{
+                  display: 'inline-block', marginTop: 4, padding: '3px 10px', borderRadius: 999,
+                  fontSize: 12, fontWeight: 600, background: statut.bg, color: statut.fg,
+                }}>
+                  {statut.label}
+                </span>
+              </div>
+            </div>
+
+            <div style={{ background: 'rgba(200,54,92,.05)', borderRadius: 12, padding: '12px 14px', fontSize: 14, display: 'grid', gap: 6 }}>
+              <div><strong>Atelier :</strong> {r.atelier_titre ?? '—'}{r.atelier_ville ? ` · ${r.atelier_ville}` : ''}</div>
+              {r.atelier_date && <div><strong>Date :</strong> {formatDateTime(r.atelier_date)}</div>}
+              {enfantInfos && <div><strong>Enfant :</strong> {enfantInfos}{age}</div>}
+              {r.message && <div><strong>Message :</strong> <span style={{ opacity: .85 }}>{r.message}</span></div>}
+              {r.stripe_session_id && (
+                <div style={{ fontSize: 11, opacity: .55, marginTop: 4, fontFamily: 'monospace', wordBreak: 'break-all' }}>
+                  Stripe : {r.stripe_session_id}
+                </div>
+              )}
+            </div>
+          </div>
+        )
+      })}
+    </>
   )
 }
