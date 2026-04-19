@@ -1,75 +1,58 @@
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
-import { Logo } from '@/components/brand/logo'
-import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { AdminDashboard } from '@/components/admin/admin-dashboard'
 import type { Metadata } from 'next'
+import type { ConfigAtelier } from '@/types/supabase'
 
-export const metadata: Metadata = { title: 'Dashboard' }
+export const metadata: Metadata = { title: 'Espace Ludivine' }
+
+const DEFAULT_CFG_JOURNEES: ConfigAtelier = {
+  type: 'journees', prix_centimes: 9000, prix_texte: '90€',
+  description: 'Une journée complète de couture créative dans une ambiance chaleureuse et bienveillante.',
+  inclus: 'Matériel et tissu fourni|Déjeuner tiré du sac|Collations|Maximum 6 participantes',
+  duree: '9h30 → 17h30', lieu: 'Fontaine-le-Comte (86)',
+  updated_at: new Date().toISOString(),
+}
+const DEFAULT_CFG_RETRAITES: ConfigAtelier = {
+  type: 'retraites', prix_centimes: 39000, prix_texte: '390€',
+  description: 'Un week-end ressourçant alliant couture, yoga et convivialité dans un gîte en Deux-Sèvres.',
+  inclus: 'Hébergement en gîte|Tous les repas|2 séances de yoga|Matériel couture fourni|Maximum 8 participantes',
+  duree: 'Vendredi soir → Dimanche midi', lieu: 'Deux-Sèvres (79)',
+  updated_at: new Date().toISOString(),
+}
 
 export default async function AdminPage() {
+  // Auth check
   const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/admin/login')
+
+  // Load all data with admin client
+  const db = createAdminClient()
 
   const [
-    { count: sessionsCount },
-    { count: messagesCount },
-    { count: reservationsCount },
-    { count: abonnesCount },
+    { data: enfants },
+    { data: journees },
+    { data: retraites },
+    { data: configs },
   ] = await Promise.all([
-    supabase.from('sessions').select('*', { count: 'exact', head: true }),
-    supabase.from('messages_contact').select('*', { count: 'exact', head: true }).eq('lu', false),
-    supabase.from('reservations').select('*', { count: 'exact', head: true }),
-    supabase.from('newsletter_abonnes').select('*', { count: 'exact', head: true }).eq('actif', true),
+    db.from('ateliers_enfants').select('*').eq('actif', true).order('ordre'),
+    db.from('sessions').select('*').eq('type', 'journee_creative').order('date_debut'),
+    db.from('sessions').select('*').eq('type', 'retraite_creative').order('date_debut'),
+    db.from('config_ateliers').select('*'),
   ])
 
-  const stats = [
-    { n: sessionsCount ?? 0, l: 'Sessions créées', e: '📅', href: '/admin/sessions' },
-    { n: reservationsCount ?? 0, l: 'Réservations totales', e: '🎟️', href: '/admin/sessions' },
-    { n: messagesCount ?? 0, l: 'Messages non lus', e: '✉️', href: '/admin/messages' },
-    { n: abonnesCount ?? 0, l: 'Abonnés newsletter', e: '💌', href: '/admin/newsletter' },
-  ]
-
-  async function handleLogout() {
-    'use server'
-    const { createClient: createServerClient } = await import('@/lib/supabase/server')
-    const sb = await createServerClient()
-    await sb.auth.signOut()
-  }
+  const cfgJournees = configs?.find(c => c.type === 'journees') ?? DEFAULT_CFG_JOURNEES
+  const cfgRetraites = configs?.find(c => c.type === 'retraites') ?? DEFAULT_CFG_RETRAITES
 
   return (
-    <div style={{ minHeight:'100vh', background:'var(--creme-pale)' }}>
-      {/* HEADER */}
-      <header style={{ background:'var(--framboise)', color:'var(--creme)', padding:'18px 32px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <Logo size={28} variant="creme" />
-        <span className="h-fredoka" style={{ fontSize:18 }}>Tableau de bord</span>
-        <form action={handleLogout}>
-          <button type="submit" style={{ fontSize:13, color:'rgba(251,244,228,.8)', background:'none', border:'1px dashed rgba(251,244,228,.4)', borderRadius:999, padding:'6px 14px', cursor:'pointer' }}>
-            Déconnexion
-          </button>
-        </form>
-      </header>
-
-      <div style={{ padding:'40px 32px', maxWidth:1200, margin:'0 auto' }}>
-        <h1 className="h-fredoka" style={{ fontSize:32, color:'var(--framboise)', marginBottom:32 }}>Bonjour Ludivine 👋</h1>
-
-        {/* STATS */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:20, marginBottom:48 }}>
-          {stats.map((s, i) => (
-            <Link key={i} href={s.href} style={{ textDecoration:'none' }}>
-              <div className="card" style={{ padding:'24px 28px', cursor:'pointer' }}>
-                <div style={{ fontSize:36, marginBottom:12 }}>{s.e}</div>
-                <div className="h-fredoka" style={{ fontSize:40, color:'var(--framboise)', lineHeight:1 }}>{s.n}</div>
-                <div style={{ fontSize:14, opacity:.7, marginTop:6 }}>{s.l}</div>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* QUICK LINKS */}
-        <h2 className="h-fredoka" style={{ fontSize:22, color:'var(--framboise)', marginBottom:20 }}>Actions rapides</h2>
-        <div style={{ display:'flex', gap:14, flexWrap:'wrap' }}>
-          <Link href="/admin/sessions" className="cta-pill" style={{ fontSize:14, padding:'12px 22px' }}>📅 Gérer les sessions</Link>
-          <Link href="/admin/sessions" className="cta-ghost" style={{ fontSize:14, padding:'12px 22px' }}>➕ Créer une session</Link>
-        </div>
-      </div>
-    </div>
+    <AdminDashboard
+      initialEnfants={enfants ?? []}
+      initialJournees={journees ?? []}
+      initialRetraites={retraites ?? []}
+      initialConfigJournees={cfgJournees}
+      initialConfigRetraites={cfgRetraites}
+    />
   )
 }

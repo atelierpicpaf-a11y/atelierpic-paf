@@ -187,10 +187,60 @@ Currently, workshop pages use static demo data from `lib/data/defaults.ts`. The 
 1. Never hardcode API keys or secrets anywhere
 2. Always run the build and fix ALL errors before finishing work
 3. Do not add `tailwind.config.ts` — this project uses Tailwind v4 CSS config
-4. Font import: `Fredoka` not `Fredoka_One`
+4. Font import: `Fredoka` not `Fredoka_One` (next/font/google uses `Fredoka`; fallback string uses `'Fredoka One', cursive`)
 5. Do not mix `export metadata` with `'use client'` in the same file
 6. Do not pass event handler functions (`onClick`, `onSubmit`, etc.) from Server Components to Client Components as props
 7. Keep `'use client'` directive minimal — only add it when using hooks or event listeners
 8. The `/middleware.ts` convention is deprecated in Next.js 16 — use `/proxy.ts` for new middleware
 9. All image imports use `next/image` with explicit `width` and `height`
 10. CSS apostrophes: always use double quotes `"` for strings containing apostrophes (French text)
+11. Font CSS variables: next/font uses `--ff-fredoka`, `--ff-pacifico`, `--ff-caveat`, `--ff-inter` (prefixed `ff-`) to avoid circular reference with the `@theme` block which exposes them as `--font-*`
+
+## Règles de travail
+
+### Règle 1 — Mode plan d'abord
+Écrire le plan AVANT toute ligne de code.
+
+- Avant chaque tâche non-triviale : rédiger le plan complet (fichiers concernés, étapes ordonnées, vérification finale, risques).
+- Si la session dérape en cours de route : STOP, refais le plan.
+- Pas de code sans plan validé d'abord.
+- Sur Workwave : utiliser ExitPlanMode pour soumettre les plans à l'utilisateur sur les changements d'architecture, ajouts de tables Supabase, modifications de routing, ou tout nouveau sprint.
+
+### Règle 2 — Sous-agents pour le complexe
+Déléguer aux sous-agents pour garder le contexte principal propre.
+
+- Tâche complexe = toujours un sous-agent dédié (outil Agent avec subagent_type Explore, Plan, ou general-purpose).
+- Garder le contexte principal léger et focus sur la décision.
+- 1 tâche complexe = 1 sous-agent dédié.
+- Sur Workwave, bons cas d'usage : audit SEO concurrentiel, exploration des queries Supabase existantes avant de modifier, recherche de tous les usages d'un composant avant un refactor, vérification de migration SQL.
+
+### Règle 3 — Boucle d'auto-amélioration
+Chaque erreur devient une règle persistante dans ce fichier.
+
+- Erreur détectée → la transformer immédiatement en règle écrite.
+- Sauvegarder la règle dans la section "Leçons apprises" ci-dessous.
+- Session suivante : -80% d'erreurs sur le même sujet.
+- Avant tout nouveau sprint : relire la section "Leçons apprises".
+
+### Règle 4 — Prouve que ça marche
+Pas de "done" sans preuve concrète.
+
+- Ne JAMAIS marquer une tâche terminée sans preuve.
+- Exécuter les tests + vérifier les logs à chaque fois.
+- Pas de supposition : démontrer que ça fonctionne.
+- Sur Workwave, preuves obligatoires selon le type de tâche :
+  - **Code TS/React** : `npm run build` qui passe + `npx tsc --noEmit` (après `rm -rf .next` si erreurs dans `.next/types/`)
+  - **SEO/UI** : vérification visuelle de la page rendue (capture ou description précise)
+  - **Emails** : envoi en mode dry-run vers `atelierpicpaf@gmail.com`
+  - **Migrations Supabase** : test de la requête générée + vérification du schéma
+  - **Commits** : `git status` après commit pour confirmer + `git log --oneline -3`
+  - **Push** : confirmation du push réussi vers `origin/main`
+
+## Leçons apprises
+
+- `Fredoka_One` échoue dans next/font/google → utiliser `Fredoka` avec weight 700
+- CSS variable `--font-fredoka` créée par next/font ET par `@theme` → référence circulaire. Fix : next/font utilise `--ff-fredoka`, @theme expose `--font-fredoka: var(--ff-fredoka)`
+- `'use client'` + `export metadata` dans le même fichier → erreur build. Toujours séparer en server wrapper + client child
+- Français avec apostrophes dans JSX → utiliser `&apos;` ou double quotes pour les attributs
+- `rm -rf node_modules` en background peut supprimer tout le projet → JAMAIS en background
+- Token GitHub exposé dans la conversation → toujours révoquer immédiatement sur github.com/settings/tokens

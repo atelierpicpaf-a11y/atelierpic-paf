@@ -6,8 +6,40 @@ export type Session = {
   acompte_centimes: number | null; age_min: number | null; age_max: number | null
   statut: 'ouvert' | 'complet' | 'annule' | 'termine'
   image_url: string | null; slug: string | null; meta_title: string | null
-  meta_description: string | null; created_at: string; updated_at: string
+  meta_description: string | null; prix_texte: string | null
+  created_at: string; updated_at: string
 }
+
+export type AtelierEnfantRow = {
+  id: string
+  titre: string
+  categorie: string
+  badge_texte: string | null
+  badge_couleur: string
+  ville: string
+  description: string | null
+  infos: string | null
+  prix_texte: string | null
+  places_max: number | null
+  places_dispo: number | null
+  emoji: string
+  ordre: number
+  actif: boolean
+  created_at: string
+  updated_at: string
+}
+
+export type ConfigAtelier = {
+  type: string
+  prix_centimes: number
+  prix_texte: string | null
+  description: string | null
+  inclus: string | null
+  duree: string | null
+  lieu: string | null
+  updated_at: string
+}
+
 export type Reservation = {
   id: string; session_id: string; nom: string; prenom: string; email: string
   telephone: string | null; nb_personnes: number; nom_participant: string | null
@@ -24,7 +56,9 @@ export type Article = { id: string; slug: string; titre: string; extrait: string
 export type Database = {
   public: {
     Tables: {
-      sessions: { Row: Session; Insert: Omit<Session, 'id'|'created_at'|'updated_at'|'places_reservees'> & { id?: string; created_at?: string; updated_at?: string; places_reservees?: number }; Update: Partial<Session>; Relationships: [] }
+      sessions: { Row: Session; Insert: { id?: string; type: Session['type']; titre: string; date_debut: string; date_fin: string; lieu: string; places_max: number; prix_centimes: number; statut?: Session['statut']; description?: string | null; ville?: string | null; code_postal?: string | null; adresse?: string | null; places_reservees?: number; acompte_centimes?: number | null; age_min?: number | null; age_max?: number | null; image_url?: string | null; slug?: string | null; meta_title?: string | null; meta_description?: string | null; prix_texte?: string | null; created_at?: string; updated_at?: string }; Update: Partial<Session>; Relationships: [] }
+      ateliers_enfants: { Row: AtelierEnfantRow; Insert: { id?: string; titre: string; categorie?: string; badge_texte?: string | null; badge_couleur?: string; ville?: string; description?: string | null; infos?: string | null; prix_texte?: string | null; places_max?: number | null; places_dispo?: number | null; emoji?: string; ordre?: number; actif?: boolean; created_at?: string; updated_at?: string }; Update: Partial<AtelierEnfantRow>; Relationships: [] }
+      config_ateliers: { Row: ConfigAtelier; Insert: ConfigAtelier; Update: Partial<ConfigAtelier>; Relationships: [] }
       reservations: { Row: Reservation; Insert: Omit<Reservation, 'id'|'created_at'> & { id?: string; created_at?: string }; Update: Partial<Reservation>; Relationships: [] }
       newsletter_abonnes: { Row: NewsletterAbonne; Insert: Omit<NewsletterAbonne, 'id'|'date_inscription'|'consentement'|'actif'> & { id?: string; date_inscription?: string; consentement?: boolean; actif?: boolean }; Update: Partial<NewsletterAbonne>; Relationships: [] }
       messages_contact: { Row: MessageContact; Insert: Omit<MessageContact, 'id'|'created_at'|'lu'> & { id?: string; created_at?: string; lu?: boolean }; Update: Partial<MessageContact>; Relationships: [] }
