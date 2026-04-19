@@ -20,11 +20,13 @@ const FAQS = [
 
 export default async function AteliersEnfantsPage() {
   const supabase = await createClient()
+  const nowIso = new Date().toISOString()
   const { data: ateliers } = await supabase
     .from('ateliers_enfants')
     .select('*')
     .eq('actif', true)
-    .order('ordre')
+    .gte('date_atelier', nowIso)
+    .order('date_atelier', { ascending: true })
   return (
     <div className="route-enter">
       <section style={{ position:'relative', overflow:'hidden', padding:'80px 0 60px', background:'var(--creme)' }}>

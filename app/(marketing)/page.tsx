@@ -18,11 +18,13 @@ const BADGE_COLOR_MAP: Record<string, string> = {
 
 export default async function HomePage() {
   const supabase = await createClient()
+  const nowIso = new Date().toISOString()
   const { data: ateliers } = await supabase
     .from('ateliers_enfants')
     .select('*')
     .eq('actif', true)
-    .order('ordre')
+    .gte('date_atelier', nowIso)
+    .order('date_atelier', { ascending: true })
     .limit(3)
 
   const enfantsSource = ateliers ?? []
