@@ -35,7 +35,7 @@ export default async function AteliersEnfantsPage() {
           <div>
             <span className="h-caveat" style={{ fontSize:28, color:'var(--framboise)' }}>~ Dès 6 ans ~</span>
             <h1 className="sticker-title" style={{ fontSize:'clamp(44px,6vw,76px)', textAlign:'left', margin:'8px 0 22px' }}>Ateliers<br/>enfants</h1>
-            <p style={{ fontSize:18, maxWidth:520, lineHeight:1.6, opacity:.85 }}>Cours hebdomadaires, stages de vacances, anniversaires, interventions écoles… Mes petits créateurs repartent toujours avec une pépite crée de leurs mains.</p>
+            <p style={{ fontSize:18, maxWidth:520, lineHeight:1.6, opacity:.85 }}>Cours hebdomadaires, stages de vacances, anniversaires, interventions écoles… Mes petits créateurs repartent toujours avec une pépite créée de leurs mains.</p>
             <div style={{ marginTop:28, display:'flex', gap:14, flexWrap:'wrap' }}>
               <a href="/contact" className="cta-pill">Inscription</a>
             </div>
