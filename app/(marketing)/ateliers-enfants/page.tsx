@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 }
 
 const FAQS = [
-  { q:'À partir de quel âge ?', r:"6 ans, quand les petites mains savent tenir une aiguille. Jusqu'à 12 ans pour les cours réguliers." },
-  { q:'Faut-il amener du matériel ?', r:'Non, je fournis tout : machines, tissus, mercerie, fils. Les enfants viennent les mains dans les poches.' },
+  { q:'À partir de quel âge ?', r:"6 ans, quand les petites mains savent tenir une aiguille. Jusqu'à 99 ans !" },
+  { q:'Faut-il amener du matériel ?', r:"Oui si tu as une machine à coudre !" },
   { q:"Et si mon enfant n'a jamais cousu ?", r:'Parfait ! La plupart découvrent tout. On commence doucement, on prend le temps.' },
   { q:"Comment on s'inscrit ?", r:'Par mail, téléphone, ou en payant directement en ligne (paiement sécurisé Stripe).' },
 ]
