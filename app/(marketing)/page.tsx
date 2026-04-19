@@ -21,7 +21,7 @@ export default function HomePage() {
         <div className="container" style={{ position:'relative', padding:'80px 28px 100px', textAlign:'center' }}>
           <div style={{ position:'absolute', left:40, top:90 }} className="hidden-mobile"><Bobines size={140} /></div>
           <div style={{ position:'absolute', right:30, top:120 }} className="hidden-mobile"><Fee size={200} /></div>
-          <div style={{ marginBottom:28 }}><Logo width={320} /></div>
+          <div style={{ marginBottom:28 }}><Logo size={88} /></div>
           <div style={{ marginBottom:24 }}>
             <span className="slogan" style={{ fontSize:'clamp(36px,5.5vw,62px)' }}>Deviens toi aussi une magicienne&nbsp;!</span>
           </div>

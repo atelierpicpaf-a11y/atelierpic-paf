@@ -30,7 +30,7 @@ export default function AdminLoginPage() {
     <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', background:'var(--creme)', padding:24 }}>
       <div style={{ width:'100%', maxWidth:440 }}>
         <div style={{ textAlign:'center', marginBottom:40 }}>
-          <Logo width={160} />
+          <Logo size={56} />
           <p style={{ marginTop:16, fontSize:15, opacity:.7 }}>Espace Ludivine</p>
         </div>
         <div className="card" style={{ padding:'36px 36px', overflow:'visible' }}>

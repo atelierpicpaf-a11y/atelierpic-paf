@@ -12,7 +12,7 @@ export function Footer() {
       <footer style={{ background:'var(--framboise)', color:'var(--creme)', padding:'64px 0 28px' }}>
         <div className="container" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(200px, 1fr))', gap:40 }}>
           <div>
-            <Logo width={120} variant="creme" />
+            <Logo size={28} variant="creme" />
             <p style={{ marginTop:18, fontSize:15, maxWidth:280, color:'#fde5d4', lineHeight:1.6 }}>Je suis Ludivine, magicienne des tissus en Vienne (86) et Deux-Sèvres (79).</p>
           </div>
           <div>

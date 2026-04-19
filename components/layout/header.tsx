@@ -7,7 +7,7 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="container" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 28px', gap:20 }}>
-        <Link href="/"><Logo width={130} /></Link>
+        <Link href="/"><Logo size={34} /></Link>
         <DesktopNav />
         <Link href="/ateliers-adultes/journees-creatives" className="cta-pill hidden-mobile" style={{ fontSize:14, padding:'12px 22px' }}>Réserver</Link>
         <MobileNav />
