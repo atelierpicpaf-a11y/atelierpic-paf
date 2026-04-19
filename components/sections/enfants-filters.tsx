@@ -86,7 +86,7 @@ export function EnfantsFilters({ ateliers }: Props) {
         </div>
       </section>
       {reserveAtelier && (
-        <ReservationForm atelier={reserveAtelier} onClose={() => setReserveAtelier(null)} />
+        <ReservationForm mode="atelier" atelier={reserveAtelier} onClose={() => setReserveAtelier(null)} />
       )}
     </>
   )

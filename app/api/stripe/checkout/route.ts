@@ -14,30 +14,76 @@ export async function POST(req: Request) {
     const data = parsed.data
     const db = createAdminClient()
 
-    // Récupérer l'atelier (prix, titre, places dispo)
-    const { data: atelier, error: fetchError } = await db
-      .from('ateliers_enfants')
-      .select('*')
-      .eq('id', data.atelierId)
-      .single()
+    // Récupérer la cible (atelier enfant OU session adulte) + construire le line_item
+    let itemName = ''
+    let itemDescription: string | undefined
+    let prixCentimes = 0
+    const metadataExtra: Record<string, string> = {}
 
-    if (fetchError || !atelier) {
-      return NextResponse.json({ error: 'Atelier introuvable' }, { status: 404 })
+    if (data.atelierId) {
+      const { data: atelier, error: fetchError } = await db
+        .from('ateliers_enfants')
+        .select('*')
+        .eq('id', data.atelierId)
+        .single()
+
+      if (fetchError || !atelier) {
+        return NextResponse.json({ error: 'Atelier introuvable' }, { status: 404 })
+      }
+      if (!atelier.actif) {
+        return NextResponse.json({ error: 'Cet atelier n\'est plus disponible' }, { status: 400 })
+      }
+      if (atelier.prix_centimes <= 0) {
+        return NextResponse.json({ error: 'Prix non configuré pour cet atelier' }, { status: 400 })
+      }
+      if (atelier.places_dispo !== null && atelier.places_dispo <= 0) {
+        return NextResponse.json({ error: 'Atelier complet' }, { status: 400 })
+      }
+
+      itemName = atelier.titre
+      itemDescription = atelier.description || `Atelier couture enfant · ${atelier.ville}`
+      prixCentimes = atelier.prix_centimes
+      metadataExtra.atelier_enfant_id = atelier.id
+    } else if (data.sessionId) {
+      const { data: session, error: fetchError } = await db
+        .from('sessions')
+        .select('*')
+        .eq('id', data.sessionId)
+        .single()
+
+      if (fetchError || !session) {
+        return NextResponse.json({ error: 'Session introuvable' }, { status: 404 })
+      }
+      if (session.statut !== 'ouvert') {
+        return NextResponse.json({ error: 'Cette session n\'est plus disponible' }, { status: 400 })
+      }
+      if (session.places_reservees >= session.places_max) {
+        return NextResponse.json({ error: 'Session complète' }, { status: 400 })
+      }
+
+      // Prix : d'abord session.prix_centimes, sinon config_ateliers pour ce type
+      let priceToUse = session.prix_centimes
+      if (priceToUse <= 0) {
+        const cfgType = session.type === 'journee_creative' ? 'journees' : session.type === 'retraite_creative' ? 'retraites' : null
+        if (cfgType) {
+          const { data: cfg } = await db.from('config_ateliers').select('prix_centimes').eq('type', cfgType).maybeSingle()
+          priceToUse = cfg?.prix_centimes ?? 0
+        }
+      }
+      if (priceToUse <= 0) {
+        return NextResponse.json({ error: 'Prix non configuré pour cette session' }, { status: 400 })
+      }
+
+      itemName = session.titre
+      itemDescription = session.description || `${session.lieu}`
+      prixCentimes = priceToUse
+      metadataExtra.session_id = session.id
+      metadataExtra.session_type = session.type
+    } else {
+      return NextResponse.json({ error: 'Cible manquante' }, { status: 400 })
     }
 
-    if (!atelier.actif) {
-      return NextResponse.json({ error: 'Cet atelier n\'est plus disponible' }, { status: 400 })
-    }
-
-    if (atelier.prix_centimes <= 0) {
-      return NextResponse.json({ error: 'Prix non configuré pour cet atelier' }, { status: 400 })
-    }
-
-    if (atelier.places_dispo !== null && atelier.places_dispo <= 0) {
-      return NextResponse.json({ error: 'Atelier complet' }, { status: 400 })
-    }
-
-    // Dériver l'URL du site : on lit d'abord l'origin de la requête, puis fallback ENV, puis défaut
+    // Dériver l'URL du site : origin de la requête, fallback ENV, puis défaut
     function normalizeUrl(raw: string | null | undefined): string | null {
       if (!raw) return null
       const trimmed = raw.trim().replace(/\/+$/, '')
@@ -55,28 +101,28 @@ export async function POST(req: Request) {
     const siteUrl =
       normalizeUrl(origin) ||
       normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL) ||
-      'https://atelier-picpaf.vercel.app'
+      'https://atelierpicpaf.fr'
 
-    // Créer la session Stripe Checkout
+    // Créer la session Stripe Checkout — cartes + Klarna (3x sans frais en France)
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: 'payment',
-      payment_method_types: ['card'],
+      payment_method_types: ['card', 'klarna'],
       customer_email: data.email,
       line_items: [
         {
           quantity: 1,
           price_data: {
             currency: 'eur',
-            unit_amount: atelier.prix_centimes,
+            unit_amount: prixCentimes,
             product_data: {
-              name: atelier.titre,
-              description: atelier.description || `Atelier couture enfant · ${atelier.ville}`,
+              name: itemName,
+              description: itemDescription,
             },
           },
         },
       ],
       metadata: {
-        atelier_enfant_id: atelier.id,
+        ...metadataExtra,
         nom: data.nom,
         prenom: data.prenom,
         telephone: data.telephone || '',

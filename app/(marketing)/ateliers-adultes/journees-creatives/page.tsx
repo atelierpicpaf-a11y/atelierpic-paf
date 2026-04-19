@@ -1,6 +1,7 @@
 import { Fee } from '@/components/brand/fee'
 import { Bobines } from '@/components/brand/bobines'
 import { SectionTitle } from '@/components/sections/section-title'
+import { JourneesDatesGrid } from '@/components/sections/journees-dates-grid'
 import { createClient } from '@/lib/supabase/server'
 import { JOURNEES_CONFIG } from '@/lib/data/defaults'
 import type { Metadata } from 'next'
@@ -8,13 +9,6 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Journées créatives couture adultes',
   description: 'Une journée entière pour coudre le projet de vos rêves à Fontaine-le-Comte. 90€ tout compris, 6 participantes maximum.',
-}
-
-function formatJourneeDate(iso: string) {
-  const d = new Date(iso)
-  const jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
-  const mois = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
-  return { jour: jours[d.getDay()], num: String(d.getDate()), mois: mois[d.getMonth()] }
 }
 
 const PROGRAMME = [
@@ -50,10 +44,7 @@ export default async function JourneesCreativesPage() {
   const prixAffiche = cfg?.prix_texte ?? `${JOURNEES_CONFIG.prix}€`
   const lieu = cfg?.lieu ?? JOURNEES_CONFIG.lieu
   const horaire = cfg?.duree ?? JOURNEES_CONFIG.horaire
-  const placesMax = cfg?.prix_centimes ? undefined : JOURNEES_CONFIG.placesMax
 
-  // Dates : Supabase si disponibles, sinon fallback statique
-  const hasDates = sessions && sessions.length > 0
   return (
     <div className="route-enter">
       {/* HERO */}
@@ -178,37 +169,7 @@ export default async function JourneesCreativesPage() {
         <div className="container">
           <SectionTitle kicker="Rejoignez-nous" align="center">Prochaines dates</SectionTitle>
           <div style={{ marginTop:50, display:'flex', flexDirection:'column', gap:18, maxWidth:680, margin:'50px auto 0' }}>
-            {!hasDates && (
-              <div style={{ textAlign:'center', padding:'48px 0', opacity:.6 }}>
-                <div style={{ fontSize:40, marginBottom:12 }}>📅</div>
-                <p style={{ fontFamily:'var(--font-fredoka)', fontSize:18, color:'var(--framboise)', marginBottom:16 }}>Aucune date programmée pour le moment.</p>
-                <a href="/contact" className="cta-ghost">Être prévenue des prochaines dates →</a>
-              </div>
-            )}
-            {hasDates && sessions!.map((s) => {
-              const { jour, num, mois } = formatJourneeDate(s.date_debut)
-              const placesLeft = s.places_max - s.places_reservees
-              const complet = s.statut === 'complet' || placesLeft <= 0
-              return (
-                <div key={s.id} className="card" style={{ padding:'24px 28px', display:'flex', alignItems:'center', gap:24, flexWrap:'wrap' }}>
-                  <div style={{ textAlign:'center', minWidth:70 }}>
-                    <div style={{ fontSize:13, color:'var(--framboise)', fontWeight:600 }}>{jour}</div>
-                    <div className="h-fredoka" style={{ fontSize:40, color:'var(--framboise)', lineHeight:1 }}>{num}</div>
-                    <div style={{ fontSize:13, color:'var(--framboise)', opacity:.8 }}>{mois}</div>
-                  </div>
-                  <div style={{ flex:1, minWidth:180 }}>
-                    <div className="h-fredoka" style={{ fontSize:20, color:'var(--ink)' }}>{s.titre}</div>
-                    <div style={{ fontSize:13, opacity:.7, marginTop:4 }}>{horaire} · {s.lieu || lieu}</div>
-                  </div>
-                  <div style={{ display:'flex', gap:14, alignItems:'center' }}>
-                    <span className={`badge ${complet ? '' : 'mint'}`} style={complet ? {} : { background:'var(--menthe)', color:'#1a4a42' }}>
-                      {complet ? 'Complet' : `${placesLeft} place${placesLeft > 1 ? 's' : ''}`}
-                    </span>
-                    {!complet && <a href="/contact" className="cta-pill" style={{ padding:'10px 20px', fontSize:14 }}>Réserver</a>}
-                  </div>
-                </div>
-              )
-            })}
+            <JourneesDatesGrid sessions={sessions ?? []} horaire={horaire} lieuDefaut={lieu} prixCentimes={cfg?.prix_centimes ?? 0} />
           </div>
           <div style={{ textAlign:'center', marginTop:36 }}>
             <a href="/contact" className="cta-ghost">Être prévenue des prochaines dates →</a>

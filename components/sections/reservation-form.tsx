@@ -1,12 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import type { AtelierEnfantRow } from '@/types/supabase'
+import type { AtelierEnfantRow, Session } from '@/types/supabase'
 
-interface Props {
-  atelier: AtelierEnfantRow
-  onClose: () => void
-}
+type AtelierMode = { mode: 'atelier'; atelier: AtelierEnfantRow }
+type SessionMode = { mode: 'session'; session: Session; prixCentimes: number }
+type Props = (AtelierMode | SessionMode) & { onClose: () => void }
 
 const INPUT_S: React.CSSProperties = {
   width: '100%',
@@ -36,7 +35,17 @@ function formatDateFr(iso: string | null): string {
   return `${jours[d.getDay()]} ${d.getDate()} ${mois[d.getMonth()]}`
 }
 
-export function ReservationForm({ atelier, onClose }: Props) {
+function formatDateRangeFr(debut: string, fin: string | null): string {
+  const d1 = new Date(debut)
+  const mois = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.']
+  if (!fin) return `${d1.getDate()} ${mois[d1.getMonth()]}`
+  const d2 = new Date(fin)
+  if (d1.getMonth() === d2.getMonth()) return `${d1.getDate()} — ${d2.getDate()} ${mois[d1.getMonth()]}`
+  return `${d1.getDate()} ${mois[d1.getMonth()]} → ${d2.getDate()} ${mois[d2.getMonth()]}`
+}
+
+export function ReservationForm(props: Props) {
+  const { mode, onClose } = props
   const [nom, setNom] = useState('')
   const [prenom, setPrenom] = useState('')
   const [email, setEmail] = useState('')
@@ -48,9 +57,29 @@ export function ReservationForm({ atelier, onClose }: Props) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const prix = atelier.prix_centimes > 0
-    ? (atelier.prix_centimes / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
-    : atelier.prix_texte || '—'
+  // Dériver titre, date affichée, lieu, prix selon le mode
+  let titre = ''
+  let sousTitre = ''
+  let prixCentimes = 0
+  let prixTexteFallback: string | null = null
+
+  if (mode === 'atelier') {
+    const a = props.atelier
+    titre = a.titre
+    sousTitre = `${a.date_atelier ? formatDateFr(a.date_atelier) + ' · ' : ''}${a.ville}`
+    prixCentimes = a.prix_centimes
+    prixTexteFallback = a.prix_texte
+  } else {
+    const s = props.session
+    titre = s.titre
+    sousTitre = `${formatDateRangeFr(s.date_debut, s.date_fin)} · ${s.lieu}`
+    prixCentimes = props.prixCentimes
+    prixTexteFallback = s.prix_texte
+  }
+
+  const prix = prixCentimes > 0
+    ? (prixCentimes / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
+    : prixTexteFallback || '—'
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -58,20 +87,26 @@ export function ReservationForm({ atelier, onClose }: Props) {
     setLoading(true)
 
     try {
+      const body: Record<string, string> = {
+        nom,
+        prenom,
+        email,
+        telephone: telephone || '',
+        message: message || '',
+      }
+      if (mode === 'atelier') {
+        body.atelierId = props.atelier.id
+        body.prenomEnfant = prenomEnfant || ''
+        body.nomEnfant = nomEnfant || ''
+        body.ageEnfant = ageEnfant || ''
+      } else {
+        body.sessionId = props.session.id
+      }
+
       const res = await fetch('/api/stripe/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          atelierId: atelier.id,
-          nom,
-          prenom,
-          email,
-          telephone: telephone || '',
-          prenomEnfant: prenomEnfant || '',
-          nomEnfant: nomEnfant || '',
-          ageEnfant: ageEnfant || '',
-          message: message || '',
-        }),
+        body: JSON.stringify(body),
       })
 
       const data = await res.json()
@@ -82,7 +117,6 @@ export function ReservationForm({ atelier, onClose }: Props) {
         return
       }
 
-      // Redirection vers Stripe Checkout
       window.location.href = data.url
     } catch (err) {
       console.error(err)
@@ -146,16 +180,15 @@ export function ReservationForm({ atelier, onClose }: Props) {
         <h2 id="reservation-title" className="h-fredoka" style={{ fontSize: 26, color: 'var(--framboise)', margin: '0 0 6px', lineHeight: 1.2 }}>
           Je réserve ma place
         </h2>
-        <p style={{ margin: '0 0 6px', fontSize: 15, fontWeight: 600 }}>{atelier.titre}</p>
+        <p style={{ margin: '0 0 6px', fontSize: 15, fontWeight: 600 }}>{titre}</p>
         <p style={{ margin: '0 0 20px', fontSize: 13, opacity: 0.75 }}>
-          {atelier.date_atelier ? formatDateFr(atelier.date_atelier) + ' · ' : ''}
-          {atelier.ville} · <strong style={{ color: 'var(--framboise)' }}>{prix}</strong>
+          {sousTitre} · <strong style={{ color: 'var(--framboise)' }}>{prix}</strong>
         </p>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <div>
-              <label style={LABEL_S} htmlFor="prenom">Prénom (parent) *</label>
+              <label style={LABEL_S} htmlFor="prenom">Prénom *</label>
               <input id="prenom" type="text" required value={prenom} onChange={(e) => setPrenom(e.target.value)} style={INPUT_S} />
             </div>
             <div>
@@ -174,23 +207,25 @@ export function ReservationForm({ atelier, onClose }: Props) {
             <input id="telephone" type="tel" value={telephone} onChange={(e) => setTelephone(e.target.value)} style={INPUT_S} />
           </div>
 
-          <div style={{ borderTop: '1px dashed rgba(200,54,92,.2)', paddingTop: 14, marginTop: 4 }}>
-            <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600, color: 'var(--framboise)' }}>L&apos;enfant inscrit</p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 90px', gap: 10 }}>
-              <div>
-                <label style={LABEL_S} htmlFor="prenomEnfant">Prénom</label>
-                <input id="prenomEnfant" type="text" value={prenomEnfant} onChange={(e) => setPrenomEnfant(e.target.value)} style={INPUT_S} />
-              </div>
-              <div>
-                <label style={LABEL_S} htmlFor="nomEnfant">Nom</label>
-                <input id="nomEnfant" type="text" value={nomEnfant} onChange={(e) => setNomEnfant(e.target.value)} style={INPUT_S} />
-              </div>
-              <div>
-                <label style={LABEL_S} htmlFor="ageEnfant">Âge</label>
-                <input id="ageEnfant" type="number" min={1} max={99} value={ageEnfant} onChange={(e) => setAgeEnfant(e.target.value)} style={INPUT_S} />
+          {mode === 'atelier' && (
+            <div style={{ borderTop: '1px dashed rgba(200,54,92,.2)', paddingTop: 14, marginTop: 4 }}>
+              <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600, color: 'var(--framboise)' }}>L&apos;enfant inscrit</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 90px', gap: 10 }}>
+                <div>
+                  <label style={LABEL_S} htmlFor="prenomEnfant">Prénom</label>
+                  <input id="prenomEnfant" type="text" value={prenomEnfant} onChange={(e) => setPrenomEnfant(e.target.value)} style={INPUT_S} />
+                </div>
+                <div>
+                  <label style={LABEL_S} htmlFor="nomEnfant">Nom</label>
+                  <input id="nomEnfant" type="text" value={nomEnfant} onChange={(e) => setNomEnfant(e.target.value)} style={INPUT_S} />
+                </div>
+                <div>
+                  <label style={LABEL_S} htmlFor="ageEnfant">Âge</label>
+                  <input id="ageEnfant" type="number" min={1} max={99} value={ageEnfant} onChange={(e) => setAgeEnfant(e.target.value)} style={INPUT_S} />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div>
             <label style={LABEL_S} htmlFor="message">Message (optionnel)</label>
@@ -207,7 +242,7 @@ export function ReservationForm({ atelier, onClose }: Props) {
             {loading ? 'Redirection vers le paiement…' : `Payer ${prix} →`}
           </button>
           <p style={{ margin: 0, fontSize: 12, textAlign: 'center', opacity: 0.65 }}>
-            Paiement sécurisé par Stripe. Aucune donnée bancaire n&apos;est stockée chez nous.
+            Paiement sécurisé par Stripe · Carte bancaire ou paiement en 3× avec Klarna.
           </p>
         </form>
       </div>

@@ -450,8 +450,19 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
               <h1 style={S.sectionTitle}>Config journées créatives</h1>
             </div>
             <div style={{ ...S.card, ...(dirtyCfgJournees ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
-              <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr', marginBottom: 12 }}>
-                <FieldGroup label="Prix affiché">
+              <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr', marginBottom: 12 }}>
+                <FieldGroup label="Prix facturé (€)">
+                  <input
+                    style={INPUT_S}
+                    type="number"
+                    min={0}
+                    step="0.01"
+                    placeholder="90"
+                    value={cfgJournees.prix_centimes > 0 ? (cfgJournees.prix_centimes / 100).toString() : ''}
+                    onChange={e => updateCfgJournees('prix_centimes', e.target.value === '' ? 0 : Math.round(Number(e.target.value) * 100))}
+                  />
+                </FieldGroup>
+                <FieldGroup label="Prix affiché (texte)">
                   <input style={INPUT_S} value={cfgJournees.prix_texte ?? ''} onChange={e => updateCfgJournees('prix_texte', e.target.value)} placeholder="90€" />
                 </FieldGroup>
                 <FieldGroup label="Durée / horaire">
@@ -532,8 +543,19 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
               <h1 style={S.sectionTitle}>Config retraites créatives</h1>
             </div>
             <div style={{ ...S.card, ...(dirtyCfgRetraites ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
-              <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr', marginBottom: 12 }}>
-                <FieldGroup label="Prix affiché">
+              <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr', marginBottom: 12 }}>
+                <FieldGroup label="Prix facturé (€)">
+                  <input
+                    style={INPUT_S}
+                    type="number"
+                    min={0}
+                    step="0.01"
+                    placeholder="390"
+                    value={cfgRetraites.prix_centimes > 0 ? (cfgRetraites.prix_centimes / 100).toString() : ''}
+                    onChange={e => updateCfgRetraites('prix_centimes', e.target.value === '' ? 0 : Math.round(Number(e.target.value) * 100))}
+                  />
+                </FieldGroup>
+                <FieldGroup label="Prix affiché (texte)">
                   <input style={INPUT_S} value={cfgRetraites.prix_texte ?? ''} onChange={e => updateCfgRetraites('prix_texte', e.target.value)} placeholder="390€" />
                 </FieldGroup>
                 <FieldGroup label="Durée">

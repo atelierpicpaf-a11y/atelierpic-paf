@@ -59,7 +59,7 @@ export function HomeEnfantsGrid({ ateliers }: Props) {
         )}
       </div>
       {reserveAtelier && (
-        <ReservationForm atelier={reserveAtelier} onClose={() => setReserveAtelier(null)} />
+        <ReservationForm mode="atelier" atelier={reserveAtelier} onClose={() => setReserveAtelier(null)} />
       )}
     </>
   )

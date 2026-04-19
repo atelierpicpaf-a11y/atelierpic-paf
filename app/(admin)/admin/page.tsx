@@ -45,16 +45,30 @@ export default async function AdminPage() {
     db.from('reservations').select('*').order('created_at', { ascending: false }).limit(500),
   ])
 
-  // Joindre manuellement le titre/date de l'atelier à chaque résa (pour affichage admin)
+  // Joindre manuellement le titre/date/lieu à chaque résa (ateliers enfants OU sessions adultes)
   const ateliersById = new Map((enfants ?? []).map(a => [a.id, a]))
+  const sessionsById = new Map([...(journees ?? []), ...(retraites ?? [])].map(s => [s.id, s]))
   const reservations: ReservationWithAtelier[] = (reservationsRaw ?? []).map(r => {
-    const atelier = r.atelier_enfant_id ? ateliersById.get(r.atelier_enfant_id) : null
-    return {
-      ...r,
-      atelier_titre: atelier?.titre ?? null,
-      atelier_date: atelier?.date_atelier ?? null,
-      atelier_ville: atelier?.ville ?? null,
+    if (r.atelier_enfant_id) {
+      const atelier = ateliersById.get(r.atelier_enfant_id)
+      return {
+        ...r,
+        atelier_titre: atelier ? `👧 ${atelier.titre}` : null,
+        atelier_date: atelier?.date_atelier ?? null,
+        atelier_ville: atelier?.ville ?? null,
+      }
     }
+    if (r.session_id) {
+      const sess = sessionsById.get(r.session_id)
+      const emoji = sess?.type === 'retraite_creative' ? '🏡' : '🧵'
+      return {
+        ...r,
+        atelier_titre: sess ? `${emoji} ${sess.titre}` : null,
+        atelier_date: sess?.date_debut ?? null,
+        atelier_ville: sess?.lieu ?? sess?.ville ?? null,
+      }
+    }
+    return { ...r, atelier_titre: null, atelier_date: null, atelier_ville: null }
   })
 
   const cfgJournees = configs?.find(c => c.type === 'journees') ?? DEFAULT_CFG_JOURNEES
