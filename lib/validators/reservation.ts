@@ -8,7 +8,7 @@ export const reservationSchema = z.object({
   telephone: z.string().trim().max(20).optional().or(z.literal('')),
   prenomEnfant: z.string().trim().max(80).optional().or(z.literal('')),
   nomEnfant: z.string().trim().max(80).optional().or(z.literal('')),
-  ageEnfant: z.coerce.number().int().min(3).max(18).optional().or(z.literal('')),
+  ageEnfant: z.coerce.number().int().min(1).max(99).optional().or(z.literal('')),
   message: z.string().trim().max(1000).optional().or(z.literal('')),
 })
 

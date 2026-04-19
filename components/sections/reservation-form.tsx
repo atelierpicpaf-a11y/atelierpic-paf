@@ -187,7 +187,7 @@ export function ReservationForm({ atelier, onClose }: Props) {
               </div>
               <div>
                 <label style={LABEL_S} htmlFor="ageEnfant">Âge</label>
-                <input id="ageEnfant" type="number" min={3} max={18} value={ageEnfant} onChange={(e) => setAgeEnfant(e.target.value)} style={INPUT_S} />
+                <input id="ageEnfant" type="number" min={1} max={99} value={ageEnfant} onChange={(e) => setAgeEnfant(e.target.value)} style={INPUT_S} />
               </div>
             </div>
           </div>
