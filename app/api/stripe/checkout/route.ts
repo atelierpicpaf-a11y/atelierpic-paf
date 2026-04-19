@@ -74,6 +74,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ url: checkoutSession.url })
   } catch (err) {
     console.error('[stripe/checkout]', err)
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+    const message = err instanceof Error ? err.message : 'Erreur inconnue'
+    return NextResponse.json({ error: `Erreur serveur: ${message}` }, { status: 500 })
   }
 }
