@@ -4,14 +4,36 @@ import { Logo } from '@/components/brand/logo'
 import { SectionTitle } from '@/components/sections/section-title'
 import { AtelierCard } from '@/components/sections/atelier-card'
 import { HomeNewsletter } from '@/components/sections/home-newsletter'
+import { createClient } from '@/lib/supabase/server'
+import type { AtelierEnfantRow } from '@/types/supabase'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Ateliers couture créatifs en Vienne et Deux-Sèvres",
-  description: "Ateliers couture enfants dès 6 ans, journées créatives et retraites pour adultes. Deviens toi aussi une magicienne !",
+  title: "Ateliers créatifs en Vienne et Deux-Sèvres",
+  description: "Ateliers créatifs pour enfants dès 6 ans, journées créatives et retraites pour adultes. Deviens toi aussi une magicienne !",
 }
 
-export default function HomePage() {
+const BADGE_COLOR_MAP: Record<string, string> = {
+  menthe: 'mint', rose: 'rose', framboise: '', outline: 'outline',
+}
+
+const STATIC_ENFANTS = [
+  { id:'1', badge:'Dès 6 ans', badgeColor:'mint', title:'Couture du mercredi', desc:"Chaque semaine, ma petite troupe découvre une nouvelle pépite à coudre. Trousses, doudous, coussins…", meta:['14h — 16h','1h30 / séance','Trimestre'], price:'18€', city:'Poitiers', emoji:'🧵' },
+  { id:'2', badge:'Stage vacances', badgeColor:'rose', title:'Stages vacances scolaires', desc:"Trois après-midis d'aventure créative pendant les vacances. On coud, on joue, on invente.", meta:['3 séances','3x 2h','Goûter inclus'], price:'65€', city:'Vouillé', emoji:'✂️' },
+  { id:'3', badge:'Anniversaire', badgeColor:'', title:'Anniversaires créatifs', desc:"Une fête pas comme les autres. Les enfants repartent fiers avec leur première création cousue.", meta:['6 à 10 enfants','2h atelier','À domicile'], price:'dès 180€', city:'Vienne 86', emoji:'🎂' },
+]
+
+export default async function HomePage() {
+  const supabase = await createClient()
+  const { data: ateliers } = await supabase
+    .from('ateliers_enfants')
+    .select('*')
+    .eq('actif', true)
+    .order('ordre')
+    .limit(3)
+
+  const enfantsSource: AtelierEnfantRow[] = ateliers && ateliers.length > 0 ? ateliers : []
+
   return (
     <div>
       {/* HERO */}
@@ -26,7 +48,7 @@ export default function HomePage() {
             <span className="slogan" style={{ fontSize:'clamp(36px,5.5vw,62px)' }}>Deviens toi aussi une magicienne&nbsp;!</span>
           </div>
           <p style={{ fontSize:'clamp(17px,1.4vw,20px)', maxWidth:620, margin:'0 auto 36px', lineHeight:1.55 }}>
-            Ateliers couture pour enfants dès 6 ans, journées créatives et retraites pour adultes, partout en Vienne et en Deux-Sèvres.
+            Ateliers créatifs pour enfants dès 6 ans, journées créatives et retraites pour adultes, partout en Vienne et en Deux-Sèvres.
           </p>
           <div style={{ display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
             <a href="/ateliers-enfants" className="cta-pill">Voir les ateliers</a>
@@ -47,14 +69,46 @@ export default function HomePage() {
       <section style={{ padding:'100px 0 80px', background:'var(--creme)' }}>
         <div className="container">
           <SectionTitle kicker="Pour les petits créateurs" align="center">Ateliers enfants</SectionTitle>
-          <p style={{ textAlign:'center', maxWidth:640, margin:'22px auto 50px', fontSize:17, opacity:.8 }}>Dès 6 ans, vos petits apprennent à dompter le fil et l&apos;aiguille. Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault.</p>
+          <p style={{ textAlign:'center', maxWidth:640, margin:'22px auto 50px', fontSize:17, opacity:.8 }}>
+            Dès 6 ans, vos petits apprennent à créer de leurs mains. Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault.
+          </p>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:28 }}>
-            <AtelierCard badge="Dès 6 ans" badgeColor="mint" title="Couture du mercredi" desc="Chaque semaine, ma petite troupe découvre une nouvelle pépite à coudre. Trousses, doudous, coussins…" meta={['14h — 16h','1h30 / séance','Trimestre']} price="18€" city="Poitiers" emoji="🧵" />
-            <AtelierCard badge="Stage vacances" badgeColor="rose" title="Stages vacances scolaires" desc="Trois après-midis d'aventure créative pendant les vacances. On coud, on joue, on invente." meta={['3 séances','3x 2h','Goûter inclus']} price="65€" city="Vouillé" emoji="✂️" />
-            <AtelierCard badge="Anniversaire" title="Anniversaires créatifs" desc="Une fête pas comme les autres. Les enfants repartent fiers avec leur première création cousue." meta={['6 à 10 enfants','2h atelier','À domicile']} price="dès 180€" city="Vienne 86" emoji="🎂" />
+            {enfantsSource.length > 0
+              ? enfantsSource.map(a => (
+                  <AtelierCard
+                    key={a.id}
+                    badge={a.badge_texte ?? undefined}
+                    badgeColor={BADGE_COLOR_MAP[a.badge_couleur] ?? ''}
+                    title={a.titre}
+                    desc={a.description ?? ''}
+                    meta={a.infos ? a.infos.split('|').map(s => s.trim()) : []}
+                    price={a.prix_texte ?? undefined}
+                    city={a.ville || undefined}
+                    emoji={a.emoji}
+                    places={a.places_dispo}
+                    placesMax={a.places_max}
+                    actionLabel="Je m'inscris"
+                  />
+                ))
+              : STATIC_ENFANTS.map(a => (
+                  <AtelierCard
+                    key={a.id}
+                    badge={a.badge}
+                    badgeColor={a.badgeColor}
+                    title={a.title}
+                    desc={a.desc}
+                    meta={a.meta}
+                    price={a.price}
+                    city={a.city}
+                    emoji={a.emoji}
+                    actionLabel="Je m'inscris"
+                  />
+                ))
+            }
           </div>
-          <div style={{ textAlign:'center', marginTop:48 }}>
-            <a href="/ateliers-enfants" className="cta-ghost">Voir tous les ateliers enfants →</a>
+          <div style={{ textAlign:'center', marginTop:48, display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap' }}>
+            <a href="/ateliers-enfants" className="cta-pill">Voir tous les ateliers enfants</a>
+            <a href="/contact" className="cta-ghost">Inscrire mon enfant</a>
           </div>
         </div>
       </section>
@@ -66,16 +120,23 @@ export default function HomePage() {
           <SectionTitle kicker="Pour les grandes magiciennes" align="center">Ateliers adultes</SectionTitle>
           <p style={{ textAlign:'center', maxWidth:620, margin:'22px auto 50px', fontSize:17, opacity:.8 }}>Deux façons de vous offrir une vraie parenthèse créative, loin du quotidien.</p>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(340px, 1fr))', gap:32 }}>
+
+            {/* JOURNÉES CRÉATIVES */}
             <div className="card" style={{ padding:0, overflow:'hidden' }}>
               <div style={{ position:'relative', padding:'38px 36px', background:'var(--framboise)', color:'var(--creme)', minHeight:220 }}>
                 <div style={{ position:'absolute', right:-10, top:-10, transform:'rotate(15deg)' }}><Fee size={130} /></div>
                 <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42' }}>Journée</span>
                 <h3 className="h-fredoka" style={{ fontSize:36, margin:'14px 0 12px', color:'var(--creme)', maxWidth:'70%', lineHeight:1.05 }}>Journées créatives</h3>
-                <p style={{ margin:0, fontSize:15, maxWidth:'70%', opacity:.95 }}>Une journée entière pour coudre un projet qui vous tient à cœur.</p>
+                <p style={{ margin:0, fontSize:15, maxWidth:'70%', opacity:.95 }}>Une journée entière pour se reconnecter à sa créativité.</p>
               </div>
               <div style={{ padding:'28px 32px', display:'flex', flexDirection:'column', gap:16 }}>
                 <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:10 }}>
-                  {['Fontaine-le-Comte (86)','9h30 → 17h, repas partagé inclus','6 participantes maximum','Machines & mercerie fournies'].map((it,i) => (
+                  {[
+                    'Fontaine-le-Comte (86)',
+                    '10h → 17h, repas partagé inclus',
+                    'Matériel fourni',
+                    'Machines & mercerie fournies',
+                  ].map((it,i) => (
                     <li key={i} style={{ display:'flex', gap:10, fontSize:15 }}><span style={{ color:'var(--framboise)' }}>✦</span> {it}</li>
                   ))}
                 </ul>
@@ -85,15 +146,22 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+
+            {/* RETRAITES CRÉATIVES */}
             <div className="card" style={{ padding:0, overflow:'hidden' }}>
               <div style={{ position:'relative', padding:'38px 36px', background:'linear-gradient(135deg, var(--menthe), #7fb8ae)', color:'#1a4a42', minHeight:220 }}>
                 <span className="badge" style={{ background:'var(--creme)', color:'var(--framboise)' }}>Weekend</span>
                 <h3 className="h-fredoka" style={{ fontSize:36, margin:'14px 0 12px', color:'#0f3b33', maxWidth:'70%', lineHeight:1.05 }}>Retraites créatives</h3>
-                <p style={{ margin:0, fontSize:15, maxWidth:'70%', opacity:.85 }}>Un weekend pour vous ressourcer dans un lieu d&apos;exception.</p>
+                <p style={{ margin:0, fontSize:15, maxWidth:'70%', opacity:.85 }}>Un weekend pour vous ressourcer.</p>
               </div>
               <div style={{ padding:'28px 32px', display:'flex', flexDirection:'column', gap:16 }}>
                 <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:10 }}>
-                  {['Gîte 4 chambres / 8 lits, Deux-Sèvres','Vendredi soir → Dimanche 16h','Repas bio, yoga doux, balades','Projet couture guidé inclus'].map((it,i) => (
+                  {[
+                    'Gîte 4 chambres / 8 lits, Fontaine-le-Comte (86)',
+                    'Vendredi soir → Dimanche 16h',
+                    'Repas, linge de lit, serviette inclus',
+                    'Un programme riche que je préfère te laisser découvrir sur place',
+                  ].map((it,i) => (
                     <li key={i} style={{ display:'flex', gap:10, fontSize:15 }}><span style={{ color:'var(--framboise)' }}>✦</span> {it}</li>
                   ))}
                 </ul>
@@ -103,6 +171,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -120,7 +189,11 @@ export default function HomePage() {
               </div>
             </div>
             <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
-              {[{e:'🏡',t:'ALSH & Centres de loisirs',d:"Interventions sur vos thématiques, groupes d'enfants 6-12 ans."},{e:'📚',t:'Médiathèques',d:'Ateliers ponctuels ou cycles, autour du livre et du tissu.'},{e:'🌟',t:"Associations & écoles",d:"Projets sur-mesure, fêtes d'école, kermesses créatives."}].map((it,i) => (
+              {[
+                {e:'🏡',t:'ALSH & Centres de loisirs',d:"Interventions sur vos thématiques, groupes d'enfants 6-12 ans."},
+                {e:'📚',t:'Médiathèques',d:'Ateliers ponctuels ou cycles, autour du livre et du tissu.'},
+                {e:'🌟',t:'Associations & écoles',d:"Projets sur-mesure, fêtes d'école, kermesses créatives."},
+              ].map((it,i) => (
                 <div key={i} className="card" style={{ padding:'22px 24px', display:'flex', gap:18, alignItems:'center' }}>
                   <div style={{ fontSize:36, width:60, height:60, borderRadius:20, background:'var(--rose)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>{it.e}</div>
                   <div><h4 className="h-fredoka" style={{ margin:0, fontSize:19, color:'var(--framboise)' }}>{it.t}</h4><p style={{ margin:'4px 0 0', fontSize:14, opacity:.8 }}>{it.d}</p></div>
