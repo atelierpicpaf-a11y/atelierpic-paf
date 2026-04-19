@@ -1,0 +1,205 @@
+import { SectionTitle } from '@/components/sections/section-title'
+import { DEFAULT_DATES_RETRAITES, RETRAITES_CONFIG } from '@/lib/data/defaults'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Retraites créatives couture — Weekend ressourcement',
+  description: 'Un weekend de ressourcement couture dans un gîte en Deux-Sèvres. Repas bio, yoga, couture guidée. 390€ tout compris.',
+}
+
+const INCLUS_RETRAITE = [
+  { e:'🛏️', t:'Hébergement', d:'Chambre partagée dans un gîte 4 étoiles entouré de nature.' },
+  { e:'🍽️', t:'Repas bio', d:'Tous les repas du vendredi soir au dimanche midi, cuisinés maison.' },
+  { e:'🧵', t:'Couture guidée', d:'Un projet couture adapté à tous les niveaux, matériel fourni.' },
+  { e:'🌿', t:'Bien-être', d:'Yoga doux le matin, balade en forêt, temps libre pour se ressourcer.' },
+]
+
+const PROGRAMME_WEEKEND = [
+  {
+    jour: 'Vendredi soir',
+    items: [
+      '18h — Arrivée et installation',
+      '19h30 — Dîner convivial',
+      '21h — Présentation du projet couture du weekend',
+    ]
+  },
+  {
+    jour: 'Samedi',
+    items: [
+      '8h — Yoga doux & petit déjeuner',
+      '9h30 → 12h30 — Atelier couture matin',
+      '12h30 — Déjeuner partagé',
+      '14h → 17h30 — Atelier couture après-midi',
+      '18h — Balade & temps libre',
+      '19h30 — Dîner & soirée jeux',
+    ]
+  },
+  {
+    jour: 'Dimanche',
+    items: [
+      '8h — Yoga & petit déjeuner',
+      '10h → 12h — Finitions & photos',
+      '12h30 — Déjeuner final',
+      '14h → 16h — Départs progressifs',
+    ]
+  },
+]
+
+export default function RetraitesCreativesPage() {
+  return (
+    <div className="route-enter">
+      {/* HERO POSÉ */}
+      <section style={{ padding:'100px 0 80px', background:'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth:760, textAlign:'center' }}>
+          <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42', marginBottom:24 }}>Weekend ressourcement</span>
+          <h1 className="h-fredoka" style={{ fontSize:'clamp(44px,6vw,76px)', color:'var(--framboise)', margin:'16px 0 28px', lineHeight:1.05 }}>Retraites créatives</h1>
+          <p style={{ fontSize:'clamp(17px,1.4vw,20px)', maxWidth:600, margin:'0 auto 16px', lineHeight:1.65, opacity:.85 }}>
+            Trois jours pour se retrouver entre femmes qui aiment coudre. Un gîte en pleine nature dans les Deux-Sèvres, des repas bio, du yoga et un beau projet couture à ramener chez soi.
+          </p>
+          <p className="h-caveat" style={{ fontSize:28, color:'var(--framboise)', margin:'0 0 36px' }}>~ Vendredi soir → Dimanche 16h ~</p>
+          <div style={{ display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
+            <a href="#retraites" className="cta-pill">Voir les dates</a>
+            <a href="/contact" className="cta-ghost">Me contacter</a>
+          </div>
+        </div>
+      </section>
+
+      <div className="stripes-band" />
+
+      {/* L'ESPRIT */}
+      <section style={{ padding:'80px 0', background:'var(--creme)' }}>
+        <div className="container" style={{ maxWidth:740, textAlign:'center' }}>
+          <SectionTitle kicker="Pourquoi une retraite ?" align="center">L&apos;esprit Pic &amp; Paf</SectionTitle>
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:28 }}>
+            Parce qu&apos;on a toutes besoin d&apos;une vraie pause. Pas juste un samedi : un weekend entier où on pose ses téléphones, on cuisine ensemble, on rit, on coud et on repart avec une création dont on est fières — et surtout, avec des souvenirs plein le cœur.
+          </p>
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
+            Les retraites sont limitées à <strong>8 participantes</strong> pour garder une atmosphère intime et permettre un vrai accompagnement personnalisé.
+          </p>
+          <div style={{ marginTop:40, display:'flex', gap:30, justifyContent:'center', flexWrap:'wrap' }}>
+            {[{n:'8',l:'participantes max'},{n:`${RETRAITES_CONFIG.prix}€`,l:'tout compris'},{n:'3 jours',l:'de ressourcement'}].map((s,i) => (
+              <div key={i} style={{ textAlign:'center', padding:'20px 28px', background:'var(--creme-pale)', borderRadius:24, border:'2px solid rgba(200,54,92,.2)' }}>
+                <div className="h-fredoka" style={{ fontSize:34, color:'var(--framboise)', lineHeight:1 }}>{s.n}</div>
+                <div style={{ fontSize:13, opacity:.7, marginTop:6 }}>{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LE LIEU */}
+      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+        <div className="container">
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))', gap:50, alignItems:'center' }}>
+            <div>
+              <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ Le cadre ~</span>
+              <h2 className="h-fredoka" style={{ fontSize:'clamp(32px,4vw,50px)', color:'var(--framboise)', margin:'10px 0 20px', lineHeight:1.1 }}>Un gîte au cœur des Deux-Sèvres</h2>
+              <p style={{ fontSize:17, opacity:.85, lineHeight:1.65, marginBottom:20 }}>
+                Niché dans la campagne des Deux-Sèvres, notre gîte dispose de 4 chambres pour 8 personnes, d&apos;une grande cuisine équipée, d&apos;un salon avec cheminée et d&apos;un jardin avec terrasse.
+              </p>
+              <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:12 }}>
+                {['4 chambres / 8 lits','Grande salle lumineuse pour coudre','Cuisine équipée & jardin','Forêt & sentiers à 5 min à pied'].map((it,i) => (
+                  <li key={i} style={{ display:'flex', gap:12, fontSize:15, alignItems:'center' }}><span style={{ color:'var(--framboise)', fontSize:18 }}>✦</span> {it}</li>
+                ))}
+              </ul>
+            </div>
+            <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
+              <div className="ph" style={{ height:220, borderRadius:24 }}><span>Photo du gîte à venir</span></div>
+              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
+                <div className="ph" style={{ height:130, borderRadius:20 }}><span>Vue jardin</span></div>
+                <div className="ph" style={{ height:130, borderRadius:20 }}><span>Salle couture</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROGRAMME WEEKEND */}
+      <section style={{ padding:'80px 0', background:'var(--creme)' }}>
+        <div className="container">
+          <SectionTitle kicker="Vendredi → Dimanche" align="center">Programme du weekend</SectionTitle>
+          <div style={{ marginTop:50, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(260px, 1fr))', gap:28 }}>
+            {PROGRAMME_WEEKEND.map((j, i) => (
+              <div key={i} className="card" style={{ padding:'28px 24px' }}>
+                <h3 className="h-fredoka" style={{ fontSize:22, color:'var(--framboise)', margin:'0 0 20px', borderBottom:'2px dashed rgba(200,54,92,.25)', paddingBottom:12 }}>{j.jour}</h3>
+                <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:12 }}>
+                  {j.items.map((item, k) => (
+                    <li key={k} style={{ display:'flex', gap:10, fontSize:14, lineHeight:1.5, alignItems:'flex-start' }}>
+                      <span style={{ color:'var(--framboise)', flexShrink:0, marginTop:2 }}>›</span>
+                      <span style={{ opacity:.85 }}>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CE QUI EST INCLUS */}
+      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+        <div className="container">
+          <SectionTitle kicker="Tout est prévu" align="center">Ce qui est inclus</SectionTitle>
+          <div style={{ marginTop:50, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(240px, 1fr))', gap:24 }}>
+            {INCLUS_RETRAITE.map((it, i) => (
+              <div key={i} className="card" style={{ padding:'28px 24px' }}>
+                <div style={{ fontSize:40, marginBottom:16 }}>{it.e}</div>
+                <h3 className="h-fredoka" style={{ fontSize:20, color:'var(--framboise)', margin:'0 0 10px' }}>{it.t}</h3>
+                <p style={{ margin:0, fontSize:14, opacity:.8, lineHeight:1.6 }}>{it.d}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign:'center', marginTop:40 }}>
+            <div style={{ display:'inline-block', padding:'24px 40px', background:'var(--framboise)', borderRadius:28, color:'var(--creme)' }}>
+              <div className="h-fredoka" style={{ fontSize:56, lineHeight:1 }}>{RETRAITES_CONFIG.prix}€</div>
+              <div style={{ fontSize:15, opacity:.9, marginTop:6 }}>par personne · {RETRAITES_CONFIG.duree}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROCHAINES RETRAITES */}
+      <section id="retraites" style={{ padding:'80px 0', background:'var(--creme)' }}>
+        <div className="container">
+          <SectionTitle kicker="Rejoignez-nous" align="center">Prochaines retraites</SectionTitle>
+          <div style={{ marginTop:50, display:'flex', flexDirection:'column', gap:18, maxWidth:680, margin:'50px auto 0' }}>
+            {DEFAULT_DATES_RETRAITES.map((r) => (
+              <div key={r.id} className="card" style={{ padding:'24px 28px', display:'flex', alignItems:'center', gap:24, flexWrap:'wrap', opacity: r.complet ? .7 : 1 }}>
+                <div style={{ flex:1, minWidth:200 }}>
+                  <div className="h-fredoka" style={{ fontSize:22, color:'var(--framboise)' }}>{r.theme}</div>
+                  <div style={{ fontSize:15, opacity:.7, marginTop:4 }}>{r.dates}</div>
+                </div>
+                <div style={{ display:'flex', gap:14, alignItems:'center' }}>
+                  <span className={`badge ${r.complet ? '' : 'mint'}`} style={r.complet ? { background:'var(--rose)', color:'#7a2d2d' } : { background:'var(--menthe)', color:'#1a4a42' }}>
+                    {r.statut}
+                  </span>
+                  {!r.complet && <a href="/contact" className="cta-pill" style={{ padding:'10px 20px', fontSize:14 }}>Je m&apos;inscris</a>}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign:'center', marginTop:36 }}>
+            <a href="/contact" className="cta-ghost">Être prévenue des prochaines dates →</a>
+          </div>
+        </div>
+      </section>
+
+      {/* TEMOIGNAGE FINAL */}
+      <section style={{ padding:'80px 0', background:'var(--framboise)', color:'var(--creme)' }}>
+        <div className="container" style={{ maxWidth:680, textAlign:'center' }}>
+          <div className="h-caveat" style={{ fontSize:28, color:'var(--creme)', opacity:.9, marginBottom:20 }}>~ Ce qu&apos;elles en disent ~</div>
+          <blockquote style={{ margin:0 }}>
+            <p className="h-caveat" style={{ fontSize:28, color:'var(--creme)', lineHeight:1.5, marginBottom:24 }}>
+              « Je pensais venir coudre. Je suis repartie avec une robe, deux nouvelles amies et une envie de recommencer dès le lundi. »
+            </p>
+            <footer style={{ fontSize:15, opacity:.85 }}>— Sophie, retraite de mai 2025</footer>
+          </blockquote>
+          <div style={{ marginTop:40, display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
+            <a href="#retraites" className="cta-pill" style={{ boxShadow:'0 0 0 4px var(--framboise-dark), var(--shadow-framboise)' }}>Voir les dates</a>
+            <a href="/contact" className="cta-ghost" style={{ background:'transparent', color:'var(--creme)', borderColor:'var(--creme)' }}>Me contacter</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
