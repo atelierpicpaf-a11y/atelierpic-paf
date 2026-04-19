@@ -23,7 +23,7 @@
   --shadow-framboise: 0 10px 30px -12px rgba(200,54,92,.35);
   --shadow-card: 0 8px 24px -10px rgba(200,54,92,.25);
   /* ── Brand fonts (loaded via Google Fonts <link>) ── */
-  --font-fredoka: 'Fredoka One', cursive;
+  --font-fredoka: 'Fredoka', cursive;
   --font-pacifico: 'Pacifico', cursive;
   --font-caveat: 'Caveat', cursive;
   --font-body: 'Inter', system-ui, sans-serif;
@@ -132,6 +132,7 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-link {
   font-family: var(--font-fredoka);
+  font-weight: 600;
   font-size: 15px; color: var(--ink);
   padding: 10px 14px; border-radius: 999px;
   transition: all .15s ease; background: none; border: none; cursor: pointer;

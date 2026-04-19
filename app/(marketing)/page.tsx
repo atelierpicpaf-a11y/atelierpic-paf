@@ -21,7 +21,7 @@ export default function HomePage() {
         <div className="container" style={{ position:'relative', padding:'80px 28px 100px', textAlign:'center' }}>
           <div style={{ position:'absolute', left:40, top:90 }} className="hidden-mobile"><Bobines size={140} /></div>
           <div style={{ position:'absolute', right:30, top:120 }} className="hidden-mobile"><Fee size={200} /></div>
-          <div style={{ marginBottom:28 }}><Logo size={88} /></div>
+          <div style={{ marginBottom:28 }}><Logo size={130} /></div>
           <div style={{ marginBottom:24 }}>
             <span className="slogan" style={{ fontSize:'clamp(36px,5.5vw,62px)' }}>Deviens toi aussi une magicienne&nbsp;!</span>
           </div>
@@ -35,7 +35,7 @@ export default function HomePage() {
           <div style={{ marginTop:56, display:'flex', gap:40, justifyContent:'center', flexWrap:'wrap' }}>
             {[{n:'+250',l:'petits créateurs'},{n:'4',l:"villes d'atelier"},{n:'6 ans',l:'âge minimum'},{n:'100%',l:'fait main & magique'}].map((s,i) => (
               <div key={i} style={{ textAlign:'center' }}>
-                <div className="h-fredoka" style={{ fontSize:30, color:'var(--framboise)', lineHeight:1 }}>{s.n}</div>
+                <div className="h-fredoka" style={{ fontSize:'clamp(42px,5vw,54px)', fontWeight:700, color:'var(--framboise)', lineHeight:1 }}>{s.n}</div>
                 <div style={{ fontSize:13, opacity:.7, marginTop:4 }}>{s.l}</div>
               </div>
             ))}
