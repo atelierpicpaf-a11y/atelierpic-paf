@@ -13,7 +13,6 @@ const BADGE_COLOR_MAP: Record<string, string> = {
 
 const FILTERS = [
   { id: 'tous', label: 'Tous les ateliers' },
-  { id: 'hebdo', label: 'Cours hebdo' },
   { id: 'stage', label: 'Stages vacances' },
   { id: 'evenement', label: 'Événementiel' },
 ]

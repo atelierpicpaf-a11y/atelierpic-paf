@@ -15,7 +15,7 @@ const FAQS = [
   { q:'À partir de quel âge ?', r:"6 ans, quand les petites mains savent tenir une aiguille. Jusqu'à 12 ans pour les cours réguliers." },
   { q:'Faut-il amener du matériel ?', r:'Non, je fournis tout : machines, tissus, mercerie, fils. Les enfants viennent les mains dans les poches.' },
   { q:"Et si mon enfant n'a jamais cousu ?", r:'Parfait ! La plupart découvrent tout. On commence doucement, on prend le temps.' },
-  { q:"Comment on s'inscrit ?", r:'Par mail, téléphone, ou en remplissant le formulaire. Je confirme sous 24h.' },
+  { q:"Comment on s'inscrit ?", r:'Par mail, téléphone, ou en payant directement en ligne (paiement sécurisé Stripe).' },
 ]
 
 export default async function AteliersEnfantsPage() {
@@ -35,7 +35,7 @@ export default async function AteliersEnfantsPage() {
             <h1 className="sticker-title" style={{ fontSize:'clamp(44px,6vw,76px)', textAlign:'left', margin:'8px 0 22px' }}>Ateliers<br/>enfants</h1>
             <p style={{ fontSize:18, maxWidth:520, lineHeight:1.6, opacity:.85 }}>Cours hebdomadaires, stages de vacances, anniversaires, interventions écoles… Mes petits créateurs repartent toujours avec une pépite cousue de leurs mains.</p>
             <div style={{ marginTop:28, display:'flex', gap:14, flexWrap:'wrap' }}>
-              <a href="/contact" className="cta-pill">Inscription trimestre</a>
+              <a href="/contact" className="cta-pill">Inscription</a>
               <a href="/contact" className="cta-ghost">Voir le calendrier</a>
             </div>
           </div>
