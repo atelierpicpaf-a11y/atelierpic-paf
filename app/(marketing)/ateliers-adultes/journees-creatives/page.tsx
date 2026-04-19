@@ -18,9 +18,9 @@ function formatJourneeDate(iso: string) {
 }
 
 const PROGRAMME = [
-  { n:'1', titre:"Accueil & café", desc:"On se retrouve à 9h30 autour d'un café et de viennoiseries. Présentation du projet du jour.", heure:'9h30' },
-  { n:'2', titre:'Matin couture', desc:"Découpe du tissu, assemblage, premières coutures. Chacune avance à son rythme avec mon accompagnement.", heure:'10h – 12h30' },
-  { n:'3', titre:"Repas partagé", desc:"Pause déjeuner conviviale. Chacune apporte quelque chose, on mange ensemble dans la bonne humeur.", heure:'12h30 – 14h' },
+  { n:'1', titre:"Accueil & café", desc:"On se retrouve à 10h autour d'un café et de viennoiseries. Présentation du projet du jour.", heure:'10h' },
+  { n:'2', titre:'Matin couture', desc:"Création. Chacune avance à son rythme avec mon accompagnement.", heure:'10h30 – 12h30' },
+  { n:'3', titre:"Repas partagé", desc:"Pause déjeuner conviviale. Je m'occupe du repas vous n'avez rien n'a rapporter, on mange ensemble dans la bonne humeur.", heure:'12h30 – 14h' },
   { n:'4', titre:"Après-midi & finitions", desc:"On reprend, on finit les détails, on prend les dernières photos fières de sa création !", heure:'14h – 17h' },
 ]
 
@@ -65,7 +65,7 @@ export default async function JourneesCreativesPage() {
             <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42', marginBottom:20 }}>Journée créative</span>
             <h1 className="sticker-title" style={{ fontSize:'clamp(44px,6vw,72px)', textAlign:'left', margin:'12px 0 22px' }}>Journées<br/>créatives</h1>
             <p style={{ fontSize:18, maxWidth:520, lineHeight:1.6, opacity:.85, marginBottom:28 }}>
-              Une journée entière pour vous offrir une parenthèse cousue. Projets guidés ou carte blanche, dans une ambiance chaleureuse à {lieu}.
+              Une journée entière pour vous offrir une parenthèse. Projets guidés ou carte blanche, dans une ambiance chaleureuse.
             </p>
             <div style={{ display:'flex', gap:14, flexWrap:'wrap', marginBottom:36 }}>
               <a href="#dates" className="cta-pill">Voir les prochaines dates</a>
@@ -158,7 +158,7 @@ export default async function JourneesCreativesPage() {
               <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ L&apos;atelier ~</span>
               <h2 className="sticker-title" style={{ fontSize:'clamp(32px,4.5vw,52px)', margin:'10px 0 20px', textAlign:'left' }}>Fontaine-le-Comte</h2>
               <p style={{ fontSize:17, opacity:.85, lineHeight:1.65, marginBottom:20 }}>
-                Un atelier chaleureux à {lieu}, à 15 minutes au sud de Poitiers. Facile d&apos;accès, parking, ambiance cosy garantie.
+                Un atelier chaleureux à Fontaine-le-Comte, à 5 minutes au sud de Poitiers. Facile d&apos;accès, parking, ambiance cosy garantie.
               </p>
               <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:10 }}>
                 {['15 min au sud de Poitiers','Parking gratuit sur place','Accès PMR','Atelier lumineux et bien équipé'].map((it,i) => (
