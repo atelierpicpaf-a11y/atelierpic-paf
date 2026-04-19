@@ -153,31 +153,31 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
 
   // ── Shared styles ────────────────────────────────────────
   const S = {
-    page: { minHeight: '100vh', background: 'var(--creme-pale)', fontFamily: "var(--ff-inter, system-ui)" } as React.CSSProperties,
+    page: { minHeight: '100vh', background: 'var(--creme-pale)', fontFamily: "var(--font-body)" } as React.CSSProperties,
     header: { background: 'var(--framboise)', color: 'var(--creme)', padding: '0 28px', height: 64, display: 'flex', alignItems: 'center', gap: 16 } as React.CSSProperties,
     tabBar: { background: '#fff', borderBottom: '2px solid rgba(200,54,92,.12)', padding: '0 28px', display: 'flex', gap: 6, overflowX: 'auto' as const },
     tabBtn: (active: boolean): React.CSSProperties => ({
       padding: '14px 18px', borderRadius: '12px 12px 0 0', border: 'none', cursor: 'pointer',
-      fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 15, letterSpacing: '.3px',
+      fontFamily: "var(--font-fredoka)", fontSize: 15, letterSpacing: '.3px',
       background: active ? 'var(--framboise)' : 'transparent',
       color: active ? '#fff' : 'var(--ink)',
       transition: 'all .15s', whiteSpace: 'nowrap' as const,
     }),
     content: { padding: '32px 28px', maxWidth: 900, margin: '0 auto' } as React.CSSProperties,
     sectionHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 } as React.CSSProperties,
-    sectionTitle: { fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 26, color: 'var(--ink)', margin: 0 } as React.CSSProperties,
+    sectionTitle: { fontFamily: "var(--font-fredoka)", fontSize: 26, color: 'var(--ink)', margin: 0 } as React.CSSProperties,
     card: { background: '#fff', border: '2px solid rgba(200,54,92,.15)', borderRadius: 20, padding: '20px 22px', marginBottom: 16 } as React.CSSProperties,
     cardTitle: { display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 } as React.CSSProperties,
     emojiBox: { width: 44, height: 44, background: 'rgba(200,54,92,.08)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 } as React.CSSProperties,
-    titleInput: { flex: 1, fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 20, color: 'var(--framboise)', background: 'none', border: '2px solid transparent', borderRadius: 10, padding: '6px 10px', outline: 'none', width: '100%' } as React.CSSProperties,
-    deleteBtn: { padding: '7px 16px', borderRadius: 999, border: '1.5px solid var(--framboise)', background: 'none', color: 'var(--framboise)', fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 14, cursor: 'pointer', whiteSpace: 'nowrap' as const } as React.CSSProperties,
+    titleInput: { flex: 1, fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)', background: 'none', border: '2px solid transparent', borderRadius: 10, padding: '6px 10px', outline: 'none', width: '100%' } as React.CSSProperties,
+    deleteBtn: { padding: '7px 16px', borderRadius: 999, border: '1.5px solid var(--framboise)', background: 'none', color: 'var(--framboise)', fontFamily: "var(--font-fredoka)", fontSize: 14, cursor: 'pointer', whiteSpace: 'nowrap' as const } as React.CSSProperties,
     row: { display: 'grid', gap: 12, marginBottom: 12 } as React.CSSProperties,
-    label: { fontSize: 12, fontWeight: 600, color: 'var(--framboise)', marginBottom: 4, display: 'block', fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", letterSpacing: '.3px' } as React.CSSProperties,
+    label: { fontSize: 12, fontWeight: 600, color: 'var(--framboise)', marginBottom: 4, display: 'block', fontFamily: "var(--font-fredoka)", letterSpacing: '.3px' } as React.CSSProperties,
     input: { width: '100%', padding: '9px 12px', border: '1.5px solid rgba(200,54,92,.25)', borderRadius: 10, fontSize: 14, outline: 'none', fontFamily: 'inherit', background: '#fafafa' } as React.CSSProperties,
     select: { width: '100%', padding: '9px 12px', border: '1.5px solid rgba(200,54,92,.25)', borderRadius: 10, fontSize: 14, outline: 'none', fontFamily: 'inherit', background: '#fafafa' } as React.CSSProperties,
     textarea: { width: '100%', padding: '9px 12px', border: '1.5px solid rgba(200,54,92,.25)', borderRadius: 10, fontSize: 14, outline: 'none', fontFamily: 'inherit', background: '#fafafa', resize: 'vertical' as const, minHeight: 72 } as React.CSSProperties,
     bottomBar: { position: 'fixed' as const, bottom: 0, left: 0, right: 0, background: 'var(--creme)', borderTop: '2px solid rgba(200,54,92,.15)', padding: '10px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 30 } as React.CSSProperties,
-    addBtn: { fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 15, color: '#fff', background: 'var(--framboise)', padding: '10px 22px', borderRadius: 999, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 } as React.CSSProperties,
+    addBtn: { fontFamily: "var(--font-fredoka)", fontSize: 15, color: '#fff', background: 'var(--framboise)', padding: '10px 22px', borderRadius: 999, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 } as React.CSSProperties,
   }
 
   const FieldGroup = ({ label, children, style }: { label: string; children: React.ReactNode; style?: React.CSSProperties }) => (
@@ -208,15 +208,15 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
     <div style={S.page}>
       {/* ── Header ── */}
       <header style={S.header}>
-        <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(255,255,255,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 20, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
+        <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(255,255,255,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "var(--font-fredoka)", fontSize: 20, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
           L
         </div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 20, lineHeight: 1.2 }}>Espace Ludivine</div>
+          <div style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, lineHeight: 1.2 }}>Espace Ludivine</div>
           <div style={{ fontSize: 13, opacity: .75 }}>Gérer tes ateliers, dates et disponibilités</div>
         </div>
         <form action={adminLogout}>
-          <button type="submit" style={{ padding: '8px 18px', borderRadius: 999, border: '1.5px solid rgba(255,255,255,.5)', background: 'none', color: '#fff', fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 14, cursor: 'pointer' }}>
+          <button type="submit" style={{ padding: '8px 18px', borderRadius: 999, border: '1.5px solid rgba(255,255,255,.5)', background: 'none', color: '#fff', fontFamily: "var(--font-fredoka)", fontSize: 14, cursor: 'pointer' }}>
             Déconnexion
           </button>
         </form>
@@ -249,7 +249,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             {enfants.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 0', opacity: .5 }}>
                 <div style={{ fontSize: 48, marginBottom: 12 }}>🧵</div>
-                <p style={{ fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 20, color: 'var(--framboise)' }}>
+                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>
                   Aucun atelier pour le moment
                 </p>
               </div>
@@ -321,7 +321,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             {journees.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 0', opacity: .5 }}>
                 <div style={{ fontSize: 48, marginBottom: 12 }}>📅</div>
-                <p style={{ fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 20, color: 'var(--framboise)' }}>Aucune date programmée</p>
+                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>Aucune date programmée</p>
               </div>
             )}
             {journees.map(j => (
@@ -400,7 +400,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
             {retraites.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 0', opacity: .5 }}>
                 <div style={{ fontSize: 48, marginBottom: 12 }}>🏡</div>
-                <p style={{ fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 20, color: 'var(--framboise)' }}>Aucune retraite programmée</p>
+                <p style={{ fontFamily: "var(--font-fredoka)", fontSize: 20, color: 'var(--framboise)' }}>Aucune retraite programmée</p>
               </div>
             )}
             {retraites.map(r => (
@@ -482,7 +482,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
         </span>
         <button
           onClick={() => router.refresh()}
-          style={{ padding: '8px 18px', borderRadius: 999, border: '1.5px dashed var(--framboise)', background: 'none', color: 'var(--framboise)', fontFamily: "var(--ff-fredoka, 'Fredoka One', cursive)", fontSize: 14, cursor: 'pointer' }}
+          style={{ padding: '8px 18px', borderRadius: 999, border: '1.5px dashed var(--framboise)', background: 'none', color: 'var(--framboise)', fontFamily: "var(--font-fredoka)", fontSize: 14, cursor: 'pointer' }}
         >
           Actualiser
         </button>

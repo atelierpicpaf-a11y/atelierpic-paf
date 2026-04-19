@@ -8,14 +8,10 @@
   --color-picpaf-menthe: #A8D5CC;
   --color-picpaf-rose: #F5C5C5;
   --color-picpaf-ink: #2A1313;
-  /* --ff-* vars are injected by next/font on <html>. Using them here avoids circular references. */
-  --font-fredoka: var(--ff-fredoka), 'Fredoka One', cursive;
-  --font-pacifico: var(--ff-pacifico), 'Pacifico', cursive;
-  --font-caveat: var(--ff-caveat), 'Caveat', cursive;
-  --font-body: var(--ff-inter), system-ui, sans-serif;
 }
 
 :root {
+  /* ── Brand colors ── */
   --framboise: #C8365C;
   --framboise-dark: #A82948;
   --framboise-soft: #E07A95;
@@ -26,11 +22,16 @@
   --ink: #2A1313;
   --shadow-framboise: 0 10px 30px -12px rgba(200,54,92,.35);
   --shadow-card: 0 8px 24px -10px rgba(200,54,92,.25);
+  /* ── Brand fonts (loaded via Google Fonts <link>) ── */
+  --font-fredoka: 'Fredoka One', cursive;
+  --font-pacifico: 'Pacifico', cursive;
+  --font-caveat: 'Caveat', cursive;
+  --font-body: 'Inter', system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
 body {
-  font-family: var(--ff-inter), system-ui, sans-serif;
+  font-family: var(--font-body);
   background: var(--creme);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
@@ -56,7 +57,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Titles ── */
 .sticker-title {
-  font-family: var(--ff-fredoka), 'Fredoka One', cursive;
+  font-family: var(--font-fredoka);
   font-weight: 700;
   color: var(--framboise);
   -webkit-text-stroke: 10px var(--creme);
@@ -69,14 +70,14 @@ a { color: inherit; text-decoration: none; }
   -webkit-text-stroke: 10px var(--framboise-dark);
 }
 
-.h-fredoka { font-family: var(--ff-fredoka), 'Fredoka One', cursive; font-weight: 400; letter-spacing: .3px; }
-.h-script   { font-family: var(--ff-pacifico), 'Pacifico', cursive; font-weight: 400; }
-.h-caveat   { font-family: var(--ff-caveat), 'Caveat', cursive; font-weight: 700; }
+.h-fredoka { font-family: var(--font-fredoka); font-weight: 400; letter-spacing: .3px; }
+.h-script   { font-family: var(--font-pacifico); font-weight: 400; }
+.h-caveat   { font-family: var(--font-caveat); font-weight: 700; }
 
 /* ── Buttons ── */
 .cta-pill {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--ff-fredoka), 'Fredoka One', cursive;
+  font-family: var(--font-fredoka);
   font-size: 17px; color: #fff;
   background: var(--framboise);
   padding: 16px 30px; border-radius: 999px;
@@ -88,7 +89,7 @@ a { color: inherit; text-decoration: none; }
 
 .cta-ghost {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--ff-fredoka), 'Fredoka One', cursive;
+  font-family: var(--font-fredoka);
   font-size: 16px; color: var(--framboise);
   background: var(--creme);
   padding: 14px 26px; border-radius: 999px;
@@ -101,7 +102,7 @@ a { color: inherit; text-decoration: none; }
 .badge {
   display: inline-flex; align-items: center; gap: 6px;
   background: var(--framboise); color: var(--creme);
-  font-family: var(--ff-fredoka), 'Fredoka One', cursive;
+  font-family: var(--font-fredoka);
   font-size: 13px; padding: 6px 14px; border-radius: 999px;
 }
 .badge.mint    { background: var(--menthe); color: #1a4a42; }
@@ -130,7 +131,7 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 2px solid rgba(200,54,92,.15);
 }
 .nav-link {
-  font-family: var(--ff-fredoka), 'Fredoka One', cursive;
+  font-family: var(--font-fredoka);
   font-size: 15px; color: var(--ink);
   padding: 10px 14px; border-radius: 999px;
   transition: all .15s ease; background: none; border: none; cursor: pointer;
@@ -167,7 +168,7 @@ a { color: inherit; text-decoration: none; }
 .ph span { background: var(--creme); padding: 6px 12px; border-radius: 999px; border: 1.5px dashed var(--framboise); }
 
 /* ── Decorative ── */
-.slogan { font-family: var(--ff-pacifico), 'Pacifico', cursive; color: var(--framboise); transform: rotate(-3deg); display: inline-block; }
+.slogan { font-family: var(--font-pacifico); color: var(--framboise); transform: rotate(-3deg); display: inline-block; }
 
 @keyframes wiggle { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)} }
 .wiggle:hover { animation: wiggle 1.2s ease-in-out infinite; }

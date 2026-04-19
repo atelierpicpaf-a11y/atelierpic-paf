@@ -1,11 +1,5 @@
 import type { Metadata } from 'next'
-import { Fredoka, Pacifico, Caveat, Inter } from 'next/font/google'
 import '@/styles/globals.css'
-
-const fredoka = Fredoka({ subsets: ['latin'], weight: ['400', '700'], variable: '--ff-fredoka' })
-const pacifico = Pacifico({ subsets: ['latin'], weight: '400', variable: '--ff-pacifico' })
-const caveat = Caveat({ subsets: ['latin'], weight: ['400', '600', '700'], variable: '--ff-caveat' })
-const inter = Inter({ subsets: ['latin'], variable: '--ff-inter' })
 
 export const metadata: Metadata = {
   title: { template: '%s | L\'atelier Pic & Paf', default: 'L\'atelier Pic & Paf — Ateliers couture créatifs en Vienne et Deux-Sèvres' },
@@ -15,7 +9,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${fredoka.variable} ${pacifico.variable} ${caveat.variable} ${inter.variable}`}>
+    <html lang="fr">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Pacifico&family=Caveat:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>{children}</body>
     </html>
   )

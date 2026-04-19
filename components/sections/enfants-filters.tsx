@@ -81,7 +81,7 @@ export function EnfantsFilters({ ateliers }: Props) {
           {shown.length === 0 && (
             <div style={{ gridColumn:'1/-1', textAlign:'center', padding:60, opacity:.6 }}>
               <div style={{ fontSize:40, marginBottom:12 }}>🧵</div>
-              <p style={{ fontFamily:"var(--ff-fredoka, 'Fredoka One', cursive)", fontSize:18, color:'var(--framboise)' }}>
+              <p style={{ fontFamily:"var(--font-fredoka)", fontSize:18, color:'var(--framboise)' }}>
                 Aucun atelier dans cette catégorie pour le moment.
               </p>
             </div>
