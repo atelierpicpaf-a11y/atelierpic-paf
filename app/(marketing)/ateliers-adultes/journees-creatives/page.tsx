@@ -161,7 +161,7 @@ export default async function JourneesCreativesPage() {
                 Un atelier chaleureux à Fontaine-le-Comte, à 5 minutes au sud de Poitiers. Facile d&apos;accès, parking, ambiance cosy garantie.
               </p>
               <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:10 }}>
-                {['15 min au sud de Poitiers','Parking gratuit sur place','Accès PMR','Atelier lumineux et bien équipé'].map((it,i) => (
+                {['5 min au sud de Poitiers','Parking gratuit sur place','Accès PMR','Atelier lumineux et bien équipé'].map((it,i) => (
                   <li key={i} style={{ display:'flex', gap:10, fontSize:15 }}><span style={{ color:'var(--framboise)' }}>📍</span> {it}</li>
                 ))}
               </ul>
