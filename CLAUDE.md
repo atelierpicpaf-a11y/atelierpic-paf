@@ -244,3 +244,4 @@ Pas de "done" sans preuve concrète.
 - Français avec apostrophes dans JSX → utiliser `&apos;` ou double quotes pour les attributs
 - `rm -rf node_modules` en background peut supprimer tout le projet → JAMAIS en background
 - Token GitHub exposé dans la conversation → toujours révoquer immédiatement sur github.com/settings/tokens
+- Modification de contenu (chiffre, lieu, prix, horaire, nom) → TOUJOURS grep toute la page/fichier pour traquer les doublons avant de commit. Exemple vécu : changement "15 min → 5 min au sud de Poitiers" corrigé dans le paragraphe hero mais oublié dans la puce `<ul>` juste en dessous. Workflow : (1) faire la modif demandée, (2) grep l'ancienne valeur dans le fichier, (3) grep dans tout le projet si c'est une info potentiellement partagée (lieu, prix, contact)
