@@ -37,7 +37,25 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Atelier complet' }, { status: 400 })
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://atelier-picpaf.vercel.app'
+    // Dériver l'URL du site : on lit d'abord l'origin de la requête, puis fallback ENV, puis défaut
+    function normalizeUrl(raw: string | null | undefined): string | null {
+      if (!raw) return null
+      const trimmed = raw.trim().replace(/\/+$/, '')
+      if (!trimmed) return null
+      const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`
+      try {
+        new URL(withProtocol)
+        return withProtocol
+      } catch {
+        return null
+      }
+    }
+
+    const origin = req.headers.get('origin')
+    const siteUrl =
+      normalizeUrl(origin) ||
+      normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL) ||
+      'https://atelier-picpaf.vercel.app'
 
     // Créer la session Stripe Checkout
     const checkoutSession = await stripe.checkout.sessions.create({
