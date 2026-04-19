@@ -18,7 +18,7 @@ export function MobileNav() {
       {open && (
         <div className="burger-panel">
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:30 }}>
-            <Logo size={30} />
+            <Logo width={140} />
             <button onClick={() => setOpen(false)} style={{ width:46, height:46, borderRadius:14, background:'var(--framboise)', color:'#fff', fontSize:22 }}>✕</button>
           </div>
           <nav style={{ display:'flex', flexDirection:'column', gap:8 }}>
