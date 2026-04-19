@@ -3,6 +3,7 @@ import { Bobines } from '@/components/brand/bobines'
 import { SectionTitle } from '@/components/sections/section-title'
 import { FaqItem } from '@/components/sections/faq-item'
 import { EnfantsFilters } from '@/components/sections/enfants-filters'
+import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -17,7 +18,13 @@ const FAQS = [
   { q:"Comment on s'inscrit ?", r:'Par mail, téléphone, ou en remplissant le formulaire. Je confirme sous 24h.' },
 ]
 
-export default function AteliersEnfantsPage() {
+export default async function AteliersEnfantsPage() {
+  const supabase = await createClient()
+  const { data: ateliers } = await supabase
+    .from('ateliers_enfants')
+    .select('*')
+    .eq('actif', true)
+    .order('ordre')
   return (
     <div className="route-enter">
       <section style={{ position:'relative', overflow:'hidden', padding:'80px 0 60px', background:'var(--creme)' }}>
@@ -39,7 +46,7 @@ export default function AteliersEnfantsPage() {
         </div>
       </section>
 
-      <EnfantsFilters />
+      <EnfantsFilters ateliers={ateliers ?? []} />
 
       <section style={{ padding:'64px 0', background:'var(--creme-pale)' }}>
         <div className="container" style={{ textAlign:'center' }}>
