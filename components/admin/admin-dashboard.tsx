@@ -317,7 +317,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                       {CATEGORIES_ENFANT.map(c => <option key={c.val} value={c.val}>{c.label}</option>)}
                     </select>
                   </FieldGroup>
-                  <FieldGroup label="Prix">
+                  <FieldGroup label="Prix affiché">
                     <input
                       style={INPUT_S}
                       value={a.prix_texte ?? ''}
@@ -327,8 +327,19 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                   </FieldGroup>
                 </div>
 
-                {/* Places dispo | Places max */}
-                <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 3fr', marginBottom: 12 }}>
+                {/* Prix Stripe (€) | Places dispo | Places max */}
+                <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr', marginBottom: 12 }}>
+                  <FieldGroup label="Prix Stripe (€)">
+                    <input
+                      style={INPUT_S}
+                      type="number"
+                      min={0}
+                      step={0.01}
+                      value={a.prix_centimes > 0 ? (a.prix_centimes / 100).toString() : ''}
+                      onChange={e => updateEnfantField(a.id, 'prix_centimes', e.target.value === '' ? 0 : Math.round(Number(e.target.value) * 100))}
+                      placeholder="25"
+                    />
+                  </FieldGroup>
                   <FieldGroup label="Places dispo">
                     <input
                       style={INPUT_S}
@@ -351,7 +362,6 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                       placeholder="10"
                     />
                   </FieldGroup>
-                  <div />
                 </div>
 
                 {/* Description */}

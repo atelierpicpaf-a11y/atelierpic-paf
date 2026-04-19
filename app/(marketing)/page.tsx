@@ -2,7 +2,7 @@ import { Fee } from '@/components/brand/fee'
 import { Bobines } from '@/components/brand/bobines'
 import { Logo } from '@/components/brand/logo'
 import { SectionTitle } from '@/components/sections/section-title'
-import { AtelierCard } from '@/components/sections/atelier-card'
+import { HomeEnfantsGrid } from '@/components/sections/home-enfants-grid'
 import { HomeNewsletter } from '@/components/sections/home-newsletter'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
@@ -10,10 +10,6 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: "Ateliers créatifs en Vienne et Deux-Sèvres",
   description: "Ateliers créatifs pour enfants dès 6 ans, journées créatives et retraites pour adultes. Deviens toi aussi une magicienne !",
-}
-
-const BADGE_COLOR_MAP: Record<string, string> = {
-  menthe: 'mint', rose: 'rose', framboise: '', outline: 'outline',
 }
 
 export default async function HomePage() {
@@ -67,30 +63,7 @@ export default async function HomePage() {
           <p style={{ textAlign:'center', maxWidth:640, margin:'22px auto 50px', fontSize:17, opacity:.8 }}>
             Dès 6 ans, vos petits apprennent à créer de leurs mains. Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault.
           </p>
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:28 }}>
-            {enfantsSource.map(a => (
-              <AtelierCard
-                key={a.id}
-                badge={a.badge_texte ?? undefined}
-                badgeColor={BADGE_COLOR_MAP[a.badge_couleur] ?? ''}
-                title={a.titre}
-                desc={a.description ?? ''}
-                meta={a.infos ? a.infos.split('|').map(s => s.trim()) : []}
-                price={a.prix_texte ?? undefined}
-                city={a.ville || undefined}
-                emoji={a.emoji}
-                places={a.places_dispo}
-                placesMax={a.places_max}
-                actionLabel="Je m'inscris"
-              />
-            ))}
-            {enfantsSource.length === 0 && (
-              <div style={{ gridColumn:'1/-1', textAlign:'center', padding:'40px 0', opacity:.6 }}>
-                <div style={{ fontSize:36, marginBottom:10 }}>🧵</div>
-                <p style={{ fontFamily:'var(--font-fredoka)', fontSize:17, color:'var(--framboise)' }}>Les prochains ateliers arrivent bientôt !</p>
-              </div>
-            )}
-          </div>
+          <HomeEnfantsGrid ateliers={enfantsSource} />
           <div style={{ textAlign:'center', marginTop:48, display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap' }}>
             <a href="/ateliers-enfants" className="cta-pill">Voir tous les ateliers enfants</a>
             <a href="/contact" className="cta-ghost">Inscrire mon enfant</a>

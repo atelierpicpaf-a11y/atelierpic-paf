@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { AtelierCard } from '@/components/sections/atelier-card'
+import { ReservationForm } from '@/components/sections/reservation-form'
 import type { AtelierEnfantRow } from '@/types/supabase'
 
 const BADGE_COLOR_MAP: Record<string, string> = {
@@ -30,6 +31,7 @@ interface Props {
 
 export function EnfantsFilters({ ateliers }: Props) {
   const [filter, setFilter] = useState('tous')
+  const [reserveAtelier, setReserveAtelier] = useState<AtelierEnfantRow | null>(null)
 
   const shown = filter === 'tous'
     ? ateliers
@@ -68,6 +70,7 @@ export function EnfantsFilters({ ateliers }: Props) {
                 places={a.places_dispo}
                 placesMax={a.places_max}
                 actionLabel="Je m'inscris"
+                onAction={() => setReserveAtelier(a)}
               />
             )
           })}
@@ -82,6 +85,9 @@ export function EnfantsFilters({ ateliers }: Props) {
           )}
         </div>
       </section>
+      {reserveAtelier && (
+        <ReservationForm atelier={reserveAtelier} onClose={() => setReserveAtelier(null)} />
+      )}
     </>
   )
 }
