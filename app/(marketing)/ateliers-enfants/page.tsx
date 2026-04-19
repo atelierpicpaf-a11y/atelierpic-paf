@@ -36,7 +36,6 @@ export default async function AteliersEnfantsPage() {
             <p style={{ fontSize:18, maxWidth:520, lineHeight:1.6, opacity:.85 }}>Cours hebdomadaires, stages de vacances, anniversaires, interventions écoles… Mes petits créateurs repartent toujours avec une pépite cousue de leurs mains.</p>
             <div style={{ marginTop:28, display:'flex', gap:14, flexWrap:'wrap' }}>
               <a href="/contact" className="cta-pill">Inscription</a>
-              <a href="/contact" className="cta-ghost">Voir le calendrier</a>
             </div>
           </div>
           <div style={{ position:'relative', minHeight:320, display:'flex', justifyContent:'center' }}>
