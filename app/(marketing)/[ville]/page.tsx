@@ -22,8 +22,8 @@ export async function generateMetadata({
   const v = getVilleBySlug(ville)
   if (!v) return { title: 'Ville introuvable' }
 
-  const title = `Ateliers couture à ${v.nom} (${v.dept}) — Enfants, adultes, anniversaires`
-  const description = `Cours de couture enfants dès 6 ans, journées créatives adultes, anniversaires couture et interventions en structure à ${v.nom} (${v.codePostal}), ${v.deptNom}. Ludivine se déplace, contactez-la pour organiser votre atelier.`
+  const title = `Ateliers créatifs à ${v.nom} (${v.dept}) — Couture, punch needle, anniversaires`
+  const description = `Ateliers créatifs à ${v.nom} (${v.codePostal}), ${v.deptNom} : couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires et interventions en structure. Ludivine se déplace, contactez-la pour organiser votre atelier.`
   const url = `https://atelierpicpaf.fr/${v.slug}`
 
   return {
@@ -56,7 +56,7 @@ const FORMULES = [
   {
     emoji: '✂️',
     titre: 'Journée créative adultes',
-    pitch: 'Une journée pour apprendre, coudre et repartir avec ton projet fini.',
+    pitch: 'Couture ou punch needle. Une journée pour apprendre et repartir avec ton projet fini.',
     sujet: 'Journée créative',
   },
   {
@@ -110,11 +110,14 @@ export default async function VillePage({ params }: { params: Promise<Params> })
           <div style={{ marginBottom: 14 }}>
             <span className="h-caveat" style={{ fontSize: 26, color: 'var(--framboise)' }}>~ {v.kicker} ~</span>
           </div>
-          <h1 className="sticker-title" style={{ fontSize: 'clamp(40px, 6vw, 72px)', margin: '0 0 22px' }}>
+          <h1 className="sticker-title" style={{ fontSize: 'clamp(40px, 6vw, 72px)', margin: '0 0 18px' }}>
             {v.titreH1}
           </h1>
+          <h2 className="h-fredoka" style={{ fontSize: 'clamp(20px, 2.6vw, 28px)', color: 'var(--framboise)', margin: '0 0 22px', fontWeight: 600 }}>
+            Atelier couture · Atelier punch needle
+          </h2>
           <p style={{ fontSize: 19, lineHeight: 1.6, maxWidth: 640, margin: '0 auto 34px', opacity: 0.85 }}>
-            On coud ensemble à {v.nom} — enfants, ados, adultes, groupes, structures.
+            On crée ensemble à {v.nom} — enfants, ados, adultes, groupes, structures.
             Je me déplace, on construit ensemble le format qui te va.
           </p>
           <Link
@@ -132,7 +135,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
       <section style={{ padding: '70px 0', background: 'var(--creme-pale)' }}>
         <div className="container" style={{ maxWidth: 780 }}>
           <SectionTitle kicker={`${v.nom} · ${v.codePostal}`} align="center">
-            Couture créative à {v.nom}
+            Couture &amp; punch needle à {v.nom}
           </SectionTitle>
           <p style={{ fontSize: 17, lineHeight: 1.8, marginTop: 36, textAlign: 'left' }}>
             {v.intro}

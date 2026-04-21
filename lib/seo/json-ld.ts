@@ -226,11 +226,11 @@ export function villeServiceJsonLd(input: VilleServiceInput) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: `Ateliers couture à ${input.ville}`,
-    description: `Cours de couture enfants dès 6 ans, journées créatives adultes, anniversaires couture et interventions en structure (écoles, ALSH, médiathèques) à ${input.ville} (${input.codePostal}), ${input.deptNom} (${input.dept}).`,
+    name: `Ateliers créatifs à ${input.ville}`,
+    description: `Ateliers créatifs à ${input.ville} (${input.codePostal}), ${input.deptNom} (${input.dept}) : atelier couture enfants dès 6 ans, atelier punch needle, journées créatives adultes, anniversaires et interventions en structure (écoles, ALSH, médiathèques).`,
     url: input.url,
     provider: { '@id': `${SITE_URL}/#organization` },
-    serviceType: 'Cours de couture',
+    serviceType: ['Atelier couture', 'Atelier punch needle', 'Atelier créatif'],
     areaServed: [
       {
         '@type': 'City',
