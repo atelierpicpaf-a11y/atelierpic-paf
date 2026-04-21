@@ -134,7 +134,7 @@ export default function AnniversairePage() {
       >
         <div
           className="stripes-thin"
-          style={{ position: 'absolute', inset: 0, opacity: 0.35 }}
+          style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 18, opacity: 1 }}
         />
         <div
           className="container"

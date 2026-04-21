@@ -132,7 +132,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
 
       {/* ───────── HERO ───────── */}
       <section style={{ position: 'relative', padding: '90px 0 70px', background: 'var(--creme)', overflow: 'hidden' }}>
-        <div className="stripes-thin" style={{ position: 'absolute', inset: 0, opacity: 0.35 }} />
+        <div className="stripes-thin" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 18, opacity: 1 }} />
         <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 880 }}>
           <div style={{ marginBottom: 14 }}>
             <span className="h-caveat" style={{ fontSize: 26, color: 'var(--framboise)' }}>~ {v.kicker} ~</span>
