@@ -23,7 +23,7 @@ export async function generateMetadata({
   const v = getVilleBySlug(ville)
   if (!v) return { title: 'Ville introuvable' }
 
-  const title = `Ateliers créatifs à ${v.nom} (${v.dept}) — Couture, punch needle, anniversaires`
+  const title = `Ateliers créatifs à ${v.nom} (${v.dept}) · Couture, punch needle, anniversaires`
   const description = `Ateliers créatifs à ${v.nom} (${v.codePostal}), ${v.deptNom} : couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires et interventions en structure. Ludivine se déplace, contactez-la pour organiser votre atelier.`
   const url = `https://atelierpicpaf.fr/${v.slug}`
 
@@ -118,7 +118,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
             Atelier couture · Atelier punch needle
           </h2>
           <p style={{ fontSize: 19, lineHeight: 1.6, maxWidth: 640, margin: '0 auto 34px', opacity: 0.85 }}>
-            On crée ensemble à {v.nom} — enfants, ados, adultes, groupes, structures.
+            On crée ensemble à {v.nom} : enfants, ados, adultes, groupes, structures.
             Je me déplace, on construit ensemble le format qui te va.
           </p>
           <Link
@@ -151,7 +151,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
             Le punch needle, le chouchou de l&apos;atelier
           </SectionTitle>
           <p style={{ fontSize: 17, lineHeight: 1.7, textAlign: 'center', maxWidth: 680, margin: '28px auto 0', opacity: 0.85 }}>
-            Une aiguille magique, de la laine colorée, un tambour — et on crée des motifs en relief qui plaisent autant aux enfants qu&apos;aux adultes. Parfait pour un atelier à {v.nom} : ludique, accessible dès 6 ans, et résultat bluffant.
+            Une aiguille magique, de la laine colorée, un tambour, et on crée des motifs en relief qui plaisent autant aux enfants qu&apos;aux adultes. Parfait pour un atelier à {v.nom} : ludique, accessible dès 6 ans, et résultat bluffant.
           </p>
 
           <div
@@ -206,7 +206,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
               <div style={{ position: 'relative', width: '100%', aspectRatio: '3/4', borderRadius: 14, overflow: 'hidden', background: 'var(--creme)' }}>
                 <Image
                   src="/images/punch-needle/renard.jpg"
-                  alt={`Création d'un renard en punch needle — atelier créatif à ${v.nom}`}
+                  alt={`Création d'un renard en punch needle lors d'un atelier créatif à ${v.nom}`}
                   fill
                   sizes="(max-width: 768px) 90vw, 360px"
                   style={{ objectFit: 'cover' }}
