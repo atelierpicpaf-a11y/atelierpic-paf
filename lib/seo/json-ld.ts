@@ -210,6 +210,49 @@ export function serviceJsonLd(input: ServiceInput) {
 }
 
 // ────────────────────────────────────────────────────────────────
+// Service par ville — pages /[ville]
+// On re-déclare un Service dédié à chaque ville (sans dupliquer le
+// LocalBusiness, on référence l'organisation par son @id).
+// ────────────────────────────────────────────────────────────────
+export interface VilleServiceInput {
+  ville: string
+  dept: '86' | '79'
+  deptNom: string
+  url: string
+  codePostal: string
+}
+
+export function villeServiceJsonLd(input: VilleServiceInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `Ateliers couture à ${input.ville}`,
+    description: `Cours de couture enfants dès 6 ans, journées créatives adultes, anniversaires couture et interventions en structure (écoles, ALSH, médiathèques) à ${input.ville} (${input.codePostal}), ${input.deptNom} (${input.dept}).`,
+    url: input.url,
+    provider: { '@id': `${SITE_URL}/#organization` },
+    serviceType: 'Cours de couture',
+    areaServed: [
+      {
+        '@type': 'City',
+        name: input.ville,
+        address: {
+          '@type': 'PostalAddress',
+          postalCode: input.codePostal,
+          addressLocality: input.ville,
+          addressRegion: input.deptNom,
+          addressCountry: 'FR',
+        },
+      },
+    ],
+    potentialAction: {
+      '@type': 'ReserveAction',
+      target: `${SITE_URL}/contact?ville=${encodeURIComponent(input.ville)}`,
+      name: `Me contacter pour organiser un atelier à ${input.ville}`,
+    },
+  }
+}
+
+// ────────────────────────────────────────────────────────────────
 // BreadcrumbList — helper générique
 // ────────────────────────────────────────────────────────────────
 export function breadcrumbJsonLd(items: Array<{ name: string; url: string }>) {

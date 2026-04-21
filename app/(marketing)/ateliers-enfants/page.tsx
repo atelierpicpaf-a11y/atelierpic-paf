@@ -74,12 +74,30 @@ export default async function AteliersEnfantsPage() {
       <section style={{ padding:'64px 0', background:'var(--creme-pale)' }}>
         <div className="container" style={{ textAlign:'center' }}>
           <SectionTitle kicker="Près de chez vous">On se retrouve où&nbsp;?</SectionTitle>
-          <div style={{ display:'flex', gap:18, flexWrap:'wrap', justifyContent:'center', marginTop:36 }}>
-            {['Poitiers','Vouillé','Fontaine-le-Comte','Châtellerault','Niort'].map(v => (
-              <div key={v} style={{ padding:'14px 24px', background:'var(--creme)', borderRadius:999, border:'2px solid var(--framboise)', fontFamily:'var(--font-fredoka)', fontSize:17, color:'var(--framboise)' }}>📍 {v}</div>
+          <p style={{ marginTop:22, fontSize:16, opacity:.8, maxWidth:620, margin:'22px auto 0' }}>
+            Je me déplace en Vienne (86) et dans les Deux-Sèvres (79). Choisissez votre ville pour découvrir les ateliers couture près de chez vous.
+          </p>
+          <div style={{ display:'flex', gap:12, flexWrap:'wrap', justifyContent:'center', marginTop:36 }}>
+            {[
+              { slug:'poitiers', nom:'Poitiers' },
+              { slug:'fontaine-le-comte', nom:'Fontaine-le-Comte' },
+              { slug:'vouille', nom:'Vouillé' },
+              { slug:'chatellerault', nom:'Châtellerault' },
+              { slug:'saint-benoit', nom:'Saint-Benoît' },
+              { slug:'buxerolles', nom:'Buxerolles' },
+              { slug:'jaunay-marigny', nom:'Jaunay-Marigny' },
+              { slug:'mirebeau', nom:'Mirebeau' },
+              { slug:'lusignan', nom:'Lusignan' },
+              { slug:'chauvigny', nom:'Chauvigny' },
+              { slug:'niort', nom:'Niort' },
+              { slug:'parthenay', nom:'Parthenay' },
+              { slug:'bressuire', nom:'Bressuire' },
+              { slug:'thouars', nom:'Thouars' },
+            ].map(v => (
+              <a key={v.slug} href={`/${v.slug}`} style={{ padding:'12px 22px', background:'var(--creme)', borderRadius:999, border:'2px solid var(--framboise)', fontFamily:'var(--font-fredoka)', fontSize:16, color:'var(--framboise)', textDecoration:'none' }}>📍 {v.nom}</a>
             ))}
           </div>
-          <p className="h-caveat" style={{ marginTop:30, fontSize:22, color:'var(--framboise)' }}>Et bientôt peut-être… votre ville ?</p>
+          <p className="h-caveat" style={{ marginTop:30, fontSize:22, color:'var(--framboise)' }}>Ta ville n&apos;y est pas&nbsp;? Écris-moi, je me déplace !</p>
         </div>
       </section>
 

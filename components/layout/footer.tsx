@@ -22,6 +22,14 @@ export function Footer() {
             <FooterLink href="/ateliers-adultes/retraites-creatives">Retraites créatives</FooterLink>
           </div>
           <div>
+            <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Près de chez vous</h5>
+            <FooterLink href="/poitiers">Ateliers à Poitiers (86)</FooterLink>
+            <FooterLink href="/fontaine-le-comte">Ateliers à Fontaine-le-Comte</FooterLink>
+            <FooterLink href="/vouille">Ateliers à Vouillé</FooterLink>
+            <FooterLink href="/chatellerault">Ateliers à Châtellerault</FooterLink>
+            <FooterLink href="/niort">Ateliers à Niort (79)</FooterLink>
+          </div>
+          <div>
             <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Contact</h5>
             <FooterLink>atelierpicpaf@gmail.com</FooterLink>
             <FooterLink>06 21 07 35 36</FooterLink>

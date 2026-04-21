@@ -1,9 +1,45 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+const SUJETS = [
+  'Atelier enfants',
+  'Journée créative',
+  'Retraite créative',
+  'Anniversaire / Événement',
+  'Structure / Devis',
+  'Autre',
+] as const
 
 export function ContactForm() {
   const [sent, setSent] = useState(false)
   const [form, setForm] = useState({ nom: '', email: '', sujet: '', message: '' })
+
+  // Pré-remplissage depuis ?ville= et ?sujet= (venant des pages villes).
+  // On lit côté client pour éviter d'imposer un <Suspense> au parent server.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const p = new URLSearchParams(window.location.search)
+    const ville = p.get('ville')?.trim()
+    const sujetRaw = p.get('sujet')?.trim()
+    if (!ville && !sujetRaw) return
+
+    setForm((f) => {
+      // Si le sujet d'URL correspond à une option du select, on la sélectionne.
+      const sujetMatched =
+        sujetRaw && (SUJETS as readonly string[]).includes(sujetRaw) ? sujetRaw : f.sujet
+
+      // Message pré-rempli pour donner le contexte à Ludivine.
+      let message = f.message
+      if (!message) {
+        const parts: string[] = []
+        if (ville) parts.push(`Bonjour, je souhaite organiser un atelier couture à ${ville}.`)
+        if (sujetRaw && !sujetMatched) parts.push(`Sujet : ${sujetRaw}.`)
+        if (parts.length) message = parts.join(' ') + '\n\n'
+      }
+
+      return { ...f, sujet: sujetMatched, message }
+    })
+  }, [])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }))
@@ -40,12 +76,9 @@ export function ContactForm() {
         <label style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--framboise)', marginBottom:6 }}>Sujet</label>
         <select name="sujet" value={form.sujet} onChange={handleChange} className="input-admin">
           <option value="">Choisissez un sujet…</option>
-          <option>Atelier enfants</option>
-          <option>Journée créative</option>
-          <option>Retraite créative</option>
-          <option>Anniversaire / Événement</option>
-          <option>Structure / Devis</option>
-          <option>Autre</option>
+          {SUJETS.map((s) => (
+            <option key={s} value={s}>{s}</option>
+          ))}
         </select>
       </div>
       <div>
