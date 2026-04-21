@@ -3,8 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SectionTitle } from '@/components/sections/section-title'
+import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
-import { breadcrumbJsonLd, villeServiceJsonLd } from '@/lib/seo/json-ld'
+import { breadcrumbJsonLd, faqPageJsonLd, villeServiceJsonLd } from '@/lib/seo/json-ld'
 import { VILLES, getVilleBySlug, getNearby, type Ville } from '@/content/villes'
 
 // ────────────────────────────────────────────────────────────────
@@ -23,8 +24,8 @@ export async function generateMetadata({
   const v = getVilleBySlug(ville)
   if (!v) return { title: 'Ville introuvable' }
 
-  const title = `Ateliers créatifs à ${v.nom} (${v.dept}) · Couture, punch needle, anniversaires`
-  const description = `Ateliers créatifs à ${v.nom} (${v.codePostal}), ${v.deptNom} : couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires et interventions en structure. Ludivine se déplace, contactez-la pour organiser votre atelier.`
+  const title = `Ateliers créatifs à ${v.nom} (${v.dept}) · Couture + punch needle dès 6 ans ⭐`
+  const description = `🧵 Ateliers créatifs à ${v.nom} (${v.codePostal}), ${v.deptNom} : couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires, interventions écoles/ALSH. Une activité manuelle et un loisir créatif qui fait pétiller les yeux. Ludivine se déplace — contactez-la !`
   const url = `https://atelierpicpaf.fr/${v.slug}`
 
   return {
@@ -85,6 +86,30 @@ export default async function VillePage({ params }: { params: Promise<Params> })
   const proches = getNearby(v)
   const pageUrl = `https://atelierpicpaf.fr/${v.slug}`
 
+  // FAQ locale adaptative — même structure pour les 14 villes, contenu personnalisé.
+  const faqs = [
+    {
+      q: `Où se déroulent les ateliers à ${v.nom} ?`,
+      r: `Toutes les villes de la Vienne (86) et des Deux-Sèvres (79) peuvent être envisagées, ${v.nom} incluse. Selon votre projet (anniversaire à domicile, intervention en structure, journée créative), on trouve ensemble le lieu le plus adapté. Contactez-moi, on en parle !`,
+    },
+    {
+      q: `Quel âge minimum pour les cours de couture à ${v.nom} ?`,
+      r: `Les ateliers couture enfants sont ouverts dès 6 ans, quand les petites mains savent tenir une aiguille. Et ça va jusqu'à 99 ans : ados, adultes débutants, groupes entre copines, tout le monde est bienvenu à ${v.nom}.`,
+    },
+    {
+      q: `Comment organiser un anniversaire couture à ${v.nom} ?`,
+      r: `C'est la formule chouchou des enfants ! Je me déplace à ${v.nom} (ou à domicile, en salle des fêtes, en médiathèque). Chaque enfant repart avec un objet cousu par ses soins : le cadeau original par excellence. Contactez-moi, je serai ravie d'en discuter avec vous.`,
+    },
+    {
+      q: `Intervenez-vous dans les écoles et ALSH de ${v.nom} ?`,
+      r: `Oui, je propose des interventions clé en main pour écoles, ALSH, médiathèques, centres sociaux et associations. Toutes les villes de la Vienne et des Deux-Sèvres peuvent être envisagées, ${v.nom} incluse. Devis gratuit sur demande.`,
+    },
+    {
+      q: `Proposez-vous du punch needle à ${v.nom} ?`,
+      r: `Oui ! Le punch needle, c'est la technique chouchou de l'atelier : aiguille magique, laine colorée, motifs en relief. Accessible dès 6 ans, bluffant pour les adultes. Toutes les villes peuvent être envisagées, ${v.nom} incluse — contactez-moi pour organiser votre atelier.`,
+    },
+  ]
+
   return (
     <div className="route-enter">
       <JsonLd
@@ -97,6 +122,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
             codePostal: v.codePostal,
             url: pageUrl,
           }),
+          faqPageJsonLd(faqs),
           breadcrumbJsonLd([
             { name: 'Accueil', url: 'https://atelierpicpaf.fr' },
             { name: v.nom, url: pageUrl },
@@ -216,6 +242,33 @@ export default async function VillePage({ params }: { params: Promise<Params> })
                 Un petit renard tout doux 🦊
               </figcaption>
             </figure>
+
+            {/* Photo 3 — cours couture enfants (preuve locale) */}
+            <figure
+              style={{
+                margin: 0,
+                padding: 14,
+                background: 'var(--creme-pale)',
+                borderRadius: 22,
+                boxShadow: 'var(--shadow-card)',
+                transform: 'rotate(-1deg)',
+                maxWidth: 360,
+                width: '100%',
+              }}
+            >
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '3/4', borderRadius: 14, overflow: 'hidden', background: 'var(--creme)' }}>
+                <Image
+                  src="/images/ateliers/cours-couture-enfants.jpg"
+                  alt={`Cours de couture enfants à ${v.nom} (${v.deptNom}) avec Ludivine, L'atelier Pic & Paf`}
+                  fill
+                  sizes="(max-width: 768px) 90vw, 360px"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <figcaption className="h-caveat" style={{ textAlign: 'center', fontSize: 22, color: 'var(--framboise)', marginTop: 12 }}>
+                Atelier couture enfants {v.dept === '86' ? 'dans la Vienne' : 'dans les Deux-Sèvres'} ❤️
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
@@ -313,6 +366,20 @@ export default async function VillePage({ params }: { params: Promise<Params> })
           </div>
         </section>
       )}
+
+      {/* ───────── FAQ LOCALE ───────── */}
+      <section style={{ padding: '80px 0', background: 'var(--creme)' }}>
+        <div className="container" style={{ maxWidth: 820 }}>
+          <SectionTitle kicker={`Vos questions sur ${v.nom}`} align="center">
+            Les questions qu&apos;on me pose souvent
+          </SectionTitle>
+          <div style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {faqs.map((f, i) => (
+              <FaqItem key={i} q={f.q} r={f.r} />
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ───────── CTA FINAL ───────── */}
       <section style={{ padding: '80px 0', background: 'var(--framboise)', color: 'var(--creme)' }}>

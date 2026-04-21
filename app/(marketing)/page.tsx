@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Fee } from '@/components/brand/fee'
 import { Bobines } from '@/components/brand/bobines'
 import { Logo } from '@/components/brand/logo'
@@ -157,6 +158,61 @@ export default async function HomePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CE QU'ON VIT EN ATELIER — PROOF BLOC */}
+      <section style={{ padding:'100px 0', background:'var(--creme)' }}>
+        <div className="container" style={{ maxWidth:1100 }}>
+          <SectionTitle kicker="Petit aperçu" align="center">Ce qu&apos;on vit en atelier</SectionTitle>
+          <p style={{ textAlign:'center', maxWidth:620, margin:'22px auto 0', fontSize:17, opacity:.8 }}>
+            Des petites mains concentrées, de la laine colorée, des sourires fiers. Voilà ce que donnent concrètement les ateliers couture et punch needle.
+          </p>
+          <div
+            style={{
+              marginTop: 56,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: 40,
+              justifyItems: 'center',
+            }}
+          >
+            {[
+              { src:'/images/ateliers/cours-couture-enfants.jpg', alt:"Cours de couture enfants avec Ludivine, L'atelier Pic & Paf (Vienne 86 et Deux-Sèvres 79)", cap:'Atelier couture enfants ❤️', rot:-2 },
+              { src:'/images/punch-needle/arc-en-ciel.jpg', alt:"Enfant réalisant un arc-en-ciel en punch needle lors d'un atelier créatif", cap:'Un arc-en-ciel tout en laine ✨', rot:2 },
+              { src:'/images/punch-needle/renard.jpg', alt:"Création d'un renard en punch needle lors d'un atelier créatif", cap:'Un petit renard tout doux 🦊', rot:-1 },
+            ].map((p, i) => (
+              <figure
+                key={i}
+                style={{
+                  margin: 0,
+                  padding: 14,
+                  background: 'var(--creme-pale)',
+                  borderRadius: 22,
+                  boxShadow: 'var(--shadow-card)',
+                  transform: `rotate(${p.rot}deg)`,
+                  maxWidth: 340,
+                  width: '100%',
+                }}
+              >
+                <div style={{ position:'relative', width:'100%', aspectRatio:'3/4', borderRadius:14, overflow:'hidden', background:'var(--creme)' }}>
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    fill
+                    sizes="(max-width: 768px) 90vw, 340px"
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+                <figcaption className="h-caveat" style={{ textAlign:'center', fontSize:22, color:'var(--framboise)', marginTop:12 }}>
+                  {p.cap}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div style={{ textAlign:'center', marginTop:48 }}>
+            <a href="/ateliers-enfants" className="cta-pill">Voir tous les ateliers</a>
           </div>
         </div>
       </section>

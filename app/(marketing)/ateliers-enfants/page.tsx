@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Fee } from '@/components/brand/fee'
 import { Bobines } from '@/components/brand/bobines'
 import { SectionTitle } from '@/components/sections/section-title'
@@ -9,8 +10,8 @@ import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Ateliers couture enfants dès 6 ans',
-  description: 'Cours hebdomadaires, stages de vacances, anniversaires créatifs. Poitiers, Vouillé, Fontaine-le-Comte, Châtellerault.',
+  title: 'Ateliers créatifs enfants dès 6 ans · Couture + punch needle ⭐',
+  description: '🧵 Cours de couture et punch needle pour enfants dès 6 ans : cours hebdomadaires, stages de vacances, anniversaires créatifs. Vienne (86) et Deux-Sèvres (79) : Poitiers, Vouillé, Fontaine-le-Comte, Châtellerault, Niort.',
 }
 
 const FAQS = [
@@ -35,14 +36,14 @@ export default async function AteliersEnfantsPage() {
         id="ld-ateliers-enfants"
         data={[
           serviceJsonLd({
-            name: 'Ateliers couture enfants',
+            name: 'Ateliers créatifs enfants : couture et punch needle',
             description:
-              "Cours hebdomadaires, stages de vacances, anniversaires créatifs et interventions en structure. Dès 6 ans, à Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault.",
+              "Cours hebdomadaires, stages de vacances, anniversaires créatifs et interventions en structure. Atelier couture et atelier punch needle, dès 6 ans, en Vienne (86) et Deux-Sèvres (79) : Poitiers, Vouillé, Fontaine-le-Comte, Châtellerault, Niort.",
             url: 'https://atelierpicpaf.fr/ateliers-enfants',
             minAge: 6,
             maxAge: 12,
             audience: 'Enfants',
-            category: "Cours de couture pour enfants",
+            category: "Ateliers créatifs pour enfants : couture et punch needle",
           }),
           faqPageJsonLd(FAQS),
           breadcrumbJsonLd([
@@ -56,15 +57,46 @@ export default async function AteliersEnfantsPage() {
         <div className="container" style={{ marginTop:20, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:40, alignItems:'center' }}>
           <div>
             <span className="h-caveat" style={{ fontSize:28, color:'var(--framboise)' }}>~ Dès 6 ans ~</span>
-            <h1 className="sticker-title" style={{ fontSize:'clamp(44px,6vw,76px)', textAlign:'left', margin:'8px 0 22px' }}>Ateliers<br/>enfants</h1>
+            <h1 className="sticker-title" style={{ fontSize:'clamp(44px,6vw,76px)', textAlign:'left', margin:'8px 0 14px' }}>Ateliers<br/>créatifs</h1>
+            <h2 className="h-fredoka" style={{ fontSize:'clamp(20px,2.6vw,28px)', color:'var(--framboise)', margin:'0 0 22px', fontWeight:600 }}>
+              Atelier couture · Atelier punch needle
+            </h2>
             <p style={{ fontSize:18, maxWidth:520, lineHeight:1.6, opacity:.85 }}>Cours hebdomadaires, stages de vacances, anniversaires, interventions écoles… Mes petits créateurs repartent toujours avec une pépite créée de leurs mains.</p>
             <div style={{ marginTop:28, display:'flex', gap:14, flexWrap:'wrap' }}>
               <a href="/contact" className="cta-pill">Inscription</a>
             </div>
           </div>
-          <div style={{ position:'relative', minHeight:320, display:'flex', justifyContent:'center' }}>
-            <Fee size={280} />
-            <div style={{ position:'absolute', bottom:10, right:10 }}><Bobines size={140} /></div>
+          <div style={{ position:'relative', minHeight:380, display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+            <figure
+              style={{
+                margin: 0,
+                padding: 14,
+                background: 'var(--creme-pale)',
+                borderRadius: 22,
+                boxShadow: 'var(--shadow-card)',
+                transform: 'rotate(-2deg)',
+                maxWidth: 340,
+                width: '100%',
+              }}
+            >
+              <div style={{ position:'relative', width:'100%', aspectRatio:'3/4', borderRadius:14, overflow:'hidden', background:'var(--creme)' }}>
+                <Image
+                  src="/images/ateliers/cours-couture-enfants.jpg"
+                  alt="Cours de couture enfants avec Ludivine, L'atelier Pic & Paf (Vienne 86 et Deux-Sèvres 79)"
+                  fill
+                  sizes="(max-width: 768px) 90vw, 340px"
+                  style={{ objectFit: 'cover' }}
+                  priority
+                />
+              </div>
+              <figcaption className="h-caveat" style={{ textAlign:'center', fontSize:22, color:'var(--framboise)', marginTop:12 }}>
+                Petites mains, grands projets ✨
+              </figcaption>
+            </figure>
+            <div style={{ position:'relative', display:'flex', alignItems:'center', gap:10 }}>
+              <Fee size={160} />
+              <Bobines size={90} />
+            </div>
           </div>
         </div>
       </section>

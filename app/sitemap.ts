@@ -10,6 +10,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/ateliers-enfants`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/ateliers-adultes/journees-creatives`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/ateliers-adultes/retraites-creatives`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${base}/anniversaire-couture-enfant`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/punch-needle`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/interventions-structures`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ]
 
