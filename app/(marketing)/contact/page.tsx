@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { ContactForm } from './contact-form'
 import { SectionTitle } from '@/components/sections/section-title'
+import { JsonLd } from '@/components/seo/json-ld'
+import { contactPageJsonLd, breadcrumbJsonLd } from '@/lib/seo/json-ld'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -10,6 +12,16 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="route-enter">
+      <JsonLd
+        id="ld-contact"
+        data={[
+          contactPageJsonLd(),
+          breadcrumbJsonLd([
+            { name: 'Accueil', url: 'https://atelierpicpaf.fr' },
+            { name: 'Contact', url: 'https://atelierpicpaf.fr/contact' },
+          ]),
+        ]}
+      />
       <section style={{ padding:'80px 0 60px', background:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:880 }}>
           <SectionTitle kicker="On se parle ?" align="center">Contactez-moi</SectionTitle>

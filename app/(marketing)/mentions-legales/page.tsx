@@ -16,12 +16,15 @@ export default function MentionsLegalesPage() {
             <div>
               <h2 className="h-fredoka" style={{ fontSize:22, color:'var(--framboise)', marginBottom:12 }}>Éditeur du site</h2>
               <p style={{ margin:0, lineHeight:1.7 }}>
-                L&apos;atelier Pic &amp; Paf<br />
-                Ludivine Gauvrit<br />
-                Micro-entreprise<br />
-                Vienne (86), France<br />
+                <strong>L&apos;atelier Pic &amp; Paf</strong> (nom commercial)<br />
+                Ludivine Sénéchaud — Entrepreneur individuel (micro-entreprise)<br />
+                Siège social : 3 rue des Rosiers, 86110 Craon<br />
+                SIREN : 883 640 419<br />
+                SIRET (siège) : 883 640 419 00015<br />
+                Code NAF : 1413Z — Fabrication de vêtements de dessus<br />
                 Email : atelierpicpaf@gmail.com<br />
-                Téléphone : 06 21 07 35 36
+                Téléphone : 06 21 07 35 36<br />
+                Directrice de la publication : Ludivine Sénéchaud
               </p>
             </div>
 

@@ -1,5 +1,7 @@
 import { SectionTitle } from '@/components/sections/section-title'
 import { RetraitesDatesGrid } from '@/components/sections/retraites-dates-grid'
+import { JsonLd } from '@/components/seo/json-ld'
+import { serviceJsonLd, breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { RETRAITES_CONFIG } from '@/lib/data/defaults'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
@@ -58,6 +60,26 @@ export default async function RetraitesCreativesPage() {
   const duree = cfg?.duree ?? RETRAITES_CONFIG.duree
   return (
     <div className="route-enter">
+      <JsonLd
+        id="ld-retraites"
+        data={[
+          serviceJsonLd({
+            name: 'Retraites créatives couture',
+            description:
+              "Un weekend de ressourcement couture dans un gîte au cœur des Deux-Sèvres (79). Repas bio, yoga doux, couture guidée, 8 participantes maximum.",
+            url: 'https://atelierpicpaf.fr/ateliers-adultes/retraites-creatives',
+            priceCentimes: cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 39000,
+            audience: 'Adultes',
+            location: 'Deux-Sèvres',
+            category: 'Retraite créative couture',
+          }),
+          breadcrumbJsonLd([
+            { name: 'Accueil', url: 'https://atelierpicpaf.fr' },
+            { name: 'Ateliers adultes', url: 'https://atelierpicpaf.fr/ateliers-adultes/retraites-creatives' },
+            { name: 'Retraites créatives', url: 'https://atelierpicpaf.fr/ateliers-adultes/retraites-creatives' },
+          ]),
+        ]}
+      />
       {/* HERO POSÉ */}
       <section style={{ padding:'100px 0 80px', background:'var(--creme-pale)' }}>
         <div className="container" style={{ maxWidth:760, textAlign:'center' }}>

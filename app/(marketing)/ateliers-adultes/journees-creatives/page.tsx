@@ -2,6 +2,8 @@ import { Fee } from '@/components/brand/fee'
 import { Bobines } from '@/components/brand/bobines'
 import { SectionTitle } from '@/components/sections/section-title'
 import { JourneesDatesGrid } from '@/components/sections/journees-dates-grid'
+import { JsonLd } from '@/components/seo/json-ld'
+import { serviceJsonLd, breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { createClient } from '@/lib/supabase/server'
 import { JOURNEES_CONFIG } from '@/lib/data/defaults'
 import type { Metadata } from 'next'
@@ -47,6 +49,26 @@ export default async function JourneesCreativesPage() {
 
   return (
     <div className="route-enter">
+      <JsonLd
+        id="ld-journees"
+        data={[
+          serviceJsonLd({
+            name: 'Journées créatives couture',
+            description:
+              "Une journée entière de couture guidée à Fontaine-le-Comte (5 min au sud de Poitiers). Tout compris : machine, tissus, patron, repas partagé. 6 participantes maximum.",
+            url: 'https://atelierpicpaf.fr/ateliers-adultes/journees-creatives',
+            priceCentimes: cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 9000,
+            audience: 'Adultes',
+            location: 'Fontaine-le-Comte',
+            category: 'Journée créative couture',
+          }),
+          breadcrumbJsonLd([
+            { name: 'Accueil', url: 'https://atelierpicpaf.fr' },
+            { name: 'Ateliers adultes', url: 'https://atelierpicpaf.fr/ateliers-adultes/journees-creatives' },
+            { name: 'Journées créatives', url: 'https://atelierpicpaf.fr/ateliers-adultes/journees-creatives' },
+          ]),
+        ]}
+      />
       {/* HERO */}
       <section style={{ position:'relative', overflow:'hidden' }}>
         <div className="stripes-vertical" style={{ position:'absolute', inset:0, opacity:1 }} />

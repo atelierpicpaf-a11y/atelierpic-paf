@@ -3,6 +3,8 @@ import { Bobines } from '@/components/brand/bobines'
 import { SectionTitle } from '@/components/sections/section-title'
 import { FaqItem } from '@/components/sections/faq-item'
 import { EnfantsFilters } from '@/components/sections/enfants-filters'
+import { JsonLd } from '@/components/seo/json-ld'
+import { faqPageJsonLd, serviceJsonLd, breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
@@ -29,6 +31,26 @@ export default async function AteliersEnfantsPage() {
     .order('date_atelier', { ascending: true })
   return (
     <div className="route-enter">
+      <JsonLd
+        id="ld-ateliers-enfants"
+        data={[
+          serviceJsonLd({
+            name: 'Ateliers couture enfants',
+            description:
+              "Cours hebdomadaires, stages de vacances, anniversaires créatifs et interventions en structure. Dès 6 ans, à Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault.",
+            url: 'https://atelierpicpaf.fr/ateliers-enfants',
+            minAge: 6,
+            maxAge: 12,
+            audience: 'Enfants',
+            category: "Cours de couture pour enfants",
+          }),
+          faqPageJsonLd(FAQS),
+          breadcrumbJsonLd([
+            { name: 'Accueil', url: 'https://atelierpicpaf.fr' },
+            { name: 'Ateliers enfants', url: 'https://atelierpicpaf.fr/ateliers-enfants' },
+          ]),
+        ]}
+      />
       <section style={{ position:'relative', overflow:'hidden', padding:'80px 0 60px', background:'var(--creme)' }}>
         <div className="stripes-thin" style={{ position:'absolute', top:0, left:0, right:0, height:18, opacity:1 }} />
         <div className="container" style={{ marginTop:20, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:40, alignItems:'center' }}>
