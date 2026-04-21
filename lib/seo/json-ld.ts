@@ -230,6 +230,10 @@ export function villeServiceJsonLd(input: VilleServiceInput) {
     description: `Ateliers créatifs à ${input.ville} (${input.codePostal}), ${input.deptNom} (${input.dept}) : atelier couture enfants dès 6 ans, atelier punch needle, journées créatives adultes, anniversaires et interventions en structure (écoles, ALSH, médiathèques).`,
     url: input.url,
     provider: { '@id': `${SITE_URL}/#organization` },
+    image: [
+      `${SITE_URL}/images/punch-needle/arc-en-ciel.jpg`,
+      `${SITE_URL}/images/punch-needle/renard.jpg`,
+    ],
     serviceType: ['Atelier couture', 'Atelier punch needle', 'Atelier créatif'],
     areaServed: [
       {

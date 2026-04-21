@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SectionTitle } from '@/components/sections/section-title'
@@ -142,6 +143,84 @@ export default async function VillePage({ params }: { params: Promise<Params> })
           </p>
         </div>
       </section>
+
+      {/* ───────── PUNCH NEEDLE SHOWCASE ───────── */}
+      <section style={{ padding: '80px 0 70px', background: 'var(--creme)' }}>
+        <div className="container" style={{ maxWidth: 1040 }}>
+          <SectionTitle kicker="Zoom sur une technique qu'on adore" align="center">
+            Le punch needle, le chouchou de l&apos;atelier
+          </SectionTitle>
+          <p style={{ fontSize: 17, lineHeight: 1.7, textAlign: 'center', maxWidth: 680, margin: '28px auto 0', opacity: 0.85 }}>
+            Une aiguille magique, de la laine colorée, un tambour — et on crée des motifs en relief qui plaisent autant aux enfants qu&apos;aux adultes. Parfait pour un atelier à {v.nom} : ludique, accessible dès 6 ans, et résultat bluffant.
+          </p>
+
+          <div
+            style={{
+              marginTop: 56,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: 40,
+              justifyItems: 'center',
+            }}
+          >
+            {/* Photo 1 — arc-en-ciel enfant */}
+            <figure
+              style={{
+                margin: 0,
+                padding: 14,
+                background: 'var(--creme-pale)',
+                borderRadius: 22,
+                boxShadow: 'var(--shadow-card)',
+                transform: 'rotate(-2deg)',
+                maxWidth: 360,
+                width: '100%',
+              }}
+            >
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '3/4', borderRadius: 14, overflow: 'hidden', background: 'var(--creme)' }}>
+                <Image
+                  src="/images/punch-needle/arc-en-ciel.jpg"
+                  alt={`Enfant réalisant un arc-en-ciel en punch needle lors d'un atelier créatif à ${v.nom}`}
+                  fill
+                  sizes="(max-width: 768px) 90vw, 360px"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <figcaption className="h-caveat" style={{ textAlign: 'center', fontSize: 22, color: 'var(--framboise)', marginTop: 12 }}>
+                Un arc-en-ciel tout en laine ✨
+              </figcaption>
+            </figure>
+
+            {/* Photo 2 — renard */}
+            <figure
+              style={{
+                margin: 0,
+                padding: 14,
+                background: 'var(--creme-pale)',
+                borderRadius: 22,
+                boxShadow: 'var(--shadow-card)',
+                transform: 'rotate(2deg)',
+                maxWidth: 360,
+                width: '100%',
+              }}
+            >
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '3/4', borderRadius: 14, overflow: 'hidden', background: 'var(--creme)' }}>
+                <Image
+                  src="/images/punch-needle/renard.jpg"
+                  alt={`Création d'un renard en punch needle — atelier créatif à ${v.nom}`}
+                  fill
+                  sizes="(max-width: 768px) 90vw, 360px"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <figcaption className="h-caveat" style={{ textAlign: 'center', fontSize: 22, color: 'var(--framboise)', marginTop: 12 }}>
+                Un petit renard tout doux 🦊
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <div className="stripes-band" />
 
       {/* ───────── FORMULES ───────── */}
       <section style={{ padding: '80px 0', background: 'var(--creme)' }}>
