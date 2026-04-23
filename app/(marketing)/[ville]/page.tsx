@@ -25,7 +25,7 @@ export async function generateMetadata({
   if (!v) return { title: 'Ville introuvable' }
 
   const title = `Ateliers créatifs à ${v.nom} (${v.dept}) · Couture + punch needle dès 6 ans ⭐`
-  const description = `🧵 Ateliers créatifs à ${v.nom} (${v.codePostal}), ${v.deptNom} : couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires, interventions écoles/ALSH. Une activité manuelle et un loisir créatif qui fait pétiller les yeux. Ludivine se déplace — contactez-la !`
+  const description = v.metaDescription ?? `🧵 Ateliers créatifs à ${v.nom} (${v.codePostal}), ${v.deptNom} : couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires, interventions écoles/ALSH. Une activité manuelle et un loisir créatif qui fait pétiller les yeux. Ludivine se déplace — contactez-la !`
   const url = `https://atelierpicpaf.fr/${v.slug}`
 
   return {

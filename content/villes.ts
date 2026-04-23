@@ -34,6 +34,8 @@ export interface Ville {
   villesProches: string[]
   /** Vague 1 = villes où Ludivine intervient déjà, vague 2 = villes à conquérir. */
   wave: 1 | 2
+  /** Meta description SEO custom — si absente, fallback sur le template générique. */
+  metaDescription?: string
 }
 
 export const VILLES: Ville[] = [
@@ -65,6 +67,8 @@ export const VILLES: Ville[] = [
       "Fontaine-le-Comte est la commune où je concentre mon activité couture adulte : c'est ici, au cœur du Grand Poitiers et de la Vienne (86), que j'anime mes journées créatives et mes retraites couture en weekend. Le cadre s'y prête à merveille : la nature autour, un gîte chaleureux et tout le calme nécessaire pour débrancher, ralentir et retrouver son élan créatif. Je propose des cours de couture enfants (une vraie activité manuelle qui les pose, les concentre et les rend fiers), des journées créatives adultes, des retraites créatives en weekend entre femmes (3 jours de couture, yoga et convivialité), des anniversaires couture et des interventions auprès des écoles, ALSH et médiathèques de Fontaine-le-Comte et des environs. Les habitantes et habitants de Poitiers, Ligugé, Saint-Benoît ou Vouneuil-sous-Biard font facilement le trajet jusqu'ici. Tu as une envie précise ? Fêter l'anniversaire d'un enfant, monter un atelier entre copines, organiser une animation pour ta structure, venir te ressourcer un weekend ? Je m'adapte à ton projet et on définit ensemble le format qui te va.",
     villesProches: ['poitiers', 'saint-benoit', 'vouille', 'lusignan'],
     wave: 1,
+    metaDescription:
+      "🧵 Journées créatives couture et retraites weekend entre femmes à Fontaine-le-Comte (86), au cœur du Grand Poitiers. Ateliers couture enfants dès 6 ans, punch needle, anniversaires, interventions écoles/ALSH. Un gîte au calme, du yoga, de la couture guidée — la parenthèse créative que tu cherchais.",
   },
   {
     slug: 'vouille',
