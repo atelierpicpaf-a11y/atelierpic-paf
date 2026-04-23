@@ -61,7 +61,7 @@ export function localBusinessJsonLd() {
     logo: `${SITE_URL}/images/brand/logo-og.png`,
     image: `${SITE_URL}/images/brand/logo-og.png`,
     description:
-      'Ateliers couture créatifs pour enfants dès 6 ans, journées créatives et retraites pour adultes en Vienne (86) et Deux-Sèvres (79).',
+      'Ateliers couture créatifs pour enfants dès 6 ans en Vienne (86) et Deux-Sèvres (79), journées créatives et retraites pour adultes à Fontaine-le-Comte (86).',
     email: b.email,
     telephone: b.telephone,
     priceRange: b.priceRange,

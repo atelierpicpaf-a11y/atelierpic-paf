@@ -40,7 +40,7 @@ export default async function HomePage() {
             <span className="slogan" style={{ fontSize:'clamp(36px,5.5vw,62px)' }}>Deviens toi aussi une magicienne&nbsp;!</span>
           </div>
           <p style={{ fontSize:'clamp(17px,1.4vw,20px)', maxWidth:620, margin:'0 auto 36px', lineHeight:1.55 }}>
-            Ateliers créatifs pour enfants dès 6 ans, journées créatives et retraites pour adultes, partout en Vienne et en Deux-Sèvres.
+            Ateliers créatifs pour enfants dès 6 ans partout en Vienne et en Deux-Sèvres, journées créatives et retraites pour adultes à Fontaine-le-Comte.
           </p>
           <div style={{ display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
             <a href="/ateliers-enfants" className="cta-pill">Voir les ateliers</a>
