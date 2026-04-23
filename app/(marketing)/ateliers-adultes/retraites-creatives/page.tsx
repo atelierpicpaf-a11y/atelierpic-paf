@@ -106,7 +106,7 @@ export default async function RetraitesCreativesPage() {
             Parce qu&apos;on a toutes besoin d&apos;une vraie déconnexion. Pas juste un samedi après-midi entre deux rendez-vous : un week-end entier en immersion pour poser son téléphone, respirer et ralentir.
           </p>
           <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
-            L&apos;esprit de nos retraites, c&apos;est avant tout le partage : on cuisine ensemble, on rit, on explore sa créativité et on repart avec nos réalisations dont on est fières — mais surtout, avec des souvenirs plein le cœur.
+            L&apos;esprit de nos retraites, c&apos;est avant tout le partage : on cuisine ensemble, on rit, on explore sa créativité et on repart avec nos réalisations dont on est fières, mais surtout avec des souvenirs plein le cœur.
           </p>
           <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
             <strong style={{ color:'var(--framboise)', fontWeight:600 }}>Une expérience privilégiée :</strong> pour préserver cette atmosphère intime et vous offrir un accompagnement sur mesure, les places sont limitées à <strong>9 participantes maximum</strong>.
