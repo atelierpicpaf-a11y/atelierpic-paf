@@ -66,7 +66,7 @@ export default async function RetraitesCreativesPage() {
           serviceJsonLd({
             name: 'Retraites créatives couture',
             description:
-              "Un weekend de ressourcement couture dans un gîte au cœur des Deux-Sèvres (79). Repas bio, yoga doux, couture guidée, 8 participantes maximum.",
+              "Un weekend de ressourcement couture dans un gîte au cœur des Deux-Sèvres (79). Repas bio, yoga doux, couture guidée, 9 participantes maximum.",
             url: 'https://atelierpicpaf.fr/ateliers-adultes/retraites-creatives',
             priceCentimes: cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 39000,
             audience: 'Adultes',
@@ -101,15 +101,18 @@ export default async function RetraitesCreativesPage() {
       {/* L'ESPRIT */}
       <section style={{ padding:'80px 0', background:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:740, textAlign:'center' }}>
-          <SectionTitle kicker="Pourquoi une retraite ?" align="center">L&apos;esprit Pic &amp; Paf</SectionTitle>
+          <SectionTitle kicker="Pourquoi s&apos;offrir une parenthèse ?" align="center">L&apos;esprit Pic &amp; Paf ✨</SectionTitle>
           <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:28 }}>
-            Parce qu&apos;on a toutes besoin d&apos;une vraie pause. Pas juste un samedi : un weekend entier où on pose ses téléphones, on cuisine ensemble, on rit, on coud et on repart avec une création dont on est fières — et surtout, avec des souvenirs plein le cœur.
+            Parce qu&apos;on a toutes besoin d&apos;une vraie déconnexion. Pas juste un samedi après-midi entre deux rendez-vous : un week-end entier en immersion pour poser son téléphone, respirer et ralentir.
           </p>
           <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
-            Les retraites sont limitées à <strong>8 participantes</strong> pour garder une atmosphère intime et permettre un vrai accompagnement personnalisé.
+            L&apos;esprit de nos retraites, c&apos;est avant tout le partage : on cuisine ensemble, on rit, on explore sa créativité et on repart avec nos réalisations dont on est fières — mais surtout, avec des souvenirs plein le cœur.
+          </p>
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
+            <strong style={{ color:'var(--framboise)', fontWeight:600 }}>Une expérience privilégiée :</strong> pour préserver cette atmosphère intime et vous offrir un accompagnement sur mesure, les places sont limitées à <strong>9 participantes maximum</strong>.
           </p>
           <div style={{ marginTop:40, display:'flex', gap:30, justifyContent:'center', flexWrap:'wrap' }}>
-            {[{n:'8',l:'participantes max'},{n:prixAffiche,l:'tout compris'},{n:'3 jours',l:'de ressourcement'}].map((s,i) => (
+            {[{n:'9',l:'participantes max'},{n:prixAffiche,l:'tout compris'},{n:'3 jours',l:'de ressourcement'}].map((s,i) => (
               <div key={i} style={{ textAlign:'center', padding:'20px 28px', background:'var(--creme-pale)', borderRadius:24, border:'2px solid rgba(200,54,92,.2)' }}>
                 <div className="h-fredoka" style={{ fontSize:34, color:'var(--framboise)', lineHeight:1 }}>{s.n}</div>
                 <div style={{ fontSize:13, opacity:.7, marginTop:6 }}>{s.l}</div>
