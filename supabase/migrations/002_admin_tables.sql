@@ -76,6 +76,6 @@ INSERT INTO config_ateliers (type, prix_centimes, prix_texte, description, inclu
   ('retraites', 39000, '390€',
    'Un week-end ressourçant alliant couture, yoga et convivialité dans un gîte à Fontaine-le-Comte (86). Venez vous reconnecter à votre créativité.',
    'Hébergement en gîte|Tous les repas|2 séances de yoga|Matériel couture fourni|Maximum 9 participantes',
-   'Vendredi soir → Dimanche midi',
+   'Vendredi soir → Dimanche 16h',
    'Fontaine-le-Comte (86)')
 ON CONFLICT (type) DO NOTHING;

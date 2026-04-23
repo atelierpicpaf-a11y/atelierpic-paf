@@ -68,7 +68,7 @@ export const VILLES: Ville[] = [
     villesProches: ['poitiers', 'saint-benoit', 'vouille', 'lusignan'],
     wave: 1,
     metaDescription:
-      "🧵 Journées créatives couture et retraites weekend entre femmes à Fontaine-le-Comte (86), au cœur du Grand Poitiers. Ateliers couture enfants dès 6 ans, punch needle, anniversaires, interventions écoles/ALSH. Un gîte au calme, du yoga, de la couture guidée — la parenthèse créative que tu cherchais.",
+      "🧵 Journées créatives couture et retraites weekend entre femmes à Fontaine-le-Comte (86), au cœur du Grand Poitiers. Ateliers couture enfants dès 6 ans, punch needle, anniversaires, interventions écoles/ALSH. Un gîte au calme, du yoga, des ateliers créatifs guidés — la parenthèse créative que tu cherchais.",
   },
   {
     slug: 'vouille',

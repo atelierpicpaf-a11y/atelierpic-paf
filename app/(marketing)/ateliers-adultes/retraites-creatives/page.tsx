@@ -8,14 +8,14 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Retraites créatives couture — Weekend ressourcement entre femmes',
-  description: "Une bulle de douceur conçue pour les femmes qui veulent allier passion créative et bien-être. Week-end hors du temps dans un gîte à Fontaine-le-Comte (86) : yoga, repas bio, couture guidée. 390€ tout compris.",
+  description: "Une bulle de douceur conçue pour les femmes qui veulent allier passion créative et bien-être. Week-end hors du temps dans un gîte à Fontaine-le-Comte (86) : yoga, repas maison, atelier créatif guidé. 390€ tout compris.",
 }
 
 const INCLUS_RETRAITE = [
-  { e:'🛏️', t:'Hébergement', d:'Chambre partagée dans un gîte 4 étoiles entouré de nature.' },
-  { e:'🍽️', t:'Repas bio', d:'Tous les repas du vendredi soir au dimanche midi, cuisinés maison.' },
-  { e:'🧵', t:'Couture guidée', d:'Un projet couture adapté à tous les niveaux, matériel fourni.' },
-  { e:'🌿', t:'Bien-être', d:'Yoga doux le matin, balade en forêt, temps libre pour se ressourcer.' },
+  { e:'🛏️', t:'Hébergement', d:'Chambre partagée dans un gîte entouré de nature.' },
+  { e:'🍽️', t:'Repas', d:'Tous les repas du vendredi soir au dimanche midi, cuisinés maison.' },
+  { e:'🧵', t:'Atelier créatif guidé', d:'Un projet créatif adapté à tous les niveaux, matériel fourni.' },
+  { e:'🌿', t:'Bien-être', d:'Yoga, massage, balade en forêt… Ludivine compose une parenthèse bien-être adaptée à chaque retraite.' },
 ]
 
 export default async function RetraitesCreativesPage() {
@@ -35,7 +35,7 @@ export default async function RetraitesCreativesPage() {
           serviceJsonLd({
             name: 'Retraites créatives couture',
             description:
-              "Un weekend de ressourcement couture dans un gîte à Fontaine-le-Comte (86), au cœur de la nature en Vienne. Repas bio, yoga doux, couture guidée, 9 participantes maximum.",
+              "Un weekend de ressourcement créatif dans un gîte à Fontaine-le-Comte (86), au cœur de la nature en Vienne. Repas maison, yoga doux, atelier créatif guidé, 9 participantes maximum.",
             url: 'https://atelierpicpaf.fr/ateliers-adultes/retraites-creatives',
             priceCentimes: cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 39000,
             audience: 'Adultes',
@@ -161,17 +161,14 @@ export default async function RetraitesCreativesPage() {
         </div>
       </section>
 
-      {/* TEMOIGNAGE FINAL */}
+      {/* CTA FINAL */}
       <section style={{ padding:'80px 0', background:'var(--framboise)', color:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:680, textAlign:'center' }}>
-          <div className="h-caveat" style={{ fontSize:28, color:'var(--creme)', opacity:.9, marginBottom:20 }}>~ Ce qu&apos;elles en disent ~</div>
-          <blockquote style={{ margin:0 }}>
-            <p className="h-caveat" style={{ fontSize:28, color:'var(--creme)', lineHeight:1.5, marginBottom:24 }}>
-              « Je pensais venir coudre. Je suis repartie avec une robe, deux nouvelles amies et une envie de recommencer dès le lundi. »
-            </p>
-            <footer style={{ fontSize:15, opacity:.85 }}>— Sophie, retraite de mai 2025</footer>
-          </blockquote>
-          <div style={{ marginTop:40, display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
+          <h2 className="h-fredoka" style={{ fontSize:36, color:'var(--creme)', marginBottom:16 }}>Prête à t&apos;offrir cette parenthèse ?</h2>
+          <p style={{ fontSize:17, lineHeight:1.7, opacity:.95, marginBottom:32 }}>
+            Les places sont limitées à 9 participantes. Réserve la tienne, ou contacte-moi si tu veux plus d&apos;infos sur le programme et le cadre.
+          </p>
+          <div style={{ display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
             <a href="#retraites" className="cta-pill" style={{ boxShadow:'0 0 0 4px var(--framboise-dark), var(--shadow-framboise)' }}>Voir les dates</a>
             <a href="/contact" className="cta-ghost" style={{ background:'transparent', color:'var(--creme)', borderColor:'var(--creme)' }}>Me contacter</a>
           </div>
