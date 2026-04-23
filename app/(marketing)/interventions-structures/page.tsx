@@ -77,7 +77,7 @@ const PUBLICS = [
   {
     e: '📚',
     t: 'Médiathèques',
-    d: "Ateliers autour d'un album, animations tout-public, nuit de la lecture, semaines thématiques, partenariats au long cours.",
+    d: "Ateliers autour d'un album, animations tout-public, semaines thématiques, partenariats au long cours.",
   },
   {
     e: '🤝',
@@ -92,7 +92,7 @@ const PUBLICS = [
   {
     e: '💡',
     t: 'Autres structures',
-    d: "Crèches, MJC, IME, EHPAD, maisons de quartier… Si votre structure n'apparaît pas ici, contactez Ludivine : beaucoup de choses sont possibles.",
+    d: "Crèches, MJC, IME, maisons de quartier… Si votre structure n'apparaît pas ici, contactez Ludivine : beaucoup de choses sont possibles.",
   },
 ]
 
@@ -294,7 +294,7 @@ export default function InterventionsPage() {
             {[
               {
                 titre: 'Atelier punch needle en médiathèque',
-                d: "Animation 2h autour d'un album, 8 enfants, chacun repart avec sa création. Parfait pour une nuit de la lecture ou un temps fort.",
+                d: "Animation 2h autour d'un album, 8 enfants, chacun repart avec sa création. Parfait pour une semaine thématique ou un temps fort.",
               },
               {
                 titre: 'Cycle couture en ALSH',
