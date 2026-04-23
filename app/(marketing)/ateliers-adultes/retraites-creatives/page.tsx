@@ -110,7 +110,7 @@ export default async function RetraitesCreativesPage() {
               <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ Votre hôte ~</span>
               <h2 className="h-fredoka" style={{ fontSize:'clamp(32px,4vw,48px)', color:'var(--framboise)', margin:'10px 0 24px', lineHeight:1.1 }}>Avec Ludivine</h2>
               <p style={{ fontSize:17, opacity:.88, lineHeight:1.7, marginBottom:16 }}>
-                Passionnée de couture depuis toujours, j&apos;ai créé L&apos;atelier Pic &amp; Paf pour partager ce qui me fait vibrer : transmettre, créer, relier.
+                Passionnée et créative depuis toujours, j&apos;ai créé L&apos;atelier Pic &amp; Paf pour partager ce qui me fait vibrer : transmettre, créer, relier.
               </p>
               <p style={{ fontSize:17, opacity:.88, lineHeight:1.7, marginBottom:16 }}>
                 Mes retraites, je les imagine comme des petites bulles de douceur : un groupe restreint, un cadre chaleureux, et surtout l&apos;envie de vous offrir un vrai moment pour vous. Pas de pression, pas de niveau requis, juste l&apos;envie de créer et de se sentir bien.
