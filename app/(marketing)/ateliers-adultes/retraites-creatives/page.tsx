@@ -7,8 +7,8 @@ import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Retraites créatives couture — Weekend ressourcement',
-  description: 'Un weekend de ressourcement couture dans un gîte en Deux-Sèvres. Repas bio, yoga, couture guidée. 390€ tout compris.',
+  title: 'Retraites créatives couture — Weekend ressourcement entre femmes',
+  description: "Une bulle de douceur conçue pour les femmes qui veulent allier passion créative et bien-être. Week-end hors du temps dans un gîte en Deux-Sèvres : yoga, repas bio, couture guidée. 390€ tout compris.",
 }
 
 const INCLUS_RETRAITE = [
@@ -85,8 +85,8 @@ export default async function RetraitesCreativesPage() {
         <div className="container" style={{ maxWidth:760, textAlign:'center' }}>
           <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42', marginBottom:24 }}>Weekend ressourcement</span>
           <h1 className="h-fredoka" style={{ fontSize:'clamp(44px,6vw,76px)', color:'var(--framboise)', margin:'16px 0 28px', lineHeight:1.05 }}>Retraites créatives</h1>
-          <p style={{ fontSize:'clamp(17px,1.4vw,20px)', maxWidth:600, margin:'0 auto 16px', lineHeight:1.65, opacity:.85 }}>
-            Trois jours pour se retrouver entre femmes qui aiment coudre. Un gîte en pleine nature dans les Deux-Sèvres, des repas bio, du yoga et un beau projet couture à ramener chez soi.
+          <p style={{ fontSize:'clamp(17px,1.4vw,20px)', maxWidth:640, margin:'0 auto 16px', lineHeight:1.7, opacity:.88 }}>
+            <strong style={{ color:'var(--framboise)', fontWeight:600 }}>Besoin de ralentir et de retrouver votre élan créatif&nbsp;?</strong> Offrez-vous un week-end hors du temps, une bulle de douceur conçue exclusivement pour les femmes qui souhaitent allier passion créative et bien-être.
           </p>
           <p className="h-caveat" style={{ fontSize:28, color:'var(--framboise)', margin:'0 0 36px' }}>~ Vendredi soir → Dimanche 16h ~</p>
           <div style={{ display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
