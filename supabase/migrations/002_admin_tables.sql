@@ -70,7 +70,7 @@ CREATE POLICY "Config admin" ON config_ateliers
 INSERT INTO config_ateliers (type, prix_centimes, prix_texte, description, inclus, duree, lieu) VALUES
   ('journees', 9000, '90€',
    'Une journée complète de couture créative dans une ambiance chaleureuse et bienveillante. Tous les niveaux sont les bienvenus.',
-   'Matériel et tissu fourni|Déjeuner tiré du sac|Collations|Maximum 6 participantes',
+   'Matériel et tissu fourni|Déjeuner tiré du sac|Collations|Maximum 8 participantes',
    '9h30 → 17h30',
    'Fontaine-le-Comte (86)'),
   ('retraites', 39000, '390€',

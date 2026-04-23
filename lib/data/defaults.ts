@@ -16,9 +16,9 @@ export const DEFAULT_ATELIERS_ENFANTS: AtelierEnfant[] = [
 ]
 
 export const DEFAULT_DATES_JOURNEES: DateJournee[] = [
-  { id:'dj1', jour:'Sam', num:'12', mois:'Avril', theme:"Blouse d'été — patron Mars & Co", places: 3, placesMax: 6 },
-  { id:'dj2', jour:'Dim', num:'27', mois:'Avril', theme:'Sac tote revisité', places: 1, placesMax: 6 },
-  { id:'dj3', jour:'Sam', num:'10', mois:'Mai', theme:'Jupe midi — carte blanche', places: 5, placesMax: 6 },
+  { id:'dj1', jour:'Sam', num:'12', mois:'Avril', theme:"Blouse d'été — patron Mars & Co", places: 3, placesMax: 8 },
+  { id:'dj2', jour:'Dim', num:'27', mois:'Avril', theme:'Sac tote revisité', places: 1, placesMax: 8 },
+  { id:'dj3', jour:'Sam', num:'10', mois:'Mai', theme:'Jupe midi — carte blanche', places: 5, placesMax: 8 },
 ]
 
 export const DEFAULT_DATES_RETRAITES: DateRetraite[] = [
@@ -27,5 +27,5 @@ export const DEFAULT_DATES_RETRAITES: DateRetraite[] = [
   { id:'dr3', dates:'26 — 28 sept.', theme:'Retraite rentrée douce', statut:'Ouverture réservations', complet: false },
 ]
 
-export const JOURNEES_CONFIG = { prix: 90, lieu: 'Fontaine-le-Comte', placesMax: 6, horaire: '9h30 → 17h' }
+export const JOURNEES_CONFIG = { prix: 90, lieu: 'Fontaine-le-Comte', placesMax: 8, horaire: '9h30 → 17h' }
 export const RETRAITES_CONFIG = { prix: 390, lieu: 'Deux-Sèvres (79)', nbLits: 8, duree: 'Vendredi soir → Dimanche 16h' }

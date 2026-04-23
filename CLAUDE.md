@@ -7,7 +7,7 @@
 L'atelier Pic & Paf is run by **Ludivine**, a sewing workshop instructor based in **Vienne (86)** and **Deux-Sèvres (79)**, Nouvelle-Aquitaine, France. She offers:
 
 - **Ateliers enfants** — weekly sewing classes for kids 6-12 (Poitiers, Vouillé, Fontaine-le-Comte, Châtellerault), holiday stages, birthday parties, school events
-- **Journées créatives** — full-day adult sewing workshops at Fontaine-le-Comte, 90€, max 6 participants, everything included
+- **Journées créatives** — full-day adult sewing workshops at Fontaine-le-Comte, 90€ solo / 150€ duo (promo -30€), max 8 participants, tissu + laine (punch needle), everything included
 - **Retraites créatives** — weekend sewing retreats in a gîte in Deux-Sèvres, 390€, max 8 participants, meals + yoga included
 - **Structure interventions** — visiting ALSH, libraries, schools, associations
 

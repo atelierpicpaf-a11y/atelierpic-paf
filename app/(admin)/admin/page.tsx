@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: 'Espace Ludivine' }
 const DEFAULT_CFG_JOURNEES: ConfigAtelier = {
   type: 'journees', prix_centimes: 9000, prix_texte: '90€',
   description: 'Une journée complète de couture créative dans une ambiance chaleureuse et bienveillante.',
-  inclus: 'Matériel et tissu fourni|Déjeuner tiré du sac|Collations|Maximum 6 participantes',
+  inclus: 'Matériel et tissu fourni|Déjeuner tiré du sac|Collations|Maximum 8 participantes',
   duree: '9h30 → 17h30', lieu: 'Fontaine-le-Comte (86)',
   updated_at: new Date().toISOString(),
 }

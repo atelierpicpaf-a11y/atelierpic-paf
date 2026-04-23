@@ -20,13 +20,6 @@ const PROGRAMME = [
   { n:'4', titre:"Après-midi & finitions", desc:"On reprend, on finit les détails, on prend les dernières photos fières de sa création !", heure:'14h – 17h' },
 ]
 
-const CE_QU_ON_PEUT_CREER = [
-  { e:'👗', t:'Vêtements en tissu', d:'Blouse, jupe, robe, top… avec un patron ou en carte blanche.' },
-  { e:'👜', t:'Sacs & accessoires', d:'Tote bag, sac à main, trousse, pochette en tissu.' },
-  { e:'🪡', t:'Punch needle', d:'Tableau, coussin, déco murale en laine, à votre rythme.' },
-  { e:'🏠', t:'Déco maison', d:'Coussin, nappe, rideau, linge de maison en tissu.' },
-]
-
 const INCLUS = [
   'Machine à coudre & surjeteuse',
   'Tissus & mercerie fournis',
@@ -55,7 +48,7 @@ export default async function JourneesCreativesPage() {
           serviceJsonLd({
             name: 'Journées créatives couture',
             description:
-              "Une journée entière de couture guidée à Fontaine-le-Comte (5 min au sud de Poitiers). Tout compris : machine, tissus, patron, repas partagé. 6 participantes maximum.",
+              "Une journée entière de couture guidée à Fontaine-le-Comte (5 min au sud de Poitiers). Tout compris : machine, tissus, patron, repas partagé. 8 participantes maximum.",
             url: 'https://atelierpicpaf.fr/ateliers-adultes/journees-creatives',
             priceCentimes: cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 9000,
             audience: 'Adultes',
@@ -88,7 +81,7 @@ export default async function JourneesCreativesPage() {
               {[
                 {n:prixAffiche,l:'seule, tout compris'},
                 {n:'150€',l:'à deux (-30€ de promo)'},
-                {n:`${cfg?.prix_centimes ? 6 : JOURNEES_CONFIG.placesMax} places`,l:'max par journée'},
+                {n:`${cfg?.prix_centimes ? 8 : JOURNEES_CONFIG.placesMax} places`,l:'max par journée'},
                 {n:horaire,l:'horaire'},
               ].map((s,i) => (
                 <div key={i}>
@@ -126,21 +119,53 @@ export default async function JourneesCreativesPage() {
         </div>
       </section>
 
-      {/* CE QU'ON PEUT CRÉER — tissu & laine */}
-      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
-        <div className="container">
+      {/* DEUX UNIVERS — tissu & laine */}
+      <section style={{ padding:'90px 0', background:'var(--creme-pale)', position:'relative', overflow:'hidden' }}>
+        <div style={{ position:'absolute', top:40, right:-50, opacity:.08, pointerEvents:'none' }}>
+          <Bobines size={260} />
+        </div>
+        <div className="container" style={{ position:'relative' }}>
           <SectionTitle kicker="Sur le thème du tissu &amp; de la laine" align="center">Ce qu&apos;on peut créer</SectionTitle>
-          <p style={{ textAlign:'center', maxWidth:640, margin:'20px auto 0', fontSize:16, opacity:.8, lineHeight:1.6 }}>
-            Les journées créatives tournent autour de deux univers : la couture (tissu) et le punch needle (laine). À vous de choisir votre projet du jour.
+          <p style={{ textAlign:'center', maxWidth:680, margin:'26px auto 55px', fontSize:18, opacity:.85, lineHeight:1.7 }}>
+            Les journées créatives tournent autour de deux univers&nbsp;: la couture <strong style={{ color:'var(--framboise)' }}>(tissu)</strong> et le punch needle <strong style={{ color:'var(--framboise)' }}>(laine)</strong>. À vous de choisir votre projet du jour.
           </p>
-          <div style={{ marginTop:50, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:24 }}>
-            {CE_QU_ON_PEUT_CREER.map((it, i) => (
-              <div key={i} className="card" style={{ padding:'28px 24px', textAlign:'center' }}>
-                <div style={{ fontSize:48, marginBottom:16 }}>{it.e}</div>
-                <h3 className="h-fredoka" style={{ fontSize:20, color:'var(--framboise)', margin:'0 0 10px' }}>{it.t}</h3>
-                <p style={{ margin:0, fontSize:14, opacity:.8, lineHeight:1.6 }}>{it.d}</p>
-              </div>
-            ))}
+
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:28, maxWidth:820, margin:'0 auto' }}>
+            {/* Univers 1 — La couture (tissu) */}
+            <div style={{
+              background:'var(--creme)',
+              borderRadius:28,
+              padding:'48px 32px 40px',
+              boxShadow:'var(--shadow-card)',
+              textAlign:'center',
+              border:'2px solid rgba(200,54,92,.1)',
+            }}>
+              <div style={{ fontSize:78, lineHeight:1, marginBottom:18 }}>🧵</div>
+              <div className="h-caveat" style={{ fontSize:22, color:'var(--framboise)', opacity:.8, marginBottom:4 }}>~ Univers n°1 ~</div>
+              <h3 className="h-fredoka" style={{ fontSize:32, color:'var(--framboise)', margin:'0 0 6px', lineHeight:1.1 }}>La couture</h3>
+              <div style={{ fontSize:13, opacity:.65, letterSpacing:3, textTransform:'uppercase', marginBottom:16 }}>Tissu</div>
+              <p style={{ margin:0, fontSize:15, opacity:.75, lineHeight:1.6 }}>
+                Vêtements, sacs, accessoires, déco… avec un patron ou en carte blanche.
+              </p>
+            </div>
+
+            {/* Univers 2 — Le punch needle (laine) */}
+            <div style={{
+              background:'var(--creme)',
+              borderRadius:28,
+              padding:'48px 32px 40px',
+              boxShadow:'var(--shadow-card)',
+              textAlign:'center',
+              border:'2px solid rgba(200,54,92,.1)',
+            }}>
+              <div style={{ fontSize:78, lineHeight:1, marginBottom:18 }}>🪡</div>
+              <div className="h-caveat" style={{ fontSize:22, color:'var(--framboise)', opacity:.8, marginBottom:4 }}>~ Univers n°2 ~</div>
+              <h3 className="h-fredoka" style={{ fontSize:32, color:'var(--framboise)', margin:'0 0 6px', lineHeight:1.1 }}>Le punch needle</h3>
+              <div style={{ fontSize:13, opacity:.65, letterSpacing:3, textTransform:'uppercase', marginBottom:16 }}>Laine</div>
+              <p style={{ margin:0, fontSize:15, opacity:.75, lineHeight:1.6 }}>
+                Tableau, coussin, déco murale en laine. Une technique accessible et méditative.
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -476,7 +476,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                 <textarea style={TEXTAREA_S} value={cfgJournees.description ?? ''} onChange={e => updateCfgJournees('description', e.target.value)} />
               </FieldGroup>
               <FieldGroup label="Ce qui est inclus (séparés par |)">
-                <input style={INPUT_S} value={cfgJournees.inclus ?? ''} onChange={e => updateCfgJournees('inclus', e.target.value)} placeholder="Matériel fourni | Déjeuner | Max 6 personnes" />
+                <input style={INPUT_S} value={cfgJournees.inclus ?? ''} onChange={e => updateCfgJournees('inclus', e.target.value)} placeholder="Matériel fourni | Déjeuner | Max 8 personnes" />
               </FieldGroup>
             </div>
           </>
