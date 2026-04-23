@@ -152,6 +152,16 @@ export async function POST(req: Request) {
         atelierDate = formatDateRangeFr(sess.date_debut, sess.date_fin)
         atelierLieu = sess.lieu || sess.ville || ''
 
+        // Duo journées créatives : nb_personnes peut être 1 ou 2
+        const nbPersonnes = metadata.nb_personnes === '2' ? 2 : 1
+        const prenom2 = metadata.prenom_2 || ''
+        const nom2 = metadata.nom_2 || ''
+        const messageClient = (metadata.message || '').trim()
+        const messageDuo = nbPersonnes === 2 && (prenom2 || nom2)
+          ? `[Duo] Accompagnante : ${prenom2} ${nom2}`.trim()
+          : ''
+        const messageFinal = [messageDuo, messageClient].filter(Boolean).join(' — ') || null
+
         const { error: insertError } = await db.from('reservations').insert({
           atelier_enfant_id: null,
           session_id: sessionDbId!,
@@ -159,11 +169,11 @@ export async function POST(req: Request) {
           prenom: metadata.prenom || '',
           email,
           telephone: metadata.telephone || null,
-          nb_personnes: 1,
-          prenom_participant: null,
-          nom_participant: null,
+          nb_personnes: nbPersonnes,
+          prenom_participant: nbPersonnes === 2 ? prenom2 || null : null,
+          nom_participant: nbPersonnes === 2 ? nom2 || null : null,
           age_participant: null,
-          message: metadata.message || null,
+          message: messageFinal,
           regime_alimentaire: null,
           stripe_session_id: session.id,
           stripe_payment_intent_id: (session.payment_intent as string | null) ?? null,
@@ -176,8 +186,8 @@ export async function POST(req: Request) {
           return NextResponse.json({ received: true, error: insertError.message })
         }
 
-        // Incrémenter places_reservees + mettre à jour statut si complet
-        const newPlacesReservees = sess.places_reservees + 1
+        // Incrémenter places_reservees du nombre de personnes (1 ou 2) + statut
+        const newPlacesReservees = sess.places_reservees + nbPersonnes
         const newStatut = newPlacesReservees >= sess.places_max ? 'complet' : sess.statut
         await db
           .from('sessions')

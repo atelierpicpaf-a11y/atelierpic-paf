@@ -13,6 +13,10 @@ export const reservationSchema = z
     nomEnfant: z.string().trim().max(80).optional().or(z.literal('')),
     ageEnfant: z.coerce.number().int().min(1).max(99).optional().or(z.literal('')),
     message: z.string().trim().max(1000).optional().or(z.literal('')),
+    // Duo journées créatives — 1 par défaut, 2 si venue en binôme (promo 150€ au lieu de 180€)
+    nbPersonnes: z.coerce.number().int().min(1).max(2).optional(),
+    prenom2: z.string().trim().max(80).optional().or(z.literal('')),
+    nom2: z.string().trim().max(80).optional().or(z.literal('')),
   })
   .superRefine((data, ctx) => {
     const hasAtelier = Boolean(data.atelierId)
@@ -23,6 +27,15 @@ export const reservationSchema = z
         message: 'Fournir exactement un: atelierId OU sessionId',
         path: ['atelierId'],
       })
+    }
+    // Si duo, on exige les noms de la 2e personne
+    if (data.nbPersonnes === 2) {
+      if (!data.prenom2 || data.prenom2.trim().length < 2) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Prénom de la 2e personne requis', path: ['prenom2'] })
+      }
+      if (!data.nom2 || data.nom2.trim().length < 2) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Nom de la 2e personne requis', path: ['nom2'] })
+      }
     }
   })
 

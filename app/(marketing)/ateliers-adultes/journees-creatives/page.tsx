@@ -10,7 +10,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Journées créatives couture adultes',
-  description: 'Une journée entière pour coudre le projet de vos rêves à Fontaine-le-Comte. 90€ tout compris, 6 participantes maximum.',
+  description: 'Une journée entière pour coudre le projet de vos rêves à Fontaine-le-Comte. 90€ solo ou 150€ à deux (-30€ de promo duo). Tissu & laine.',
 }
 
 const PROGRAMME = [
@@ -20,11 +20,11 @@ const PROGRAMME = [
   { n:'4', titre:"Après-midi & finitions", desc:"On reprend, on finit les détails, on prend les dernières photos fières de sa création !", heure:'14h – 17h' },
 ]
 
-const CE_QU_ON_PEUT_COUDRE = [
-  { e:'👗', t:'Vêtements', d:'Blouse, jupe, robe, top… avec un patron ou en carte blanche.' },
-  { e:'👜', t:'Sacs & accessoires', d:'Tote bag, sac à main, trousse, pochette.' },
-  { e:'🏠', t:'Déco maison', d:'Coussin, nappe, rideau, linge de maison.' },
-  { e:'🎁', t:'Cadeaux personnalisés', d:'Créations sur-mesure pour offrir à vos proches.' },
+const CE_QU_ON_PEUT_CREER = [
+  { e:'👗', t:'Vêtements en tissu', d:'Blouse, jupe, robe, top… avec un patron ou en carte blanche.' },
+  { e:'👜', t:'Sacs & accessoires', d:'Tote bag, sac à main, trousse, pochette en tissu.' },
+  { e:'🪡', t:'Punch needle', d:'Tableau, coussin, déco murale en laine, à votre rythme.' },
+  { e:'🏠', t:'Déco maison', d:'Coussin, nappe, rideau, linge de maison en tissu.' },
 ]
 
 const INCLUS = [
@@ -85,7 +85,12 @@ export default async function JourneesCreativesPage() {
               <a href="/contact" className="cta-ghost">Une question ?</a>
             </div>
             <div style={{ display:'flex', gap:24, flexWrap:'wrap' }}>
-              {[{n:prixAffiche,l:'tout compris'},{n:`${cfg?.prix_centimes ? 6 : JOURNEES_CONFIG.placesMax} places`,l:'max par journée'},{n:horaire,l:'horaire'}].map((s,i) => (
+              {[
+                {n:prixAffiche,l:'seule, tout compris'},
+                {n:'150€',l:'à deux (-30€ de promo)'},
+                {n:`${cfg?.prix_centimes ? 6 : JOURNEES_CONFIG.placesMax} places`,l:'max par journée'},
+                {n:horaire,l:'horaire'},
+              ].map((s,i) => (
                 <div key={i}>
                   <div className="h-fredoka" style={{ fontSize:26, color:'var(--framboise)', lineHeight:1 }}>{s.n}</div>
                   <div style={{ fontSize:13, opacity:.7 }}>{s.l}</div>
@@ -121,12 +126,15 @@ export default async function JourneesCreativesPage() {
         </div>
       </section>
 
-      {/* CE QU'ON PEUT COUDRE */}
+      {/* CE QU'ON PEUT CRÉER — tissu & laine */}
       <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
         <div className="container">
-          <SectionTitle kicker="Vos idées sont les bienvenues" align="center">Ce qu&apos;on peut coudre</SectionTitle>
+          <SectionTitle kicker="Sur le thème du tissu &amp; de la laine" align="center">Ce qu&apos;on peut créer</SectionTitle>
+          <p style={{ textAlign:'center', maxWidth:640, margin:'20px auto 0', fontSize:16, opacity:.8, lineHeight:1.6 }}>
+            Les journées créatives tournent autour de deux univers : la couture (tissu) et le punch needle (laine). À vous de choisir votre projet du jour.
+          </p>
           <div style={{ marginTop:50, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:24 }}>
-            {CE_QU_ON_PEUT_COUDRE.map((it, i) => (
+            {CE_QU_ON_PEUT_CREER.map((it, i) => (
               <div key={i} className="card" style={{ padding:'28px 24px', textAlign:'center' }}>
                 <div style={{ fontSize:48, marginBottom:16 }}>{it.e}</div>
                 <h3 className="h-fredoka" style={{ fontSize:20, color:'var(--framboise)', margin:'0 0 10px' }}>{it.t}</h3>
@@ -145,11 +153,20 @@ export default async function JourneesCreativesPage() {
             <div>
               <span className="h-caveat" style={{ fontSize:26, color:'var(--creme)', opacity:.9 }}>~ Tout est prévu ~</span>
               <h2 className="h-fredoka" style={{ fontSize:'clamp(36px,5vw,60px)', color:'var(--creme)', margin:'10px 0 20px', lineHeight:1 }}>Ce qui est inclus</h2>
-              <div style={{ marginBottom:30 }}>
+              <div style={{ marginBottom:20 }}>
                 <div className="h-fredoka" style={{ fontSize:64, color:'var(--creme)', lineHeight:1 }}>{prixAffiche}</div>
-                <div style={{ fontSize:15, opacity:.8 }}>par personne, tout compris</div>
+                <div style={{ fontSize:15, opacity:.8 }}>seule, tout compris</div>
               </div>
-              <a href="#dates" className="cta-pill" style={{ boxShadow:'0 0 0 4px var(--framboise-dark), var(--shadow-framboise)' }}>Je réserve ma place</a>
+              <div style={{ display:'inline-flex', alignItems:'center', gap:10, background:'rgba(251,244,228,.15)', border:'1px dashed rgba(251,244,228,.45)', borderRadius:16, padding:'14px 18px', marginBottom:30 }}>
+                <span style={{ background:'var(--menthe)', color:'#1a4a42', fontSize:12, fontWeight:700, padding:'4px 10px', borderRadius:999 }}>PROMO DUO</span>
+                <div>
+                  <div className="h-fredoka" style={{ fontSize:24, color:'var(--creme)', lineHeight:1.1 }}>150€ à deux</div>
+                  <div style={{ fontSize:13, opacity:.85 }}>au lieu de 180€ · soit -30€ en venant à deux</div>
+                </div>
+              </div>
+              <div>
+                <a href="#dates" className="cta-pill" style={{ boxShadow:'0 0 0 4px var(--framboise-dark), var(--shadow-framboise)' }}>Je réserve ma place</a>
+              </div>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
               {(cfg?.inclus ? cfg.inclus.split('|').map(s => s.trim()) : INCLUS).map((item, i) => (

@@ -74,9 +74,38 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Prix non configuré pour cette session' }, { status: 400 })
       }
 
-      itemName = session.titre
-      itemDescription = session.description || `${session.lieu}`
-      prixCentimes = priceToUse
+      // ── Tarif duo journées créatives ──
+      // 1 personne = priceToUse (90€ par défaut)
+      // 2 personnes = 150€ tout compris (au lieu de 180€, promo -30€)
+      const nbPersonnes = data.nbPersonnes === 2 ? 2 : 1
+      const isJourneeDuo = session.type === 'journee_creative' && nbPersonnes === 2
+      const DUO_PRICE_CENTIMES = 15000 // 150€ — hardcodé, modifiable ici
+
+      // Vérifier qu'il reste assez de places pour l'équipe demandée
+      if (session.places_reservees + nbPersonnes > session.places_max) {
+        return NextResponse.json(
+          {
+            error: `Il ne reste pas assez de places pour ${nbPersonnes} personne${nbPersonnes > 1 ? 's' : ''}. Places restantes : ${session.places_max - session.places_reservees}.`,
+          },
+          { status: 400 }
+        )
+      }
+
+      if (isJourneeDuo) {
+        itemName = `${session.titre} — duo (2 personnes)`
+        itemDescription = session.description
+          ? `${session.description} · Tarif duo 150€ au lieu de 180€ (-30€)`
+          : `${session.lieu} · Tarif duo 150€ au lieu de 180€ (-30€)`
+        prixCentimes = DUO_PRICE_CENTIMES
+        metadataExtra.nb_personnes = '2'
+        metadataExtra.prenom_2 = data.prenom2 || ''
+        metadataExtra.nom_2 = data.nom2 || ''
+      } else {
+        itemName = session.titre
+        itemDescription = session.description || `${session.lieu}`
+        prixCentimes = priceToUse
+        metadataExtra.nb_personnes = '1'
+      }
       metadataExtra.session_id = session.id
       metadataExtra.session_type = session.type
     } else {

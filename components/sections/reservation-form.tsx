@@ -44,6 +44,8 @@ function formatDateRangeFr(debut: string, fin: string | null): string {
   return `${d1.getDate()} ${mois[d1.getMonth()]} → ${d2.getDate()} ${mois[d2.getMonth()]}`
 }
 
+const DUO_PRICE_CENTIMES = 15000 // 150€ — promo duo journées créatives (doit matcher l'API checkout)
+
 export function ReservationForm(props: Props) {
   const { mode, onClose } = props
   const [nom, setNom] = useState('')
@@ -54,6 +56,9 @@ export function ReservationForm(props: Props) {
   const [nomEnfant, setNomEnfant] = useState('')
   const [ageEnfant, setAgeEnfant] = useState('')
   const [message, setMessage] = useState('')
+  const [nbPersonnes, setNbPersonnes] = useState<1 | 2>(1)
+  const [prenom2, setPrenom2] = useState('')
+  const [nom2, setNom2] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -62,6 +67,7 @@ export function ReservationForm(props: Props) {
   let sousTitre = ''
   let prixCentimes = 0
   let prixTexteFallback: string | null = null
+  const isJournee = mode === 'session' && props.session.type === 'journee_creative'
 
   if (mode === 'atelier') {
     const a = props.atelier
@@ -77,8 +83,11 @@ export function ReservationForm(props: Props) {
     prixTexteFallback = s.prix_texte
   }
 
-  const prix = prixCentimes > 0
-    ? (prixCentimes / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
+  // Si duo journée créative, on affiche 150€ (pas 2x le prix solo)
+  const prixCentimesAffiche = isJournee && nbPersonnes === 2 ? DUO_PRICE_CENTIMES : prixCentimes
+
+  const prix = prixCentimesAffiche > 0
+    ? (prixCentimesAffiche / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
     : prixTexteFallback || '—'
 
   async function handleSubmit(e: React.FormEvent) {
@@ -101,6 +110,13 @@ export function ReservationForm(props: Props) {
         body.ageEnfant = ageEnfant || ''
       } else {
         body.sessionId = props.session.id
+        if (isJournee) {
+          body.nbPersonnes = String(nbPersonnes)
+          if (nbPersonnes === 2) {
+            body.prenom2 = prenom2
+            body.nom2 = nom2
+          }
+        }
       }
 
       const res = await fetch('/api/stripe/checkout', {
@@ -224,6 +240,92 @@ export function ReservationForm(props: Props) {
                   <input id="ageEnfant" type="number" min={1} max={99} value={ageEnfant} onChange={(e) => setAgeEnfant(e.target.value)} style={INPUT_S} />
                 </div>
               </div>
+            </div>
+          )}
+
+          {isJournee && (
+            <div style={{ borderTop: '1px dashed rgba(200,54,92,.2)', paddingTop: 14, marginTop: 4 }}>
+              <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600, color: 'var(--framboise)' }}>Je viens…</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: nbPersonnes === 2 ? 14 : 0 }}>
+                <button
+                  type="button"
+                  onClick={() => setNbPersonnes(1)}
+                  style={{
+                    padding: '14px 12px',
+                    borderRadius: 14,
+                    border: `2px solid ${nbPersonnes === 1 ? 'var(--framboise)' : 'rgba(200,54,92,.25)'}`,
+                    background: nbPersonnes === 1 ? 'var(--framboise)' : 'var(--creme-pale)',
+                    color: nbPersonnes === 1 ? '#fff' : 'var(--ink)',
+                    cursor: 'pointer',
+                    fontFamily: 'inherit',
+                    fontSize: 14,
+                    fontWeight: 600,
+                    transition: 'all .15s',
+                    textAlign: 'left',
+                  }}
+                >
+                  Seule
+                  <span style={{ display: 'block', fontSize: 12, opacity: 0.85, fontWeight: 400, marginTop: 2 }}>
+                    {(prixCentimes / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNbPersonnes(2)}
+                  style={{
+                    padding: '14px 12px',
+                    borderRadius: 14,
+                    border: `2px solid ${nbPersonnes === 2 ? 'var(--framboise)' : 'rgba(200,54,92,.25)'}`,
+                    background: nbPersonnes === 2 ? 'var(--framboise)' : 'var(--creme-pale)',
+                    color: nbPersonnes === 2 ? '#fff' : 'var(--ink)',
+                    cursor: 'pointer',
+                    fontFamily: 'inherit',
+                    fontSize: 14,
+                    fontWeight: 600,
+                    transition: 'all .15s',
+                    textAlign: 'left',
+                    position: 'relative',
+                  }}
+                >
+                  À deux
+                  <span style={{ display: 'block', fontSize: 12, opacity: 0.85, fontWeight: 400, marginTop: 2 }}>
+                    {(DUO_PRICE_CENTIMES / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })} au lieu de 180€
+                  </span>
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: -8,
+                      right: -6,
+                      background: 'var(--menthe)',
+                      color: '#1a4a42',
+                      fontSize: 11,
+                      fontWeight: 700,
+                      padding: '3px 8px',
+                      borderRadius: 999,
+                      boxShadow: '0 2px 6px rgba(0,0,0,.12)',
+                    }}
+                  >
+                    -30€
+                  </span>
+                </button>
+              </div>
+              {nbPersonnes === 2 && (
+                <div style={{ background: 'var(--creme-pale)', border: '1px dashed rgba(200,54,92,.25)', borderRadius: 14, padding: 14 }}>
+                  <p style={{ margin: '0 0 10px', fontSize: 12, opacity: 0.8 }}>
+                    Qui vient avec toi&nbsp;? (1 seul paiement de 150€ pour les deux)
+                  </p>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                    <div>
+                      <label style={LABEL_S} htmlFor="prenom2">Prénom *</label>
+                      <input id="prenom2" type="text" required value={prenom2} onChange={(e) => setPrenom2(e.target.value)} style={INPUT_S} />
+                    </div>
+                    <div>
+                      <label style={LABEL_S} htmlFor="nom2">Nom *</label>
+                      <input id="nom2" type="text" required value={nom2} onChange={(e) => setNom2(e.target.value)} style={INPUT_S} />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
