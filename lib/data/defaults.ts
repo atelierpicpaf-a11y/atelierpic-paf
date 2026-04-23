@@ -28,4 +28,4 @@ export const DEFAULT_DATES_RETRAITES: DateRetraite[] = [
 ]
 
 export const JOURNEES_CONFIG = { prix: 90, lieu: 'Fontaine-le-Comte', placesMax: 8, horaire: '9h30 → 17h' }
-export const RETRAITES_CONFIG = { prix: 390, lieu: 'Deux-Sèvres (79)', nbLits: 8, duree: 'Vendredi soir → Dimanche 16h' }
+export const RETRAITES_CONFIG = { prix: 390, lieu: 'Fontaine-le-Comte (86)', nbLits: 8, duree: 'Vendredi soir → Dimanche 16h' }

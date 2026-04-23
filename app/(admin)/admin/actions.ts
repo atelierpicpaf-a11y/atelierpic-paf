@@ -117,8 +117,8 @@ export async function deleteJournee(id: string) {
 // ── RETRAITES CREATIVES ────────────────────────────────────
 const RETRAITE_DEFAULTS = {
   type: 'retraite_creative' as const,
-  lieu: 'Gîte, Deux-Sèvres (79)',
-  places_max: 8,
+  lieu: 'Gîte, Fontaine-le-Comte (86)',
+  places_max: 9,
   places_reservees: 0,
   prix_centimes: 39000,
   statut: 'ouvert' as const,

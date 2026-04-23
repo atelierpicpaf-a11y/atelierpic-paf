@@ -517,7 +517,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                     <input style={INPUT_S} type="date" value={toDateInput(r.date_fin)} onChange={e => updateRetraiteField(r.id, 'date_fin', fromDateInput(e.target.value, '16:00'))} />
                   </FieldGroup>
                   <FieldGroup label="Lieu">
-                    <input style={INPUT_S} value={r.lieu} onChange={e => updateRetraiteField(r.id, 'lieu', e.target.value)} placeholder="Gîte, Deux-Sèvres" />
+                    <input style={INPUT_S} value={r.lieu} onChange={e => updateRetraiteField(r.id, 'lieu', e.target.value)} placeholder="Gîte, Fontaine-le-Comte" />
                   </FieldGroup>
                   <FieldGroup label="Places max">
                     <input style={INPUT_S} type="number" min={1} max={100} value={r.places_max} onChange={e => updateRetraiteField(r.id, 'places_max', Number(e.target.value))} />
@@ -563,7 +563,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                 </FieldGroup>
               </div>
               <FieldGroup label="Lieu" style={{ marginBottom: 12 }}>
-                <input style={INPUT_S} value={cfgRetraites.lieu ?? ''} onChange={e => updateCfgRetraites('lieu', e.target.value)} placeholder="Deux-Sèvres (79)" />
+                <input style={INPUT_S} value={cfgRetraites.lieu ?? ''} onChange={e => updateCfgRetraites('lieu', e.target.value)} placeholder="Fontaine-le-Comte (86)" />
               </FieldGroup>
               <FieldGroup label="Description" style={{ marginBottom: 12 }}>
                 <textarea style={TEXTAREA_S} value={cfgRetraites.description ?? ''} onChange={e => updateCfgRetraites('description', e.target.value)} />

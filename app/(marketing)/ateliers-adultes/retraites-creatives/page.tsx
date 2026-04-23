@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Retraites créatives couture — Weekend ressourcement entre femmes',
-  description: "Une bulle de douceur conçue pour les femmes qui veulent allier passion créative et bien-être. Week-end hors du temps dans un gîte en Deux-Sèvres : yoga, repas bio, couture guidée. 390€ tout compris.",
+  description: "Une bulle de douceur conçue pour les femmes qui veulent allier passion créative et bien-être. Week-end hors du temps dans un gîte à Fontaine-le-Comte (86) : yoga, repas bio, couture guidée. 390€ tout compris.",
 }
 
 const INCLUS_RETRAITE = [
@@ -66,11 +66,11 @@ export default async function RetraitesCreativesPage() {
           serviceJsonLd({
             name: 'Retraites créatives couture',
             description:
-              "Un weekend de ressourcement couture dans un gîte au cœur des Deux-Sèvres (79). Repas bio, yoga doux, couture guidée, 9 participantes maximum.",
+              "Un weekend de ressourcement couture dans un gîte à Fontaine-le-Comte (86), au cœur de la nature en Vienne. Repas bio, yoga doux, couture guidée, 9 participantes maximum.",
             url: 'https://atelierpicpaf.fr/ateliers-adultes/retraites-creatives',
             priceCentimes: cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 39000,
             audience: 'Adultes',
-            location: 'Deux-Sèvres',
+            location: 'Fontaine-le-Comte',
             category: 'Retraite créative couture',
           }),
           breadcrumbJsonLd([
@@ -124,28 +124,20 @@ export default async function RetraitesCreativesPage() {
 
       {/* LE LIEU */}
       <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
-        <div className="container">
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))', gap:50, alignItems:'center' }}>
-            <div>
-              <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ Le cadre ~</span>
-              <h2 className="h-fredoka" style={{ fontSize:'clamp(32px,4vw,50px)', color:'var(--framboise)', margin:'10px 0 20px', lineHeight:1.1 }}>Un gîte au cœur des Deux-Sèvres</h2>
-              <p style={{ fontSize:17, opacity:.85, lineHeight:1.65, marginBottom:20 }}>
-                Niché dans la campagne des Deux-Sèvres, notre gîte dispose de 4 chambres pour 8 personnes, d&apos;une grande cuisine équipée, d&apos;un salon avec cheminée et d&apos;un jardin avec terrasse.
-              </p>
-              <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:12 }}>
-                {['4 chambres / 8 lits','Grande salle lumineuse pour coudre','Cuisine équipée & jardin','Forêt & sentiers à 5 min à pied'].map((it,i) => (
-                  <li key={i} style={{ display:'flex', gap:12, fontSize:15, alignItems:'center' }}><span style={{ color:'var(--framboise)', fontSize:18 }}>✦</span> {it}</li>
-                ))}
-              </ul>
-            </div>
-            <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
-              <div className="ph" style={{ height:220, borderRadius:24 }}><span>Photo du gîte à venir</span></div>
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
-                <div className="ph" style={{ height:130, borderRadius:20 }}><span>Vue jardin</span></div>
-                <div className="ph" style={{ height:130, borderRadius:20 }}><span>Salle couture</span></div>
-              </div>
-            </div>
-          </div>
+        <div className="container" style={{ maxWidth:760, textAlign:'center' }}>
+          <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ Le cadre ~</span>
+          <h2 className="h-fredoka" style={{ fontSize:'clamp(32px,4vw,50px)', color:'var(--framboise)', margin:'10px 0 20px', lineHeight:1.1 }}>Une parenthèse enchantée à Fontaine-le-Comte</h2>
+          <p style={{ fontSize:17, opacity:.85, lineHeight:1.65, marginBottom:16 }}>
+            C&apos;est au cœur de la nature, à Fontaine-le-Comte (Vienne), que nous vous ouvrons les portes de notre refuge. Un lieu pensé pour la déconnexion, où le temps semble s&apos;arrêter pour laisser place à la douceur.
+          </p>
+          <p style={{ fontSize:17, opacity:.85, lineHeight:1.65, marginBottom:24 }}>
+            Le gîte a été choisi pour son âme et son confort :
+          </p>
+          <ul style={{ margin:'0 auto', padding:0, listStyle:'none', display:'inline-flex', flexDirection:'column', gap:12, textAlign:'left' }}>
+            {['4 chambres douillettes pour accueillir notre petit groupe','Un salon convivial','Une grande cuisine équipée','Un jardin avec terrasse, pour profiter de l\u2019air pur et du calme environnant'].map((it,i) => (
+              <li key={i} style={{ display:'flex', gap:12, fontSize:15, alignItems:'center' }}><span style={{ color:'var(--framboise)', fontSize:18 }}>✦</span> {it}</li>
+            ))}
+          </ul>
         </div>
       </section>
 

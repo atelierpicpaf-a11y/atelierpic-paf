@@ -16,9 +16,9 @@ const DEFAULT_CFG_JOURNEES: ConfigAtelier = {
 }
 const DEFAULT_CFG_RETRAITES: ConfigAtelier = {
   type: 'retraites', prix_centimes: 39000, prix_texte: '390€',
-  description: 'Un week-end ressourçant alliant couture, yoga et convivialité dans un gîte en Deux-Sèvres.',
+  description: 'Un week-end ressourçant alliant couture, yoga et convivialité dans un gîte à Fontaine-le-Comte (86).',
   inclus: 'Hébergement en gîte|Tous les repas|2 séances de yoga|Matériel couture fourni|Maximum 9 participantes',
-  duree: 'Vendredi soir → Dimanche midi', lieu: 'Deux-Sèvres (79)',
+  duree: 'Vendredi soir → Dimanche midi', lieu: 'Fontaine-le-Comte (86)',
   updated_at: new Date().toISOString(),
 }
 

@@ -8,7 +8,7 @@ L'atelier Pic & Paf is run by **Ludivine**, a sewing workshop instructor based i
 
 - **Ateliers enfants** — weekly sewing classes for kids 6-12 (Poitiers, Vouillé, Fontaine-le-Comte, Châtellerault), holiday stages, birthday parties, school events
 - **Journées créatives** — full-day adult sewing workshops at Fontaine-le-Comte, 90€ solo / 150€ duo (promo -30€), max 8 participants, tissu + laine (punch needle), everything included
-- **Retraites créatives** — weekend sewing retreats in a gîte in Deux-Sèvres, 390€, max 9 participants, meals + yoga included
+- **Retraites créatives** — weekend sewing retreats in a gîte in Fontaine-le-Comte (86), 390€, max 9 participants, meals + yoga included
 - **Structure interventions** — visiting ALSH, libraries, schools, associations
 
 Contact: atelierpicpaf@gmail.com / 06 21 07 35 36 / @atelier_picpaf
