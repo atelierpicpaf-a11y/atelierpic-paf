@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { SectionTitle } from '@/components/sections/section-title'
 import { RetraitesDatesGrid } from '@/components/sections/retraites-dates-grid'
 import { JsonLd } from '@/components/seo/json-ld'
@@ -91,8 +92,37 @@ export default async function RetraitesCreativesPage() {
         </div>
       </section>
 
-      {/* LE LIEU */}
+      {/* AVEC LUDIVINE */}
       <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth:1040 }}>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:48, alignItems:'center' }}>
+            <div style={{ position:'relative', aspectRatio:'1 / 1', borderRadius:32, overflow:'hidden', boxShadow:'var(--shadow-framboise)', maxWidth:480, margin:'0 auto', width:'100%' }}>
+              <Image
+                src="/images/brand/ludivine-portrait.jpg"
+                alt="Ludivine, fondatrice de L'atelier Pic & Paf, souriante devant le logo rayé framboise et son slogan « Deviens toi aussi une magicienne ! »"
+                fill
+                sizes="(max-width: 768px) 90vw, 480px"
+                style={{ objectFit:'cover' }}
+                priority={false}
+              />
+            </div>
+            <div>
+              <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ Votre hôte ~</span>
+              <h2 className="h-fredoka" style={{ fontSize:'clamp(32px,4vw,48px)', color:'var(--framboise)', margin:'10px 0 24px', lineHeight:1.1 }}>Avec Ludivine</h2>
+              <p style={{ fontSize:17, opacity:.88, lineHeight:1.7, marginBottom:16 }}>
+                Passionnée de couture depuis toujours, j&apos;ai créé L&apos;atelier Pic &amp; Paf pour partager ce qui me fait vibrer : transmettre, créer, relier.
+              </p>
+              <p style={{ fontSize:17, opacity:.88, lineHeight:1.7, marginBottom:16 }}>
+                Mes retraites, je les imagine comme des petites bulles de douceur : un groupe restreint, un cadre chaleureux, et surtout l&apos;envie de vous offrir un vrai moment pour vous. Pas de pression, pas de niveau requis, juste l&apos;envie de créer et de se sentir bien.
+              </p>
+              <p className="h-caveat" style={{ fontSize:26, color:'var(--framboise)', margin:'20px 0 0' }}>~ J&apos;ai hâte de vous rencontrer ✨ ~</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* LE LIEU */}
+      <section style={{ padding:'80px 0', background:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:760, textAlign:'center' }}>
           <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ Le cadre ~</span>
           <h2 className="h-fredoka" style={{ fontSize:'clamp(32px,4vw,50px)', color:'var(--framboise)', margin:'10px 0 20px', lineHeight:1.1 }}>Une parenthèse enchantée à Fontaine-le-Comte</h2>
@@ -111,7 +141,7 @@ export default async function RetraitesCreativesPage() {
       </section>
 
       {/* PROGRAMME SUR-MESURE */}
-      <section style={{ padding:'80px 0', background:'var(--creme)' }}>
+      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
         <div className="container" style={{ maxWidth:720, textAlign:'center' }}>
           <SectionTitle kicker="Chaque retraite est unique" align="center">Un programme sur-mesure ✨</SectionTitle>
           <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:28 }}>
@@ -127,7 +157,7 @@ export default async function RetraitesCreativesPage() {
       </section>
 
       {/* CE QUI EST INCLUS */}
-      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+      <section style={{ padding:'80px 0', background:'var(--creme)' }}>
         <div className="container">
           <SectionTitle kicker="Tout est prévu" align="center">Ce qui est inclus</SectionTitle>
           <div style={{ marginTop:50, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(240px, 1fr))', gap:24 }}>
@@ -149,7 +179,7 @@ export default async function RetraitesCreativesPage() {
       </section>
 
       {/* PROCHAINES RETRAITES */}
-      <section id="retraites" style={{ padding:'80px 0', background:'var(--creme)' }}>
+      <section id="retraites" style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
         <div className="container">
           <SectionTitle kicker="Rejoignez-nous" align="center">Prochaines retraites</SectionTitle>
           <div style={{ marginTop:50, display:'flex', flexDirection:'column', gap:18, maxWidth:680, margin:'50px auto 0' }}>
