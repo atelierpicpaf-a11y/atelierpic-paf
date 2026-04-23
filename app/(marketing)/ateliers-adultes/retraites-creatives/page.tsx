@@ -118,7 +118,7 @@ export default async function RetraitesCreativesPage() {
             Thème, projet couture, rythme, ambiance : chaque retraite a son identité propre, pensée avec soin par Ludivine pour que chaque édition soit une vraie pépite.
           </p>
           <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
-            Le programme détaillé vous sera communiqué sur demande, au moment où vous contactez Ludivine — pour coller au plus près de la prochaine retraite et de vos envies.
+            Le programme détaillé vous sera communiqué sur demande, au moment où vous contactez Ludivine, pour coller au plus près de la prochaine retraite et de vos envies.
           </p>
           <div style={{ marginTop:36 }}>
             <a href="/contact" className="cta-pill">Demander le programme à Ludivine</a>
