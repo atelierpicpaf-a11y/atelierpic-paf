@@ -18,37 +18,6 @@ const INCLUS_RETRAITE = [
   { e:'🌿', t:'Bien-être', d:'Yoga doux le matin, balade en forêt, temps libre pour se ressourcer.' },
 ]
 
-const PROGRAMME_WEEKEND = [
-  {
-    jour: 'Vendredi soir',
-    items: [
-      '18h — Arrivée et installation',
-      '19h30 — Dîner convivial',
-      '21h — Présentation du projet couture du weekend',
-    ]
-  },
-  {
-    jour: 'Samedi',
-    items: [
-      '8h — Yoga doux & petit déjeuner',
-      '9h30 → 12h30 — Atelier couture matin',
-      '12h30 — Déjeuner partagé',
-      '14h → 17h30 — Atelier couture après-midi',
-      '18h — Balade & temps libre',
-      '19h30 — Dîner & soirée jeux',
-    ]
-  },
-  {
-    jour: 'Dimanche',
-    items: [
-      '8h — Yoga & petit déjeuner',
-      '10h → 12h — Finitions & photos',
-      '12h30 — Déjeuner final',
-      '14h → 16h — Départs progressifs',
-    ]
-  },
-]
-
 export default async function RetraitesCreativesPage() {
   const supabase = await createClient()
   const [{ data: sessions }, { data: configs }] = await Promise.all([
@@ -141,24 +110,18 @@ export default async function RetraitesCreativesPage() {
         </div>
       </section>
 
-      {/* PROGRAMME WEEKEND */}
+      {/* PROGRAMME SUR-MESURE */}
       <section style={{ padding:'80px 0', background:'var(--creme)' }}>
-        <div className="container">
-          <SectionTitle kicker="Vendredi → Dimanche" align="center">Programme du weekend</SectionTitle>
-          <div style={{ marginTop:50, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(260px, 1fr))', gap:28 }}>
-            {PROGRAMME_WEEKEND.map((j, i) => (
-              <div key={i} className="card" style={{ padding:'28px 24px' }}>
-                <h3 className="h-fredoka" style={{ fontSize:22, color:'var(--framboise)', margin:'0 0 20px', borderBottom:'2px dashed rgba(200,54,92,.25)', paddingBottom:12 }}>{j.jour}</h3>
-                <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:12 }}>
-                  {j.items.map((item, k) => (
-                    <li key={k} style={{ display:'flex', gap:10, fontSize:14, lineHeight:1.5, alignItems:'flex-start' }}>
-                      <span style={{ color:'var(--framboise)', flexShrink:0, marginTop:2 }}>›</span>
-                      <span style={{ opacity:.85 }}>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+        <div className="container" style={{ maxWidth:720, textAlign:'center' }}>
+          <SectionTitle kicker="Chaque retraite est unique" align="center">Un programme sur-mesure ✨</SectionTitle>
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:28 }}>
+            Thème, projet couture, rythme, ambiance : chaque retraite a son identité propre, pensée avec soin par Ludivine pour que chaque édition soit une vraie pépite.
+          </p>
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
+            Le programme détaillé vous sera communiqué sur demande, au moment où vous contactez Ludivine — pour coller au plus près de la prochaine retraite et de vos envies.
+          </p>
+          <div style={{ marginTop:36 }}>
+            <a href="/contact" className="cta-pill">Demander le programme à Ludivine</a>
           </div>
         </div>
       </section>
