@@ -2,6 +2,7 @@ import { Fee } from '@/components/brand/fee'
 import { Bobines } from '@/components/brand/bobines'
 import { SectionTitle } from '@/components/sections/section-title'
 import { JourneesDatesGrid } from '@/components/sections/journees-dates-grid'
+import { KlarnaBadge } from '@/components/sections/klarna-badge'
 import { JsonLd } from '@/components/seo/json-ld'
 import { serviceJsonLd, breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { createClient } from '@/lib/supabase/server'
@@ -182,12 +183,15 @@ export default async function JourneesCreativesPage() {
                 <div className="h-fredoka" style={{ fontSize:64, color:'var(--creme)', lineHeight:1 }}>{prixAffiche}</div>
                 <div style={{ fontSize:15, opacity:.8 }}>seule, tout compris</div>
               </div>
-              <div style={{ display:'inline-flex', alignItems:'center', gap:10, background:'rgba(251,244,228,.15)', border:'1px dashed rgba(251,244,228,.45)', borderRadius:16, padding:'14px 18px', marginBottom:30 }}>
+              <div style={{ display:'inline-flex', alignItems:'center', gap:10, background:'rgba(251,244,228,.15)', border:'1px dashed rgba(251,244,228,.45)', borderRadius:16, padding:'14px 18px', marginBottom:18 }}>
                 <span style={{ background:'var(--menthe)', color:'#1a4a42', fontSize:12, fontWeight:700, padding:'4px 10px', borderRadius:999 }}>PROMO DUO</span>
                 <div>
                   <div className="h-fredoka" style={{ fontSize:24, color:'var(--creme)', lineHeight:1.1 }}>150€ à deux</div>
                   <div style={{ fontSize:13, opacity:.85 }}>au lieu de 180€ · soit -30€ en venant à deux</div>
                 </div>
+              </div>
+              <div style={{ marginBottom:28 }}>
+                <KlarnaBadge prixCentimes={cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 9000} variant="dark" />
               </div>
               <div>
                 <a href="#dates" className="cta-pill" style={{ boxShadow:'0 0 0 4px var(--framboise-dark), var(--shadow-framboise)' }}>Je réserve ma place</a>

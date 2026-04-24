@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { SectionTitle } from '@/components/sections/section-title'
 import { RetraitesDatesGrid } from '@/components/sections/retraites-dates-grid'
+import { KlarnaBadge } from '@/components/sections/klarna-badge'
 import { JsonLd } from '@/components/seo/json-ld'
 import { serviceJsonLd, breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { RETRAITES_CONFIG } from '@/lib/data/defaults'
@@ -169,11 +170,12 @@ export default async function RetraitesCreativesPage() {
               </div>
             ))}
           </div>
-          <div style={{ textAlign:'center', marginTop:40 }}>
+          <div style={{ textAlign:'center', marginTop:40, display:'flex', flexDirection:'column', alignItems:'center', gap:22 }}>
             <div style={{ display:'inline-block', padding:'24px 40px', background:'var(--framboise)', borderRadius:28, color:'var(--creme)' }}>
               <div className="h-fredoka" style={{ fontSize:56, lineHeight:1 }}>{prixAffiche}</div>
               <div style={{ fontSize:15, opacity:.9, marginTop:6 }}>par personne · {duree}</div>
             </div>
+            <KlarnaBadge prixCentimes={cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 39000} variant="light" />
           </div>
         </div>
       </section>
