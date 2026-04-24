@@ -74,9 +74,12 @@ export default async function JourneesCreativesPage() {
             <p style={{ fontSize:18, maxWidth:520, lineHeight:1.6, opacity:.85, marginBottom:28 }}>
               Une journée entière pour vous offrir une parenthèse. Projets guidés ou carte blanche, dans une ambiance chaleureuse.
             </p>
-            <div style={{ display:'flex', gap:14, flexWrap:'wrap', marginBottom:36 }}>
+            <div style={{ display:'flex', gap:14, flexWrap:'wrap', marginBottom:20 }}>
               <a href="#dates" className="cta-pill">Voir les prochaines dates</a>
               <a href="/contact" className="cta-ghost">Une question ?</a>
+            </div>
+            <div style={{ marginBottom:32 }}>
+              <KlarnaBadge prixCentimes={cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 9000} variant="light" />
             </div>
             <div style={{ display:'flex', gap:24, flexWrap:'wrap' }}>
               {[

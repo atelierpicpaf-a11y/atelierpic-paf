@@ -64,6 +64,9 @@ export default async function RetraitesCreativesPage() {
             <a href="#retraites" className="cta-pill">Voir les dates</a>
             <a href="/contact" className="cta-ghost">Me contacter</a>
           </div>
+          <div style={{ marginTop:28, display:'flex', justifyContent:'center' }}>
+            <KlarnaBadge prixCentimes={cfg?.prix_centimes && cfg.prix_centimes > 0 ? cfg.prix_centimes : 39000} variant="light" />
+          </div>
         </div>
       </section>
 
