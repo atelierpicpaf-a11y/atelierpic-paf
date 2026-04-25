@@ -4,8 +4,8 @@ import { JsonLd } from '@/components/seo/json-ld'
 import { localBusinessJsonLd, personJsonLd, webSiteJsonLd } from '@/lib/seo/json-ld'
 
 export const metadata: Metadata = {
-  title: { template: '%s | L\'atelier Pic & Paf', default: 'L\'atelier Pic & Paf — Ateliers couture créatifs en Vienne et Deux-Sèvres' },
-  description: 'Ateliers couture enfants dès 6 ans en Vienne (86) et Deux-Sèvres (79), journées créatives et retraites pour adultes à Fontaine-le-Comte (86). Deviens toi aussi une magicienne !',
+  title: { template: '%s | L\'atelier Pic & Paf', default: 'L\'atelier Pic & Paf — Ateliers créatifs Poitiers, Vienne (86) & Deux-Sèvres (79)' },
+  description: 'Ateliers créatifs à Poitiers et alentours : couture enfants dès 6 ans, journées créatives adultes et retraites créatives weekend à Fontaine-le-Comte (Vienne 86). Punch needle, anniversaires, interventions écoles. Deviens toi aussi une magicienne !',
   metadataBase: new URL('https://atelierpicpaf.fr'),
 }
 

@@ -9,8 +9,8 @@ import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Retraites créatives couture — Weekend ressourcement entre femmes',
-  description: "Une bulle de douceur conçue pour les femmes qui veulent allier passion créative et bien-être. Week-end hors du temps dans un gîte à Fontaine-le-Comte (86) : yoga, repas maison, atelier créatif guidé. 390€ tout compris.",
+  title: 'Retraite créative Poitiers · Weekend couture, yoga & gîte à Fontaine-le-Comte (Vienne 86)',
+  description: '🌿 Retraite créative weekend entre femmes près de Poitiers : 3 jours dans un gîte à Fontaine-le-Comte (Vienne 86), atelier créatif guidé, yoga, repas maison, 9 participantes max. 390€ tout compris, paiement 3× sans frais Klarna.',
 }
 
 const INCLUS_RETRAITE = [
@@ -55,7 +55,8 @@ export default async function RetraitesCreativesPage() {
       <section style={{ padding:'100px 0 80px', background:'var(--creme-pale)' }}>
         <div className="container" style={{ maxWidth:760, textAlign:'center' }}>
           <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42', marginBottom:24 }}>Weekend ressourcement</span>
-          <h1 className="h-fredoka" style={{ fontSize:'clamp(44px,6vw,76px)', color:'var(--framboise)', margin:'16px 0 28px', lineHeight:1.05 }}>Retraites créatives</h1>
+          <h1 className="h-fredoka" style={{ fontSize:'clamp(44px,6vw,76px)', color:'var(--framboise)', margin:'16px 0 12px', lineHeight:1.05 }}>Retraite créative près de Poitiers</h1>
+          <p style={{ fontSize:18, color:'var(--framboise)', fontWeight:600, marginBottom:24, opacity:.85 }}>Weekend couture, yoga &amp; bien-être à Fontaine-le-Comte (Vienne 86)</p>
           <p style={{ fontSize:'clamp(17px,1.4vw,20px)', maxWidth:640, margin:'0 auto 16px', lineHeight:1.7, opacity:.88 }}>
             <strong style={{ color:'var(--framboise)', fontWeight:600 }}>Besoin de ralentir et de retrouver votre élan créatif&nbsp;?</strong> Offrez-vous un week-end hors du temps, une bulle de douceur conçue exclusivement pour les femmes qui souhaitent allier passion créative et bien-être.
           </p>

@@ -10,8 +10,8 @@ import { JOURNEES_CONFIG } from '@/lib/data/defaults'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Journées créatives couture adultes',
-  description: 'Une journée entière pour coudre le projet de vos rêves à Fontaine-le-Comte. 90€ solo ou 150€ à deux (-30€ de promo duo). Tissu & laine.',
+  title: 'Journée créative Poitiers · Atelier couture & punch needle adulte à Fontaine-le-Comte (86)',
+  description: '🧵 Journée créative à Poitiers (Fontaine-le-Comte, Vienne 86) : une journée entière de couture ou punch needle, tout compris (matériel, repas, café). 90€ seule ou 150€ à deux. 8 places max. Réservation en ligne, paiement 3× sans frais avec Klarna.',
 }
 
 const PROGRAMME = [
@@ -70,7 +70,8 @@ export default async function JourneesCreativesPage() {
         <div className="container" style={{ position:'relative', padding:'80px 28px 100px', display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))', gap:40, alignItems:'center' }}>
           <div>
             <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42', marginBottom:20 }}>Journée créative</span>
-            <h1 className="sticker-title" style={{ fontSize:'clamp(44px,6vw,72px)', textAlign:'left', margin:'12px 0 22px' }}>Journées<br/>créatives</h1>
+            <h1 className="sticker-title" style={{ fontSize:'clamp(44px,6vw,72px)', textAlign:'left', margin:'12px 0 12px' }}>Journée<br/>créative</h1>
+            <p style={{ fontSize:18, color:'var(--framboise)', fontWeight:600, marginBottom:18, opacity:.85 }}>à Fontaine-le-Comte, 5 min de Poitiers (Vienne 86)</p>
             <p style={{ fontSize:18, maxWidth:520, lineHeight:1.6, opacity:.85, marginBottom:28 }}>
               Une journée entière pour vous offrir une parenthèse. Projets guidés ou carte blanche, dans une ambiance chaleureuse.
             </p>

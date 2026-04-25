@@ -10,8 +10,8 @@ import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Ateliers créatifs en Vienne et Deux-Sèvres",
-  description: "Ateliers créatifs pour enfants dès 6 ans, journées créatives et retraites pour adultes. Deviens toi aussi une magicienne !",
+  title: "Ateliers créatifs à Poitiers · Couture, punch needle, journées et retraites",
+  description: "🧵 Atelier créatif Poitiers : couture enfants dès 6 ans en Vienne (86) et Deux-Sèvres (79), journées créatives et retraites weekend pour adultes à Fontaine-le-Comte (5 min de Poitiers). Punch needle, anniversaires, interventions écoles. Réservation en ligne, paiement 3× sans frais.",
 }
 
 export default async function HomePage() {
