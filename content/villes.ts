@@ -47,12 +47,14 @@ export const VILLES: Ville[] = [
     deptNom: 'Vienne',
     codePostal: '86000',
     statut: 'préfecture de la Vienne',
-    kicker: 'Couture créative · Vienne (86)',
-    titreH1: 'Ateliers créatifs à Poitiers',
+    kicker: 'Atelier créatif · Vienne (86)',
+    titreH1: 'Atelier créatif à Poitiers',
     intro:
-      "Je propose des ateliers couture à Poitiers et dans toute l'agglomération poitevine pour les enfants dès 6 ans comme pour les adultes. Préfecture de la Vienne, Poitiers concentre un public curieux et créatif, et mes cours de couture y trouvent naturellement leur public : enfants qui découvrent la machine à coudre, ados qui customisent leurs vêtements, adultes qui veulent apprendre à coudre sans se sentir jugés. C'est un loisir créatif qui fait du bien, qu'on pratique en famille ou entre copines. J'organise aussi des anniversaires couture à Poitiers (l'occasion rêvée pour un cadeau original) et j'interviens volontiers dans les écoles, médiathèques, ALSH et structures associatives du secteur. Que tu habites Poitiers centre, les quartiers Sud ou que tu rayonnes depuis Saint-Benoît, Buxerolles ou Fontaine-le-Comte, je peux caler un atelier qui te ressemble. Pas de catalogue figé : tu me dis ton envie (groupe amical, stage vacances, team-building, atelier parent-enfant), je construis la proposition et l'emplacement en fonction de ton projet.",
+      "Atelier créatif à Poitiers et dans toute l'agglomération poitevine, pour les enfants dès 6 ans comme pour les adultes. Préfecture de la Vienne (86), Poitiers concentre un public curieux et créatif : mes cours de couture, mes journées créatives adultes et mes retraites créatives weekend (à 5 minutes au sud, à Fontaine-le-Comte) y trouvent naturellement leur public — enfants qui découvrent la machine à coudre, ados qui customisent leurs vêtements, adultes débutantes qui veulent apprendre à coudre sans se sentir jugées. C'est un loisir créatif et une activité manuelle qui fait du bien, qu'on pratique en famille, entre copines ou en solo. À Poitiers j'organise aussi des anniversaires couture (l'occasion rêvée pour un cadeau original), des stages enfants pendant les vacances scolaires, et j'interviens dans les écoles, médiathèques, ALSH et structures associatives du Grand Poitiers. Que tu habites Poitiers centre, le quartier Sud, le Plateau ou que tu rayonnes depuis Saint-Benoît, Buxerolles, Migné-Auxances, Mignaloux-Beauvoir ou Fontaine-le-Comte, je peux caler un atelier qui te ressemble. Pas de catalogue figé : tu me dis ton envie (groupe amical, stage vacances, team-building, atelier parent-enfant, journée créative entre copines, weekend retraite couture/yoga), je construis la proposition et l'emplacement en fonction de ton projet.",
     villesProches: ['saint-benoit', 'buxerolles', 'fontaine-le-comte', 'vouille'],
     wave: 1,
+    metaDescription:
+      "🧵 Atelier créatif à Poitiers (86) : cours de couture enfants dès 6 ans, journée créative adulte (90€) et retraite créative weekend (390€) à Fontaine-le-Comte, 5 min de Poitiers. Punch needle, anniversaires, stages vacances, interventions écoles. Paiement en 3× sans frais Klarna.",
   },
   {
     slug: 'fontaine-le-comte',
