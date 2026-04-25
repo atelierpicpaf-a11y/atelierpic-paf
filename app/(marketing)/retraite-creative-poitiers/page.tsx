@@ -12,12 +12,12 @@ const PAGE_URL = `${SITE_URL}/retraite-creative-poitiers`
 export const metadata: Metadata = {
   title: 'Retraite créative près de Poitiers · Weekend couture, yoga & gîte (Vienne 86)',
   description:
-    "🌿 Retraite créative weekend entre femmes près de Poitiers : 3 jours dans un gîte à Fontaine-le-Comte (Vienne 86), atelier créatif guidé, yoga, repas maison, 9 participantes maximum. 390€ tout compris, paiement 3× sans frais Klarna.",
+    "🌿 Retraite créative weekend entre femmes près de Poitiers : 3 jours dans un gîte à Fontaine-le-Comte (Vienne 86), atelier créatif guidé, bien-être (yoga, balade, massage selon la retraite), repas maison. 9 participantes max. 390€ tout compris, paiement 3× sans frais Klarna.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: 'Retraite créative près de Poitiers · Weekend couture & yoga',
+    title: 'Retraite créative près de Poitiers · Weekend couture & bien-être',
     description:
-      "Weekend de ressourcement entre femmes à Fontaine-le-Comte (Vienne 86), 5 min de Poitiers. 390€ tout compris.",
+      "Weekend de ressourcement entre femmes à Fontaine-le-Comte (Vienne 86), 5 min de Poitiers. 390€ tout compris, paiement 3× Klarna.",
     url: PAGE_URL,
     siteName: "L'atelier Pic & Paf",
     locale: 'fr_FR',
@@ -26,34 +26,54 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image' },
 }
 
+// Inclus exact — source : /ateliers-adultes/retraites-creatives
+const INCLUS = [
+  { e: '🛏️', t: 'Hébergement', d: 'Chambre partagée dans un gîte entouré de nature.' },
+  { e: '🍽️', t: 'Repas', d: 'Tous les repas du vendredi soir au dimanche midi, cuisinés maison.' },
+  { e: '🧵', t: 'Atelier créatif guidé', d: 'Un projet créatif adapté à tous les niveaux, matériel fourni.' },
+  { e: '🌿', t: 'Bien-être', d: 'Yoga, massage, balade en forêt… Ludivine compose une parenthèse bien-être adaptée à chaque retraite.' },
+]
+
+// Le gîte — source : /ateliers-adultes/retraites-creatives
+const GITE = [
+  '4 chambres douillettes pour accueillir notre petit groupe',
+  'Un salon convivial',
+  'Une grande cuisine équipée',
+  'Un jardin avec terrasse, pour profiter de l’air pur et du calme environnant',
+]
+
 const FAQ: { q: string; r: string }[] = [
   {
-    q: 'Où exactement se déroule la retraite créative par rapport à Poitiers ?',
-    r: "La retraite a lieu à Fontaine-le-Comte, à seulement 5 minutes au sud de Poitiers (Vienne 86), dans un gîte au calme entouré de nature. Pour les participantes qui viennent de loin, c'est facile d'accès en voiture (sortie Poitiers Sud) ou en train (gare TGV de Poitiers à 10 minutes en taxi).",
+    q: 'Où exactement se déroule la retraite par rapport à Poitiers ?',
+    r: "La retraite a lieu à Fontaine-le-Comte (Vienne 86), à 5 minutes au sud de Poitiers, dans un gîte au calme entouré de nature.",
   },
   {
-    q: 'Faut-il savoir coudre pour participer à la retraite&nbsp;?',
-    r: "Pas du tout. La retraite est ouverte à toutes&nbsp;: débutantes complètes, intermédiaires, confirmées. Je m'adapte à chaque participante et je propose un projet créatif adapté au niveau de chacune. L'esprit de la retraite, c'est avant tout le partage et la déconnexion, pas la performance.",
+    q: 'Quelle est la durée exacte du weekend ?',
+    r: "La retraite commence le vendredi soir et se termine le dimanche à 16h.",
   },
   {
-    q: 'Combien de participantes maximum&nbsp;?',
-    r: "9 participantes maximum, pour préserver l'atmosphère intime et te garantir un accompagnement sur mesure. C'est le format parfait pour créer du lien sans se sentir noyée dans un grand groupe.",
+    q: 'Combien de participantes maximum ?',
+    r: "9 participantes maximum, pour préserver une atmosphère intime et un accompagnement sur mesure.",
   },
   {
-    q: "Qu'est-ce qui est inclus dans les 390€&nbsp;?",
-    r: "Tout&nbsp;: l'hébergement en chambre partagée dans le gîte, tous les repas (du vendredi soir au dimanche midi) cuisinés maison, l'atelier créatif guidé avec tout le matériel fourni, les séances de bien-être (yoga, balade nature, parfois massage selon la retraite). Tu n'as plus qu'à venir avec ton sac.",
+    q: 'Faut-il savoir coudre pour participer ?',
+    r: "Non. L'atelier créatif est guidé par Ludivine et le projet est adapté à tous les niveaux, débutantes incluses. Pas de niveau requis, juste l'envie de créer.",
   },
   {
-    q: 'Est-ce que je peux payer en plusieurs fois&nbsp;?',
-    r: "Oui, le paiement en 3 fois sans frais est disponible via Klarna&nbsp;: 3× 130€ étalés sur 3 mois. Aucun dossier, aucun justificatif, c'est validé en quelques clics au moment de la réservation.",
+    q: "Qu'est-ce qui est inclus dans les 390€ ?",
+    r: "Tout est compris : l'hébergement en chambre partagée dans le gîte, tous les repas (du vendredi soir au dimanche midi) cuisinés maison, l'atelier créatif guidé avec matériel fourni, et le volet bien-être (yoga, massage, balade en forêt — Ludivine compose une parenthèse adaptée à chaque retraite).",
   },
   {
-    q: 'Quelle est la différence avec une journée créative&nbsp;?',
-    r: "La journée créative dure 8 heures, c'est une parenthèse en pleine semaine pour avancer un projet précis (90€). La retraite, c'est tout un weekend de 3 jours en immersion dans un gîte, avec yoga, repas, sommeil sur place et un groupe restreint qui partage le quotidien (390€). C'est un format beaucoup plus profond, conçu pour vraiment décrocher.",
+    q: 'À quoi ressemble le gîte ?',
+    r: "Le gîte a été choisi pour son âme et son confort : 4 chambres douillettes, un salon convivial, une grande cuisine équipée, et un jardin avec terrasse.",
   },
   {
-    q: 'Puis-je venir seule sans connaître personne&nbsp;?',
-    r: "Beaucoup de participantes viennent seules&nbsp;! Le format intime (9 max) et le rythme partagé (repas ensemble, yoga ensemble) facilitent les rencontres. Tu repartiras souvent avec deux ou trois nouvelles amies.",
+    q: 'Peut-on payer en 3 fois ?',
+    r: "Oui, le paiement en 3× sans frais via Klarna est disponible : 3× 130€. Aucun dossier, aucun justificatif, validation en quelques clics au moment de la réservation.",
+  },
+  {
+    q: 'Quel est le programme détaillé du weekend ?',
+    r: "Chaque retraite est unique : thème, projet couture, rythme, ambiance. Ludivine compose un programme sur-mesure pour chaque édition. Le programme détaillé vous est communiqué directement par Ludivine au moment où vous la contactez, pour coller au plus près de la prochaine retraite et de vos envies.",
   },
 ]
 
@@ -66,7 +86,7 @@ export default function RetraiteCreativePoitiersPage() {
           serviceJsonLd({
             name: 'Retraite créative weekend près de Poitiers',
             description:
-              "Retraite créative entre femmes à Fontaine-le-Comte (Vienne 86), à 5 min de Poitiers. Weekend de 3 jours en gîte, atelier créatif guidé, yoga, repas maison, 9 participantes max.",
+              "Retraite créative entre femmes à Fontaine-le-Comte (Vienne 86), à 5 min de Poitiers. Weekend du vendredi soir au dimanche 16h, atelier créatif guidé, repas maison, volet bien-être (yoga, massage, balade selon la retraite), 9 participantes max.",
             url: PAGE_URL,
             priceCentimes: 39000,
             audience: 'Adultes femmes',
@@ -89,10 +109,10 @@ export default function RetraiteCreativePoitiersPage() {
             Retraite créative près de Poitiers
           </h1>
           <p style={{ fontSize:18, color:'var(--framboise)', fontWeight:600, marginBottom:24, opacity:.9 }}>
-            Weekend couture, yoga &amp; bien-être à Fontaine-le-Comte (Vienne 86)
+            Weekend couture &amp; bien-être à Fontaine-le-Comte (Vienne 86)
           </p>
           <p style={{ fontSize:17, lineHeight:1.7, opacity:.85, marginBottom:30, maxWidth:680, marginLeft:'auto', marginRight:'auto' }}>
-            Tu cherches une <strong>retraite créative près de Poitiers</strong> pour te ressourcer un weekend, allier passion créative et bien-être, et te reconnecter à toi-même&nbsp;? Mes retraites créatives ont lieu à Fontaine-le-Comte, à 5 minutes au sud de Poitiers, dans un gîte au calme entouré de nature. 3 jours, 9 femmes, et tout l&apos;espace pour ralentir.
+            <strong style={{ color:'var(--framboise)', fontWeight:600 }}>Besoin de ralentir et de retrouver votre élan créatif&nbsp;?</strong> Un week-end hors du temps, conçu pour les femmes qui souhaitent allier passion créative et bien-être, dans un gîte à Fontaine-le-Comte, à 5 minutes au sud de Poitiers. 9 participantes maximum.
           </p>
           <p className="h-caveat" style={{ fontSize:26, color:'var(--framboise)', margin:'0 0 30px' }}>~ Vendredi soir → Dimanche 16h ~</p>
           <div style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap', marginBottom:24 }}>
@@ -105,76 +125,78 @@ export default function RetraiteCreativePoitiersPage() {
         </div>
       </section>
 
-      {/* POURQUOI POITIERS */}
+      {/* L'ESPRIT */}
       <section style={{ padding:'80px 0', background:'var(--creme)' }}>
-        <div className="container" style={{ maxWidth:820 }}>
-          <SectionTitle kicker="Pourquoi cette retraite est la bonne&nbsp;?" align="center">Le format unique en Vienne</SectionTitle>
-          <p style={{ fontSize:17, lineHeight:1.75, opacity:.88, marginTop:28 }}>
-            Il existe peu de retraites créatives en Vienne et autour de Poitiers — et encore moins qui combinent <strong>atelier créatif guidé, yoga doux, repas maison et nuitée en gîte</strong> dans un format aussi intime (9 participantes maximum). C&apos;est exactement ce que je propose à Fontaine-le-Comte, à 5 minutes au sud de Poitiers.
+        <div className="container" style={{ maxWidth:740, textAlign:'center' }}>
+          <SectionTitle kicker="Pourquoi s&apos;offrir une parenthèse&nbsp;?" align="center">L&apos;esprit Pic &amp; Paf ✨</SectionTitle>
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:28 }}>
+            Parce qu&apos;on a toutes besoin d&apos;une vraie déconnexion. Pas juste un samedi après-midi entre deux rendez-vous&nbsp;: un week-end entier en immersion pour poser son téléphone, respirer et ralentir.
           </p>
-          <p style={{ fontSize:17, lineHeight:1.75, opacity:.88, marginTop:18 }}>
-            Le gîte a été choisi pour son âme&nbsp;: 4 chambres douillettes, un salon convivial, une grande cuisine équipée, un jardin avec terrasse. Tu poses ton sac le vendredi soir, et pendant 3 jours tu n&apos;as plus rien à gérer&nbsp;: les repas sont cuisinés, le matériel créatif est fourni, le yoga est intégré, le programme se déroule à un rythme doux. Toi tu coud, tu respires, tu ris, tu te reposes.
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
+            L&apos;esprit de nos retraites, c&apos;est avant tout le partage&nbsp;: on cuisine ensemble, on rit, on explore sa créativité et on repart avec nos réalisations dont on est fières, mais surtout avec des souvenirs plein le cœur.
           </p>
-          <p style={{ fontSize:17, lineHeight:1.75, opacity:.88, marginTop:18 }}>
-            <strong>L&apos;esprit&nbsp;: pas de niveau requis.</strong> Tu n&apos;as jamais cousu&nbsp;? Parfait. Tu es confirmée et tu veux progresser&nbsp;? Aussi parfait. Je m&apos;adapte à chacune, et le format restreint me permet vraiment d&apos;être présente pour toi.
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
+            <strong style={{ color:'var(--framboise)', fontWeight:600 }}>Une expérience privilégiée&nbsp;:</strong> pour préserver cette atmosphère intime, les places sont limitées à <strong>9 participantes maximum</strong>.
           </p>
+        </div>
+      </section>
+
+      {/* LE GÎTE */}
+      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth:760, textAlign:'center' }}>
+          <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ Le cadre ~</span>
+          <h2 className="h-fredoka" style={{ fontSize:'clamp(28px,3.5vw,42px)', color:'var(--framboise)', margin:'10px 0 20px', lineHeight:1.1 }}>Une parenthèse enchantée à Fontaine-le-Comte</h2>
+          <p style={{ fontSize:17, opacity:.85, lineHeight:1.65, marginBottom:24 }}>
+            C&apos;est au cœur de la nature, à Fontaine-le-Comte (Vienne, 5 minutes au sud de Poitiers), que nous vous ouvrons les portes de notre refuge. Le gîte a été choisi pour son âme et son confort&nbsp;:
+          </p>
+          <ul style={{ margin:'0 auto', padding:0, listStyle:'none', display:'inline-flex', flexDirection:'column', gap:12, textAlign:'left' }}>
+            {GITE.map((it, i) => (
+              <li key={i} style={{ display:'flex', gap:12, fontSize:15, alignItems:'center' }}>
+                <span style={{ color:'var(--framboise)', fontSize:18 }}>✦</span> {it}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
       {/* CE QUI EST INCLUS */}
-      <section style={{ padding:'70px 0', background:'var(--creme-pale)' }}>
-        <div className="container" style={{ maxWidth:820 }}>
-          <SectionTitle kicker="Tout est compris" align="center">Inclus dans les 390€</SectionTitle>
-          <ul style={{ marginTop:32, padding:0, listStyle:'none', display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:14 }}>
-            {[
-              'Hébergement en gîte (chambre partagée)',
-              'Tous les repas du vendredi soir au dimanche midi',
-              'Repas maison cuisinés sur place',
-              'Atelier créatif guidé adapté à ton niveau',
-              'Tout le matériel fourni',
-              'Yoga doux + balade nature',
-              'Petit groupe (9 participantes max)',
-              'Accompagnement personnalisé',
-            ].map((it, i) => (
-              <li key={i} style={{ background:'var(--creme)', borderRadius:18, padding:'14px 18px', display:'flex', gap:10, alignItems:'center', boxShadow:'var(--shadow-card)' }}>
-                <span style={{ color:'var(--framboise)', fontSize:18 }}>✦</span>
-                <span style={{ fontSize:14.5 }}>{it}</span>
-              </li>
+      <section style={{ padding:'80px 0', background:'var(--creme)' }}>
+        <div className="container" style={{ maxWidth:980 }}>
+          <SectionTitle kicker="Tout est prévu" align="center">Ce qui est inclus dans les 390€</SectionTitle>
+          <div style={{ marginTop:38, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:18 }}>
+            {INCLUS.map((it, i) => (
+              <div key={i} className="card" style={{ padding:'24px 22px' }}>
+                <div style={{ fontSize:34, marginBottom:12 }}>{it.e}</div>
+                <h3 className="h-fredoka" style={{ fontSize:18, color:'var(--framboise)', margin:'0 0 8px' }}>{it.t}</h3>
+                <p style={{ margin:0, fontSize:13.5, opacity:.78, lineHeight:1.55 }}>{it.d}</p>
+              </div>
             ))}
-          </ul>
+          </div>
           <div style={{ textAlign:'center', marginTop:36, display:'flex', flexDirection:'column', alignItems:'center', gap:18 }}>
-            <Link href="/ateliers-adultes/retraites-creatives" className="cta-pill">Voir tous les détails et les dates</Link>
             <KlarnaBadge prixCentimes={39000} variant="light" />
+            <Link href="/ateliers-adultes/retraites-creatives" className="cta-pill">Voir tous les détails et les dates</Link>
           </div>
         </div>
       </section>
 
-      {/* COMMENT VENIR */}
-      <section style={{ padding:'70px 0', background:'var(--creme)' }}>
-        <div className="container" style={{ maxWidth:820 }}>
-          <SectionTitle kicker="Accès depuis Poitiers" align="center">Comment venir au gîte</SectionTitle>
-          <div style={{ marginTop:28, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(240px, 1fr))', gap:20 }}>
-            <div className="card" style={{ padding:'24px 22px' }}>
-              <div style={{ fontSize:34, marginBottom:10 }}>🚗</div>
-              <h3 className="h-fredoka" style={{ fontSize:18, color:'var(--framboise)', margin:'0 0 8px' }}>En voiture</h3>
-              <p style={{ margin:0, fontSize:14, opacity:.8, lineHeight:1.6 }}>5 minutes depuis Poitiers Sud (sortie 31 A10). Parking gratuit sur place.</p>
-            </div>
-            <div className="card" style={{ padding:'24px 22px' }}>
-              <div style={{ fontSize:34, marginBottom:10 }}>🚆</div>
-              <h3 className="h-fredoka" style={{ fontSize:18, color:'var(--framboise)', margin:'0 0 8px' }}>En train</h3>
-              <p style={{ margin:0, fontSize:14, opacity:.8, lineHeight:1.6 }}>Gare TGV de Poitiers (Paris en 1h20), puis 10 min en taxi. Je peux organiser un covoiturage entre participantes.</p>
-            </div>
-            <div className="card" style={{ padding:'24px 22px' }}>
-              <div style={{ fontSize:34, marginBottom:10 }}>🚌</div>
-              <h3 className="h-fredoka" style={{ fontSize:18, color:'var(--framboise)', margin:'0 0 8px' }}>En bus</h3>
-              <p style={{ margin:0, fontSize:14, opacity:.8, lineHeight:1.6 }}>Lignes du Grand Poitiers desservent Fontaine-le-Comte depuis le centre-ville.</p>
-            </div>
+      {/* PROGRAMME SUR-MESURE */}
+      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth:720, textAlign:'center' }}>
+          <SectionTitle kicker="Chaque retraite est unique" align="center">Un programme sur-mesure ✨</SectionTitle>
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:28 }}>
+            Thème, projet couture, rythme, ambiance&nbsp;: chaque retraite a son identité propre, pensée avec soin par Ludivine pour que chaque édition soit une vraie pépite.
+          </p>
+          <p style={{ fontSize:18, lineHeight:1.7, opacity:.85, marginTop:16 }}>
+            Le programme détaillé vous est communiqué sur demande, au moment où vous contactez Ludivine, pour coller au plus près de la prochaine retraite et de vos envies.
+          </p>
+          <div style={{ marginTop:28 }}>
+            <Link href="/contact?sujet=Retraite+cr%C3%A9ative+Poitiers" className="cta-pill">Demander le programme à Ludivine</Link>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+      <section style={{ padding:'80px 0', background:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:820 }}>
           <SectionTitle kicker="Tout savoir avant de réserver" align="center">FAQ Retraite créative Poitiers</SectionTitle>
           <div style={{ marginTop:36, display:'flex', flexDirection:'column', gap:14 }}>
@@ -190,7 +212,7 @@ export default function RetraiteCreativePoitiersPage() {
         <div className="container" style={{ maxWidth:680, textAlign:'center' }}>
           <h2 className="h-fredoka" style={{ fontSize:36, color:'var(--creme)', marginBottom:14 }}>Prête à t&apos;offrir cette parenthèse&nbsp;?</h2>
           <p style={{ fontSize:17, lineHeight:1.7, opacity:.95, marginBottom:28 }}>
-            9 places par retraite. Réservation en ligne sécurisée. Paiement 3× sans frais Klarna.
+            9 places par retraite. Réservation sécurisée en ligne. Paiement carte ou Klarna 3× sans frais.
           </p>
           <div style={{ display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
             <Link href="/ateliers-adultes/retraites-creatives#retraites" className="cta-pill" style={{ boxShadow:'0 0 0 4px var(--framboise-dark), var(--shadow-framboise)' }}>Voir les dates</Link>

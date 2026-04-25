@@ -12,7 +12,7 @@ const PAGE_URL = `${SITE_URL}/journee-creative-poitiers`
 export const metadata: Metadata = {
   title: 'Journée créative à Poitiers · Atelier couture & punch needle adulte',
   description:
-    "🧵 Journée créative à Poitiers : une journée entière de couture ou punch needle à Fontaine-le-Comte (5 min au sud de Poitiers, Vienne 86). Tout compris (matériel, repas, café), 8 places max. 90€ seule, 150€ à deux, paiement 3× sans frais avec Klarna.",
+    "🧵 Journée créative à Poitiers : une journée de couture ou punch needle à Fontaine-le-Comte (5 min au sud de Poitiers, Vienne 86). 10h → 17h, tout compris. 90€ seule, 150€ à deux. 8 places max. Paiement 3× sans frais Klarna.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: 'Journée créative à Poitiers · Atelier couture adulte',
@@ -26,30 +26,56 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image' },
 }
 
+// Programme exact de la journée — source : /ateliers-adultes/journees-creatives
+const PROGRAMME = [
+  { n: '1', titre: 'Accueil & café', heure: '10h', desc: "On se retrouve à 10h autour d'un café et de viennoiseries. Présentation du projet du jour." },
+  { n: '2', titre: 'Matin couture', heure: '10h30 – 12h30', desc: 'Création. Chacune avance à son rythme avec mon accompagnement.' },
+  { n: '3', titre: 'Repas partagé', heure: '12h30 – 14h', desc: "Pause déjeuner conviviale. Je m'occupe du repas, vous n'avez rien à apporter, on mange ensemble dans la bonne humeur." },
+  { n: '4', titre: 'Après-midi & finitions', heure: '14h – 17h', desc: 'On reprend, on finit les détails, on prend les dernières photos fières de sa création.' },
+]
+
+// Inclus exacts — source : /ateliers-adultes/journees-creatives
+const INCLUS = [
+  'Machine à coudre & surjeteuse',
+  'Tissus & mercerie fournis',
+  'Patron ou aide au patron',
+  'Repas du midi partagé',
+  'Café, thé & petits gâteaux',
+  "Goûter de l'après-midi",
+]
+
 const FAQ: { q: string; r: string }[] = [
   {
     q: 'Où ont lieu les journées créatives par rapport à Poitiers ?',
-    r: "Les journées créatives se déroulent à Fontaine-le-Comte, à seulement 5 minutes au sud de Poitiers (sortie Poitiers Sud / direction Lusignan). Tu peux venir en voiture (parking gratuit sur place) ou en bus. C'est tout proche du centre-ville de Poitiers et facilement accessible depuis Saint-Benoît, Buxerolles, Migné-Auxances, Lusignan ou Vouneuil-sous-Biard.",
+    r: "Les journées créatives se déroulent à Fontaine-le-Comte (Vienne 86), à 5 minutes au sud de Poitiers. Parking gratuit sur place, atelier lumineux et accessible PMR.",
   },
   {
-    q: 'Faut-il déjà savoir coudre pour participer ?',
-    r: "Non, pas du tout. Les journées créatives sont ouvertes à toutes les débutantes : je t'accompagne pas à pas. Si tu sais déjà coudre et que tu veux progresser sur un projet précis, c'est aussi parfait — je m'adapte à ton niveau. C'est l'avantage du petit groupe (8 personnes maximum) : chacune avance à son rythme.",
+    q: 'Quel est le déroulé exact de la journée ?',
+    r: "10h : accueil café et viennoiseries. 10h30 → 12h30 : matin couture. 12h30 → 14h : repas partagé (je m'occupe du repas, vous n'avez rien à apporter). 14h → 17h : après-midi et finitions.",
   },
   {
-    q: 'Qu\'est-ce qui est inclus dans le tarif de 90€ ?',
-    r: "Tout est compris : la machine à coudre (ou les outils punch needle), les tissus, le patron, le matériel, le café d'accueil, les boissons et le repas du midi convivial. Tu repars en fin de journée avec le projet que tu as cousu — un vêtement, un sac, une déco, un coussin punch needle, ce que tu veux.",
+    q: 'Couture ou punch needle, je dois choisir quoi ?',
+    r: "Vous choisissez votre univers. Couture (tissu) : vêtements, sacs, accessoires, déco… avec un patron ou en carte blanche. Punch needle (laine) : tableau, coussin, déco murale, une technique accessible et méditative.",
   },
   {
-    q: 'Est-ce qu\'on peut payer en plusieurs fois ?',
-    r: "Oui : les 90€ sont payables en 3× 30€ sans frais grâce à Klarna (intégré au paiement en ligne). Aucun dossier, aucun justificatif, c'est validé en quelques clics au moment de la réservation.",
-  },
-  {
-    q: 'Comment réserver ma place ?',
-    r: "Les dates sont publiées sur la page Journées créatives. Tu choisis ta date, tu cliques sur \"Je réserve\", tu paies en ligne (carte ou Klarna 3×). C'est sécurisé et tu reçois la confirmation par email.",
+    q: "Qu'est-ce qui est inclus dans les 90€ ?",
+    r: 'Tout est compris : machine à coudre & surjeteuse, tissus & mercerie, patron ou aide au patron, repas du midi partagé, café, thé & petits gâteaux, et goûter de l\'après-midi.',
   },
   {
     q: "C'est quoi la promo \"venir à deux\" ?",
-    r: "Si tu viens avec une copine, une sœur, ta maman, ta cousine, vous êtes à 150€ pour deux au lieu de 180€ (-30€). C'est l'occasion idéale pour un cadeau commun, un anniversaire, ou juste un moment partagé autour de la couture.",
+    r: "Si vous venez à deux (copine, sœur, maman, cousine), c'est 150€ pour deux au lieu de 180€, soit -30€. Une bonne occasion pour un cadeau commun ou un moment partagé.",
+  },
+  {
+    q: 'Peut-on payer en 3 fois ?',
+    r: "Oui, le paiement en 3× sans frais via Klarna est disponible au moment de la réservation en ligne : 3× 30€. Aucun dossier, aucun justificatif.",
+  },
+  {
+    q: 'Combien de places par journée ?',
+    r: '8 participantes maximum, pour préserver un accompagnement personnalisé.',
+  },
+  {
+    q: 'Comment réserver ma place ?',
+    r: "Les dates sont publiées sur la page Journées créatives. Vous choisissez votre date, cliquez sur \"Je réserve\", paiement sécurisé en ligne (carte ou Klarna 3×).",
   },
 ]
 
@@ -62,7 +88,7 @@ export default function JourneeCreativePoitiersPage() {
           serviceJsonLd({
             name: 'Journée créative couture à Poitiers',
             description:
-              'Atelier couture et punch needle adulte à Fontaine-le-Comte, 5 min au sud de Poitiers (Vienne 86). Une journée tout compris (matériel, repas, café), 8 participantes maximum.',
+              'Atelier couture et punch needle adulte à Fontaine-le-Comte, 5 min au sud de Poitiers (Vienne 86). 10h → 17h, tout compris (machine & surjeteuse, tissus, patron, repas, café, goûter). 8 participantes maximum.',
             url: PAGE_URL,
             priceCentimes: 9000,
             audience: 'Adultes',
@@ -79,7 +105,6 @@ export default function JourneeCreativePoitiersPage() {
 
       {/* HERO */}
       <section style={{ position:'relative', overflow:'hidden', padding:'90px 0 70px', background:'var(--creme-pale)' }}>
-        <div className="stripes-thin" style={{ position:'absolute', top:0, left:0, right:0 }} />
         <div className="container" style={{ maxWidth:820, textAlign:'center', position:'relative' }}>
           <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42', marginBottom:18 }}>Vienne (86) · 5 min de Poitiers</span>
           <h1 className="h-fredoka" style={{ fontSize:'clamp(40px,5.5vw,68px)', color:'var(--framboise)', margin:'14px 0 14px', lineHeight:1.05 }}>
@@ -89,8 +114,9 @@ export default function JourneeCreativePoitiersPage() {
             Atelier couture &amp; punch needle adulte à Fontaine-le-Comte (Vienne 86)
           </p>
           <p style={{ fontSize:17, lineHeight:1.7, opacity:.85, marginBottom:30, maxWidth:680, marginLeft:'auto', marginRight:'auto' }}>
-            Tu cherches une <strong>journée créative près de Poitiers</strong> pour décrocher du quotidien et repartir avec un projet fini de tes mains&nbsp;? Bienvenue. Mes journées créatives ont lieu à Fontaine-le-Comte, à seulement 5 minutes au sud de Poitiers, dans une ambiance chaleureuse et bienveillante. Couture ou punch needle, tu choisis. Tout est fourni&nbsp;: machine, tissu, matériel, repas, café. Toi tu viens juste avec l&apos;envie.
+            Une journée entière pour vous offrir une parenthèse créative, à Fontaine-le-Comte, à 5 minutes au sud de Poitiers. Couture (tissu) ou punch needle (laine), vous choisissez votre univers. Projets guidés ou carte blanche, dans une ambiance chaleureuse, en petit groupe (8 maximum).
           </p>
+          <p className="h-caveat" style={{ fontSize:26, color:'var(--framboise)', margin:'0 0 30px' }}>~ 10h → 17h ~</p>
           <div style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap', marginBottom:24 }}>
             <Link href="/ateliers-adultes/journees-creatives#dates" className="cta-pill">Voir les prochaines dates</Link>
             <Link href="/contact?sujet=Journ%C3%A9e+cr%C3%A9ative+Poitiers" className="cta-ghost">Une question ?</Link>
@@ -101,52 +127,79 @@ export default function JourneeCreativePoitiersPage() {
         </div>
       </section>
 
-      {/* POURQUOI ICI */}
+      {/* DEUX UNIVERS */}
       <section style={{ padding:'80px 0', background:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:820 }}>
-          <SectionTitle kicker="Pourquoi venir d&apos;aussi loin que Poitiers&nbsp;?" align="center">À 5 minutes du centre, dans la nature</SectionTitle>
-          <p style={{ fontSize:17, lineHeight:1.75, opacity:.88, marginTop:28 }}>
-            Fontaine-le-Comte est <strong>la commune la plus proche de Poitiers où tu peux te poser une journée entière pour coudre</strong>, dans un cadre verdoyant, sans le stress urbain. C&apos;est cinq minutes de voiture depuis Poitiers Sud, et une ambiance complètement différente&nbsp;: nature autour, salon convivial, grande table de couture lumineuse, bobines et tissus à portée de main.
+          <SectionTitle kicker="Sur le thème du tissu &amp; de la laine" align="center">Ce qu&apos;on peut créer</SectionTitle>
+          <p style={{ textAlign:'center', maxWidth:680, margin:'26px auto 40px', fontSize:17, opacity:.85, lineHeight:1.7 }}>
+            Les journées créatives tournent autour de deux univers&nbsp;: la couture <strong style={{ color:'var(--framboise)' }}>(tissu)</strong> et le punch needle <strong style={{ color:'var(--framboise)' }}>(laine)</strong>. À vous de choisir votre projet du jour.
           </p>
-          <p style={{ fontSize:17, lineHeight:1.75, opacity:.88, marginTop:18 }}>
-            Mes journées créatives sont conçues pour que tu décroches vraiment&nbsp;: pas d&apos;écran, pas de boulot, juste toi, ta machine et ton projet. Tu arrives à 9h30, café d&apos;accueil, on choisit ensemble ton projet du jour, on coud jusqu&apos;à midi, repas convivial, on reprend l&apos;après-midi, et tu repars à 17h30 avec ta création — un vêtement, un sac, un coussin punch needle, ce que tu veux.
-          </p>
-          <p style={{ fontSize:17, lineHeight:1.75, opacity:.88, marginTop:18 }}>
-            Le groupe est limité à <strong>8 participantes maximum</strong> pour que je puisse vraiment t&apos;accompagner — débutante absolue ou cousette confirmée, chacune avance à son rythme et personne n&apos;est laissée sur le carreau.
-          </p>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(260px, 1fr))', gap:24 }}>
+            <div style={{ background:'var(--creme-pale)', borderRadius:24, padding:'32px 26px', textAlign:'center', border:'2px solid rgba(200,54,92,.1)' }}>
+              <div style={{ fontSize:54, lineHeight:1, marginBottom:14 }}>🧵</div>
+              <h3 className="h-fredoka" style={{ fontSize:24, color:'var(--framboise)', margin:'0 0 6px' }}>La couture</h3>
+              <div style={{ fontSize:12, opacity:.65, letterSpacing:3, textTransform:'uppercase', marginBottom:12 }}>Tissu</div>
+              <p style={{ margin:0, fontSize:15, opacity:.78, lineHeight:1.55 }}>
+                Vêtements, sacs, accessoires, déco… avec un patron ou en carte blanche.
+              </p>
+            </div>
+            <div style={{ background:'var(--creme-pale)', borderRadius:24, padding:'32px 26px', textAlign:'center', border:'2px solid rgba(200,54,92,.1)' }}>
+              <div style={{ fontSize:54, lineHeight:1, marginBottom:14 }}>🪡</div>
+              <h3 className="h-fredoka" style={{ fontSize:24, color:'var(--framboise)', margin:'0 0 6px' }}>Le punch needle</h3>
+              <div style={{ fontSize:12, opacity:.65, letterSpacing:3, textTransform:'uppercase', marginBottom:12 }}>Laine</div>
+              <p style={{ margin:0, fontSize:15, opacity:.78, lineHeight:1.55 }}>
+                Tableau, coussin, déco murale en laine. Une technique accessible et méditative.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* CE QUI EST INCLUS — bandeau résumé */}
-      <section style={{ padding:'70px 0', background:'var(--creme-pale)' }}>
+      {/* PROGRAMME */}
+      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth:820 }}>
+          <SectionTitle kicker="Le déroulé de la journée" align="center">Programme · 10h → 17h</SectionTitle>
+          <div style={{ marginTop:38, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:18 }}>
+            {PROGRAMME.map((p) => (
+              <div key={p.n} className="card" style={{ padding:'22px 20px' }}>
+                <div style={{ display:'flex', gap:12, alignItems:'center', marginBottom:12 }}>
+                  <div style={{ width:38, height:38, borderRadius:999, background:'var(--framboise)', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-fredoka)', fontSize:18, flexShrink:0 }}>{p.n}</div>
+                  <div>
+                    <div className="h-fredoka" style={{ fontSize:16, color:'var(--framboise)', lineHeight:1.1 }}>{p.titre}</div>
+                    <div style={{ fontSize:12, color:'var(--framboise)', opacity:.7 }}>{p.heure}</div>
+                  </div>
+                </div>
+                <p style={{ margin:0, fontSize:13.5, opacity:.78, lineHeight:1.55 }}>{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CE QUI EST INCLUS */}
+      <section style={{ padding:'80px 0', background:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:820 }}>
           <SectionTitle kicker="Tout est prévu" align="center">Ce qui est inclus dans les 90€</SectionTitle>
           <ul style={{ marginTop:32, padding:0, listStyle:'none', display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:14 }}>
-            {[
-              'Machine à coudre + outils punch needle',
-              'Tissu &amp; mercerie de qualité',
-              'Patron adapté à ton projet',
-              'Café et boissons toute la journée',
-              'Repas du midi convivial',
-              'Petit groupe (8 personnes max)',
-              'Accompagnement personnalisé',
-              'Tu repars avec ton projet fini',
-            ].map((it, i) => (
-              <li key={i} style={{ background:'var(--creme)', borderRadius:18, padding:'14px 18px', display:'flex', gap:10, alignItems:'center', boxShadow:'var(--shadow-card)' }}>
+            {INCLUS.map((it, i) => (
+              <li key={i} style={{ background:'var(--creme-pale)', borderRadius:18, padding:'14px 18px', display:'flex', gap:10, alignItems:'center', boxShadow:'var(--shadow-card)' }}>
                 <span style={{ color:'var(--framboise)', fontSize:18 }}>✦</span>
-                <span style={{ fontSize:14.5 }} dangerouslySetInnerHTML={{ __html: it }} />
+                <span style={{ fontSize:14.5 }}>{it}</span>
               </li>
             ))}
           </ul>
           <div style={{ textAlign:'center', marginTop:36, display:'flex', flexDirection:'column', alignItems:'center', gap:18 }}>
-            <Link href="/ateliers-adultes/journees-creatives" className="cta-pill">Voir le détail complet et les dates</Link>
+            <p style={{ margin:0, fontSize:14, opacity:.75 }}>
+              <strong style={{ color:'var(--framboise)' }}>Promo duo</strong>&nbsp;: 150€ à deux au lieu de 180€ (-30€).
+            </p>
             <KlarnaBadge prixCentimes={9000} variant="light" />
+            <Link href="/ateliers-adultes/journees-creatives" className="cta-pill">Voir le détail complet et les dates</Link>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section style={{ padding:'80px 0', background:'var(--creme)' }}>
+      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
         <div className="container" style={{ maxWidth:820 }}>
           <SectionTitle kicker="Tout savoir avant de réserver" align="center">FAQ Journée créative Poitiers</SectionTitle>
           <div style={{ marginTop:36, display:'flex', flexDirection:'column', gap:14 }}>
@@ -160,9 +213,9 @@ export default function JourneeCreativePoitiersPage() {
       {/* CTA FINAL */}
       <section style={{ padding:'80px 0', background:'var(--framboise)', color:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:680, textAlign:'center' }}>
-          <h2 className="h-fredoka" style={{ fontSize:36, color:'var(--creme)', marginBottom:14 }}>Prête à t&apos;offrir une journée pour toi&nbsp;?</h2>
+          <h2 className="h-fredoka" style={{ fontSize:36, color:'var(--creme)', marginBottom:14 }}>Prête à coudre quelque chose de beau&nbsp;?</h2>
           <p style={{ fontSize:17, lineHeight:1.7, opacity:.95, marginBottom:28 }}>
-            Réserve en quelques clics. Paiement sécurisé carte ou Klarna 3× sans frais.
+            8 places par journée. Réservation sécurisée en ligne. Paiement carte ou Klarna 3× sans frais.
           </p>
           <div style={{ display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
             <Link href="/ateliers-adultes/journees-creatives#dates" className="cta-pill" style={{ boxShadow:'0 0 0 4px var(--framboise-dark), var(--shadow-framboise)' }}>Voir les dates</Link>
