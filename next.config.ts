@@ -28,13 +28,9 @@ const nextConfig: NextConfig = {
       { source: '/retraite-couture', destination: '/ateliers-adultes/retraites-creatives', permanent: true },
       // Anniversaires
       { source: '/anniversaire-couture', destination: '/anniversaire-couture-enfant', permanent: true },
-      // www → apex (canonical)
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.atelierpicpaf.fr' }],
-        destination: 'https://atelierpicpaf.fr/:path*',
-        permanent: true,
-      },
+      // Note : pas de redirection www → apex ici. Vercel gère ça
+      // au niveau des Domains du projet (config dans le dashboard).
+      // Une règle Next.js + alias Vercel = boucle de redirection.
     ]
   },
 }
