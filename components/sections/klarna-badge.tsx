@@ -15,22 +15,24 @@
 interface KlarnaBadgeProps {
   prixCentimes: number
   variant?: 'light' | 'dark'
+  size?: 'md' | 'sm'
 }
 
-export function KlarnaBadge({ prixCentimes, variant = 'light' }: KlarnaBadgeProps) {
+export function KlarnaBadge({ prixCentimes, variant = 'light', size = 'md' }: KlarnaBadgeProps) {
   if (!prixCentimes || prixCentimes <= 0) return null
   const per3 = Math.round(prixCentimes / 3 / 100)
 
   const isDark = variant === 'dark'
+  const isSm = size === 'sm'
 
   const wrapStyle: React.CSSProperties = {
     display: 'inline-flex',
     alignItems: 'stretch',
-    gap: 18,
+    gap: isSm ? 12 : 18,
     background: isDark ? 'rgba(251,244,228,0.12)' : 'var(--creme)',
     border: isDark ? '2px dashed rgba(251,244,228,0.55)' : '2px dashed var(--framboise)',
-    borderRadius: 22,
-    padding: '14px 22px',
+    borderRadius: isSm ? 16 : 22,
+    padding: isSm ? '8px 14px' : '14px 22px',
     boxShadow: isDark ? 'none' : 'var(--shadow-card)',
     position: 'relative',
     overflow: 'hidden',
@@ -52,15 +54,15 @@ export function KlarnaBadge({ prixCentimes, variant = 'light' }: KlarnaBadgeProp
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          paddingRight: 18,
+          paddingRight: isSm ? 12 : 18,
           borderRight: `1px solid ${divider}`,
-          minWidth: 72,
+          minWidth: isSm ? 52 : 72,
         }}
       >
         <div
           className="h-fredoka"
           style={{
-            fontSize: 42,
+            fontSize: isSm ? 30 : 42,
             color: textPrimary,
             lineHeight: 0.95,
             fontWeight: 700,
@@ -68,7 +70,7 @@ export function KlarnaBadge({ prixCentimes, variant = 'light' }: KlarnaBadgeProp
         >
           3×
         </div>
-        <div style={{ fontSize: 11, opacity: 0.8, marginTop: 3, letterSpacing: 0.5, textTransform: 'uppercase', color: textSecondary }}>
+        <div style={{ fontSize: isSm ? 9 : 11, opacity: 0.8, marginTop: 2, letterSpacing: 0.5, textTransform: 'uppercase', color: textSecondary }}>
           sans frais
         </div>
       </div>
@@ -78,15 +80,15 @@ export function KlarnaBadge({ prixCentimes, variant = 'light' }: KlarnaBadgeProp
         <div
           className="h-fredoka"
           style={{
-            fontSize: 24,
+            fontSize: isSm ? 18 : 24,
             color: textPrimary,
             lineHeight: 1.05,
             fontWeight: 700,
           }}
         >
-          {per3}€ <span style={{ fontSize: 16, opacity: 0.85, fontWeight: 500 }}>/ mois</span>
+          {per3}€ <span style={{ fontSize: isSm ? 12 : 16, opacity: 0.85, fontWeight: 500 }}>/ mois</span>
         </div>
-        <div style={{ fontSize: 12.5, color: textSecondary, marginTop: 4, lineHeight: 1.3 }}>
+        <div style={{ fontSize: isSm ? 11 : 12.5, color: textSecondary, marginTop: isSm ? 2 : 4, lineHeight: 1.3 }}>
           Paiement en 3 fois avec <strong style={{ color: textPrimary, fontWeight: 700 }}>Klarna</strong>
         </div>
       </div>

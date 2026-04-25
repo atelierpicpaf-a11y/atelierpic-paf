@@ -5,6 +5,7 @@ import { Logo } from '@/components/brand/logo'
 import { SectionTitle } from '@/components/sections/section-title'
 import { HomeEnfantsGrid } from '@/components/sections/home-enfants-grid'
 import { HomeNewsletter } from '@/components/sections/home-newsletter'
+import { KlarnaBadge } from '@/components/sections/klarna-badge'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
@@ -102,6 +103,7 @@ export default async function HomePage() {
                   <div><div className="h-fredoka" style={{ fontSize:40, color:'var(--framboise)', lineHeight:1 }}>90€</div><div style={{ fontSize:12, opacity:.6 }}>/ personne, tout compris</div></div>
                   <a href="/ateliers-adultes/journees-creatives" className="cta-pill">Je réserve</a>
                 </div>
+                <KlarnaBadge prixCentimes={9000} variant="light" size="sm" />
               </div>
             </div>
 
@@ -127,6 +129,7 @@ export default async function HomePage() {
                   <div><div className="h-fredoka" style={{ fontSize:40, color:'var(--framboise)', lineHeight:1 }}>390€</div><div style={{ fontSize:12, opacity:.6 }}>/ personne, weekend complet</div></div>
                   <a href="/ateliers-adultes/retraites-creatives" className="cta-pill">Je réserve</a>
                 </div>
+                <KlarnaBadge prixCentimes={39000} variant="light" size="sm" />
               </div>
             </div>
 
