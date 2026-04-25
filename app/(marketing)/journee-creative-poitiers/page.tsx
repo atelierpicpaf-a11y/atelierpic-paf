@@ -36,7 +36,6 @@ const PROGRAMME = [
 
 // Inclus exacts — source : /ateliers-adultes/journees-creatives
 const INCLUS = [
-  'Machine à coudre & surjeteuse',
   'Tissus & mercerie fournis',
   'Patron ou aide au patron',
   'Repas du midi partagé',
@@ -59,7 +58,7 @@ const FAQ: { q: string; r: string }[] = [
   },
   {
     q: "Qu'est-ce qui est inclus dans les 90€ ?",
-    r: 'Tout est compris : machine à coudre & surjeteuse, tissus & mercerie, patron ou aide au patron, repas du midi partagé, café, thé & petits gâteaux, et goûter de l\'après-midi.',
+    r: 'Tout est compris : tissus & mercerie, patron ou aide au patron, repas du midi partagé, café, thé & petits gâteaux, et goûter de l\'après-midi.',
   },
   {
     q: "C'est quoi la promo \"venir à deux\" ?",
@@ -88,7 +87,7 @@ export default function JourneeCreativePoitiersPage() {
           serviceJsonLd({
             name: 'Journée créative couture à Poitiers',
             description:
-              'Atelier couture et punch needle adulte à Fontaine-le-Comte, 5 min au sud de Poitiers (Vienne 86). 10h → 17h, tout compris (machine & surjeteuse, tissus, patron, repas, café, goûter). 8 participantes maximum.',
+              'Atelier couture et punch needle adulte à Fontaine-le-Comte, 5 min au sud de Poitiers (Vienne 86). 10h → 17h, tout compris (tissus, patron, repas, café, goûter). 8 participantes maximum.',
             url: PAGE_URL,
             priceCentimes: 9000,
             audience: 'Adultes',
