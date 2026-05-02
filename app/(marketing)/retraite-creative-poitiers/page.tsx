@@ -6,6 +6,8 @@ import { serviceJsonLd, breadcrumbJsonLd, faqPageJsonLd } from '@/lib/seo/json-l
 import { SectionTitle } from '@/components/sections/section-title'
 import { FaqItem } from '@/components/sections/faq-item'
 import { KlarnaBadge } from '@/components/sections/klarna-badge'
+import { RetraitesDatesGrid } from '@/components/sections/retraites-dates-grid'
+import { createClient } from '@/lib/supabase/server'
 
 const SITE_URL = 'https://atelierpicpaf.fr'
 const PAGE_URL = `${SITE_URL}/retraite-creative-poitiers`
@@ -78,7 +80,13 @@ const FAQ: { q: string; r: string }[] = [
   },
 ]
 
-export default function RetraiteCreativePoitiersPage() {
+export default async function RetraiteCreativePoitiersPage() {
+  const supabase = await createClient()
+  const [{ data: sessions }, { data: configs }] = await Promise.all([
+    supabase.from('sessions').select('*').eq('type', 'retraite_creative').in('statut', ['ouvert', 'complet']).order('date_debut'),
+    supabase.from('config_ateliers').select('*').eq('type', 'retraites'),
+  ])
+  const cfg = configs?.[0]
   return (
     <div className="route-enter">
       <JsonLd
@@ -139,7 +147,7 @@ export default function RetraiteCreativePoitiersPage() {
           </p>
           <p className="h-caveat" style={{ fontSize:26, color:'var(--framboise)', margin:'0 0 30px' }}>~ Vendredi soir → Dimanche 16h ~</p>
           <div style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap', marginBottom:24 }}>
-            <Link href="/ateliers-adultes/retraites-creatives#retraites" className="cta-pill">Voir les prochaines dates</Link>
+            <Link href="#dates" className="cta-pill">Voir les prochaines dates</Link>
             <Link href="/contact?sujet=Retraite+cr%C3%A9ative+Poitiers" className="cta-ghost">Me contacter</Link>
           </div>
           <div style={{ display:'flex', justifyContent:'center' }}>
@@ -218,6 +226,22 @@ export default function RetraiteCreativePoitiersPage() {
         </div>
       </section>
 
+      {/* PROCHAINES DATES */}
+      <section id="dates" style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+        <div className="container">
+          <SectionTitle kicker="Réservation en ligne · Paiement 3× Klarna" align="center">Prochaines retraites</SectionTitle>
+          <p style={{ textAlign:'center', maxWidth:620, margin:'24px auto 0', fontSize:16, opacity:.85, lineHeight:1.6 }}>
+            9 places par retraite. Réserve la tienne directement en ligne — paiement sécurisé carte ou Klarna 3× sans frais.
+          </p>
+          <div style={{ marginTop:50, display:'flex', flexDirection:'column', gap:18, maxWidth:680, margin:'50px auto 0' }}>
+            <RetraitesDatesGrid sessions={sessions ?? []} prixCentimes={cfg?.prix_centimes ?? 39000} />
+          </div>
+          <div style={{ textAlign:'center', marginTop:36 }}>
+            <Link href="/contact?sujet=Retraite+cr%C3%A9ative+Poitiers" className="cta-ghost">Être prévenue des prochaines dates →</Link>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section style={{ padding:'80px 0', background:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:820 }}>
@@ -238,7 +262,7 @@ export default function RetraiteCreativePoitiersPage() {
             9 places par retraite. Réservation sécurisée en ligne. Paiement carte ou Klarna 3× sans frais.
           </p>
           <div style={{ display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
-            <Link href="/ateliers-adultes/retraites-creatives#retraites" className="cta-pill" style={{ boxShadow:'0 0 0 4px var(--framboise-dark), var(--shadow-framboise)' }}>Voir les dates</Link>
+            <Link href="#dates" className="cta-pill" style={{ boxShadow:'0 0 0 4px var(--framboise-dark), var(--shadow-framboise)' }}>Voir les dates</Link>
             <Link href="/contact?sujet=Retraite+cr%C3%A9ative+Poitiers" className="cta-ghost" style={{ background:'transparent', color:'var(--creme)', borderColor:'var(--creme)' }}>Me contacter</Link>
           </div>
         </div>
