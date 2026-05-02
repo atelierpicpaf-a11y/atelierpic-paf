@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Logo } from '@/components/brand/logo'
 
 const NAV_ITEMS = [
-  { href: '/ateliers-enfants', label: 'Ateliers enfants' },
+  { href: '/ateliers-enfants', label: 'Atelier créatif enfant et adulte' },
   { href: '/ateliers-adultes/journees-creatives', label: 'Journées créatives' },
   { href: '/ateliers-adultes/retraites-creatives', label: 'Retraites créatives' },
   { href: '/contact', label: 'Contact' },
