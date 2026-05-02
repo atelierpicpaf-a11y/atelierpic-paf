@@ -24,19 +24,30 @@ export function Footer() {
             <FooterLink href="/anniversaire-couture-enfant">Anniversaire couture</FooterLink>
           </div>
           <div>
-            <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Près de Poitiers</h5>
+            <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Pages Poitiers</h5>
             <FooterLink href="/poitiers">Atelier créatif Poitiers</FooterLink>
             <FooterLink href="/journee-creative-poitiers">Journée créative Poitiers</FooterLink>
             <FooterLink href="/retraite-creative-poitiers">Retraite créative Poitiers</FooterLink>
-            <FooterLink href="/fontaine-le-comte">Ateliers Fontaine-le-Comte</FooterLink>
           </div>
           <div>
-            <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Près de chez vous</h5>
-            <FooterLink href="/poitiers">Ateliers à Poitiers (86)</FooterLink>
-            <FooterLink href="/fontaine-le-comte">Ateliers à Fontaine-le-Comte</FooterLink>
-            <FooterLink href="/vouille">Ateliers à Vouillé</FooterLink>
-            <FooterLink href="/chatellerault">Ateliers à Châtellerault</FooterLink>
-            <FooterLink href="/niort">Ateliers à Niort (79)</FooterLink>
+            <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Vienne (86)</h5>
+            <FooterLink href="/poitiers">Poitiers</FooterLink>
+            <FooterLink href="/fontaine-le-comte">Fontaine-le-Comte</FooterLink>
+            <FooterLink href="/saint-benoit">Saint-Benoît</FooterLink>
+            <FooterLink href="/buxerolles">Buxerolles</FooterLink>
+            <FooterLink href="/vouille">Vouillé</FooterLink>
+            <FooterLink href="/chatellerault">Châtellerault</FooterLink>
+            <FooterLink href="/jaunay-marigny">Jaunay-Marigny</FooterLink>
+            <FooterLink href="/mirebeau">Mirebeau</FooterLink>
+            <FooterLink href="/lusignan">Lusignan</FooterLink>
+            <FooterLink href="/chauvigny">Chauvigny</FooterLink>
+          </div>
+          <div>
+            <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Deux-Sèvres (79)</h5>
+            <FooterLink href="/niort">Niort</FooterLink>
+            <FooterLink href="/parthenay">Parthenay</FooterLink>
+            <FooterLink href="/bressuire">Bressuire</FooterLink>
+            <FooterLink href="/thouars">Thouars</FooterLink>
           </div>
           <div>
             <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Contact</h5>
