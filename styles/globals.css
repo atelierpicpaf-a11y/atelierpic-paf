@@ -200,7 +200,9 @@ a { color: inherit; text-decoration: none; }
   z-index: 1;
 }
 @media (max-width: 720px) {
-  .float-word { display: none; }
+  /* Sur mobile : on cache uniquement les mots les plus longs (Pause entre filles, Ressourcement)
+     pour ne pas chevaucher le texte du hero. Les autres restent visibles, scalés via clamp(). */
+  .float-word-hide-sm { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .float-word { animation: none; opacity: .4; transform: none; }

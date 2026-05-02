@@ -67,12 +67,12 @@ export default async function RetraitesCreativesPage() {
         </div>
         {/* Mots flottants animés */}
         <div style={{ position:'absolute', inset:0, pointerEvents:'none' }} aria-hidden="true">
-          <span className="float-word" style={{ top:'8%',  left:'4%',  fontSize:38, animationDelay:'0s',   animationDuration:'9s'  }}>Détente</span>
-          <span className="float-word" style={{ top:'12%', right:'6%', fontSize:42, animationDelay:'1.5s', animationDuration:'10s' }}>Weekend</span>
-          <span className="float-word" style={{ top:'48%', left:'3%',  fontSize:36, animationDelay:'3s',   animationDuration:'8.5s', color:'var(--framboise-soft)' }}>Relax</span>
-          <span className="float-word" style={{ top:'55%', right:'4%', fontSize:34, animationDelay:'4.5s', animationDuration:'11s'  }}>Cocooning</span>
-          <span className="float-word" style={{ bottom:'14%', left:'18%', fontSize:30, animationDelay:'6s',  animationDuration:'12s' }}>Pause entre filles</span>
-          <span className="float-word" style={{ bottom:'18%', right:'18%', fontSize:32, animationDelay:'7.5s', animationDuration:'9.5s', color:'var(--framboise-soft)' }}>Ressourcement</span>
+          <span className="float-word" style={{ top:'8%',  left:'4%',  fontSize:'clamp(20px, 4.2vw, 38px)', animationDelay:'0s',   animationDuration:'9s'  }}>Détente</span>
+          <span className="float-word" style={{ top:'12%', right:'6%', fontSize:'clamp(22px, 4.6vw, 42px)', animationDelay:'1.5s', animationDuration:'10s' }}>Weekend</span>
+          <span className="float-word" style={{ top:'48%', left:'3%',  fontSize:'clamp(19px, 4vw, 36px)',   animationDelay:'3s',   animationDuration:'8.5s', color:'var(--framboise-soft)' }}>Relax</span>
+          <span className="float-word" style={{ top:'55%', right:'4%', fontSize:'clamp(18px, 3.8vw, 34px)', animationDelay:'4.5s', animationDuration:'11s'  }}>Cocooning</span>
+          <span className="float-word float-word-hide-sm" style={{ bottom:'14%', left:'18%', fontSize:30, animationDelay:'6s',  animationDuration:'12s' }}>Pause entre filles</span>
+          <span className="float-word float-word-hide-sm" style={{ bottom:'18%', right:'18%', fontSize:32, animationDelay:'7.5s', animationDuration:'9.5s', color:'var(--framboise-soft)' }}>Ressourcement</span>
         </div>
         <div className="container" style={{ maxWidth:760, textAlign:'center', position:'relative', zIndex:2 }}>
           <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42', marginBottom:24 }}>Weekend ressourcement</span>

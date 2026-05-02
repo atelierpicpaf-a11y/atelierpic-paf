@@ -127,12 +127,12 @@ export default async function RetraiteCreativePoitiersPage() {
         </div>
         {/* Mots flottants animés */}
         <div style={{ position:'absolute', inset:0, pointerEvents:'none' }} aria-hidden="true">
-          <span className="float-word" style={{ top:'8%',  left:'4%',  fontSize:38, animationDelay:'0s',   animationDuration:'9s'  }}>Détente</span>
-          <span className="float-word" style={{ top:'12%', right:'6%', fontSize:42, animationDelay:'1.5s', animationDuration:'10s' }}>Weekend</span>
-          <span className="float-word" style={{ top:'48%', left:'3%',  fontSize:36, animationDelay:'3s',   animationDuration:'8.5s', color:'var(--framboise-soft)' }}>Relax</span>
-          <span className="float-word" style={{ top:'55%', right:'4%', fontSize:34, animationDelay:'4.5s', animationDuration:'11s'  }}>Cocooning</span>
-          <span className="float-word" style={{ bottom:'14%', left:'18%', fontSize:30, animationDelay:'6s',  animationDuration:'12s' }}>Pause entre filles</span>
-          <span className="float-word" style={{ bottom:'18%', right:'18%', fontSize:32, animationDelay:'7.5s', animationDuration:'9.5s', color:'var(--framboise-soft)' }}>Ressourcement</span>
+          <span className="float-word" style={{ top:'8%',  left:'4%',  fontSize:'clamp(20px, 4.2vw, 38px)', animationDelay:'0s',   animationDuration:'9s'  }}>Détente</span>
+          <span className="float-word" style={{ top:'12%', right:'6%', fontSize:'clamp(22px, 4.6vw, 42px)', animationDelay:'1.5s', animationDuration:'10s' }}>Weekend</span>
+          <span className="float-word" style={{ top:'48%', left:'3%',  fontSize:'clamp(19px, 4vw, 36px)',   animationDelay:'3s',   animationDuration:'8.5s', color:'var(--framboise-soft)' }}>Relax</span>
+          <span className="float-word" style={{ top:'55%', right:'4%', fontSize:'clamp(18px, 3.8vw, 34px)', animationDelay:'4.5s', animationDuration:'11s'  }}>Cocooning</span>
+          <span className="float-word float-word-hide-sm" style={{ bottom:'14%', left:'18%', fontSize:30, animationDelay:'6s',  animationDuration:'12s' }}>Pause entre filles</span>
+          <span className="float-word float-word-hide-sm" style={{ bottom:'18%', right:'18%', fontSize:32, animationDelay:'7.5s', animationDuration:'9.5s', color:'var(--framboise-soft)' }}>Ressourcement</span>
         </div>
         <div className="container" style={{ maxWidth:820, textAlign:'center', position:'relative', zIndex:2 }}>
           <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42', marginBottom:18 }}>Vienne (86) · 5 min de Poitiers</span>
@@ -152,6 +152,34 @@ export default async function RetraiteCreativePoitiersPage() {
           </div>
           <div style={{ display:'flex', justifyContent:'center' }}>
             <KlarnaBadge prixCentimes={39000} variant="light" />
+          </div>
+        </div>
+      </section>
+
+      {/* AVEC LUDIVINE */}
+      <section style={{ padding:'80px 0', background:'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth:1040 }}>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:48, alignItems:'center' }}>
+            <div style={{ position:'relative', aspectRatio:'1 / 1', borderRadius:32, overflow:'hidden', boxShadow:'var(--shadow-framboise)', maxWidth:480, margin:'0 auto', width:'100%' }}>
+              <Image
+                src="/images/brand/ludivine-portrait.jpg"
+                alt="Ludivine, fondatrice de L'atelier Pic & Paf, souriante devant le logo rayé framboise et son slogan « Deviens toi aussi une magicienne ! »"
+                fill
+                sizes="(max-width: 768px) 90vw, 480px"
+                style={{ objectFit:'cover' }}
+              />
+            </div>
+            <div>
+              <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ Votre hôte ~</span>
+              <h2 className="h-fredoka" style={{ fontSize:'clamp(32px,4vw,48px)', color:'var(--framboise)', margin:'10px 0 24px', lineHeight:1.1 }}>Avec Ludivine</h2>
+              <p style={{ fontSize:17, opacity:.88, lineHeight:1.7, marginBottom:16 }}>
+                Passionnée et créative depuis toujours, j&apos;ai créé L&apos;atelier Pic &amp; Paf pour partager ce qui me fait vibrer&nbsp;: transmettre, créer, relier.
+              </p>
+              <p style={{ fontSize:17, opacity:.88, lineHeight:1.7, marginBottom:16 }}>
+                Mes retraites, je les imagine comme des petites bulles de douceur&nbsp;: un groupe restreint, un cadre chaleureux, et surtout l&apos;envie de vous offrir un vrai moment pour vous. Pas de pression, pas de niveau requis, juste l&apos;envie de créer et de se sentir bien.
+              </p>
+              <p className="h-caveat" style={{ fontSize:26, color:'var(--framboise)', margin:'20px 0 0' }}>~ J&apos;ai hâte de vous rencontrer ✨ ~</p>
+            </div>
           </div>
         </div>
       </section>
