@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Fee } from '@/components/brand/fee'
 import { Bobines } from '@/components/brand/bobines'
 import { SectionTitle } from '@/components/sections/section-title'
@@ -229,8 +230,23 @@ export default async function JourneesCreativesPage() {
                 ))}
               </ul>
             </div>
-            <div className="ph" style={{ height:320, borderRadius:28 }}>
-              <span>Photo de l&apos;atelier à venir</span>
+            <div style={{
+              position:'relative',
+              borderRadius:28,
+              overflow:'hidden',
+              aspectRatio:'1 / 1',
+              maxWidth:480,
+              margin:'0 auto',
+              boxShadow:'var(--shadow-card)',
+              border:'4px solid var(--creme)',
+            }}>
+              <Image
+                src="/images/brand/ludivine-portrait.jpg"
+                alt="Ludivine, fondatrice de L&apos;atelier Pic &amp; Paf, dans son atelier de Fontaine-le-Comte près de Poitiers"
+                fill
+                sizes="(max-width: 768px) 90vw, 480px"
+                style={{ objectFit:'cover' }}
+              />
             </div>
           </div>
         </div>
