@@ -235,10 +235,12 @@ export default async function JourneesCreativesPage() {
               borderRadius:28,
               overflow:'hidden',
               aspectRatio:'1 / 1',
+              width:'100%',
               maxWidth:480,
               margin:'0 auto',
               boxShadow:'var(--shadow-card)',
               border:'4px solid var(--creme)',
+              background:'var(--creme-pale)',
             }}>
               <Image
                 src="/images/brand/ludivine-portrait.jpg"
