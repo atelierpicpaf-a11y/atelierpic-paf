@@ -143,6 +143,74 @@ export default async function RetraitesCreativesPage() {
             ))}
           </ul>
         </div>
+
+
+        {/* MOSAÏQUE PHOTOS DU GÎTE */}
+        <div className="container" style={{ maxWidth:1100, marginTop:60 }}>
+          <div style={{
+            display:'grid',
+            gridTemplateColumns:'repeat(auto-fit, minmax(320px, 1fr))',
+            gap:20,
+            alignItems:'stretch',
+          }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
+              <div style={{
+                position:'relative',
+                width:'100%',
+                aspectRatio:'3 / 2',
+                borderRadius:24,
+                overflow:'hidden',
+                boxShadow:'var(--shadow-card)',
+                border:'4px solid var(--creme)',
+                background:'var(--creme-pale)',
+              }}>
+                <Image
+                  src="/images/lieu/gite-welcome.jpg"
+                  alt="Paillasson « Welcome » à l&apos;entrée du gîte de la retraite créative à Fontaine-le-Comte"
+                  fill
+                  sizes="(max-width: 768px) 90vw, 540px"
+                  style={{ objectFit:'cover' }}
+                />
+              </div>
+              <div style={{
+                position:'relative',
+                width:'100%',
+                aspectRatio:'3 / 2',
+                borderRadius:24,
+                overflow:'hidden',
+                boxShadow:'var(--shadow-card)',
+                border:'4px solid var(--creme)',
+                background:'var(--creme-pale)',
+              }}>
+                <Image
+                  src="/images/lieu/gite-cuisine.jpg"
+                  alt="Cuisine équipée du gîte avec îlot central, pour cuisiner ensemble pendant la retraite créative"
+                  fill
+                  sizes="(max-width: 768px) 90vw, 540px"
+                  style={{ objectFit:'cover' }}
+                />
+              </div>
+            </div>
+            <div style={{
+              position:'relative',
+              width:'100%',
+              aspectRatio:'3 / 4',
+              borderRadius:24,
+              overflow:'hidden',
+              boxShadow:'var(--shadow-card)',
+              border:'4px solid var(--creme)',
+              background:'var(--creme-pale)',
+            }}>
+              <Image
+                src="/images/lieu/gite-salle-manger.jpg"
+                alt="Salle à manger lumineuse avec table en bois et chaises terracotta, ouvrant sur le jardin du gîte"
+                fill
+                sizes="(max-width: 768px) 90vw, 540px"
+                style={{ objectFit:'cover' }}
+              />
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* PROGRAMME SUR-MESURE */}
