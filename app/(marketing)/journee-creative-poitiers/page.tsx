@@ -46,7 +46,7 @@ const INCLUS = [
 const FAQ: { q: string; r: string }[] = [
   {
     q: 'Où ont lieu les journées créatives par rapport à Poitiers ?',
-    r: "Les journées créatives se déroulent à Fontaine-le-Comte (Vienne 86), à 5 minutes au sud de Poitiers. Parking gratuit sur place, atelier lumineux et accessible PMR.",
+    r: "Les journées créatives se déroulent à Fontaine-le-Comte (Vienne 86), à 5 minutes au sud de Poitiers. Parking gratuit sur place, atelier lumineux et chaleureux.",
   },
   {
     q: 'Quel est le déroulé exact de la journée ?',
