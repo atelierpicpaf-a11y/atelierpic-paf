@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { JsonLd } from '@/components/seo/json-ld'
 import { serviceJsonLd, breadcrumbJsonLd, faqPageJsonLd } from '@/lib/seo/json-ld'
@@ -103,7 +104,29 @@ export default function RetraiteCreativePoitiersPage() {
 
       {/* HERO */}
       <section style={{ position:'relative', overflow:'hidden', padding:'90px 0 70px', background:'var(--creme-pale)' }}>
-        <div className="container" style={{ maxWidth:820, textAlign:'center', position:'relative' }}>
+        {/* Fond motifs aquarelle */}
+        <div style={{ position:'absolute', inset:0, opacity:.55, pointerEvents:'none' }} aria-hidden="true">
+          <Image
+            src="/images/lieu/hero-retraite-motifs.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit:'cover', objectPosition:'center' }}
+          />
+          {/* Voile crème pour adoucir et garantir la lisibilité du texte */}
+          <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at center, rgba(255,250,240,.78) 0%, rgba(255,250,240,.55) 40%, rgba(255,250,240,.15) 80%)' }} />
+        </div>
+        {/* Mots flottants animés */}
+        <div style={{ position:'absolute', inset:0, pointerEvents:'none' }} aria-hidden="true">
+          <span className="float-word" style={{ top:'8%',  left:'4%',  fontSize:38, animationDelay:'0s',   animationDuration:'9s'  }}>Détente</span>
+          <span className="float-word" style={{ top:'12%', right:'6%', fontSize:42, animationDelay:'1.5s', animationDuration:'10s' }}>Weekend</span>
+          <span className="float-word" style={{ top:'48%', left:'3%',  fontSize:36, animationDelay:'3s',   animationDuration:'8.5s', color:'var(--framboise-soft)' }}>Relax</span>
+          <span className="float-word" style={{ top:'55%', right:'4%', fontSize:34, animationDelay:'4.5s', animationDuration:'11s'  }}>Cocooning</span>
+          <span className="float-word" style={{ bottom:'14%', left:'18%', fontSize:30, animationDelay:'6s',  animationDuration:'12s' }}>Pause entre filles</span>
+          <span className="float-word" style={{ bottom:'18%', right:'18%', fontSize:32, animationDelay:'7.5s', animationDuration:'9.5s', color:'var(--framboise-soft)' }}>Ressourcement</span>
+        </div>
+        <div className="container" style={{ maxWidth:820, textAlign:'center', position:'relative', zIndex:2 }}>
           <span className="badge" style={{ background:'var(--menthe)', color:'#1a4a42', marginBottom:18 }}>Vienne (86) · 5 min de Poitiers</span>
           <h1 className="h-fredoka" style={{ fontSize:'clamp(40px,5.5vw,68px)', color:'var(--framboise)', margin:'14px 0 14px', lineHeight:1.05 }}>
             Retraite créative près de Poitiers

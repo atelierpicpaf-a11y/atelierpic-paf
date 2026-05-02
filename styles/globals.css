@@ -178,6 +178,34 @@ a { color: inherit; text-decoration: none; }
 @keyframes fade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 .route-enter { animation: fade .28s ease both; }
 
+/* ── Hero floating words (retreat) ── */
+@keyframes floatPop {
+  0%, 100% { opacity: 0; transform: translate(0, 22px) rotate(-3deg) scale(.82); }
+  10% { opacity: .55; }
+  25% { transform: translate(8px, -4px) rotate(-1deg) scale(1); }
+  50% { opacity: .82; transform: translate(-10px, -16px) rotate(2deg) scale(1.06); }
+  75% { transform: translate(12px, -24px) rotate(-2deg) scale(1); }
+  90% { opacity: .35; }
+}
+.float-word {
+  position: absolute;
+  font-family: var(--font-pacifico), 'Pacifico', cursive;
+  color: var(--framboise);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  animation: floatPop 9s ease-in-out infinite;
+  opacity: 0;
+  text-shadow: 0 1px 0 var(--creme), 0 0 12px rgba(251,244,228,.6);
+  z-index: 1;
+}
+@media (max-width: 720px) {
+  .float-word { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .float-word { animation: none; opacity: .4; transform: none; }
+}
+
 /* ── Responsive helpers ── */
 .hidden-mobile { display: initial; }
 @media (max-width: 860px) { .hidden-mobile { display: none !important; } }
