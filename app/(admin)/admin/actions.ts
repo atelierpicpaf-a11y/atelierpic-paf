@@ -31,7 +31,9 @@ export async function createAtelierEnfant(): Promise<AtelierEnfantRow> {
     .order('ordre', { ascending: false })
     .limit(1)
   const nextOrdre = existing && existing.length > 0 ? (existing[0].ordre + 1) : 0
-  const emojis = ['🧵', '✂️', '🪡', '🌸', '🎀', '🎨', '🪢', '💫']
+  // Liste curated pour les ateliers couture / punch needle / kids.
+  // Ludivine peut changer l'emoji depuis l'admin via le picker (cf. components/admin/admin-dashboard.tsx).
+  const emojis = ['🧵', '✂️', '🪡', '🧶', '🌸', '🎀', '🪢', '💫']
   const { data, error } = await db
     .from('ateliers_enfants')
     .insert({

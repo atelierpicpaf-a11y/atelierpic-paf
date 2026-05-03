@@ -27,6 +27,13 @@ const CATEGORIES_ENFANT = [
   { val: 'scolaire', label: 'Scolaire' },
   { val: 'evenement', label: "Fête / événement" },
 ]
+// ── Liste curated d'emojis pour les ateliers (couture / punch needle / kids).
+// Pas de palette de peinture (🎨) ni autre emoji hors-sujet.
+const ATELIER_EMOJIS = [
+  '🧵', '✂️', '🪡', '🧶', '🪢', '🌸', '🎀', '💫',
+  '⭐', '🌟', '✨', '🌈', '🎉', '🎁', '💖', '🦄',
+  '🦊', '🐶', '🐱', '🐰', '🐻', '👗', '👚', '🏡',
+]
 const STATUTS = [
   { val: 'ouvert', label: 'Ouvert' },
   { val: 'complet', label: 'Complet' },
@@ -75,6 +82,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
 
   // Dirty tracking — sauvegarde manuelle
   const [dirtyEnfants, setDirtyEnfants] = useState<Set<string>>(new Set())
+  const [emojiPickerFor, setEmojiPickerFor] = useState<string | null>(null)
   const [dirtyJournees, setDirtyJournees] = useState<Set<string>>(new Set())
   const [dirtyRetraites, setDirtyRetraites] = useState<Set<string>>(new Set())
   const [dirtyCfgJournees, setDirtyCfgJournees] = useState(false)
@@ -283,7 +291,60 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
               <div key={a.id} style={{ ...S.card, ...(dirtyEnfants.has(a.id) ? { borderColor: 'rgba(200,54,92,.45)' } : {}) }}>
                 {/* Titre + actif + supprimer */}
                 <div style={S.cardTitle}>
-                  <div style={S.emojiBox}>{a.emoji || '🧵'}</div>
+                  <div style={{ position: 'relative', flexShrink: 0 }}>
+                    <button
+                      type="button"
+                      onClick={() => setEmojiPickerFor(emojiPickerFor === a.id ? null : a.id)}
+                      style={{ ...S.emojiBox, border: '2px solid transparent', cursor: 'pointer', padding: 0, transition: 'border-color .15s' }}
+                      onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(200,54,92,.35)')}
+                      onMouseLeave={e => (e.currentTarget.style.borderColor = 'transparent')}
+                      title="Cliquer pour changer l'emoji"
+                      aria-label="Changer l'emoji de cet atelier"
+                    >
+                      {a.emoji || '🧵'}
+                    </button>
+                    {emojiPickerFor === a.id && (
+                      <>
+                        <div
+                          onClick={() => setEmojiPickerFor(null)}
+                          style={{ position: 'fixed', inset: 0, zIndex: 50 }}
+                        />
+                        <div
+                          style={{
+                            position: 'absolute', top: '100%', left: 0, marginTop: 6,
+                            background: '#fff',
+                            border: '2px solid rgba(200,54,92,.25)',
+                            borderRadius: 14, padding: 10,
+                            boxShadow: '0 12px 32px -8px rgba(200,54,92,.35)',
+                            zIndex: 51,
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(8, 1fr)',
+                            gap: 4,
+                            width: 280,
+                          }}
+                        >
+                          {ATELIER_EMOJIS.map(em => (
+                            <button
+                              key={em}
+                              type="button"
+                              onClick={() => { updateEnfantField(a.id, 'emoji', em); setEmojiPickerFor(null) }}
+                              style={{
+                                fontSize: 22, padding: '6px 4px',
+                                background: a.emoji === em ? 'rgba(200,54,92,.15)' : 'transparent',
+                                border: 'none', borderRadius: 8, cursor: 'pointer',
+                                lineHeight: 1,
+                              }}
+                              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(200,54,92,.18)')}
+                              onMouseLeave={e => (e.currentTarget.style.background = a.emoji === em ? 'rgba(200,54,92,.15)' : 'transparent')}
+                              title={em}
+                            >
+                              {em}
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
                   <input
                     style={S.titleInput}
                     value={a.titre}
