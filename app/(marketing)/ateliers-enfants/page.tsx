@@ -10,8 +10,8 @@ import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Ateliers créatifs enfants dès 6 ans · Couture + punch needle ⭐',
-  description: '🧵 Cours de couture et punch needle pour enfants dès 6 ans : cours hebdomadaires, stages de vacances, anniversaires créatifs. Vienne (86) et Deux-Sèvres (79) : Poitiers, Vouillé, Fontaine-le-Comte, Châtellerault, Niort.',
+  title: 'Atelier couture et punch needle · Enfants dès 6 ans et adultes ⭐',
+  description: '🧵 Atelier couture et punch needle pour enfants dès 6 ans et adultes : cours hebdomadaires, stages de vacances, anniversaires créatifs, journées créatives. Vienne (86) et Deux-Sèvres (79) : Poitiers, Vouillé, Fontaine-le-Comte, Châtellerault, Niort.',
 }
 
 const FAQS = [
@@ -36,14 +36,13 @@ export default async function AteliersEnfantsPage() {
         id="ld-ateliers-enfants"
         data={[
           serviceJsonLd({
-            name: 'Ateliers créatifs enfants : couture et punch needle',
+            name: 'Atelier couture et punch needle pour enfants et adultes',
             description:
-              "Cours hebdomadaires, stages de vacances, anniversaires créatifs et interventions en structure. Atelier couture et atelier punch needle, dès 6 ans, en Vienne (86) et Deux-Sèvres (79) : Poitiers, Vouillé, Fontaine-le-Comte, Châtellerault, Niort.",
+              "Cours hebdomadaires, stages de vacances, anniversaires créatifs et interventions en structure. Atelier couture et atelier punch needle, pour enfants dès 6 ans et adultes, en Vienne (86) et Deux-Sèvres (79) : Poitiers, Vouillé, Fontaine-le-Comte, Châtellerault, Niort.",
             url: 'https://atelierpicpaf.fr/ateliers-enfants',
             minAge: 6,
-            maxAge: 12,
-            audience: 'Enfants',
-            category: "Ateliers créatifs pour enfants : couture et punch needle",
+            audience: 'Enfants dès 6 ans et adultes',
+            category: "Atelier couture et punch needle pour enfants et adultes",
           }),
           faqPageJsonLd(FAQS),
           breadcrumbJsonLd([
