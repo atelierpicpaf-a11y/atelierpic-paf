@@ -59,7 +59,7 @@ export default async function AteliersEnfantsPage() {
             <span className="h-caveat" style={{ fontSize:28, color:'var(--framboise)' }}>~ Dès 6 ans ~</span>
             <h1 className="sticker-title" style={{ fontSize:'clamp(44px,6vw,76px)', textAlign:'left', margin:'8px 0 14px' }}>Ateliers<br/>créatifs</h1>
             <h2 className="h-fredoka" style={{ fontSize:'clamp(20px,2.6vw,28px)', color:'var(--framboise)', margin:'0 0 8px', fontWeight:600 }}>
-              Atelier couture &amp; punch needle pour enfants
+              Atelier couture &amp; punch needle pour enfants et adultes
             </h2>
             <p style={{ fontSize:15, color:'var(--framboise)', opacity:.8, fontWeight:500, marginBottom:22 }}>Poitiers · Fontaine-le-Comte · Vouillé · Châtellerault · Niort</p>
             <p style={{ fontSize:18, maxWidth:520, lineHeight:1.6, opacity:.85 }}>Cours hebdomadaires, stages de vacances, anniversaires, interventions écoles… Mes petits créateurs repartent toujours avec une pépite créée de leurs mains.</p>
