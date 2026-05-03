@@ -244,6 +244,102 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* NOUS TROUVER — Google Maps embed + GBP CTA */}
+      <section style={{ padding:'100px 0', background:'var(--creme)' }}>
+        <div className="container">
+          <SectionTitle kicker="Nous trouver" align="center">L&apos;atelier Pic &amp; Paf à Craon</SectionTitle>
+          <p style={{ textAlign:'center', maxWidth:680, margin:'22px auto 50px', fontSize:17, opacity:.8 }}>
+            Basée à Craon (Vienne 86), Ludivine intervient partout en Vienne et Deux-Sèvres : ateliers en école, ALSH, médiathèques, anniversaires couture, journées créatives et retraites à Fontaine-le-Comte (5 min au sud de Poitiers).
+          </p>
+
+          <div
+            style={{
+              display:'grid',
+              gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))',
+              gap:40,
+              alignItems:'stretch',
+            }}
+          >
+            {/* MAP EMBED */}
+            <div
+              style={{
+                borderRadius:24,
+                overflow:'hidden',
+                boxShadow:'var(--shadow-card)',
+                border:'2px solid rgba(200,54,92,.18)',
+                minHeight:420,
+              }}
+            >
+              <iframe
+                src="https://www.google.com/maps?q=L%27atelier+Pic+%26+Paf,+3+Rue+des+Rosiers,+86110+Craon&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border:0, display:'block', minHeight:420 }}
+                loading="lazy"
+                title="Localisation de L'atelier Pic & Paf à Craon (Vienne 86)"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+
+            {/* CONTACT INFOS + CTAs */}
+            <div style={{ display:'flex', flexDirection:'column', gap:22, justifyContent:'center' }}>
+              <div style={{ display:'flex', gap:14, alignItems:'flex-start' }}>
+                <span style={{ fontSize:26, lineHeight:1 }} aria-hidden>📍</span>
+                <div>
+                  <h3 className="h-fredoka" style={{ margin:0, fontSize:18, color:'var(--framboise)' }}>Adresse</h3>
+                  <address style={{ margin:'4px 0 0', fontSize:15, fontStyle:'normal', lineHeight:1.5 }}>
+                    3 Rue des Rosiers<br />
+                    86110 Craon, Vienne
+                  </address>
+                </div>
+              </div>
+
+              <div style={{ display:'flex', gap:14, alignItems:'flex-start' }}>
+                <span style={{ fontSize:26, lineHeight:1 }} aria-hidden>📞</span>
+                <div>
+                  <h3 className="h-fredoka" style={{ margin:0, fontSize:18, color:'var(--framboise)' }}>Téléphone</h3>
+                  <a href="tel:+33621073536" style={{ fontSize:15, color:'var(--ink)' }}>06 21 07 35 36</a>
+                </div>
+              </div>
+
+              <div style={{ display:'flex', gap:14, alignItems:'flex-start' }}>
+                <span style={{ fontSize:26, lineHeight:1 }} aria-hidden>✉️</span>
+                <div>
+                  <h3 className="h-fredoka" style={{ margin:0, fontSize:18, color:'var(--framboise)' }}>Email</h3>
+                  <a href="mailto:atelierpicpaf@gmail.com" style={{ fontSize:15, color:'var(--ink)' }}>atelierpicpaf@gmail.com</a>
+                </div>
+              </div>
+
+              <div style={{ display:'flex', gap:12, flexWrap:'wrap', marginTop:14 }}>
+                <a
+                  href="https://maps.app.goo.gl/XXzDFzLEFNSjmNy79"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cta-pill"
+                  aria-label="Voir L'atelier Pic & Paf sur Google Maps (nouvelle fenêtre)"
+                >
+                  ⭐ Voir sur Google
+                </a>
+                <a
+                  href="https://g.page/r/CduaCQBuWIIsEBI/review"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cta-ghost"
+                  aria-label="Laisser un avis Google sur L'atelier Pic & Paf (nouvelle fenêtre)"
+                >
+                  ✏️ Laisser un avis
+                </a>
+              </div>
+
+              <p style={{ fontSize:13, opacity:.65, marginTop:4, lineHeight:1.55 }}>
+                Vos avis Google sont précieux pour nous aider à toucher d&apos;autres familles et passionnées de couture 🙏
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <HomeNewsletter />
     </div>
   )

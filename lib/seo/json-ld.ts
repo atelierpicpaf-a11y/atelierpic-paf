@@ -34,6 +34,8 @@ export const BUSINESS_IDENTITY = {
   addressCountry: 'FR',
   instagram: 'https://www.instagram.com/atelier_picpaf/',
   facebook: 'https://www.facebook.com/profile.php?id=100063693513024',
+  googleBusinessProfile: 'https://maps.app.goo.gl/XXzDFzLEFNSjmNy79',
+  googleReviewUrl: 'https://g.page/r/CduaCQBuWIIsEBI/review',
   areasServed: [
     'Poitiers',
     'Fontaine-le-Comte',
@@ -87,7 +89,7 @@ export function localBusinessJsonLd() {
       addressCountry: b.addressCountry,
     },
     areaServed: b.areasServed.map((name) => ({ '@type': 'Place', name })),
-    sameAs: [b.instagram, b.facebook],
+    sameAs: [b.instagram, b.facebook, b.googleBusinessProfile],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
