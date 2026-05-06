@@ -14,7 +14,7 @@ const MOIS_ABBR = ['JAN.','FÉV.','MARS','AVR.','MAI','JUIN','JUIL.','AOÛT','SE
 const ACTIVITES = [
   { e: '🧵', l: 'Couture' },
   { e: '🪡', l: 'Punch needle' },
-  { e: '🧘‍♀️', l: 'Yoga' },
+  { e: '🌿', l: 'Bien-être' },
   { e: '🍽️', l: 'Repas maison' },
 ]
 
