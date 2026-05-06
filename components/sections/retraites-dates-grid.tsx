@@ -106,17 +106,28 @@ export function RetraitesDatesGrid({ sessions, prixCentimes }: Props) {
 
             {/* CTA */}
             <div className="retraite-card__cta">
-              <span className={`retraite-card__badge ${complet ? 'is-complet' : ''}`}>
-                {complet ? '✗ Complet' : `${placesLeft} place${placesLeft > 1 ? 's' : ''}`}
-              </span>
+              {complet ? (
+                <span className="retraite-card__badge is-complet">✗ Complet</span>
+              ) : (
+                <span className={`retraite-card__badge ${placesLeft <= 4 ? 'is-urgent' : ''}`}>
+                  {placesLeft <= 4
+                    ? `🔥 Plus que ${placesLeft} place${placesLeft > 1 ? 's' : ''}`
+                    : `${placesLeft} places disponibles`}
+                </span>
+              )}
               {!complet && (
                 <button
                   type="button"
                   onClick={() => setReserveSession(r)}
-                  className="cta-pill retraite-card__btn"
+                  className="cta-pill retraite-card__btn anim-cta-pulse"
                 >
-                  Je m&apos;inscris&nbsp;✨
+                  Je réserve ma place&nbsp;→
                 </button>
+              )}
+              {!complet && (
+                <span className="retraite-card__klarna">
+                  💳 Paiement 3× sans frais Klarna
+                </span>
               )}
             </div>
           </article>
