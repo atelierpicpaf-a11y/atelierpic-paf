@@ -130,6 +130,23 @@ export function RetraitesDatesGrid({ sessions, prixCentimes }: Props) {
                 </span>
               )}
             </div>
+
+            {/* PROGRESS BAR — apparaît quand au moins 1 résa */}
+            {r.places_reservees > 0 && (
+              <div className="retraite-card__progress" data-urgent={(r.places_reservees / r.places_max) >= 0.7 ? 'true' : 'false'}>
+                <div className="retraite-card__progress-bar" aria-hidden="true">
+                  <div
+                    className="retraite-card__progress-fill"
+                    style={{ width: `${Math.round((r.places_reservees / r.places_max) * 100)}%` }}
+                  />
+                </div>
+                <span className="retraite-card__progress-label">
+                  {complet
+                    ? `Complet · ${r.places_max}/${r.places_max} places`
+                    : `${r.places_reservees}/${r.places_max} places déjà réservées`}
+                </span>
+              </div>
+            )}
           </article>
         )
       })}
