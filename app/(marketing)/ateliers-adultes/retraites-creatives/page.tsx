@@ -429,7 +429,7 @@ export default async function RetraitesCreativesPage() {
                   </svg>
                 ),
                 t: 'Aucune annulation possible',
-                d: "Une fois la place réservée, aucun remboursement n'est possible en cas de désistement. Réfléchis bien avant de valider.",
+                d: "Une fois la place réservée, aucun remboursement n'est possible en cas de désistement.",
               },
             ].map((m, i) => (
               <AnimateOnScroll key={i} delay={i * 110} variant="fade-up">
