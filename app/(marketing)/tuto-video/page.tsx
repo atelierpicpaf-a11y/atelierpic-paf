@@ -106,6 +106,14 @@ function videoObjectJsonLd(t: Tuto, idx: number) {
 export default function TutoVideoPage() {
   return (
     <div className="route-enter">
+      {/* Preconnect aux domaines YouTube — connexion DNS/TCP/TLS ouverte avant le clic
+          = lecture quasi-instantanée quand l'utilisateur appuie sur play */}
+      <link rel="preconnect" href="https://www.youtube-nocookie.com" />
+      <link rel="preconnect" href="https://i.ytimg.com" />
+      <link rel="preconnect" href="https://s.ytimg.com" />
+      <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+      <link rel="dns-prefetch" href="https://static.doubleclick.net" />
+
       <JsonLd
         id="ld-tutos"
         data={[

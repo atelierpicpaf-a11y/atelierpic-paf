@@ -588,10 +588,31 @@ a { color: inherit; text-decoration: none; }
   outline: 4px solid var(--framboise);
   outline-offset: 4px;
 }
+
+/* Loader pendant que l'iframe YouTube charge */
+.youtube-lite__loader {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.youtube-lite__loader::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(251, 244, 228, .25);
+  border-top-color: var(--creme);
+  border-radius: 50%;
+  animation: yt-spin .8s linear infinite;
+}
+@keyframes yt-spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .youtube-lite, .youtube-lite__play, .youtube-lite__overlay { transition: none; }
   .youtube-lite:hover { transform: none; }
   .youtube-lite:hover .youtube-lite__play { transform: translate(-50%, -50%); }
+  .youtube-lite__loader::before { animation: none; }
 }
 
 /* ── Responsive helpers ── */
