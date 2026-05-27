@@ -576,6 +576,24 @@ a { color: inherit; text-decoration: none; }
   .retraite-card[data-complet="false"]:hover { transform: none; }
 }
 
+/* ── YouTube Lite player ───────────────────────────────── */
+.youtube-lite { transition: transform 320ms ease, box-shadow 320ms ease; }
+.youtube-lite:hover { transform: translateY(-2px); box-shadow: 0 20px 50px -16px rgba(200, 54, 92, .4); }
+.youtube-lite:hover .youtube-lite__overlay { opacity: .5; }
+.youtube-lite:hover .youtube-lite__play {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, .5), 0 0 0 8px rgba(251, 244, 228, .95);
+}
+.youtube-lite:focus-visible {
+  outline: 4px solid var(--framboise);
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .youtube-lite, .youtube-lite__play, .youtube-lite__overlay { transition: none; }
+  .youtube-lite:hover { transform: none; }
+  .youtube-lite:hover .youtube-lite__play { transform: translate(-50%, -50%); }
+}
+
 /* ── Responsive helpers ── */
 .hidden-mobile { display: initial; }
 @media (max-width: 860px) { .hidden-mobile { display: none !important; } }

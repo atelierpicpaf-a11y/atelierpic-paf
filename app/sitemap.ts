@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/anniversaire-couture-enfant`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/punch-needle`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/interventions-structures`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/tuto-video`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ]
 
