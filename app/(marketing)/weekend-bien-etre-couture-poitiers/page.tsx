@@ -27,9 +27,9 @@ const POURQUOI = [
 
 const PROGRAMME = [
   { jour: 'Vendredi 18h', desc: "Arrivée au gîte à Fontaine-le-Comte. Apéro de bienvenue, dîner cuisiné maison, soirée tranquille." },
-  { jour: 'Samedi matin', desc: "Réveil en douceur, yoga doux, petit déjeuner. Premier atelier créatif guidé (couture ou punch needle)." },
+  { jour: 'Samedi matin', desc: "Réveil en douceur avec un temps bien-être (yoga, balade ou autre selon la retraite). Petit déjeuner. Premier atelier créatif guidé (couture ou punch needle)." },
   { jour: 'Samedi après-midi', desc: "Déjeuner partagé. Temps libre : continuer son projet, balader, lire, dormir. Atelier en début de soirée." },
-  { jour: 'Dimanche', desc: "Réveil yoga ou balade, petit déjeuner, finitions du projet, déjeuner, départ vers 16-17h." },
+  { jour: 'Dimanche', desc: "Réveil bien-être (yoga, massage ou balade), petit déjeuner, finitions du projet, déjeuner, départ vers 16-17h." },
 ]
 
 const FAQS = [
@@ -39,15 +39,15 @@ const FAQS = [
   },
   {
     q: "C'est combien et qu'est-ce qui est inclus ?",
-    r: "390€ par personne, tout compris : hébergement en chambre partagée, tous les repas du vendredi soir au dimanche midi, ateliers créatifs (couture / punch needle), yoga doux, matériel. Possible en 3× sans frais Klarna (130€/mois)."
+    r: "390€ par personne, tout compris : hébergement en chambre partagée, tous les repas du vendredi soir au dimanche midi, ateliers créatifs (couture / punch needle), volet bien-être (yoga, massage, balade en forêt selon la retraite), matériel. Possible en 3× sans frais Klarna (130€/mois)."
   },
   {
     q: "C'est ouvert à toutes les habitantes de la Vienne et alentour ?",
     r: "Oui. Les retraites sont ouvertes à toutes les femmes qui veulent ralentir. La plupart des participantes viennent de Vienne (86), Deux-Sèvres (79), Charente (16), Haute-Vienne (87). Mais on a aussi des participantes parisiennes qui prennent le TGV (1h30 jusqu'à Poitiers, puis 5 min en voiture)."
   },
   {
-    q: "Je n'ai jamais cousu et jamais fait de yoga, c'est pour moi ?",
-    r: "Oui. Les ateliers sont conçus pour les débutantes complètes. Je t'accompagne pas-à-pas, on prend le temps. Le yoga est doux et accessible. Tout est optionnel : si tu veux passer une séance, c'est OK."
+    q: "Je n'ai jamais cousu, et le bien-être me fait peur, c'est pour moi ?",
+    r: "Oui. Les ateliers sont conçus pour les débutantes complètes. Je t'accompagne pas-à-pas, on prend le temps. Le volet bien-être (yoga doux, massage, balade selon la retraite) est toujours accessible à toutes et optionnel : si tu veux passer une séance, c'est OK."
   },
   {
     q: "Le gîte, c'est confortable ?",
@@ -95,10 +95,10 @@ export default function WeekendBienEtreLocalPage() {
               Weekend bien-être<br/>à 5 min de Poitiers
             </h1>
             <p style={{ fontSize: 19, color: 'var(--framboise)', fontWeight: 600, marginBottom: 26, opacity: 0.88 }}>
-              Couture, yoga, repas maison à Fontaine-le-Comte (Vienne 86). 3 jours pour souffler.
+              Couture, bien-être, repas maison à Fontaine-le-Comte (Vienne 86). 3 jours pour souffler.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.7, maxWidth: 680, margin: '0 auto 36px', opacity: 0.86 }}>
-              Tu rêves d&apos;une vraie pause mais tu n&apos;as ni l&apos;envie ni les jours pour partir 4h en voiture. Bonne nouvelle : le bien-être est à 5 minutes de chez toi. Dans un gîte chaleureux, entre femmes, avec couture, yoga et repas maison.
+              Tu rêves d&apos;une vraie pause mais tu n&apos;as ni l&apos;envie ni les jours pour partir 4h en voiture. Bonne nouvelle : le bien-être est à 5 minutes de chez toi. Dans un gîte chaleureux, entre femmes, avec couture, bien-être (yoga, massage, balade selon la retraite) et repas maison.
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 18 }}>
               <Link href="/ateliers-adultes/retraites-creatives" className="cta-pill anim-cta-pulse">Voir les dates &amp; réserver ✨</Link>

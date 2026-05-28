@@ -39,15 +39,15 @@ const FAQS = [
   },
   {
     q: "C'est combien et qu'est-ce qui est inclus ?",
-    r: "390€ par personne, tout compris : hébergement en chambre partagée (4 chambres de 2 lits simples), tous les repas du vendredi soir au dimanche midi, ateliers créatifs (couture / punch needle), yoga doux, matériel. Possible en 3× sans frais avec Klarna (130€/mois)."
+    r: "390€ par personne, tout compris : hébergement en chambre partagée (4 chambres de 2 lits simples), tous les repas du vendredi soir au dimanche midi, ateliers créatifs (couture / punch needle), volet bien-être (yoga, massage, balade en forêt selon la retraite), matériel. Possible en 3× sans frais avec Klarna (130€/mois)."
   },
   {
     q: "On peut privatiser un weekend pour notre groupe ?",
     r: "Oui, sur demande. Si vous êtes 6 à 9 amies et que vous voulez le gîte rien que pour vous, je peux organiser une session privée à la date qui vous arrange. Contactez-moi avec votre projet."
   },
   {
-    q: "Et si on a des niveaux différents en couture / yoga ?",
-    r: "Pas de souci. Les ateliers sont conçus pour accueillir tous les niveaux : débutantes complètes, intermédiaires, confirmées. Je m'adapte à chacune. Le yoga proposé est doux et accessible. Et tout est optionnel : on peut zapper une séance pour dormir ou se balader."
+    q: "Et si on a des niveaux différents en couture ou pour les activités bien-être ?",
+    r: "Pas de souci. Les ateliers créatifs sont conçus pour accueillir tous les niveaux : débutantes complètes, intermédiaires, confirmées. Je m'adapte à chacune. Le volet bien-être (yoga doux, massage, balade selon la retraite) est toujours accessible à toutes. Et tout est optionnel : on peut zapper une séance pour dormir ou se balader."
   },
   {
     q: "Le gîte, c'est où exactement ?",
@@ -95,7 +95,7 @@ export default function EntreFillesPage() {
               Retraite créative<br/>entre filles
             </h1>
             <p style={{ fontSize: 19, color: 'var(--framboise)', fontWeight: 600, marginBottom: 26, opacity: 0.88 }}>
-              3 jours pour souffler entre amies. Couture, yoga, repas maison, gîte. À 5 min de Poitiers.
+              3 jours pour souffler entre amies. Couture, bien-être, repas maison, gîte. À 5 min de Poitiers.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.7, maxWidth: 680, margin: '0 auto 36px', opacity: 0.86 }}>
               Vous étiez inséparables. Puis la vie. Le boulot. Les enfants. Les déménagements. Aujourd&apos;hui vous vous voyez quoi, deux fois par an ? Et si on changeait ça avec un weekend qui vous ressemble ?

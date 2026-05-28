@@ -20,17 +20,17 @@ export const metadata: Metadata = {
 
 const PROGRAMME = [
   { jour: 'Vendredi soir', desc: "Arrivée au gîte à partir de 18h. Apéro de bienvenue, présentation du weekend, premier dîner cuisiné maison. Ambiance posée." },
-  { jour: 'Samedi matin', desc: "Yoga doux au réveil. Petit déjeuner. Atelier créatif guidé par Ludivine : couture ou punch needle selon le projet du weekend." },
+  { jour: 'Samedi matin', desc: "Temps bien-être au réveil (yoga, balade ou autre selon la retraite). Petit déjeuner. Atelier créatif guidé par Ludivine : couture ou punch needle." },
   { jour: 'Samedi midi & après-midi', desc: "Repas partagé. Temps libre : continuer son projet en autonomie, balade dans la nature, sieste. Puis nouvel atelier en début de soirée." },
-  { jour: 'Dimanche matin', desc: "Yoga ou balade au réveil. Petit déjeuner. Finitions du projet, dernières créations." },
+  { jour: 'Dimanche matin', desc: "Temps bien-être ou balade au réveil. Petit déjeuner. Finitions du projet, dernières créations." },
   { jour: 'Dimanche midi', desc: "Repas. Photos finales fières des créations. Au revoir et départ vers 16h." },
 ]
 
 const INCLUS = [
-  { e: '🛏️', t: 'Hébergement', d: 'Chambre partagée (2 lits simples) dans un gîte chaleureux à Fontaine-le-Comte.' },
-  { e: '🍽️', t: 'Tous les repas', d: 'Du vendredi soir au dimanche midi. Cuisinés maison par mes soins, en local.' },
-  { e: '🧘‍♀️', t: 'Yoga', d: '2 séances de yoga doux, accessible à toutes (même les vraies débutantes).' },
-  { e: '🧵', t: 'Atelier créatif guidé', d: 'Couture ou punch needle, matériel et patron fournis, accompagnement par Ludivine.' },
+  { e: '🛏️', t: 'Hébergement', d: 'Chambre partagée dans un gîte entouré de nature à Fontaine-le-Comte.' },
+  { e: '🍽️', t: 'Repas', d: 'Tous les repas du vendredi soir au dimanche midi, cuisinés maison.' },
+  { e: '🧵', t: 'Atelier créatif guidé', d: 'Un projet créatif adapté à tous les niveaux, matériel fourni.' },
+  { e: '🌿', t: 'Bien-être', d: 'Yoga, massage, balade en forêt… Ludivine compose une parenthèse bien-être adaptée à chaque retraite.' },
 ]
 
 const FAQS = [
@@ -43,8 +43,8 @@ const FAQS = [
     r: "9 places maximum pour préserver une ambiance intime et un accompagnement de qualité. C'est volontaire : on se connaît tous le dimanche soir."
   },
   {
-    q: "Je n'ai jamais fait de yoga, c'est gênant ?",
-    r: "Pas du tout. Le yoga proposé est doux et accessible à toutes les morphologies et tous les niveaux, débutantes comprises. C'est aussi optionnel : si tu préfères dormir ou te balader pendant la séance, c'est OK."
+    q: "Est-ce qu'il y a forcément du yoga ?",
+    r: "Chaque retraite a son volet bien-être, composé par Ludivine selon la saison et l'ambiance : yoga doux, massage, balade en forêt… Ce sera toujours accessible à toutes (débutantes comprises) et optionnel : si tu préfères dormir ou te balader pendant une séance, c'est OK. Tu peux demander le programme bien-être de la retraite qui t'intéresse en me contactant."
   },
   {
     q: "Je n'ai jamais cousu, est-ce que c'est pour moi ?",
