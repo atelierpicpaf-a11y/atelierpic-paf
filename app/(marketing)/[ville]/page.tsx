@@ -7,6 +7,46 @@ import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd, faqPageJsonLd, villeServiceJsonLd } from '@/lib/seo/json-ld'
 import { VILLES, getVilleBySlug, getNearby, type Ville } from '@/content/villes'
+import villesDataJson from '@/content/villes-data.json'
+
+// ────────────────────────────────────────────────────────────────
+// Type des données enrichies INSEE
+// ────────────────────────────────────────────────────────────────
+type VilleData = {
+  codeInsee: string
+  population: number
+  surfaceHa: number
+  surfaceKm2: number | null
+  densite: number | null
+  lat: number
+  lon: number
+  codeEpci: string
+  distanceCraon: number
+  distances: { Poitiers: number; Niort: number; Châtellerault: number; Bressuire: number }
+  limitrophes: Array<{
+    nom: string
+    cp: string
+    dept: string
+    population: number | null
+    distance: number
+  }>
+}
+
+const VILLES_DATA = villesDataJson as Record<string, VilleData>
+
+// ────────────────────────────────────────────────────────────────
+// Helpers
+// ────────────────────────────────────────────────────────────────
+const fmt = (n: number | null | undefined) =>
+  n == null ? '—' : n.toLocaleString('fr-FR')
+
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
 
 // ────────────────────────────────────────────────────────────────
 // SSG : une page par ville, générée au build.
@@ -25,7 +65,9 @@ export async function generateMetadata({
   if (!v) return { title: 'Ville introuvable' }
 
   const title = `Ateliers créatifs à ${v.nom} (${v.dept}) · Couture + punch needle dès 6 ans ⭐`
-  const description = v.metaDescription ?? `🧵 Ateliers créatifs à ${v.nom} (${v.codePostal}), ${v.deptNom} : couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires, interventions écoles/ALSH. Une activité manuelle et un loisir créatif qui fait pétiller les yeux. Ludivine se déplace — contactez-la !`
+  const description =
+    v.metaDescription ??
+    `🧵 Ateliers créatifs à ${v.nom} (${v.codePostal}), ${v.deptNom} : couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires, interventions écoles/ALSH. Une activité manuelle et un loisir créatif qui fait pétiller les yeux. Ludivine se déplace — contactez-la !`
   const url = `https://atelierpicpaf.fr/${v.slug}`
 
   return {
@@ -45,33 +87,50 @@ export async function generateMetadata({
 }
 
 // ────────────────────────────────────────────────────────────────
-// Les 4 formules proposées (identiques pour toutes les villes —
-// la page contact est pré-remplie via ?ville=&sujet=).
+// 6 formules — chacune renvoie vers SA page de service
 // ────────────────────────────────────────────────────────────────
 const FORMULES = [
   {
     emoji: '🧵',
     titre: 'Cours couture enfants',
-    pitch: 'Dès 6 ans. Projets concrets, machine à coudre, en petits groupes.',
-    sujet: 'Atelier enfants',
+    pitch: "Dès 6 ans, en petits groupes. Machine à coudre apprivoisée, projets concrets, fierté garantie.",
+    href: '/ateliers-enfants',
+    label: 'Découvrir les ateliers enfants',
+  },
+  {
+    emoji: '🪡',
+    titre: 'Atelier punch needle',
+    pitch: 'La technique chouchou de l\'atelier : aiguille magique, laine colorée, motifs en relief.',
+    href: '/punch-needle',
+    label: 'Tout sur le punch needle',
   },
   {
     emoji: '✂️',
     titre: 'Journée créative adultes',
-    pitch: 'Couture ou punch needle. Une journée pour apprendre et repartir avec ton projet fini.',
-    sujet: 'Journée créative',
+    pitch: 'Une journée pour apprendre à coudre ou s\'initier au punch needle, dans une ambiance entre copines.',
+    href: '/ateliers-adultes/journees-creatives',
+    label: 'Voir les journées créatives',
+  },
+  {
+    emoji: '🌿',
+    titre: 'Retraite créative weekend',
+    pitch: '3 jours dans un gîte à Fontaine-le-Comte : couture, bien-être, repas maison. Entre femmes.',
+    href: '/ateliers-adultes/retraites-creatives',
+    label: 'Voir les retraites',
   },
   {
     emoji: '🎂',
     titre: 'Anniversaire couture',
-    pitch: 'Un anniversaire qu\'on n\'oublie pas. On coud un objet à ramener.',
-    sujet: 'Anniversaire / Événement',
+    pitch: "Un anniversaire qu'on n'oublie pas : chaque enfant repart avec un objet cousu de ses mains.",
+    href: '/anniversaire-couture-enfant',
+    label: 'Organiser un anniversaire',
   },
   {
     emoji: '🏫',
     titre: 'Intervention en structure',
-    pitch: 'Écoles, ALSH, médiathèques, associations : animation clé en main.',
-    sujet: 'Structure / Devis',
+    pitch: 'Écoles, ALSH, médiathèques, associations : animation clé en main pour tous publics.',
+    href: '/interventions-structures',
+    label: 'Voir les interventions',
   },
 ] as const
 
@@ -84,29 +143,39 @@ export default async function VillePage({ params }: { params: Promise<Params> })
   if (!v) notFound()
 
   const proches = getNearby(v)
+  const data = VILLES_DATA[v.slug]
   const pageUrl = `https://atelierpicpaf.fr/${v.slug}`
 
-  // FAQ locale adaptative — même structure pour les 14 villes, contenu personnalisé.
+  // Description "type" de la commune basée sur sa densité
+  const typeDeCommune = (() => {
+    if (!data?.densite) return 'commune'
+    if (data.densite < 80) return 'commune rurale'
+    if (data.densite < 300) return 'bourg de campagne'
+    if (data.densite < 1500) return 'commune péri-urbaine'
+    return 'ville'
+  })()
+
+  // FAQ enrichies avec data
   const faqs = [
     {
       q: `Où se déroulent les ateliers à ${v.nom} ?`,
-      r: `Toutes les villes de la Vienne (86) et des Deux-Sèvres (79) peuvent être envisagées, ${v.nom} incluse. Selon votre projet (anniversaire à domicile, intervention en structure, journée créative), on trouve ensemble le lieu le plus adapté. Contactez-moi, on en parle !`,
+      r: `${v.nom} (${typeDeCommune} de ${data?.population ? fmt(data.population) + ' habitants' : 'la ' + v.deptNom}) accueille volontiers les ateliers couture et punch needle de L'atelier Pic & Paf. Selon ton projet (anniversaire à domicile, intervention en structure, journée créative en groupe), on trouve ensemble le lieu le plus adapté : salle communale, école, médiathèque, à la maison. Je me déplace partout en Vienne (86) et Deux-Sèvres (79) — contacte-moi avec ton idée.`,
     },
     {
       q: `Quel âge minimum pour les cours de couture à ${v.nom} ?`,
-      r: `Les ateliers couture enfants sont ouverts dès 6 ans, quand les petites mains savent tenir une aiguille. Et ça va jusqu'à 99 ans : ados, adultes débutants, groupes entre copines, tout le monde est bienvenu à ${v.nom}.`,
+      r: `Les ateliers couture enfants sont ouverts dès 6 ans, quand les petites mains savent tenir une aiguille. Ça va jusqu'à 99 ans : ados, adultes débutants, groupes entre copines, tout le monde est bienvenu à ${v.nom}. Les cours réguliers, stages de vacances et journées créatives s'adaptent à chaque âge et chaque niveau.`,
     },
     {
       q: `Comment organiser un anniversaire couture à ${v.nom} ?`,
-      r: `C'est la formule chouchou des enfants ! Je me déplace à ${v.nom} (ou à domicile, en salle des fêtes, en médiathèque). Chaque enfant repart avec un objet cousu par ses soins : le cadeau original par excellence. Contactez-moi, je serai ravie d'en discuter avec vous.`,
+      r: `L'anniversaire couture, c'est la formule chouchou des 7-12 ans à ${v.nom}. Je me déplace chez toi (ou en salle des fêtes, médiathèque, ALSH). Chaque enfant repart avec un objet cousu par ses soins : c'est le cadeau original par excellence (et qui dure plus longtemps qu'une boîte de bonbons). Voir les détails et les formats sur la page anniversaire couture, ou contacte-moi directement avec ton projet.`,
     },
     {
       q: `Intervenez-vous dans les écoles et ALSH de ${v.nom} ?`,
-      r: `Oui, je propose des interventions clé en main pour écoles, ALSH, médiathèques, centres sociaux et associations. Toutes les villes de la Vienne et des Deux-Sèvres peuvent être envisagées, ${v.nom} incluse. Devis gratuit sur demande.`,
+      r: `Oui, je propose des interventions clé en main pour écoles, ALSH, médiathèques, centres sociaux et associations. ${v.nom} (${v.codePostal}) et toutes les communes alentour peuvent être envisagées. Je prépare le matériel, j'adapte au niveau et au nombre d'enfants, je laisse les structures gérer leur planning. Devis gratuit sur demande, voir la page interventions structures.`,
     },
     {
       q: `Proposez-vous du punch needle à ${v.nom} ?`,
-      r: `Oui ! Le punch needle, c'est la technique chouchou de l'atelier : aiguille magique, laine colorée, motifs en relief. Accessible dès 6 ans, bluffant pour les adultes. Toutes les villes peuvent être envisagées, ${v.nom} incluse — contactez-moi pour organiser votre atelier.`,
+      r: `Oui ! Le punch needle, c'est la technique chouchou de l'atelier : aiguille magique, laine colorée, motifs en relief sur tambour. Accessible dès 6 ans, bluffant pour les adultes. Je le propose en cours, en stage vacances, en journée créative, en anniversaire ou en intervention structure à ${v.nom} et toutes les communes alentour.`,
     },
   ]
 
@@ -141,7 +210,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
             {v.titreH1}
           </h1>
           <h2 className="h-fredoka" style={{ fontSize: 'clamp(20px, 2.6vw, 28px)', color: 'var(--framboise)', margin: '0 0 22px', fontWeight: 600 }}>
-            Atelier couture · Atelier punch needle
+            Atelier couture · Punch needle · Journées créatives · Retraites
           </h2>
           <p style={{ fontSize: 19, lineHeight: 1.6, maxWidth: 640, margin: '0 auto 34px', opacity: 0.85 }}>
             On crée ensemble à {v.nom} : enfants, ados, adultes, groupes, structures.
@@ -170,6 +239,103 @@ export default async function VillePage({ params }: { params: Promise<Params> })
         </div>
       </section>
 
+      {/* ───────── NOUVEAU : VILLE EN CHIFFRES (INSEE) ───────── */}
+      {data && (
+        <section style={{ padding: '70px 0', background: 'var(--creme)' }}>
+          <div className="container" style={{ maxWidth: 1000 }}>
+            <SectionTitle kicker="Sources : INSEE & data.gouv.fr" align="center">
+              {v.nom} en chiffres
+            </SectionTitle>
+            <p style={{ fontSize: 16, lineHeight: 1.7, opacity: 0.8, textAlign: 'center', maxWidth: 720, margin: '24px auto 0' }}>
+              {v.nom}, {v.statut}, est une {typeDeCommune} de {fmt(data.population)} habitants
+              {data.surfaceKm2 ? ` répartis sur ${fmt(data.surfaceKm2)} km²` : ''}
+              {data.densite ? ` (${fmt(data.densite)} hab/km²)` : ''}.
+            </p>
+            <div
+              style={{
+                marginTop: 40,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                gap: 18,
+              }}
+            >
+              {[
+                { label: 'Habitants', value: fmt(data.population), kicker: 'Population INSEE' },
+                { label: 'Surface', value: data.surfaceKm2 ? `${fmt(data.surfaceKm2)} km²` : '—', kicker: 'Territoire communal' },
+                { label: 'Densité', value: data.densite ? `${fmt(data.densite)} hab/km²` : '—', kicker: typeDeCommune },
+                { label: 'Code INSEE', value: data.codeInsee, kicker: `CP ${v.codePostal}` },
+              ].map((s) => (
+                <div
+                  key={s.label}
+                  style={{
+                    background: 'var(--creme-pale)',
+                    borderRadius: 18,
+                    padding: '22px 20px',
+                    textAlign: 'center',
+                    border: '2px solid rgba(200,54,92,.18)',
+                  }}
+                >
+                  <div className="h-caveat" style={{ fontSize: 15, color: 'var(--framboise)', opacity: 0.8 }}>{s.kicker}</div>
+                  <div className="h-fredoka" style={{ fontSize: 28, color: 'var(--framboise)', lineHeight: 1.1, margin: '8px 0 4px' }}>{s.value}</div>
+                  <div style={{ fontSize: 13, opacity: 0.65, fontWeight: 600 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ───────── NOUVEAU : DISTANCES (info pratique) ───────── */}
+      {data && (
+        <section style={{ padding: '60px 0', background: 'var(--creme-pale)' }}>
+          <div className="container" style={{ maxWidth: 880 }}>
+            <SectionTitle kicker="Info pratique" align="center">
+              Distances depuis {v.nom}
+            </SectionTitle>
+            <p style={{ fontSize: 16, opacity: 0.8, textAlign: 'center', marginTop: 22, lineHeight: 1.7 }}>
+              Je me déplace en Vienne (86) et dans les Deux-Sèvres (79).
+              Voici les distances à vol d&apos;oiseau depuis {v.nom} vers les villes principales
+              et vers Fontaine-le-Comte ({fmt(data.distances.Poitiers)} km au sud de Poitiers),
+              où je concentre mes journées créatives et retraites créatives adultes.
+            </p>
+            <div
+              style={{
+                marginTop: 32,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: 14,
+              }}
+            >
+              {[
+                { ville: 'Poitiers', dist: data.distances.Poitiers, emoji: '🏛️' },
+                { ville: 'Niort', dist: data.distances.Niort, emoji: '🏰' },
+                { ville: 'Châtellerault', dist: data.distances.Châtellerault, emoji: '🌉' },
+                { ville: 'Bressuire', dist: data.distances.Bressuire, emoji: '🌳' },
+              ].map((d) => (
+                <div
+                  key={d.ville}
+                  style={{
+                    background: 'var(--creme)',
+                    padding: '16px 18px',
+                    borderRadius: 14,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 14,
+                    border: '1.5px solid rgba(200,54,92,.18)',
+                  }}
+                >
+                  <div style={{ fontSize: 28 }}>{d.emoji}</div>
+                  <div>
+                    <div className="h-fredoka" style={{ fontSize: 17, color: 'var(--framboise)' }}>{d.ville}</div>
+                    <div style={{ fontSize: 13.5, opacity: 0.7, fontWeight: 600 }}>{fmt(d.dist)} km</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ───────── PUNCH NEEDLE SHOWCASE ───────── */}
       <section style={{ padding: '80px 0 70px', background: 'var(--creme)' }}>
         <div className="container" style={{ maxWidth: 1040 }}>
@@ -189,7 +355,6 @@ export default async function VillePage({ params }: { params: Promise<Params> })
               justifyItems: 'center',
             }}
           >
-            {/* Photo 1 — arc-en-ciel enfant */}
             <figure
               style={{
                 margin: 0,
@@ -215,8 +380,6 @@ export default async function VillePage({ params }: { params: Promise<Params> })
                 Un arc-en-ciel tout en laine ✨
               </figcaption>
             </figure>
-
-            {/* Photo 2 — renard */}
             <figure
               style={{
                 margin: 0,
@@ -242,8 +405,6 @@ export default async function VillePage({ params }: { params: Promise<Params> })
                 Un petit renard tout doux 🦊
               </figcaption>
             </figure>
-
-            {/* Photo 3 — cours couture enfants (preuve locale) */}
             <figure
               style={{
                 margin: 0,
@@ -275,24 +436,28 @@ export default async function VillePage({ params }: { params: Promise<Params> })
 
       <div className="stripes-band" />
 
-      {/* ───────── FORMULES ───────── */}
-      <section style={{ padding: '80px 0', background: 'var(--creme)' }}>
+      {/* ───────── FORMULES (renforcées avec liens internes vers pages métier) ───────── */}
+      <section style={{ padding: '80px 0', background: 'var(--creme-pale)' }}>
         <div className="container">
-          <SectionTitle kicker="Ce que je propose" align="center">
-            Les formats à {v.nom}
+          <SectionTitle kicker={`Toutes les formules à ${v.nom}`} align="center">
+            Ce que je propose
           </SectionTitle>
+          <p style={{ fontSize: 16, lineHeight: 1.7, textAlign: 'center', maxWidth: 720, margin: '24px auto 0', opacity: 0.82 }}>
+            6 formules pour tous les âges et tous les budgets, adaptées au public, au lieu et à la période.
+            Clique sur une formule pour découvrir tous les détails, ou contacte-moi directement pour organiser un atelier à {v.nom}.
+          </p>
           <div
             style={{
-              marginTop: 50,
+              marginTop: 44,
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
               gap: 22,
             }}
           >
             {FORMULES.map((f) => (
               <Link
                 key={f.titre}
-                href={`/contact?ville=${encodeURIComponent(v.nom)}&sujet=${encodeURIComponent(f.sujet)}`}
+                href={f.href}
                 className="card"
                 style={{
                   textDecoration: 'none',
@@ -301,6 +466,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
                   flexDirection: 'column',
                   gap: 12,
                   color: 'inherit',
+                  height: '100%',
                 }}
               >
                 <div style={{ fontSize: 38 }}>{f.emoji}</div>
@@ -318,15 +484,81 @@ export default async function VillePage({ params }: { params: Promise<Params> })
                     marginTop: 6,
                   }}
                 >
-                  Me contacter →
+                  {f.label} →
                 </span>
               </Link>
             ))}
           </div>
+          <p style={{ textAlign: 'center', marginTop: 36, fontSize: 14.5, opacity: 0.75 }}>
+            Une envie hors catalogue ?{' '}
+            <Link href={`/contact?ville=${encodeURIComponent(v.nom)}`} style={{ color: 'var(--framboise)', fontWeight: 600 }}>
+              Écris-moi ton projet
+            </Link>{' '}
+            — je m&apos;adapte au public et au format.
+          </p>
         </div>
       </section>
 
-      {/* ───────── MAILLAGE villes proches ───────── */}
+      {/* ───────── NOUVEAU : COMMUNES AUTOUR (INSEE) ───────── */}
+      {data && data.limitrophes.length > 0 && (
+        <section style={{ padding: '70px 0', background: 'var(--creme)' }}>
+          <div className="container" style={{ maxWidth: 920 }}>
+            <SectionTitle kicker="Source : INSEE / data.gouv.fr" align="center">
+              Communes alentour
+            </SectionTitle>
+            <p style={{ fontSize: 16, opacity: 0.82, textAlign: 'center', marginTop: 22, lineHeight: 1.7 }}>
+              J&apos;interviens aussi dans les communes voisines de {v.nom}. Voici les plus proches géographiquement :
+            </p>
+            <div
+              style={{
+                marginTop: 32,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: 12,
+              }}
+            >
+              {data.limitrophes.map((l) => {
+                const pageExists = VILLES.some((v2) => v2.slug === slugify(l.nom))
+                const slug = slugify(l.nom)
+                const inner = (
+                  <div
+                    style={{
+                      background: 'var(--creme-pale)',
+                      padding: '14px 16px',
+                      borderRadius: 12,
+                      border: pageExists ? '2px solid var(--framboise)' : '1.5px solid rgba(200,54,92,.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 2,
+                    }}
+                  >
+                    <div className="h-fredoka" style={{ fontSize: 16, color: 'var(--framboise)' }}>
+                      {l.nom}
+                    </div>
+                    <div style={{ fontSize: 12.5, opacity: 0.7, fontWeight: 500 }}>
+                      {l.cp} · {fmt(l.distance)} km
+                      {l.population != null ? ` · ${fmt(l.population)} hab` : ''}
+                    </div>
+                  </div>
+                )
+                if (pageExists) {
+                  return (
+                    <Link key={l.nom} href={`/${slug}`} style={{ textDecoration: 'none' }}>
+                      {inner}
+                    </Link>
+                  )
+                }
+                return <div key={l.nom}>{inner}</div>
+              })}
+            </div>
+            <p style={{ textAlign: 'center', marginTop: 28, fontSize: 14, opacity: 0.65, fontStyle: 'italic' }}>
+              Vous n&apos;êtes pas sur cette liste mais à proximité ? Je me déplace partout en {v.deptNom} ({v.dept}) — contactez-moi !
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* ───────── MAILLAGE villes proches (curated) ───────── */}
       {proches.length > 0 && (
         <section style={{ padding: '60px 0', background: 'var(--creme-pale)' }}>
           <div className="container" style={{ maxWidth: 920 }}>
