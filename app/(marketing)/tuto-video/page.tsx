@@ -34,7 +34,7 @@ const TUTOS: Tuto[] = [
   {
     videoId: 'Fpg-_glbkNY',
     title: 'Tuto bandeau magique',
-    description: "Apprends à coudre un bandeau magique réversible avec Ludivine, pas à pas. Un projet ultra simple, ultra mignon, parfait pour démarrer la couture sans pression.",
+    description: "Apprends à coudre un bandeau magique avec Ludivine, pas à pas. Un projet ultra simple, ultra mignon, parfait pour démarrer la couture sans pression.",
     niveau: 'Débutant',
     aspect: '9:16',
   },
