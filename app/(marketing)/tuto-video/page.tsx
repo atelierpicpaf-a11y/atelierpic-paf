@@ -24,59 +24,39 @@ interface Tuto {
   videoId: string
   title: string
   description: string
-  duree: string
+  duree?: string
   niveau: 'Débutant' | 'Intermédiaire' | 'Avancé'
+  aspect?: '16:9' | '9:16'
   coffret?: { nom: string; url: string }
 }
 
 const TUTOS: Tuto[] = [
   {
-    videoId: 'TODO_VIDEO_1',
-    title: 'Coffret n°1 — Tuto complet',
-    description: 'Découvre pas à pas la création de ton premier projet créatif, avec tous les conseils de Ludivine pour réussir sans stress.',
-    duree: '5 min',
+    videoId: 'Fpg-_glbkNY',
+    title: 'Tuto bandeau magique',
+    description: "Apprends à coudre un bandeau magique réversible avec Ludivine, pas à pas. Un projet ultra simple, ultra mignon, parfait pour démarrer la couture sans pression.",
     niveau: 'Débutant',
+    aspect: '9:16',
   },
   {
-    videoId: 'TODO_VIDEO_2',
-    title: 'Coffret n°2 — Tuto complet',
-    description: 'Apprends la technique principale du coffret en suivant Ludivine étape par étape. Tous les gestes filmés en gros plan.',
-    duree: '4 min',
+    videoId: 'nTHbXs896FM',
+    title: 'Tuto chouchou',
+    description: "Le chouchou — le projet débutante par excellence. En quelques minutes, tu repars avec un accessoire fait main, et tu auras appris les bases d'une couture propre.",
     niveau: 'Débutant',
+    aspect: '9:16',
   },
   {
-    videoId: 'TODO_VIDEO_3',
-    title: 'Coffret n°3 — Tuto complet',
-    description: 'Une création originale à réaliser tranquillement, idéale pour offrir ou se faire plaisir. Tout le matériel est inclus dans le coffret.',
-    duree: '6 min',
-    niveau: 'Intermédiaire',
-  },
-  {
-    videoId: 'TODO_VIDEO_4',
-    title: 'Coffret n°4 — Tuto complet',
-    description: 'Une initiation douce au punch needle, avec les conseils de Ludivine pour des boucles régulières et un rendu propre.',
-    duree: '3 min',
+    videoId: 'TODO_MARQUE_PAGE',
+    title: 'Tuto marque-page',
+    description: "Un marque-page créatif fait main, parfait pour offrir ou se faire plaisir. Tuto pas à pas accessible aux débutantes et aux enfants dès 6 ans.",
     niveau: 'Débutant',
-  },
-  {
-    videoId: 'TODO_VIDEO_5',
-    title: 'Coffret n°5 — Tuto complet',
-    description: 'Le tuto qui va te faire kiffer. Ludivine te guide pour réaliser un projet plein de douceur, à finir en un après-midi.',
-    duree: '5 min',
-    niveau: 'Débutant',
-  },
-  {
-    videoId: 'TODO_VIDEO_6',
-    title: 'Coffret n°6 — Tuto complet',
-    description: 'Une création un peu plus ambitieuse pour celles qui veulent passer au niveau supérieur. Toutes les techniques expliquées en détail.',
-    duree: '6 min',
-    niveau: 'Intermédiaire',
+    aspect: '9:16',
   },
 ]
 
 // JSON-LD VideoObject — pour rich snippets Google + indexation vidéo
 function videoObjectJsonLd(t: Tuto, idx: number) {
-  return {
+  const obj: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
     name: t.title,
@@ -85,7 +65,6 @@ function videoObjectJsonLd(t: Tuto, idx: number) {
     uploadDate: new Date(Date.now() - idx * 7 * 86400000).toISOString().split('T')[0],
     contentUrl: `https://www.youtube.com/watch?v=${t.videoId}`,
     embedUrl: `https://www.youtube.com/embed/${t.videoId}`,
-    duration: `PT${t.duree.replace(' min', 'M')}`,
     publisher: {
       '@type': 'Organization',
       name: "L'atelier Pic & Paf",
@@ -101,6 +80,8 @@ function videoObjectJsonLd(t: Tuto, idx: number) {
     inLanguage: 'fr',
     isFamilyFriendly: true,
   }
+  if (t.duree) obj.duration = `PT${t.duree.replace(' min', 'M').replace(' ', '')}`
+  return obj
 }
 
 export default function TutoVideoPage() {
@@ -145,16 +126,23 @@ export default function TutoVideoPage() {
       {/* GRILLE VIDÉOS */}
       <section style={{ padding: '60px 0 100px', background: 'var(--creme-pale)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 36 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32, maxWidth: 1100, margin: '0 auto' }}>
             {TUTOS.map((t, i) => (
               <AnimateOnScroll key={t.videoId + i} delay={i * 80} variant="fade-up">
                 <article className="card anim-card-hover" style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <YouTubeLite videoId={t.videoId} title={t.title} priority={i === 0} />
+                  <YouTubeLite videoId={t.videoId} title={t.title} priority={i === 0} aspect={t.aspect ?? '16:9'} />
                   <div style={{ padding: '22px 24px 24px', display: 'flex', flexDirection: 'column', gap: 12, flex: 1 }}>
                     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                      <span className="badge mint" style={{ background: 'var(--menthe)', color: '#1a4a42', fontSize: 12 }}>
-                        🎬 {t.duree}
-                      </span>
+                      {t.duree && (
+                        <span className="badge mint" style={{ background: 'var(--menthe)', color: '#1a4a42', fontSize: 12 }}>
+                          🎬 {t.duree}
+                        </span>
+                      )}
+                      {t.aspect === '9:16' && (
+                        <span className="badge" style={{ background: 'var(--framboise)', color: 'var(--creme)', fontSize: 12 }}>
+                          📱 Short
+                        </span>
+                      )}
                       <span className="badge" style={{ background: 'var(--rose)', color: '#7a2d2d', fontSize: 12 }}>
                         {t.niveau}
                       </span>

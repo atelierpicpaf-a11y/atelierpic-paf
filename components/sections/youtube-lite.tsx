@@ -8,6 +8,8 @@ interface Props {
   title: string
   /** Position de l'image dans la queue de chargement */
   priority?: boolean
+  /** Ratio de la vidéo : '16:9' (regular) ou '9:16' (Short) — défaut '16:9' */
+  aspect?: '16:9' | '9:16'
 }
 
 /**
@@ -21,7 +23,8 @@ interface Props {
  * Bonus : fallback automatique maxresdefault.jpg → hqdefault.jpg si absent
  *         (certaines vidéos anciennes n'ont pas de maxres).
  */
-export function YouTubeLite({ videoId, title, priority = false }: Props) {
+export function YouTubeLite({ videoId, title, priority = false, aspect = '16:9' }: Props) {
+  const aspectRatio = aspect === '9:16' ? '9 / 16' : '16 / 9'
   const [playing, setPlaying] = useState(false)
   const [iframeLoaded, setIframeLoaded] = useState(false)
   const [warmed, setWarmed] = useState(false)
@@ -46,7 +49,7 @@ export function YouTubeLite({ videoId, title, priority = false }: Props) {
 
   if (playing) {
     return (
-      <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', borderRadius: 20, overflow: 'hidden', background: '#000' }}>
+      <div style={{ position: 'relative', width: '100%', aspectRatio, borderRadius: 20, overflow: 'hidden', background: '#000' }}>
         {!iframeLoaded && (
           <div
             aria-hidden="true"
@@ -100,7 +103,7 @@ export function YouTubeLite({ videoId, title, priority = false }: Props) {
         style={{
           position: 'relative',
           width: '100%',
-          aspectRatio: '16 / 9',
+          aspectRatio,
           borderRadius: 20,
           overflow: 'hidden',
           background: 'var(--creme-pale)',
