@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const PROGRAMME = [
   { heure: '10h', titre: 'On arrive', desc: 'Café + viennoiseries, on respire, on fait connaissance. Vous découvrez votre projet du jour.' },
-  { heure: '10h30 – 12h30', titre: 'Matin créatif', desc: 'Vous commencez votre création — couture ou punch needle au choix. Je vous accompagne pas à pas, chacune à son rythme.' },
+  { heure: '10h30 – 12h30', titre: 'Matin créatif', desc: 'Vous commencez votre création, couture ou punch needle au choix. Je vous accompagne pas à pas, chacune à son rythme.' },
   { heure: '12h30 – 14h', titre: 'Repas partagé', desc: 'Repas maison fait par mes soins, vous n\'avez rien à apporter. Un moment chaleureux entre toutes.' },
   { heure: '14h – 17h', titre: 'Après-midi & finitions', desc: 'On termine les détails, on fait des photos fières de vos créations. Vous repartez chacune avec votre pépite.' },
 ]
@@ -43,7 +43,7 @@ const OCCASIONS = [
 const FAQS = [
   {
     q: "À partir de quel âge ma fille peut venir ?",
-    r: "Pour les journées créatives, je conseille à partir de 10-12 ans (concentration sur 6h, machine à coudre apprivoisée). Pour les plus jeunes (6-9 ans), je propose plutôt des ateliers parent-enfant plus courts ou des anniversaires couture sur 2-3h — écris-moi, on trouve le bon format."
+    r: "Pour les journées créatives, je conseille à partir de 10-12 ans (concentration sur 6h, vraie autonomie créative). Pour les plus jeunes (6-9 ans), je propose plutôt des ateliers parent-enfant plus courts ou des anniversaires couture sur 2-3h. Écris-moi, on trouve le bon format."
   },
   {
     q: "Et si on est plutôt mère-ado (16-25 ans) ?",
@@ -51,7 +51,7 @@ const FAQS = [
   },
   {
     q: "On n'a jamais cousu ni l'une ni l'autre, c'est grave ?",
-    r: "Pas du tout. La majorité des participantes débute. Je vous montre la machine à coudre, on prend le temps, vous ne faites jamais quelque chose sans accompagnement. La fierté de la première création, c'est exactement ce qu'on cherche."
+    r: "Pas du tout. La majorité des participantes débute. Je vous montre tout pas à pas, on prend le temps, vous ne faites jamais quelque chose sans accompagnement. La fierté de la première création, c'est exactement ce qu'on cherche."
   },
   {
     q: "Combien ça coûte exactement ?",
@@ -107,7 +107,7 @@ export default function JourneeMereFillePage() {
               Couture &amp; punch needle à Fontaine-le-Comte (Vienne 86) · 5 min au sud de Poitiers
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.7, maxWidth: 680, margin: '0 auto 36px', opacity: 0.86 }}>
-              Sans écran. Sans course. Sans la to-do list. Juste vous deux, vos deux mains, et le temps de créer ensemble — pendant 6 heures, vous êtes les seules personnes qui comptent.
+              Sans écran. Sans course. Sans la to do list. Juste vous deux, vos deux mains, et le temps de créer ensemble. Pendant 6 heures, vous êtes les seules personnes qui comptent.
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 18 }}>
               <Link href="/ateliers-adultes/journees-creatives" className="cta-pill anim-cta-pulse">Voir les dates &amp; réserver ✨</Link>
@@ -137,7 +137,7 @@ export default function JourneeMereFillePage() {
                 Tu te dis qu&apos;un jour, tu vas vraiment prendre le temps. Mais le quotidien revient toujours plus vite que prévu.
               </p>
               <p style={{ marginBottom: 16 }}>
-                À L&apos;atelier Pic &amp; Paf, j&apos;organise des <strong style={{ color: 'var(--framboise)', fontWeight: 600 }}>journées créatives mère-fille</strong> pensées pour ces moments-là. Une journée entière dans un lieu calme et chaleureux, à 5 minutes de Poitiers. Vous arrivez le matin, on coud, on prend le temps de manger ensemble, vous repartez à 17h avec une création faite de vos mains — et surtout avec un souvenir partagé que les écrans ne pourront pas vous voler.
+                À L&apos;atelier Pic &amp; Paf, j&apos;organise des <strong style={{ color: 'var(--framboise)', fontWeight: 600 }}>journées créatives mère-fille</strong> pensées pour ces moments-là. Une journée entière dans un lieu calme et chaleureux, à 5 minutes de Poitiers. Vous arrivez le matin, on coud, on prend le temps de manger ensemble, vous repartez à 17h avec une création faite de vos mains. Et surtout avec un souvenir partagé que les écrans ne pourront pas vous voler.
               </p>
               <p style={{ marginBottom: 16, fontStyle: 'italic', color: 'var(--framboise)' }}>
                 Pas besoin d&apos;avoir cousu de votre vie. Pas besoin d&apos;être douée. Juste l&apos;envie de partager 6 heures où vous êtes les seules personnes qui comptent.
@@ -260,7 +260,7 @@ export default function JourneeMereFillePage() {
             </AnimateOnScroll>
           </div>
           <p style={{ fontSize: 16, opacity: 0.82, lineHeight: 1.7, marginTop: 36, maxWidth: 640, margin: '36px auto 0' }}>
-            Tout est compris dans le tarif : matériel (machine à coudre, tissu, mercerie, laine punch needle), repas du midi maison, café, viennoiseries, goûter de l&apos;après-midi. Tu n&apos;as rien à apporter.
+            Tout est compris dans le tarif : matériel (tissu, mercerie, laine punch needle), repas du midi maison, café, viennoiseries, goûter de l&apos;après-midi. Tu n&apos;as rien à apporter.
           </p>
           <p className="h-caveat" style={{ fontSize: 24, color: 'var(--framboise)', marginTop: 20 }}>
             ~ Paiement possible en 3× sans frais avec Klarna ~
@@ -317,7 +317,7 @@ export default function JourneeMereFillePage() {
                 Je suis Ludivine. Couturière depuis toujours, j&apos;ai créé L&apos;atelier Pic &amp; Paf pour transmettre ce qui me fait vibrer : créer de ses mains, prendre le temps, partager.
               </p>
               <p style={{ fontSize: 17, opacity: 0.88, lineHeight: 1.75, marginBottom: 16 }}>
-                Les journées mère-fille, je les anime avec un soin particulier — parce que je sais ce que ces moments représentent. Pas de pression, pas de niveau requis, juste l&apos;envie de partager 6 heures où vous comptez l&apos;une pour l&apos;autre.
+                Les journées mère-fille, je les anime avec un soin particulier, parce que je sais ce que ces moments représentent. Pas de pression, pas de niveau requis, juste l&apos;envie de partager 6 heures où vous comptez l&apos;une pour l&apos;autre.
               </p>
               <p className="h-caveat" style={{ fontSize: 24, color: 'var(--framboise)', margin: '18px 0 0' }}>~ J&apos;ai hâte de vous accueillir ✨ ~</p>
             </AnimateOnScroll>
