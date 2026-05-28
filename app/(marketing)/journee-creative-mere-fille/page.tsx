@@ -63,7 +63,7 @@ const FAQS = [
   },
   {
     q: "On repart avec quoi concrètement ?",
-    r: "Chacune sa création finie. Selon votre projet du jour : trousse, pochette, marque-page punch needle, mini coussin, top simple... Je propose une sélection de projets accessibles à toutes, vous choisissez à l'arrivée selon vos envies."
+    r: "Chacune sa création finie. Selon votre projet du jour : trousse, pochette, marque-page en couture, initiation punch needle (coussin ou déco murale), mini coussin, top simple... Je propose une sélection de projets accessibles à toutes, vous choisissez à l'arrivée selon vos envies."
   },
   {
     q: "Comment je réserve pour deux ?",

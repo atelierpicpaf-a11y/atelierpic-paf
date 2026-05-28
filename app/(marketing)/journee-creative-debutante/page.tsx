@@ -34,7 +34,8 @@ const RASSURANT = [
 
 const PROJETS = [
   { e: '🎀', t: 'Trousse / pochette', d: 'Le projet débutante par excellence : zip cousu, doublure, finitions propres.' },
-  { e: '📖', t: 'Marque-page punch needle', d: 'Initiation à l\'aiguille magique : motif simple, laine colorée, fini en 2h.' },
+  { e: '📖', t: 'Marque-page (couture)', d: 'Petit projet rapide en tissu, idéal pour découvrir la couture sans pression. Fini en 1-2h.' },
+  { e: '🪡', t: 'Initiation punch needle', d: "L'aiguille magique avec laine colorée sur tambour : motif simple, technique tendance, résultat bluffant." },
   { e: '🌸', t: 'Coussin déco simple', d: 'Tissu choisi, couture droite, fermeture invisible. Tu repars avec un objet utile.' },
   { e: '👒', t: 'Bandeau magique', d: 'Un accessoire qu\'on porte tout de suite. Couture rapide et résultat valorisant.' },
 ]
@@ -46,7 +47,7 @@ const FAQS = [
   },
   {
     q: "Quel projet je vais coudre ?",
-    r: "Tu choisis à l'arrivée parmi des projets adaptés au niveau débutant : trousse, pochette, marque-page punch needle, coussin simple, bandeau magique. Je te conseille selon ton envie et ce qui te parle."
+    r: "Tu choisis à l'arrivée parmi des projets adaptés au niveau débutant : trousse, pochette, marque-page en couture, initiation punch needle, coussin simple, bandeau magique. Je te conseille selon ton envie et ce qui te parle."
   },
   {
     q: "Est-ce que je peux faire du punch needle plutôt que de la couture ?",
