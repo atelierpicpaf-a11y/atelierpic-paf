@@ -17,6 +17,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/interventions-structures`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/tuto-video`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/journee-creative-mere-fille`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/se-reconnecter-avec-ma-fille`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/journee-creative-entre-copines`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/journee-creative-debutante`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/cadeau-femme-atelier-creatif`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/weekend-couture-yoga-femme`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/retraite-creative-entre-filles`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/weekend-bien-etre-couture-poitiers`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ]
 
