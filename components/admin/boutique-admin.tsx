@@ -9,6 +9,7 @@ import {
   updateVariante,
   deleteVariante,
 } from '@/app/(admin)/admin/actions'
+import { ImageUploader } from '@/components/admin/image-uploader'
 import type { Produit, VarianteProduit } from '@/types/supabase'
 
 type ProduitAvecVariantes = Produit & { variantes: VarianteProduit[] }
@@ -27,6 +28,37 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
       prev.map((p) =>
         p.id === pid ? { ...p, variantes: p.variantes.map((v) => (v.id === vid ? { ...v, ...patch } : v)) } : p
       )
+    )
+  }
+
+  // Persiste immédiatement un champ image (sans attendre "Enregistrer")
+  function persistImage(id: string, patch: Partial<Produit>) {
+    startTransition(async () => {
+      await updateProduit(id, patch)
+    })
+  }
+  function onUploadPrincipale(pid: string, url: string) {
+    patchProduit(pid, { image_principale: url })
+    persistImage(pid, { image_principale: url })
+  }
+  function onAddGallery(pid: string, url: string) {
+    setProduits((prev) =>
+      prev.map((p) => {
+        if (p.id !== pid) return p
+        const next = [...(p.images || []), url]
+        persistImage(pid, { images: next })
+        return { ...p, images: next }
+      })
+    )
+  }
+  function onRemoveGallery(pid: string, idx: number) {
+    setProduits((prev) =>
+      prev.map((p) => {
+        if (p.id !== pid) return p
+        const next = (p.images || []).filter((_, i) => i !== idx)
+        persistImage(pid, { images: next })
+        return { ...p, images: next }
+      })
     )
   }
 
@@ -109,7 +141,29 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
               <input className="input-admin" value={p.niveau} onChange={(e) => patchProduit(p.id, { niveau: e.target.value })} placeholder="Niveau (Débutant…)" />
               <input className="input-admin" value={p.tuto_video_id || ''} onChange={(e) => patchProduit(p.id, { tuto_video_id: e.target.value })} placeholder="ID vidéo YouTube du tuto" />
             </div>
-            <input className="input-admin" style={{ marginBottom: 12 }} value={p.image_principale || ''} onChange={(e) => patchProduit(p.id, { image_principale: e.target.value })} placeholder="URL image principale" />
+            {/* Photo principale */}
+            <div style={{ background: 'var(--creme-pale)', borderRadius: 12, padding: 14, marginBottom: 12 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--framboise)', marginBottom: 8 }}>Photo principale</div>
+              <ImageUploader value={p.image_principale} onUploaded={(url) => onUploadPrincipale(p.id, url)} label="photo" />
+            </div>
+
+            {/* Galerie (photos secondaires) */}
+            <div style={{ background: 'var(--creme-pale)', borderRadius: 12, padding: 14, marginBottom: 12 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--framboise)', marginBottom: 8 }}>Galerie (photos en plus)</div>
+              {(p.images || []).length > 0 && (
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}>
+                  {(p.images || []).map((img, idx) => (
+                    <div key={idx} style={{ position: 'relative' }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img} alt="" style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 8, border: '2px solid var(--creme)' }} />
+                      <button type="button" onClick={() => onRemoveGallery(p.id, idx)} title="Retirer" style={{ position: 'absolute', top: -6, right: -6, width: 20, height: 20, borderRadius: '50%', border: 'none', background: 'var(--framboise)', color: '#fff', fontSize: 12, cursor: 'pointer', lineHeight: 1 }}>✕</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <ImageUploader value={null} onUploaded={(url) => onAddGallery(p.id, url)} label="photo galerie" />
+            </div>
+
             <textarea className="input-admin" style={{ marginBottom: 12, minHeight: 50 }} value={p.description || ''} onChange={(e) => patchProduit(p.id, { description: e.target.value })} placeholder="Description courte (carte boutique)" />
             <textarea className="input-admin" style={{ marginBottom: 16, minHeight: 70 }} value={p.description_longue || ''} onChange={(e) => patchProduit(p.id, { description_longue: e.target.value })} placeholder="Description longue (page produit)" />
 

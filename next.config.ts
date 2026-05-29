@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'iyjntqwjteahyujsojen.supabase.co' },
     ],
   },
+  // Upload de photos produits via server action (images redimensionnées côté client)
+  experimental: {
+    serverActions: { bodySizeLimit: '6mb' },
+  },
   // Redirections SEO 301 — récupère le PageRank des vieilles URLs Lovable
   // indexées par Google avant la migration vers Next.js
   async redirects() {
