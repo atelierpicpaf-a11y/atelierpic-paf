@@ -134,30 +134,49 @@ CREATE POLICY "Lignes commande admin" ON lignes_commande
   FOR ALL USING (auth.role() = 'service_role');
 
 -- ============================================================
--- SEED — 4 coffrets liés aux tutos (prix/photos PLACEHOLDER, à finaliser en admin)
+-- SEED — 6 produits réels (prix TTC, micro-entreprise non assujettie TVA)
+-- Photos à finaliser en admin (image_principale vide pour l'instant).
 -- ============================================================
 INSERT INTO produits (slug, nom, description, description_longue, niveau, tuto_video_id, image_principale, ordre, actif)
 VALUES
-  ('coffret-bandeau-magique', 'Coffret Bandeau magique',
-   'Tout le matériel pour coudre ton bandeau magique, avec le tuto vidéo offert.',
-   'Le coffret contient le tissu, la mercerie et le patron pour réaliser ton bandeau magique. Suis le tuto vidéo de Ludivine pas à pas. Parfait pour débuter la couture en douceur.',
+  ('kit-bandeau', 'Kit bandeau',
+   'Tout le matériel pour coudre ton bandeau, avec le tuto vidéo offert.',
+   E'Ce kit contient tout pour réaliser ton bandeau :\n• Le tutoriel vidéo\n• Le patron\n• Le tissu\n• Les épingles et le fil\n\nSuis Ludivine pas à pas, même si tu n''as jamais cousu. Le projet idéal pour débuter en douceur.',
    'Débutant', 'Fpg-_glbkNY', '', 0, true),
-  ('coffret-chouchou', 'Coffret Chouchou',
+  ('kit-chouchou', 'Kit chouchou',
    'Le kit complet pour coudre ton chouchou, tuto vidéo inclus.',
-   'Tissu, élastique, mercerie : tout est dans le coffret pour réaliser un chouchou tout doux. Accompagné du tuto vidéo. Le projet débutante par excellence.',
+   E'Ce kit contient tout pour réaliser ton chouchou :\n• Le tutoriel vidéo\n• Le patron\n• Le tissu\n• L''élastique et le fil\n\nLe projet débutante par excellence : en quelques minutes, tu repars avec un accessoire fait main.',
    'Débutant', 'nTHbXs896FM', '', 1, true),
-  ('coffret-marque-page', 'Coffret Marque-page',
-   'Crée ton marque-page en couture avec ce coffret et son tuto.',
-   'Un coffret malin pour réaliser un joli marque-page en tissu. Idéal cadeau, accessible aux débutantes et aux enfants dès 6 ans. Tuto vidéo offert.',
+  ('kit-marque-page', 'Kit marque-page',
+   'Crée ton marque-page en couture avec ce kit et son tuto.',
+   E'Ce kit contient tout pour réaliser ton marque-page :\n• Le tutoriel vidéo\n• Le patron\n• Le tissu\n• La mercerie\n\nIdéal cadeau, accessible aux débutantes et aux enfants dès 6 ans.',
    'Débutant', '_-RvDJwpIxg', '', 2, true),
-  ('coffret-lingettes-lavables', 'Coffret Lingettes lavables',
+  ('kit-lingette', 'Kit lingette lavable',
    'Couds tes lingettes lavables zéro déchet, tuto vidéo inclus.',
-   'Le coffret écolo : tissu éponge et coton pour coudre tes lingettes lavables réutilisables. Geste malin et écolo, parfait pour débuter. Tuto vidéo offert.',
-   'Débutant', 'BVnOkm172sU', '', 3, true)
+   E'Ce kit contient tout pour réaliser tes lingettes lavables :\n• Le tutoriel vidéo\n• Le patron\n• Le tissu éponge et coton\n• Le fil\n\nGeste malin et écolo, réutilisable à l''infini. Parfait pour débuter.',
+   'Débutant', 'BVnOkm172sU', '', 3, true),
+  ('coffret-punch-needle', 'Coffret punch needle',
+   'Initie-toi au punch needle : aiguille magique, laine, tambour et tutoriel.',
+   E'Le coffret pour découvrir le punch needle :\n• Le tutoriel\n• L''aiguille magique (punch needle)\n• La laine colorée\n• La toile et le tambour\n\nTout pour créer ton premier motif en relief, une technique tendance et bluffante, accessible dès le premier essai.',
+   'Débutant', '', '', 4, true),
+  ('sticker-textile', 'Sticker textile',
+   'Des stickers textiles thermocollants pour personnaliser tes créations.',
+   E'Des stickers textiles thermocollants pour customiser tes vêtements, tote-bags et créations couture. Faciles à poser au fer à repasser, ils donnent une touche unique à tes projets.',
+   'Débutant', '', '', 5, true)
 ON CONFLICT (slug) DO NOTHING;
 
--- Une variante "Standard" par coffret (prix placeholder 19,90€, stock 10)
+-- Variante "Standard" par produit avec le bon prix TTC + stock initial 20
 INSERT INTO variantes_produit (produit_id, nom, prix_centimes, stock, ordre, actif)
-SELECT id, 'Standard', 1990, 10, 0, true FROM produits
-WHERE slug IN ('coffret-bandeau-magique', 'coffret-chouchou', 'coffret-marque-page', 'coffret-lingettes-lavables')
-ON CONFLICT DO NOTHING;
+SELECT id, 'Standard',
+  CASE slug
+    WHEN 'kit-bandeau' THEN 1290
+    WHEN 'kit-chouchou' THEN 1290
+    WHEN 'kit-marque-page' THEN 1290
+    WHEN 'kit-lingette' THEN 1490
+    WHEN 'coffret-punch-needle' THEN 2490
+    WHEN 'sticker-textile' THEN 990
+  END,
+  20, 0, true
+FROM produits
+WHERE slug IN ('kit-bandeau','kit-chouchou','kit-marque-page','kit-lingette','coffret-punch-needle','sticker-textile')
+  AND NOT EXISTS (SELECT 1 FROM variantes_produit v WHERE v.produit_id = produits.id);
