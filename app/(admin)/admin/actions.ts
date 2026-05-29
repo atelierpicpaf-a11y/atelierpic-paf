@@ -269,24 +269,29 @@ export async function updateCommandeStatut(id: string, statut: Commande['statut'
 // Reçoit un FormData { file }, upload via service role, renvoie l'URL publique.
 export async function uploadProduitImage(formData: FormData): Promise<{ url: string } | { error: string }> {
   await requireAdmin()
-  const file = formData.get('file') as File | null
-  if (!file || typeof file === 'string') return { error: 'Aucun fichier' }
-  if (file.size > 12 * 1024 * 1024) return { error: 'Image trop lourde (max 12 Mo)' }
-  if (!file.type.startsWith('image/')) return { error: 'Le fichier doit être une image' }
+  try {
+    const file = formData.get('file')
+    if (!file || typeof file === 'string') return { error: 'Aucun fichier reçu' }
+    const f = file as File
+    if (f.size > 12 * 1024 * 1024) return { error: 'Image trop lourde (max 12 Mo)' }
 
-  const db = createAdminClient()
-  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg'
-  const rand = Math.random().toString(36).slice(2, 9)
-  const path = `${Date.now()}-${rand}.${ext}`
-  const arrayBuffer = await file.arrayBuffer()
+    const db = createAdminClient()
+    const ext = (f.name?.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg'
+    const rand = Math.random().toString(36).slice(2, 9)
+    const path = `${Date.now()}-${rand}.${ext}`
+    const bytes = new Uint8Array(await f.arrayBuffer())
 
-  const { error } = await db.storage.from('produits').upload(path, arrayBuffer, {
-    contentType: file.type,
-    upsert: false,
-  })
-  if (error) {
-    return { error: `Upload échoué : ${error.message}. (Le bucket "produits" existe-t-il et est-il public ?)` }
+    const { error } = await db.storage.from('produits').upload(path, bytes, {
+      contentType: f.type || 'image/jpeg',
+      upsert: false,
+    })
+    if (error) {
+      return { error: `Upload échoué : ${error.message}. (Le bucket "produits" existe-t-il et est-il public ?)` }
+    }
+    const { data } = db.storage.from('produits').getPublicUrl(path)
+    return { url: data.publicUrl }
+  } catch (e) {
+    console.error('[uploadProduitImage]', e)
+    return { error: e instanceof Error ? e.message : 'Erreur inconnue à l\'upload' }
   }
-  const { data } = db.storage.from('produits').getPublicUrl(path)
-  return { url: data.publicUrl }
 }
