@@ -107,29 +107,44 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
 
   function handleAddProduit() {
     startTransition(async () => {
-      await createProduit()
-      router.refresh()
+      try {
+        const p = await createProduit()
+        setProduits((prev) => [...prev, p])
+      } catch (e) {
+        setSaveError(e instanceof Error ? e.message : 'Erreur ajout coffret')
+      }
     })
   }
   function handleDeleteProduit(id: string) {
     if (!confirm('Supprimer définitivement ce coffret et ses variantes ?')) return
     startTransition(async () => {
-      await deleteProduit(id)
-      setProduits((prev) => prev.filter((p) => p.id !== id))
-      router.refresh()
+      try {
+        await deleteProduit(id)
+        setProduits((prev) => prev.filter((p) => p.id !== id))
+      } catch (e) {
+        setSaveError(e instanceof Error ? e.message : 'Erreur suppression')
+      }
     })
   }
   function handleAddVariante(pid: string) {
     startTransition(async () => {
-      await createVariante(pid)
-      router.refresh()
+      try {
+        const v = await createVariante(pid)
+        setProduits((prev) => prev.map((p) => (p.id === pid ? { ...p, variantes: [...p.variantes, v] } : p)))
+      } catch (e) {
+        setSaveError(e instanceof Error ? e.message : 'Erreur ajout variante')
+      }
     })
   }
-  function handleDeleteVariante(vid: string) {
+  function handleDeleteVariante(pid: string, vid: string) {
     if (!confirm('Supprimer cette variante ?')) return
     startTransition(async () => {
-      await deleteVariante(vid)
-      router.refresh()
+      try {
+        await deleteVariante(vid)
+        setProduits((prev) => prev.map((p) => (p.id === pid ? { ...p, variantes: p.variantes.filter((v) => v.id !== vid) } : p)))
+      } catch (e) {
+        setSaveError(e instanceof Error ? e.message : 'Erreur suppression variante')
+      }
     })
   }
 
@@ -214,7 +229,7 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
                     <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 13 }}>
                       <input type="checkbox" checked={v.actif} onChange={(e) => patchVariante(p.id, v.id, { actif: e.target.checked })} /> active
                     </label>
-                    <button onClick={() => handleDeleteVariante(v.id)} disabled={pending} style={{ ...smallBtn, color: '#b00', borderColor: '#b00' }}>✕</button>
+                    <button onClick={() => handleDeleteVariante(p.id, v.id)} disabled={pending} style={{ ...smallBtn, color: '#b00', borderColor: '#b00' }}>✕</button>
                   </div>
                   {/* Photo du coloris */}
                   <ImageUploader value={v.image} onUploaded={(url) => onUploadVariante(p.id, v.id, url)} label="photo coloris" />

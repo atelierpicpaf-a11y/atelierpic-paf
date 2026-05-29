@@ -187,7 +187,7 @@ function slugify(s: string): string {
 }
 
 // ── PRODUITS ───────────────────────────────────────────────
-export async function createProduit(): Promise<Produit> {
+export async function createProduit(): Promise<Produit & { variantes: VarianteProduit[] }> {
   await requireAdmin()
   const db = createAdminClient()
   const { data: existing } = await db.from('produits').select('ordre').order('ordre', { ascending: false }).limit(1)
@@ -200,9 +200,13 @@ export async function createProduit(): Promise<Produit> {
     .single()
   if (error) throw new Error(error.message)
   // Créer une variante "Standard" par défaut
-  await db.from('variantes_produit').insert({ produit_id: data.id, nom: 'Standard', prix_centimes: 0, stock: 0, ordre: 0 })
+  const { data: variante } = await db
+    .from('variantes_produit')
+    .insert({ produit_id: data.id, nom: 'Standard', prix_centimes: 0, stock: 0, ordre: 0 })
+    .select()
+    .single()
   revalidatePath('/boutique')
-  return data
+  return { ...data, variantes: variante ? [variante] : [] }
 }
 
 export async function updateProduit(id: string, updates: Partial<Produit>) {
