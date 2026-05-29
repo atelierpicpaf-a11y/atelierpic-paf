@@ -41,7 +41,7 @@ const TUTOS: Tuto[] = [
   {
     videoId: 'nTHbXs896FM',
     title: 'Tuto chouchou',
-    description: "Le chouchou — le projet débutante par excellence. En quelques minutes, tu repars avec un accessoire fait main, et tu auras appris les bases d'une couture propre.",
+    description: "Le chouchou, le projet débutante par excellence. En quelques minutes, tu repars avec un accessoire fait main, et tu auras appris les bases d'une couture propre.",
     niveau: 'Débutant',
     aspect: '9:16',
   },
@@ -49,6 +49,13 @@ const TUTOS: Tuto[] = [
     videoId: '_-RvDJwpIxg',
     title: 'Tuto marque-page',
     description: "Un marque-page créatif fait main, parfait pour offrir ou se faire plaisir. Tuto pas à pas accessible aux débutantes et aux enfants dès 6 ans.",
+    niveau: 'Débutant',
+    aspect: '9:16',
+  },
+  {
+    videoId: 'BVnOkm172sU',
+    title: 'Tuto lingette lavable',
+    description: "Couds tes propres lingettes lavables, zéro déchet et ultra simples à réaliser. Le projet malin et écolo, parfait pour débuter la couture en réutilisant tes chutes de tissu.",
     niveau: 'Débutant',
     aspect: '9:16',
   },
