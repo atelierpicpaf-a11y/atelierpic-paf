@@ -3,7 +3,8 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import type { AtelierEnfantRow, Session, ConfigAtelier } from '@/types/supabase'
+import { revalidatePath } from 'next/cache'
+import type { AtelierEnfantRow, Session, ConfigAtelier, Produit, VarianteProduit, Commande } from '@/types/supabase'
 
 // ── Auth guard ─────────────────────────────────────────────
 async function requireAdmin() {
@@ -170,5 +171,96 @@ export async function updateConfig(type: string, updates: Partial<ConfigAtelier>
     .from('config_ateliers')
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('type', type)
+  if (error) throw new Error(error.message)
+}
+
+// ══════════════════════════════════════════════════════════
+//  BOUTIQUE — produits, variantes, commandes
+// ══════════════════════════════════════════════════════════
+function slugify(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+// ── PRODUITS ───────────────────────────────────────────────
+export async function createProduit(): Promise<Produit> {
+  await requireAdmin()
+  const db = createAdminClient()
+  const { data: existing } = await db.from('produits').select('ordre').order('ordre', { ascending: false }).limit(1)
+  const nextOrdre = existing && existing.length > 0 ? existing[0].ordre + 1 : 0
+  const slug = `nouveau-coffret-${Date.now().toString(36)}`
+  const { data, error } = await db
+    .from('produits')
+    .insert({ slug, nom: 'Nouveau coffret', niveau: 'Débutant', categorie: 'coffret', ordre: nextOrdre, actif: false })
+    .select()
+    .single()
+  if (error) throw new Error(error.message)
+  // Créer une variante "Standard" par défaut
+  await db.from('variantes_produit').insert({ produit_id: data.id, nom: 'Standard', prix_centimes: 0, stock: 0, ordre: 0 })
+  revalidatePath('/boutique')
+  return data
+}
+
+export async function updateProduit(id: string, updates: Partial<Produit>) {
+  await requireAdmin()
+  const db = createAdminClient()
+  // Re-slugify si le nom change (et pas de slug explicite fourni)
+  const patch: Partial<Produit> = { ...updates }
+  if (updates.nom && !updates.slug) patch.slug = slugify(updates.nom)
+  const { error } = await db.from('produits').update(patch).eq('id', id)
+  if (error) throw new Error(error.message)
+  revalidatePath('/boutique')
+  if (patch.slug) revalidatePath(`/boutique/${patch.slug}`)
+}
+
+export async function deleteProduit(id: string) {
+  await requireAdmin()
+  const db = createAdminClient()
+  const { error } = await db.from('produits').delete().eq('id', id)
+  if (error) throw new Error(error.message)
+  revalidatePath('/boutique')
+}
+
+// ── VARIANTES ──────────────────────────────────────────────
+export async function createVariante(produitId: string): Promise<VarianteProduit> {
+  await requireAdmin()
+  const db = createAdminClient()
+  const { data: existing } = await db.from('variantes_produit').select('ordre').eq('produit_id', produitId).order('ordre', { ascending: false }).limit(1)
+  const nextOrdre = existing && existing.length > 0 ? existing[0].ordre + 1 : 0
+  const { data, error } = await db
+    .from('variantes_produit')
+    .insert({ produit_id: produitId, nom: 'Nouvelle option', prix_centimes: 0, stock: 0, ordre: nextOrdre })
+    .select()
+    .single()
+  if (error) throw new Error(error.message)
+  revalidatePath('/boutique')
+  return data
+}
+
+export async function updateVariante(id: string, updates: Partial<VarianteProduit>) {
+  await requireAdmin()
+  const db = createAdminClient()
+  const { error } = await db.from('variantes_produit').update(updates).eq('id', id)
+  if (error) throw new Error(error.message)
+  revalidatePath('/boutique')
+}
+
+export async function deleteVariante(id: string) {
+  await requireAdmin()
+  const db = createAdminClient()
+  const { error } = await db.from('variantes_produit').delete().eq('id', id)
+  if (error) throw new Error(error.message)
+  revalidatePath('/boutique')
+}
+
+// ── COMMANDES ──────────────────────────────────────────────
+export async function updateCommandeStatut(id: string, statut: Commande['statut']) {
+  await requireAdmin()
+  const db = createAdminClient()
+  const { error } = await db.from('commandes').update({ statut }).eq('id', id)
   if (error) throw new Error(error.message)
 }

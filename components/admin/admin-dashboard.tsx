@@ -257,6 +257,12 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
         <a href="/" style={{ width: 34, height: 34, borderRadius: '50%', border: '1.5px solid rgba(255,255,255,.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 18, textDecoration: 'none', flexShrink: 0 }}>×</a>
       </header>
 
+      {/* ── Liens boutique (routes séparées) ── */}
+      <div style={{ display: 'flex', gap: 12, padding: '14px 24px 0', flexWrap: 'wrap' }}>
+        <a href="/admin/boutique" style={{ padding: '10px 20px', borderRadius: 999, background: 'var(--framboise)', color: 'var(--creme)', fontFamily: 'var(--font-fredoka)', fontSize: 14, textDecoration: 'none' }}>🎁 Gérer la boutique</a>
+        <a href="/admin/commandes" style={{ padding: '10px 20px', borderRadius: 999, background: '#fff', color: 'var(--framboise)', border: '1.5px solid var(--framboise)', fontFamily: 'var(--font-fredoka)', fontSize: 14, textDecoration: 'none' }}>🛍️ Voir les commandes</a>
+      </div>
+
       {/* ── Tab bar ── */}
       <nav style={S.tabBar}>
         {tabs.map(t => (

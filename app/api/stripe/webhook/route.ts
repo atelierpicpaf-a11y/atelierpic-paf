@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type Stripe from 'stripe'
 import { stripe } from '@/lib/stripe/client'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { sendClientConfirmationEmail, sendAdminNotificationEmail } from '@/lib/resend/emails'
+import { sendClientConfirmationEmail, sendAdminNotificationEmail, sendOrderConfirmationClient, sendOrderNotificationAdmin } from '@/lib/resend/emails'
 
 export const runtime = 'nodejs'
 // Webhook: Stripe envoie le raw body, Next ne doit pas le parser
@@ -58,6 +58,13 @@ export async function POST(req: Request) {
       }
 
       const metadata = session.metadata || {}
+
+      // ── BRANCHE BOUTIQUE : commande de coffrets ──
+      if (metadata.commande_id) {
+        return await handleBoutiqueOrder(session, metadata.commande_id)
+      }
+
+      // ── BRANCHE RÉSERVATIONS (ateliers / sessions) — existant ──
       const atelierId = metadata.atelier_enfant_id
       const sessionDbId = metadata.session_id
 
@@ -227,4 +234,70 @@ export async function POST(req: Request) {
     console.error('[stripe/webhook] erreur:', err)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// BOUTIQUE — traite une commande de coffrets après paiement
+// ──────────────────────────────────────────────────────────────────────
+async function handleBoutiqueOrder(session: Stripe.Checkout.Session, commandeId: string) {
+  const db = createAdminClient()
+
+  const { data: commande } = await db.from('commandes').select('*').eq('id', commandeId).single()
+  if (!commande) {
+    console.error('[stripe/webhook] commande introuvable:', commandeId)
+    return NextResponse.json({ received: true, error: 'commande introuvable' })
+  }
+
+  // Idempotence : déjà payée → on ne refait rien
+  if (commande.statut === 'paye' || commande.statut_paiement === 'paye_total') {
+    return NextResponse.json({ received: true, already_processed: true })
+  }
+
+  // Récupérer les lignes pour décrémenter le stock + email
+  const { data: lignes } = await db.from('lignes_commande').select('*').eq('commande_id', commandeId)
+
+  // Passer la commande en payée
+  await db
+    .from('commandes')
+    .update({
+      statut: 'paye',
+      statut_paiement: 'paye_total',
+      stripe_payment_intent_id: (session.payment_intent as string | null) ?? null,
+    })
+    .eq('id', commandeId)
+
+  // Décrémenter le stock de chaque variante (fonction SQL atomique)
+  for (const l of lignes ?? []) {
+    if (l.variante_id) {
+      await db.rpc('decrementer_stock', { p_variante_id: l.variante_id, p_qty: l.quantite })
+    }
+  }
+
+  // Emails (ne fait pas échouer le webhook si ça plante)
+  try {
+    const payload = {
+      numero: commande.numero,
+      nom: commande.nom,
+      prenom: commande.prenom,
+      email: commande.email,
+      telephone: commande.telephone,
+      relaisNom: commande.mondial_relay_nom,
+      relaisAdresse: commande.mondial_relay_adresse,
+      relaisCp: commande.mondial_relay_cp,
+      relaisVille: commande.mondial_relay_ville,
+      montantTotalCentimes: commande.montant_total_centimes,
+      montantLivraisonCentimes: commande.montant_livraison_centimes,
+      lignes: (lignes ?? []).map((l) => ({
+        produitNom: l.produit_nom,
+        varianteNom: l.variante_nom,
+        prixUnitaireCentimes: l.prix_unitaire_centimes,
+        quantite: l.quantite,
+      })),
+    }
+    await Promise.all([sendOrderConfirmationClient(payload), sendOrderNotificationAdmin(payload)])
+  } catch (emailErr) {
+    console.error('[stripe/webhook] erreur emails commande:', emailErr)
+  }
+
+  return NextResponse.json({ received: true })
 }

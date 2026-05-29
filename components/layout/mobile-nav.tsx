@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { href: '/ateliers-enfants', label: 'Atelier créatif enfant et adulte' },
   { href: '/ateliers-adultes/journees-creatives', label: 'Journées créatives' },
   { href: '/ateliers-adultes/retraites-creatives', label: 'Retraites créatives' },
+  { href: '/boutique', label: 'Boutique' },
   { href: '/tuto-video', label: 'Tutos vidéos' },
   { href: '/contact', label: 'Contact' },
 ]

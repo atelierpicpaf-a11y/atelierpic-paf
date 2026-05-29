@@ -56,6 +56,37 @@ export type MessageContact = { id: string; nom: string; email: string; sujet: st
 export type NewsletterAbonne = { id: string; email: string; nom: string | null; consentement: boolean; date_inscription: string; actif: boolean }
 export type Temoignage = { id: string; nom: string; ville: string | null; note: number | null; texte: string; type_atelier: string | null; publie: boolean; created_at: string }
 export type Article = { id: string; slug: string; titre: string; extrait: string | null; contenu_mdx: string | null; image_cover: string | null; categorie: string | null; meta_title: string | null; meta_description: string | null; publie: boolean; date_publication: string | null; auteur: string; created_at: string }
+
+// ── BOUTIQUE ───────────────────────────────────────────────
+export type Produit = {
+  id: string; slug: string; nom: string; description: string | null
+  description_longue: string | null; niveau: string; categorie: string
+  image_principale: string | null; images: string[]; tuto_video_id: string | null
+  actif: boolean; ordre: number; created_at: string; updated_at: string
+}
+export type VarianteProduit = {
+  id: string; produit_id: string; nom: string; prix_centimes: number
+  stock: number; sku: string | null; actif: boolean; ordre: number; created_at: string
+}
+export type Commande = {
+  id: string; numero: string; email: string; nom: string; prenom: string
+  telephone: string | null
+  mondial_relay_id: string | null; mondial_relay_nom: string | null
+  mondial_relay_adresse: string | null; mondial_relay_cp: string | null; mondial_relay_ville: string | null
+  montant_total_centimes: number; montant_livraison_centimes: number
+  stripe_session_id: string | null; stripe_payment_intent_id: string | null
+  statut_paiement: 'en_attente' | 'paye_total' | 'rembourse' | 'annule'
+  statut: 'en_attente_paiement' | 'paye' | 'preparee' | 'expediee' | 'livree' | 'annulee'
+  message: string | null; created_at: string; updated_at: string
+}
+export type LigneCommande = {
+  id: string; commande_id: string; variante_id: string | null
+  produit_nom: string; variante_nom: string; prix_unitaire_centimes: number
+  quantite: number; created_at: string
+}
+// Produit avec ses variantes jointes (usage front boutique)
+export type ProduitAvecVariantes = Produit & { variantes: VarianteProduit[] }
+
 export type Database = {
   public: {
     Tables: {
@@ -67,7 +98,11 @@ export type Database = {
       messages_contact: { Row: MessageContact; Insert: Omit<MessageContact, 'id'|'created_at'|'lu'> & { id?: string; created_at?: string; lu?: boolean }; Update: Partial<MessageContact>; Relationships: [] }
       temoignages: { Row: Temoignage; Insert: Omit<Temoignage, 'id'|'created_at'|'publie'> & { id?: string; created_at?: string; publie?: boolean }; Update: Partial<Temoignage>; Relationships: [] }
       articles: { Row: Article; Insert: Omit<Article, 'id'|'created_at'|'publie'|'auteur'> & { id?: string; created_at?: string; publie?: boolean; auteur?: string }; Update: Partial<Article>; Relationships: [] }
+      produits: { Row: Produit; Insert: { id?: string; slug: string; nom: string; description?: string | null; description_longue?: string | null; niveau?: string; categorie?: string; image_principale?: string | null; images?: string[]; tuto_video_id?: string | null; actif?: boolean; ordre?: number; created_at?: string; updated_at?: string }; Update: Partial<Produit>; Relationships: [] }
+      variantes_produit: { Row: VarianteProduit; Insert: { id?: string; produit_id: string; nom?: string; prix_centimes?: number; stock?: number; sku?: string | null; actif?: boolean; ordre?: number; created_at?: string }; Update: Partial<VarianteProduit>; Relationships: [] }
+      commandes: { Row: Commande; Insert: { numero: string; email: string; nom: string; prenom: string; id?: string; telephone?: string | null; mondial_relay_id?: string | null; mondial_relay_nom?: string | null; mondial_relay_adresse?: string | null; mondial_relay_cp?: string | null; mondial_relay_ville?: string | null; montant_total_centimes?: number; montant_livraison_centimes?: number; stripe_session_id?: string | null; stripe_payment_intent_id?: string | null; statut_paiement?: Commande['statut_paiement']; statut?: Commande['statut']; message?: string | null; created_at?: string; updated_at?: string }; Update: Partial<Commande>; Relationships: [] }
+      lignes_commande: { Row: LigneCommande; Insert: Omit<LigneCommande, 'id'|'created_at'> & { id?: string; created_at?: string }; Update: Partial<LigneCommande>; Relationships: [] }
     }
-    Views: Record<string, never>; Functions: Record<string, never>; Enums: Record<string, never>; CompositeTypes: Record<string, never>
+    Views: Record<string, never>; Functions: { decrementer_stock: { Args: { p_variante_id: string; p_qty: number }; Returns: undefined } }; Enums: Record<string, never>; CompositeTypes: Record<string, never>
   }
 }

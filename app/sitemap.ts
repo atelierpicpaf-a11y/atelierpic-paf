@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
 import { VILLES } from '@/content/villes'
+import { createAdminClient } from '@/lib/supabase/admin'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = 'https://atelierpicpaf.fr'
   const now = new Date()
 
@@ -24,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/weekend-couture-yoga-femme`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/retraite-creative-entre-filles`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/weekend-bien-etre-couture-poitiers`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/boutique`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ]
 
@@ -34,5 +36,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: v.wave === 1 ? 0.8 : 0.6,
   }))
 
-  return [...staticRoutes, ...villeRoutes]
+  // Produits boutique (dynamique). Try/catch : ne casse pas le build si Supabase indispo.
+  let produitRoutes: MetadataRoute.Sitemap = []
+  try {
+    const db = createAdminClient()
+    const { data } = await db.from('produits').select('slug, updated_at').eq('actif', true)
+    produitRoutes = (data ?? []).map((p) => ({
+      url: `${base}/boutique/${p.slug}`,
+      lastModified: p.updated_at ? new Date(p.updated_at) : now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    }))
+  } catch {
+    produitRoutes = []
+  }
+
+  return [...staticRoutes, ...villeRoutes, ...produitRoutes]
 }

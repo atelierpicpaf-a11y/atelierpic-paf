@@ -22,6 +22,7 @@ export function Footer() {
             <FooterLink href="/ateliers-adultes/retraites-creatives">Retraites créatives</FooterLink>
             <FooterLink href="/punch-needle">Atelier punch needle</FooterLink>
             <FooterLink href="/anniversaire-couture-enfant">Anniversaire couture</FooterLink>
+            <FooterLink href="/boutique">Boutique · Coffrets DIY</FooterLink>
             <FooterLink href="/tuto-video">Tutos vidéos</FooterLink>
           </div>
           <div>
