@@ -152,16 +152,16 @@ VALUES
    E'Ce kit contient tout pour réaliser ton marque-page :\n• Le tutoriel vidéo\n• Le patron\n• Le tissu\n• La mercerie\n\nIdéal cadeau, accessible aux débutantes et aux enfants dès 6 ans.',
    'Débutant', '_-RvDJwpIxg', '', 2, true),
   ('kit-lingette', 'Kit lingette lavable',
-   'Couds tes lingettes lavables zéro déchet, tuto vidéo inclus.',
-   E'Ce kit contient tout pour réaliser tes lingettes lavables :\n• Le tutoriel vidéo\n• Le patron\n• Le tissu éponge et coton\n• Le fil\n\nGeste malin et écolo, réutilisable à l''infini. Parfait pour débuter.',
+   'Couds 4 lingettes lavables ultra douces, zéro déchet, tuto vidéo inclus.',
+   E'Ce kit contient tout pour réaliser 4 lingettes lavables ultra douces :\n• Le tutoriel vidéo\n• Le patron\n• Le tissu éponge et coton\n• Le fil\n\nGeste malin et écolo, réutilisable à l''infini. Parfait pour débuter.',
    'Débutant', 'BVnOkm172sU', '', 3, true),
   ('coffret-punch-needle', 'Coffret punch needle',
-   'Initie-toi au punch needle : aiguille magique, laine, tambour et tutoriel.',
-   E'Le coffret pour découvrir le punch needle :\n• Le tutoriel\n• L''aiguille magique (punch needle)\n• La laine colorée\n• La toile et le tambour\n\nTout pour créer ton premier motif en relief, une technique tendance et bluffante, accessible dès le premier essai.',
+   'Initie-toi au punch needle : aiguille magique, laine, toile, tambour et tutoriel. Tu n''as plus qu''à créer ton dessin !',
+   E'Le coffret pour découvrir le punch needle :\n• Le tutoriel\n• L''aiguille magique (punch needle)\n• L''enfile-aiguille\n• La laine colorée\n• La toile\n• Le tambour\n• La colle\n• Le pinceau\n\nTu n''as plus qu''à créer ton dessin !',
    'Débutant', '', '', 4, true),
-  ('sticker-textile', 'Sticker textile',
-   'Des stickers textiles thermocollants pour personnaliser tes créations.',
-   E'Des stickers textiles thermocollants pour customiser tes vêtements, tote-bags et créations couture. Faciles à poser au fer à repasser, ils donnent une touche unique à tes projets.',
+  ('sticker-textile', 'Sticker en tissu à fabriquer',
+   'Des stickers en tissu à fabriquer toi-même pour personnaliser tes affaires.',
+   E'Le kit pour créer tes propres stickers en tissu :\n• Le tutoriel\n• Les feuilles adhésives / tissu\n\nÀ toi de suivre le tuto, dessiner et découper la forme que tu souhaites. Personnalise tes photos, tes cahiers, tes affaires… et bien plus encore !',
    'Débutant', '', '', 5, true)
 ON CONFLICT (slug) DO NOTHING;
 

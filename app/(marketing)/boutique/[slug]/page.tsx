@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { SectionTitle } from '@/components/sections/section-title'
 import { AnimateOnScroll } from '@/components/ui/animate-on-scroll'
-import { ProductPurchase } from '@/components/boutique/product-purchase'
+import { ProductDetailClient } from '@/components/boutique/product-detail-client'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { createClient } from '@/lib/supabase/server'
@@ -100,39 +99,8 @@ export default async function ProduitPage({ params }: { params: Promise<Params> 
       <section style={{ padding: '60px 0 40px', background: 'var(--creme)' }}>
         <div className="container" style={{ maxWidth: 1080 }}>
           <Link href="/boutique" style={{ color: 'var(--framboise)', fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>← Retour à la boutique</Link>
-
-          <div style={{ marginTop: 24, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 44, alignItems: 'start' }}>
-            {/* GALERIE */}
-            <AnimateOnScroll variant="scale-in">
-              <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', borderRadius: 28, overflow: 'hidden', background: 'var(--creme-pale)', boxShadow: 'var(--shadow-card)' }}>
-                {galerie[0] ? (
-                  <Image src={galerie[0]} alt={produit.nom} fill sizes="(max-width:768px) 90vw, 520px" style={{ objectFit: 'cover' }} priority unoptimized />
-                ) : (
-                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 96 }}>🎁</div>
-                )}
-              </div>
-              {galerie.length > 1 && (
-                <div style={{ display: 'flex', gap: 10, marginTop: 12, flexWrap: 'wrap' }}>
-                  {galerie.slice(1, 5).map((img, i) => (
-                    <div key={i} style={{ position: 'relative', width: 72, height: 72, borderRadius: 12, overflow: 'hidden', border: '2px solid var(--creme)' }}>
-                      <Image src={img} alt={`${produit.nom} ${i + 2}`} fill sizes="72px" style={{ objectFit: 'cover' }} unoptimized />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </AnimateOnScroll>
-
-            {/* INFOS + ACHAT */}
-            <AnimateOnScroll delay={120}>
-              <div style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
-                <span className="badge" style={{ background: 'var(--rose)', color: '#7a2d2d', fontSize: 12 }}>{produit.niveau}</span>
-                {produit.tuto_video_id && <span className="badge mint" style={{ background: 'var(--menthe)', color: '#1a4a42', fontSize: 12 }}>🎬 Tuto vidéo offert</span>}
-              </div>
-              <h1 className="h-fredoka" style={{ fontSize: 'clamp(30px,4vw,44px)', color: 'var(--framboise)', margin: '0 0 16px', lineHeight: 1.1 }}>{produit.nom}</h1>
-              {produit.description && <p style={{ fontSize: 17, lineHeight: 1.7, opacity: 0.85, marginBottom: 24 }}>{produit.description}</p>}
-
-              <ProductPurchase produit={produit} variantes={variantes} />
-            </AnimateOnScroll>
+          <div style={{ marginTop: 24 }}>
+            <ProductDetailClient produit={produit} variantes={variantes} baseGalerie={galerie} />
           </div>
         </div>
       </section>

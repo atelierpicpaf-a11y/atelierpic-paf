@@ -61,6 +61,13 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
       })
     )
   }
+  // Photo d'un coloris (variante) — persistée immédiatement
+  function onUploadVariante(pid: string, vid: string, url: string) {
+    patchVariante(pid, vid, { image: url })
+    startTransition(async () => {
+      await updateVariante(vid, { image: url })
+    })
+  }
 
   function saveProduit(p: ProduitAvecVariantes) {
     startTransition(async () => {
@@ -75,7 +82,7 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
         ordre: p.ordre,
       })
       for (const v of p.variantes) {
-        await updateVariante(v.id, { nom: v.nom, prix_centimes: v.prix_centimes, stock: v.stock, actif: v.actif, ordre: v.ordre })
+        await updateVariante(v.id, { nom: v.nom, prix_centimes: v.prix_centimes, stock: v.stock, actif: v.actif, ordre: v.ordre, image: v.image })
       }
       setSavedId(p.id)
       setTimeout(() => setSavedId(null), 2500)
@@ -174,17 +181,21 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
                 <button onClick={() => handleAddVariante(p.id)} disabled={pending} style={smallBtn}>+ variante</button>
               </div>
               {p.variantes.map((v) => (
-                <div key={v.id} style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-                  <input className="input-admin" style={{ flex: 1, minWidth: 140 }} value={v.nom} onChange={(e) => patchVariante(p.id, v.id, { nom: e.target.value })} placeholder="Nom variante" />
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <input className="input-admin" style={{ width: 90 }} type="number" value={(v.prix_centimes / 100).toString()} onChange={(e) => patchVariante(p.id, v.id, { prix_centimes: Math.round(parseFloat(e.target.value || '0') * 100) })} placeholder="Prix €" />
-                    <span style={{ fontSize: 13, opacity: 0.6 }}>€</span>
+                <div key={v.id} style={{ marginBottom: 10, paddingBottom: 10, borderBottom: '1px solid rgba(200,54,92,.1)' }}>
+                  <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                    <input className="input-admin" style={{ flex: 1, minWidth: 140 }} value={v.nom} onChange={(e) => patchVariante(p.id, v.id, { nom: e.target.value })} placeholder="Coloris / option" />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <input className="input-admin" style={{ width: 90 }} type="number" value={(v.prix_centimes / 100).toString()} onChange={(e) => patchVariante(p.id, v.id, { prix_centimes: Math.round(parseFloat(e.target.value || '0') * 100) })} placeholder="Prix €" />
+                      <span style={{ fontSize: 13, opacity: 0.6 }}>€</span>
+                    </div>
+                    <input className="input-admin" style={{ width: 80 }} type="number" value={v.stock} onChange={(e) => patchVariante(p.id, v.id, { stock: parseInt(e.target.value || '0', 10) })} placeholder="Stock" title="Stock" />
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 13 }}>
+                      <input type="checkbox" checked={v.actif} onChange={(e) => patchVariante(p.id, v.id, { actif: e.target.checked })} /> active
+                    </label>
+                    <button onClick={() => handleDeleteVariante(v.id)} disabled={pending} style={{ ...smallBtn, color: '#b00', borderColor: '#b00' }}>✕</button>
                   </div>
-                  <input className="input-admin" style={{ width: 80 }} type="number" value={v.stock} onChange={(e) => patchVariante(p.id, v.id, { stock: parseInt(e.target.value || '0', 10) })} placeholder="Stock" title="Stock" />
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 13 }}>
-                    <input type="checkbox" checked={v.actif} onChange={(e) => patchVariante(p.id, v.id, { actif: e.target.checked })} /> active
-                  </label>
-                  <button onClick={() => handleDeleteVariante(v.id)} disabled={pending} style={{ ...smallBtn, color: '#b00', borderColor: '#b00' }}>✕</button>
+                  {/* Photo du coloris */}
+                  <ImageUploader value={v.image} onUploaded={(url) => onUploadVariante(p.id, v.id, url)} label="photo coloris" />
                 </div>
               ))}
             </div>

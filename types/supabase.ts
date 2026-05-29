@@ -66,7 +66,7 @@ export type Produit = {
 }
 export type VarianteProduit = {
   id: string; produit_id: string; nom: string; prix_centimes: number
-  stock: number; sku: string | null; actif: boolean; ordre: number; created_at: string
+  stock: number; sku: string | null; image: string | null; actif: boolean; ordre: number; created_at: string
 }
 export type Commande = {
   id: string; numero: string; email: string; nom: string; prenom: string
@@ -99,7 +99,7 @@ export type Database = {
       temoignages: { Row: Temoignage; Insert: Omit<Temoignage, 'id'|'created_at'|'publie'> & { id?: string; created_at?: string; publie?: boolean }; Update: Partial<Temoignage>; Relationships: [] }
       articles: { Row: Article; Insert: Omit<Article, 'id'|'created_at'|'publie'|'auteur'> & { id?: string; created_at?: string; publie?: boolean; auteur?: string }; Update: Partial<Article>; Relationships: [] }
       produits: { Row: Produit; Insert: { id?: string; slug: string; nom: string; description?: string | null; description_longue?: string | null; niveau?: string; categorie?: string; image_principale?: string | null; images?: string[]; tuto_video_id?: string | null; actif?: boolean; ordre?: number; created_at?: string; updated_at?: string }; Update: Partial<Produit>; Relationships: [] }
-      variantes_produit: { Row: VarianteProduit; Insert: { id?: string; produit_id: string; nom?: string; prix_centimes?: number; stock?: number; sku?: string | null; actif?: boolean; ordre?: number; created_at?: string }; Update: Partial<VarianteProduit>; Relationships: [] }
+      variantes_produit: { Row: VarianteProduit; Insert: { id?: string; produit_id: string; nom?: string; prix_centimes?: number; stock?: number; sku?: string | null; image?: string | null; actif?: boolean; ordre?: number; created_at?: string }; Update: Partial<VarianteProduit>; Relationships: [] }
       commandes: { Row: Commande; Insert: { numero: string; email: string; nom: string; prenom: string; id?: string; telephone?: string | null; mondial_relay_id?: string | null; mondial_relay_nom?: string | null; mondial_relay_adresse?: string | null; mondial_relay_cp?: string | null; mondial_relay_ville?: string | null; montant_total_centimes?: number; montant_livraison_centimes?: number; stripe_session_id?: string | null; stripe_payment_intent_id?: string | null; statut_paiement?: Commande['statut_paiement']; statut?: Commande['statut']; message?: string | null; created_at?: string; updated_at?: string }; Update: Partial<Commande>; Relationships: [] }
       lignes_commande: { Row: LigneCommande; Insert: Omit<LigneCommande, 'id'|'created_at'> & { id?: string; created_at?: string }; Update: Partial<LigneCommande>; Relationships: [] }
     }
