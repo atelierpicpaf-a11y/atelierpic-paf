@@ -31,10 +31,16 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
     )
   }
 
+  const [saveError, setSaveError] = useState<string | null>(null)
+
   // Persiste immédiatement un champ image (sans attendre "Enregistrer")
   function persistImage(id: string, patch: Partial<Produit>) {
     startTransition(async () => {
-      await updateProduit(id, patch)
+      try {
+        await updateProduit(id, patch)
+      } catch (e) {
+        setSaveError(e instanceof Error ? e.message : 'Erreur enregistrement photo')
+      }
     })
   }
   function onUploadPrincipale(pid: string, url: string) {
@@ -65,28 +71,37 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
   function onUploadVariante(pid: string, vid: string, url: string) {
     patchVariante(pid, vid, { image: url })
     startTransition(async () => {
-      await updateVariante(vid, { image: url })
+      try {
+        await updateVariante(vid, { image: url })
+      } catch (e) {
+        setSaveError(e instanceof Error ? e.message : 'Erreur enregistrement photo coloris')
+      }
     })
   }
 
   function saveProduit(p: ProduitAvecVariantes) {
     startTransition(async () => {
-      await updateProduit(p.id, {
-        nom: p.nom,
-        description: p.description,
-        description_longue: p.description_longue,
-        niveau: p.niveau,
-        image_principale: p.image_principale,
-        tuto_video_id: p.tuto_video_id,
-        actif: p.actif,
-        ordre: p.ordre,
-      })
-      for (const v of p.variantes) {
-        await updateVariante(v.id, { nom: v.nom, prix_centimes: v.prix_centimes, stock: v.stock, actif: v.actif, ordre: v.ordre, image: v.image })
+      try {
+        setSaveError(null)
+        await updateProduit(p.id, {
+          nom: p.nom,
+          description: p.description,
+          description_longue: p.description_longue,
+          niveau: p.niveau,
+          image_principale: p.image_principale,
+          tuto_video_id: p.tuto_video_id,
+          actif: p.actif,
+          ordre: p.ordre,
+        })
+        for (const v of p.variantes) {
+          await updateVariante(v.id, { nom: v.nom, prix_centimes: v.prix_centimes, stock: v.stock, actif: v.actif, ordre: v.ordre, image: v.image })
+        }
+        setSavedId(p.id)
+        setTimeout(() => setSavedId(null), 2500)
+        router.refresh()
+      } catch (e) {
+        setSaveError(e instanceof Error ? e.message : 'Erreur enregistrement')
       }
-      setSavedId(p.id)
-      setTimeout(() => setSavedId(null), 2500)
-      router.refresh()
     })
   }
 
@@ -126,6 +141,13 @@ export function BoutiqueAdmin({ initial }: { initial: ProduitAvecVariantes[] }) 
           + Ajouter un coffret
         </button>
       </div>
+
+      {saveError && (
+        <div style={{ background: '#ffe5e5', border: '1.5px solid #b00', color: '#b00', borderRadius: 12, padding: '12px 16px', marginBottom: 18, fontSize: 14 }}>
+          ⚠️ {saveError}
+          <button onClick={() => setSaveError(null)} style={{ float: 'right', background: 'none', border: 'none', color: '#b00', cursor: 'pointer', fontSize: 16 }}>✕</button>
+        </div>
+      )}
 
       {produits.length === 0 && (
         <div style={{ textAlign: 'center', padding: '60px 0', opacity: 0.6 }}>
