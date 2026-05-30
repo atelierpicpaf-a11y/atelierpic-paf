@@ -7,6 +7,7 @@ import { HomeEnfantsGrid } from '@/components/sections/home-enfants-grid'
 import { HomeNewsletter } from '@/components/sections/home-newsletter'
 import { KlarnaBadge } from '@/components/sections/klarna-badge'
 import { AvisForm } from '@/components/sections/avis-form'
+import { CrossPromo } from '@/components/sections/cross-promo'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
@@ -238,6 +239,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* DÉCOUVRIR AUSSI — tutos vidéos / photos Instagram / boutique */}
+      <CrossPromo bg="var(--creme)" />
 
       {/* TEMOIGNAGES (avis publiés dynamiques + formulaire) */}
       <section style={{ padding:'100px 0', background:'var(--creme-pale)' }}>
