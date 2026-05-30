@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { JsonLd } from '@/components/seo/json-ld'
 import { serviceJsonLd, breadcrumbJsonLd, faqPageJsonLd } from '@/lib/seo/json-ld'
 import { SectionTitle } from '@/components/sections/section-title'
+import { CrossPromo } from '@/components/sections/cross-promo'
 import { FaqItem } from '@/components/sections/faq-item'
 import { KlarnaBadge } from '@/components/sections/klarna-badge'
 import { RetraitesDatesGrid } from '@/components/sections/retraites-dates-grid'
@@ -282,6 +283,7 @@ export default async function RetraiteCreativePoitiersPage() {
         </div>
       </section>
 
+      <CrossPromo />
       {/* CTA FINAL */}
       <section style={{ padding:'80px 0', background:'var(--framboise)', color:'var(--creme)' }}>
         <div className="container" style={{ maxWidth:680, textAlign:'center' }}>

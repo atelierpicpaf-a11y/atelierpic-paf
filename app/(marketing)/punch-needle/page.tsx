@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SectionTitle } from '@/components/sections/section-title'
+import { CrossPromo } from '@/components/sections/cross-promo'
 import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import {
@@ -525,6 +526,7 @@ export default function PunchNeedlePage() {
         </div>
       </section>
 
+      <CrossPromo />
       {/* CTA FINAL */}
       <section
         style={{

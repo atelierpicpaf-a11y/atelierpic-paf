@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SectionTitle } from '@/components/sections/section-title'
+import { CrossPromo } from '@/components/sections/cross-promo'
 import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd, faqPageJsonLd, villeServiceJsonLd } from '@/lib/seo/json-ld'
@@ -613,6 +614,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
         </div>
       </section>
 
+      <CrossPromo />
       {/* ───────── CTA FINAL ───────── */}
       <section style={{ padding: '80px 0', background: 'var(--framboise)', color: 'var(--creme)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: 720 }}>

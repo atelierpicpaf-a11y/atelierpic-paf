@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { SectionTitle } from '@/components/sections/section-title'
+import { CrossPromo } from '@/components/sections/cross-promo'
 import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import { serviceJsonLd, breadcrumbJsonLd, faqPageJsonLd } from '@/lib/seo/json-ld'
@@ -189,6 +190,7 @@ export default function EntreFillesPage() {
         </div>
       </section>
 
+      <CrossPromo />
       <section style={{ padding: '90px 0', background: 'var(--framboise)', color: 'var(--creme)' }}>
         <div className="container" style={{ maxWidth: 720, textAlign: 'center' }}>
           <AnimateOnScroll>

@@ -261,6 +261,7 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
       <div style={{ display: 'flex', gap: 12, padding: '14px 24px 0', flexWrap: 'wrap' }}>
         <a href="/admin/boutique" style={{ padding: '10px 20px', borderRadius: 999, background: 'var(--framboise)', color: 'var(--creme)', fontFamily: 'var(--font-fredoka)', fontSize: 14, textDecoration: 'none' }}>🎁 Gérer la boutique</a>
         <a href="/admin/commandes" style={{ padding: '10px 20px', borderRadius: 999, background: '#fff', color: 'var(--framboise)', border: '1.5px solid var(--framboise)', fontFamily: 'var(--font-fredoka)', fontSize: 14, textDecoration: 'none' }}>🛍️ Voir les commandes</a>
+        <a href="/admin/avis" style={{ padding: '10px 20px', borderRadius: 999, background: '#fff', color: 'var(--framboise)', border: '1.5px solid var(--framboise)', fontFamily: 'var(--font-fredoka)', fontSize: 14, textDecoration: 'none' }}>⭐ Modérer les avis</a>
       </div>
 
       {/* ── Tab bar ── */}

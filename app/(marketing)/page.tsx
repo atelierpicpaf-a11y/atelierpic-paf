@@ -6,6 +6,7 @@ import { SectionTitle } from '@/components/sections/section-title'
 import { HomeEnfantsGrid } from '@/components/sections/home-enfants-grid'
 import { HomeNewsletter } from '@/components/sections/home-newsletter'
 import { KlarnaBadge } from '@/components/sections/klarna-badge'
+import { AvisForm } from '@/components/sections/avis-form'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
@@ -26,6 +27,24 @@ export default async function HomePage() {
     .limit(3)
 
   const enfantsSource = ateliers ?? []
+
+  // Avis publiés (modérés). Si aucun, on garde 3 témoignages de référence.
+  const { data: avisPublies } = await supabase
+    .from('temoignages')
+    .select('*')
+    .eq('publie', true)
+    .order('created_at', { ascending: false })
+    .limit(6)
+
+  const COULEURS = ['var(--menthe)', 'var(--rose)', 'var(--menthe)', 'var(--rose)']
+  const temoignagesDefaut = [
+    { who: 'Camille, maman de Jeanne (8 ans)', where: 'Poitiers', text: "Jeanne ressort rayonnante de chaque atelier. Elle a cousu un doudou pour sa petite sœur — immense fierté !", color: 'var(--menthe)', note: 5 },
+    { who: 'Hélène', where: 'Journée créative, Fontaine-le-Comte', text: "Une bulle de douceur. J'ai cousu une blouse dont je rêvais depuis deux ans.", color: 'var(--rose)', note: 5 },
+    { who: 'Médiathèque de Vouillé', where: 'Partenariat 2025', text: 'Ludivine a captivé nos petits lecteurs. Professionnelle, adaptable, on recommande chaudement.', color: 'var(--menthe)', note: 5 },
+  ]
+  const temoignages = (avisPublies && avisPublies.length > 0)
+    ? avisPublies.map((a, i) => ({ who: a.nom, where: [a.type_atelier, a.ville].filter(Boolean).join(' · '), text: a.texte, color: COULEURS[i % COULEURS.length], note: a.note ?? 5 }))
+    : temoignagesDefaut
 
   return (
     <div>
@@ -220,26 +239,46 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* TEMOIGNAGES */}
+      {/* TEMOIGNAGES (avis publiés dynamiques + formulaire) */}
       <section style={{ padding:'100px 0', background:'var(--creme-pale)' }}>
         <div className="container">
           <SectionTitle kicker="Elles en parlent mieux que moi" align="center">Paroles de magiciennes</SectionTitle>
           <div style={{ marginTop:60, display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))', gap:34 }}>
-            {[
-              {who:"Camille, maman de Jeanne (8 ans)",where:"Poitiers",text:"Jeanne ressort rayonnante de chaque atelier. Elle a cousu un doudou pour sa petite sœur — immense fierté !",color:'var(--menthe)'},
-              {who:"Hélène",where:"Journée créative, Fontaine-le-Comte",text:"Une bulle de douceur. J'ai cousu une blouse dont je rêvais depuis deux ans.",color:'var(--rose)'},
-              {who:"Médiathèque de Vouillé",where:"Partenariat 2025",text:"Ludivine a captivé nos petits lecteurs. Professionnelle, adaptable, on recommande chaudement.",color:'var(--menthe)'},
-            ].map((q,i) => (
+            {temoignages.map((q,i) => (
               <div key={i} style={{ display:'flex', flexDirection:'column', gap:22 }}>
                 <div className="bubble" style={{ background: q.color }}>
+                  {q.note ? <div style={{ fontSize:16, color:'#FFC83D', marginBottom:6, letterSpacing:2 }}>{'★'.repeat(q.note)}<span style={{ color:'rgba(0,0,0,.12)' }}>{'★'.repeat(5 - q.note)}</span></div> : null}
                   <p className="h-caveat" style={{ margin:0, fontSize:22, color:'var(--ink)', lineHeight:1.4 }}>« {q.text} »</p>
                 </div>
                 <div style={{ display:'flex', gap:14, alignItems:'center', paddingLeft:16 }}>
                   <div style={{ width:48, height:48, borderRadius:999, background:'var(--framboise)', color:'var(--creme)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-fredoka)', fontSize:20, flexShrink:0 }}>{q.who[0]}</div>
-                  <div><div className="h-fredoka" style={{ fontSize:15, color:'var(--framboise)' }}>{q.who}</div><div style={{ fontSize:13, opacity:.7 }}>{q.where}</div></div>
+                  <div><div className="h-fredoka" style={{ fontSize:15, color:'var(--framboise)' }}>{q.who}</div>{q.where ? <div style={{ fontSize:13, opacity:.7 }}>{q.where}</div> : null}</div>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Laisser un avis : Google (priorité SEO) OU formulaire sur le site */}
+          <div style={{ marginTop:70, textAlign:'center' }}>
+            <h3 className="h-fredoka" style={{ fontSize:'clamp(24px,3vw,32px)', color:'var(--framboise)', marginBottom:12 }}>Tu as participé à un atelier ?</h3>
+            <p style={{ fontSize:16, opacity:.82, maxWidth:560, margin:'0 auto 24px', lineHeight:1.6 }}>
+              Ton avis aide d&apos;autres familles et passionnées à se lancer. Laisse-le sur Google (le plus utile pour me faire connaître) ou directement ici 👇
+            </p>
+            <a
+              href="https://g.page/r/CduaCQBuWIIsEBI/review"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-pill"
+              style={{ marginBottom:36, display:'inline-block' }}
+            >
+              ⭐ Laisser un avis Google
+            </a>
+            <div style={{ display:'flex', alignItems:'center', gap:14, maxWidth:420, margin:'0 auto 36px' }}>
+              <span style={{ flex:1, height:1, background:'rgba(200,54,92,.2)' }} />
+              <span style={{ fontSize:13, opacity:.6 }}>ou ici sans compte Google</span>
+              <span style={{ flex:1, height:1, background:'rgba(200,54,92,.2)' }} />
+            </div>
+            <AvisForm />
           </div>
         </div>
       </section>

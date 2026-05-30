@@ -261,6 +261,23 @@ export async function deleteVariante(id: string) {
   revalidatePath('/boutique')
 }
 
+// ── AVIS / TÉMOIGNAGES ─────────────────────────────────────
+export async function setTemoignagePublie(id: string, publie: boolean) {
+  await requireAdmin()
+  const db = createAdminClient()
+  const { error } = await db.from('temoignages').update({ publie }).eq('id', id)
+  if (error) throw new Error(error.message)
+  revalidatePath('/')
+}
+
+export async function deleteTemoignage(id: string) {
+  await requireAdmin()
+  const db = createAdminClient()
+  const { error } = await db.from('temoignages').delete().eq('id', id)
+  if (error) throw new Error(error.message)
+  revalidatePath('/')
+}
+
 // ── COMMANDES ──────────────────────────────────────────────
 export async function updateCommandeStatut(id: string, statut: Commande['statut']) {
   await requireAdmin()
