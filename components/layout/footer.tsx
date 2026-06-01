@@ -43,6 +43,7 @@ export function Footer() {
             <FooterLink href="/mirebeau">Mirebeau</FooterLink>
             <FooterLink href="/lusignan">Lusignan</FooterLink>
             <FooterLink href="/chauvigny">Chauvigny</FooterLink>
+            <FooterLink href="/ou-nous-trouver">→ Toutes les communes (86 &amp; 79)</FooterLink>
           </div>
           <div>
             <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Deux-Sèvres (79)</h5>
@@ -50,6 +51,7 @@ export function Footer() {
             <FooterLink href="/parthenay">Parthenay</FooterLink>
             <FooterLink href="/bressuire">Bressuire</FooterLink>
             <FooterLink href="/thouars">Thouars</FooterLink>
+            <FooterLink href="/ou-nous-trouver">→ Voir toutes les villes</FooterLink>
           </div>
           <div>
             <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Contact</h5>

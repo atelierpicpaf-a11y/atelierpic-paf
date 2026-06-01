@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/anniversaire-couture-enfant`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/punch-needle`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/interventions-structures`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/ou-nous-trouver`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${base}/tuto-video`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/journee-creative-mere-fille`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/se-reconnecter-avec-ma-fille`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
