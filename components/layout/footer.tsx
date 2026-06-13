@@ -25,6 +25,7 @@ export function Footer() {
             <FooterLink href="/anniversaire-couture-enfant">Anniversaire couture</FooterLink>
             <FooterLink href="/boutique">Boutique · Coffrets DIY</FooterLink>
             <FooterLink href="/tuto-video">Tutos vidéos</FooterLink>
+            <FooterLink href="/blog">Blog</FooterLink>
           </div>
           <div>
             <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Pages Poitiers</h5>

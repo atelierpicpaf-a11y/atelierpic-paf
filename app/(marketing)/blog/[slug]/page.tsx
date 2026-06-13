@@ -1,0 +1,126 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { CrossPromo } from '@/components/sections/cross-promo'
+import { FaqItem } from '@/components/sections/faq-item'
+import { JsonLd } from '@/components/seo/json-ld'
+import { breadcrumbJsonLd, faqPageJsonLd } from '@/lib/seo/json-ld'
+import { ARTICLES, getArticleBySlug } from '@/content/articles'
+
+const PUBLISHED = '2026-06-13'
+
+export function generateStaticParams() {
+  return ARTICLES.map((a) => ({ slug: a.slug }))
+}
+
+type Params = { slug: string }
+
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { slug } = await params
+  const a = getArticleBySlug(slug)
+  if (!a) return { title: 'Article introuvable' }
+  const url = `https://atelierpicpaf.fr/blog/${a.slug}`
+  return {
+    title: a.title,
+    description: a.metaDescription,
+    alternates: { canonical: url },
+    openGraph: { title: a.title, description: a.metaDescription, url, siteName: "L'atelier Pic & Paf", locale: 'fr_FR', type: 'article' },
+    twitter: { card: 'summary_large_image', title: a.title, description: a.metaDescription },
+  }
+}
+
+export default async function ArticlePage({ params }: { params: Promise<Params> }) {
+  const { slug } = await params
+  const a = getArticleBySlug(slug)
+  if (!a) notFound()
+  const url = `https://atelierpicpaf.fr/blog/${a.slug}`
+  const autres = ARTICLES.filter((x) => x.slug !== a.slug).slice(0, 3)
+
+  return (
+    <div className="route-enter">
+      <JsonLd
+        data={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: a.h1,
+            description: a.metaDescription,
+            author: { '@id': 'https://atelierpicpaf.fr/#founder' },
+            publisher: { '@id': 'https://atelierpicpaf.fr/#organization' },
+            datePublished: PUBLISHED,
+            dateModified: PUBLISHED,
+            inLanguage: 'fr-FR',
+            mainEntityOfPage: url,
+          },
+          faqPageJsonLd(a.faq),
+          breadcrumbJsonLd([
+            { name: 'Accueil', url: 'https://atelierpicpaf.fr/' },
+            { name: 'Blog', url: 'https://atelierpicpaf.fr/blog' },
+            { name: a.h1, url },
+          ]),
+        ]}
+      />
+
+      {/* HERO */}
+      <section style={{ padding: '80px 0 40px', background: 'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth: 760, textAlign: 'center' }}>
+          <Link href="/blog" className="h-caveat" style={{ fontSize: 22, color: 'var(--framboise)', textDecoration: 'none' }}>~ Le blog Pic &amp; Paf ~</Link>
+          <h1 className="sticker-title" style={{ fontSize: 'clamp(34px,4.6vw,56px)', margin: '14px 0 22px' }}>{a.emoji} {a.h1}</h1>
+          {/* Chapô — réponse directe citable (featured snippet / IA) */}
+          <p style={{ fontSize: 19, lineHeight: 1.7, color: 'var(--ink)', background: '#fff', borderRadius: 20, padding: '22px 26px', border: '2px solid rgba(200,54,92,.18)', boxShadow: 'var(--shadow-card)', textAlign: 'left' }}>
+            {a.chapo}
+          </p>
+        </div>
+      </section>
+
+      {/* CORPS DE L'ARTICLE */}
+      <section style={{ padding: '50px 0 60px', background: 'var(--creme)' }}>
+        <article className="container" style={{ maxWidth: 720 }}>
+          {a.sections.map((s, i) => (
+            <div key={i} style={{ marginBottom: 38 }}>
+              <h2 className="h-fredoka" style={{ fontSize: 'clamp(24px,3vw,30px)', color: 'var(--framboise)', margin: '0 0 16px', lineHeight: 1.2 }}>{s.h2}</h2>
+              {s.paragraphs.map((p, j) => (
+                <p key={j} style={{ fontSize: 17, lineHeight: 1.85, margin: '0 0 16px' }}>{p}</p>
+              ))}
+            </div>
+          ))}
+
+          {/* CTA inline */}
+          <div style={{ background: 'var(--creme-pale)', borderRadius: 24, padding: '30px 28px', textAlign: 'center', border: '2px dashed rgba(200,54,92,.25)', margin: '12px 0 8px' }}>
+            <p className="h-fredoka" style={{ fontSize: 20, color: 'var(--framboise)', margin: '0 0 16px' }}>Envie de passer à la pratique ?</p>
+            <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href={a.ctaHref} className="cta-pill">{a.ctaText}</Link>
+              <a href="tel:+33621073536" className="cta-ghost">📞 06&nbsp;21&nbsp;07&nbsp;35&nbsp;36</a>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      {/* FAQ */}
+      <section style={{ padding: '60px 0', background: 'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth: 760 }}>
+          <h2 className="h-fredoka" style={{ fontSize: 'clamp(26px,3.2vw,34px)', color: 'var(--framboise)', textAlign: 'center', margin: '0 0 30px' }}>Questions fréquentes</h2>
+          {a.faq.map((f, i) => <FaqItem key={i} q={f.q} r={f.r} />)}
+        </div>
+      </section>
+
+      {/* AUTRES ARTICLES */}
+      <section style={{ padding: '60px 0', background: 'var(--creme)' }}>
+        <div className="container" style={{ maxWidth: 1000 }}>
+          <h2 className="h-fredoka" style={{ fontSize: 'clamp(24px,3vw,30px)', color: 'var(--framboise)', textAlign: 'center', margin: '0 0 34px' }}>À lire aussi</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20 }}>
+            {autres.map((x) => (
+              <Link key={x.slug} href={`/blog/${x.slug}`} className="card" style={{ textDecoration: 'none', color: 'inherit', padding: '24px 22px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div style={{ fontSize: 34 }}>{x.emoji}</div>
+                <h3 className="h-fredoka" style={{ fontSize: 18, color: 'var(--framboise)', margin: 0, lineHeight: 1.25 }}>{x.h1}</h3>
+                <span className="h-fredoka" style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--framboise)', marginTop: 4 }}>Lire l&apos;article →</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CrossPromo bg="var(--creme-pale)" />
+    </div>
+  )
+}

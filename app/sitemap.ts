@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { VILLES } from '@/content/villes'
 import { CANTONS } from '@/content/cantons'
+import { ARTICLES } from '@/content/articles'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -20,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/interventions-structures`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/ou-nous-trouver`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${base}/tuto-video`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${base}/journee-creative-mere-fille`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/se-reconnecter-avec-ma-fille`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/journee-creative-entre-copines`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
@@ -62,5 +64,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...villeRoutes, ...cantonRoutes, ...produitRoutes]
+  const blogRoutes: MetadataRoute.Sitemap = ARTICLES.map((a) => ({
+    url: `${base}/blog/${a.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...villeRoutes, ...cantonRoutes, ...blogRoutes, ...produitRoutes]
 }
