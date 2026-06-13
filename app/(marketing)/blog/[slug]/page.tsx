@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { CrossPromo } from '@/components/sections/cross-promo'
@@ -9,6 +10,23 @@ import { ARTICLES, getArticleBySlug } from '@/content/articles'
 import { DoodleScissors, DoodleSpool, DoodleFlower, DoodleNeedle, StitchDivider } from '@/components/brand/doodles'
 
 const PUBLISHED = '2026-06-13'
+
+// Vraies photos du projet, par article (authentique > illustration générée)
+const ARTICLE_IMAGES: Record<string, { src: string; alt: string; caption?: string }[]> = {
+  'punch-needle-c-est-quoi': [
+    { src: '/images/punch-needle/arc-en-ciel.jpg', alt: 'Arc-en-ciel réalisé en punch needle lors d’un atelier de L’atelier Pic & Paf', caption: 'Un arc-en-ciel tout en laine, en punch needle ✨' },
+    { src: '/images/punch-needle/renard.jpg', alt: 'Petit renard en relief réalisé en punch needle', caption: 'Un petit renard tout doux 🦊' },
+  ],
+  'a-quel-age-enfant-couture': [
+    { src: '/images/ateliers/cours-couture-enfants.jpg', alt: 'Enfants en cours de couture avec Ludivine, L’atelier Pic & Paf', caption: 'En atelier couture enfants, dès 6 ans ❤️' },
+  ],
+  'activites-enfants-vacances-poitiers': [
+    { src: '/images/ateliers/cours-couture-enfants.jpg', alt: 'Stage créatif de couture pour enfants pendant les vacances scolaires', caption: 'Un stage créatif qui change des écrans' },
+  ],
+  'debuter-couture-adulte': [
+    { src: '/images/brand/ludivine-portrait.jpg', alt: 'Ludivine, animatrice des journées créatives couture en Vienne et Deux-Sèvres', caption: 'Ludivine t’accompagne pas à pas, sans jugement' },
+  ],
+}
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }))
@@ -36,6 +54,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
   if (!a) notFound()
   const url = `https://atelierpicpaf.fr/blog/${a.slug}`
   const autres = ARTICLES.filter((x) => x.slug !== a.slug).slice(0, 3)
+  const images = ARTICLE_IMAGES[a.slug] || []
 
   return (
     <div className="route-enter">
@@ -83,6 +102,14 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
       {/* CORPS DE L'ARTICLE */}
       <section style={{ padding: '50px 0 60px', background: 'var(--creme)' }}>
         <article className="container" style={{ maxWidth: 720 }}>
+          {images[0] && (
+            <figure style={{ margin: '0 0 36px' }}>
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 10', borderRadius: 24, overflow: 'hidden', boxShadow: 'var(--shadow-card)' }}>
+                <Image src={images[0].src} alt={images[0].alt} fill sizes="(max-width: 768px) 92vw, 720px" style={{ objectFit: 'cover' }} priority />
+              </div>
+              {images[0].caption && <figcaption className="h-caveat" style={{ textAlign: 'center', fontSize: 20, color: 'var(--framboise)', marginTop: 10 }}>{images[0].caption}</figcaption>}
+            </figure>
+          )}
           {a.sections.map((s, i) => (
             <div key={i}>
               <div style={{ marginBottom: 28 }}>
@@ -91,6 +118,14 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                   <p key={j} style={{ fontSize: 17, lineHeight: 1.85, margin: '0 0 16px' }}>{p}</p>
                 ))}
               </div>
+              {i === 1 && images[1] && (
+                <figure style={{ margin: '6px 0 30px' }}>
+                  <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 10', borderRadius: 24, overflow: 'hidden', boxShadow: 'var(--shadow-card)' }}>
+                    <Image src={images[1].src} alt={images[1].alt} fill sizes="(max-width: 768px) 92vw, 720px" style={{ objectFit: 'cover' }} />
+                  </div>
+                  {images[1].caption && <figcaption className="h-caveat" style={{ textAlign: 'center', fontSize: 20, color: 'var(--framboise)', marginTop: 10 }}>{images[1].caption}</figcaption>}
+                </figure>
+              )}
               {i < a.sections.length - 1 && (
                 <StitchDivider motif={(['spool', 'flower', 'heart', 'scissors'] as const)[i % 4]} style={{ margin: '10px 0 30px' }} />
               )}

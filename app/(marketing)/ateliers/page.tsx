@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CrossPromo } from '@/components/sections/cross-promo'
+import { DoodleSpool, DoodleScissors, DoodleFlower, DoodleNeedle } from '@/components/brand/doodles'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd } from '@/lib/seo/json-ld'
 
@@ -88,8 +89,14 @@ export default function AteliersPage() {
       />
 
       {/* HERO — orientation immédiate */}
-      <section style={{ padding: '88px 0 50px', background: 'var(--creme-pale)', textAlign: 'center' }}>
-        <div className="container" style={{ maxWidth: 760 }}>
+      <section style={{ position: 'relative', overflow: 'hidden', padding: '88px 0 50px', background: 'var(--creme-pale)', textAlign: 'center' }}>
+        <div className="hidden-mobile" aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          <DoodleScissors size={58} className="floaty" style={{ position: 'absolute', top: 60, left: '8%', transform: 'rotate(-12deg)', opacity: 0.85 }} />
+          <DoodleSpool size={66} className="floaty" style={{ position: 'absolute', top: 84, right: '9%', transform: 'rotate(10deg)', opacity: 0.85 }} />
+          <DoodleFlower size={42} style={{ position: 'absolute', bottom: 22, left: '14%', opacity: 0.8 }} />
+          <DoodleNeedle size={50} style={{ position: 'absolute', bottom: 30, right: '14%', transform: 'rotate(8deg)', opacity: 0.8 }} />
+        </div>
+        <div className="container" style={{ position: 'relative', maxWidth: 760 }}>
           <span className="h-caveat" style={{ fontSize: 28, color: 'var(--framboise)' }}>~ Toutes mes formules ~</span>
           <h1 className="sticker-title" style={{ fontSize: 'clamp(42px,6vw,72px)', margin: '12px 0 16px' }}>
             Quel atelier pour toi ?

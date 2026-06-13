@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SectionTitle } from '@/components/sections/section-title'
 import { CrossPromo } from '@/components/sections/cross-promo'
+import { DoodleSpool, DoodleHeart, DoodleFlower } from '@/components/brand/doodles'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd, personJsonLd } from '@/lib/seo/json-ld'
 
@@ -54,8 +55,13 @@ export default function AProposPage() {
       />
 
       {/* HERO */}
-      <section style={{ padding: '90px 0 60px', background: 'var(--creme-pale)' }}>
-        <div className="container" style={{ maxWidth: 1040 }}>
+      <section style={{ position: 'relative', overflow: 'hidden', padding: '90px 0 60px', background: 'var(--creme-pale)' }}>
+        <div className="hidden-mobile" aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          <DoodleSpool size={58} className="floaty" style={{ position: 'absolute', top: 50, right: '6%', transform: 'rotate(10deg)', opacity: 0.8 }} />
+          <DoodleFlower size={40} style={{ position: 'absolute', bottom: 40, right: '12%', opacity: 0.75 }} />
+          <DoodleHeart size={28} style={{ position: 'absolute', top: 120, right: '20%', opacity: 0.7 }} />
+        </div>
+        <div className="container" style={{ position: 'relative', maxWidth: 1040 }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 48, alignItems: 'center' }}>
             <div style={{ position: 'relative', aspectRatio: '1 / 1', borderRadius: 32, overflow: 'hidden', boxShadow: 'var(--shadow-framboise)', maxWidth: 440, margin: '0 auto', width: '100%' }}>
               <Image

@@ -8,6 +8,7 @@ import { HomeNewsletter } from '@/components/sections/home-newsletter'
 import { KlarnaBadge } from '@/components/sections/klarna-badge'
 import { AvisForm } from '@/components/sections/avis-form'
 import { CrossPromo } from '@/components/sections/cross-promo'
+import { DoodleHeart, DoodleFlower } from '@/components/brand/doodles'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
@@ -53,6 +54,8 @@ export default async function HomePage() {
       <section style={{ position:'relative', overflow:'hidden' }}>
         <div className="stripes-vertical" style={{ position:'absolute', inset:0, opacity:1 }} />
         <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at center, var(--creme) 0%, var(--creme) 32%, rgba(251,244,228,0) 75%)' }} />
+        <DoodleHeart size={28} className="hidden-mobile" aria-hidden style={{ position:'absolute', left:'8%', bottom:'9%', opacity:.7 }} />
+        <DoodleFlower size={42} className="hidden-mobile" aria-hidden style={{ position:'absolute', right:'8%', bottom:'11%', opacity:.7 }} />
         <div className="container" style={{ position:'relative', padding:'80px 28px 100px', textAlign:'center' }}>
           <div style={{ position:'absolute', left:40, top:90 }} className="hidden-mobile"><Bobines size={140} /></div>
           <div style={{ position:'absolute', right:30, top:120 }} className="hidden-mobile"><Fee size={200} /></div>
