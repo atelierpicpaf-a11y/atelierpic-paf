@@ -21,19 +21,21 @@ export const metadata: Metadata = {
   },
 }
 
-type Carte = { emoji: string; titre: string; desc: string; prix: string; href: string; cta: string }
+type Carte = { emoji: string; pour: string; titre: string; desc: string; prix: string; href: string; cta: string }
 
 const ENFANTS: Carte[] = [
-  { emoji: '🧵', titre: 'Ateliers couture enfants', desc: 'Dès 6 ans, en cours réguliers ou en stage pendant les vacances.', prix: 'Sur demande', href: '/ateliers-enfants', cta: 'Découvrir' },
-  { emoji: '🎂', titre: 'Anniversaire couture', desc: 'Pour les 7-12 ans : chacun repart avec sa création. À domicile ou en salle.', prix: 'Sur devis', href: '/anniversaire-couture-enfant', cta: 'Découvrir' },
+  { emoji: '🧵', pour: 'Dès 6 ans', titre: 'Ateliers couture enfants', desc: 'Cours réguliers ou stages pendant les vacances. Machine à coudre, projets concrets, fierté garantie.', prix: 'Sur demande', href: '/ateliers-enfants', cta: 'Découvrir' },
+  { emoji: '🎂', pour: 'Fête · 7-12 ans', titre: 'Anniversaire couture', desc: 'Une fête qui change : chacun repart avec sa création. À domicile ou en salle.', prix: 'Sur devis', href: '/anniversaire-couture-enfant', cta: 'Découvrir' },
 ]
 const ADULTES: Carte[] = [
-  { emoji: '✂️', titre: 'Journées créatives', desc: 'Une journée couture + punch needle entre copines, tout fourni, à Fontaine-le-Comte.', prix: '90€', href: '/ateliers-adultes/journees-creatives', cta: 'Voir les dates' },
-  { emoji: '🌿', titre: 'Retraites créatives', desc: 'Un week-end en gîte : couture, yoga, repas maison. Entre femmes.', prix: '390€', href: '/ateliers-adultes/retraites-creatives', cta: 'Voir les retraites' },
-  { emoji: '🪡', titre: 'Atelier punch needle', desc: 'La broderie en relief tendance : aiguille magique, laine colorée. Dès 6 ans et adultes.', prix: 'Selon format', href: '/punch-needle', cta: 'Découvrir' },
+  { emoji: '✂️', pour: 'Adultes · ou enfant accompagné', titre: 'Journées créatives', desc: 'Une journée couture + punch needle, tout fourni, à Fontaine-le-Comte. Les enfants sont les bienvenus accompagnés d’un adulte.', prix: '90€', href: '/ateliers-adultes/journees-creatives', cta: 'Voir les dates' },
+  { emoji: '🌿', pour: 'Entre femmes · week-end', titre: 'Retraites créatives', desc: 'Un week-end en gîte : couture, yoga, repas maison. Pour souffler et créer.', prix: '390€', href: '/ateliers-adultes/retraites-creatives', cta: 'Voir les retraites' },
+]
+const TOUS: Carte[] = [
+  { emoji: '🪡', pour: 'Enfants & adultes', titre: 'Atelier punch needle', desc: 'La broderie en relief tendance : aiguille magique, laine colorée. Aussi simple pour les enfants que bluffant pour les adultes.', prix: 'Selon le format', href: '/punch-needle', cta: 'Découvrir' },
 ]
 const STRUCTURES: Carte[] = [
-  { emoji: '🏫', titre: 'Interventions en structures', desc: 'Écoles, ALSH, médiathèques, associations, comités d’entreprise. Animation clé en main.', prix: 'Devis gratuit', href: '/interventions-structures', cta: 'Découvrir' },
+  { emoji: '🏫', pour: 'Écoles · ALSH · CE…', titre: 'Interventions en structures', desc: 'Écoles, ALSH, médiathèques, associations, comités d’entreprise. Animation clé en main.', prix: 'Devis gratuit', href: '/interventions-structures', cta: 'Découvrir' },
 ]
 
 function Cartes({ items }: { items: Carte[] }) {
@@ -41,7 +43,10 @@ function Cartes({ items }: { items: Carte[] }) {
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 22, maxWidth: 1000, margin: '0 auto' }}>
       {items.map((c) => (
         <Link key={c.href} href={c.href} className="card" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', height: '100%', background: '#fff', padding: '26px 24px', gap: 10 }}>
-          <div style={{ fontSize: 40, lineHeight: 1 }}>{c.emoji}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: 36, lineHeight: 1 }}>{c.emoji}</span>
+            <span className="h-fredoka" style={{ fontSize: 12, fontWeight: 700, color: 'var(--framboise)', background: 'rgba(200,54,92,.1)', padding: '4px 12px', borderRadius: 999 }}>{c.pour}</span>
+          </div>
           <h3 className="h-fredoka" style={{ fontSize: 21, color: 'var(--framboise)', margin: 0 }}>{c.titre}</h3>
           <p style={{ fontSize: 14.5, lineHeight: 1.55, opacity: 0.82, margin: 0, flex: 1 }}>{c.desc}</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 6, paddingTop: 14, borderTop: '1.5px dashed rgba(200,54,92,.18)' }}>
@@ -75,7 +80,7 @@ export default function AteliersPage() {
             '@context': 'https://schema.org',
             '@type': 'ItemList',
             name: 'Ateliers couture & créatifs — L’atelier Pic & Paf',
-            itemListElement: [...ENFANTS, ...ADULTES, ...STRUCTURES].map((o, i) => ({
+            itemListElement: [...ENFANTS, ...ADULTES, ...TOUS, ...STRUCTURES].map((o, i) => ({
               '@type': 'ListItem', position: i + 1, name: o.titre, url: `https://atelierpicpaf.fr${o.href}`,
             })),
           },
@@ -117,8 +122,19 @@ export default function AteliersPage() {
         </div>
       </section>
 
-      {/* STRUCTURES */}
+      {/* TOUS — enfants & adultes */}
       <section style={{ padding: '66px 0', background: 'var(--creme)' }}>
+        <div className="container">
+          <GroupTitle emoji="🪡" id="tous">Couture &amp; punch needle, pour tous les âges</GroupTitle>
+          <p style={{ textAlign: 'center', maxWidth: 620, margin: '0 auto 30px', fontSize: 15.5, lineHeight: 1.6, opacity: 0.8 }}>
+            La couture comme le punch needle se partagent à tout âge : les enfants dès 6 ans comme les adultes débutants y trouvent leur compte.
+          </p>
+          <Cartes items={TOUS} />
+        </div>
+      </section>
+
+      {/* STRUCTURES */}
+      <section style={{ padding: '66px 0', background: 'var(--creme-pale)' }}>
         <div className="container">
           <GroupTitle emoji="🏫" id="structures">Pour un groupe ou une structure</GroupTitle>
           <Cartes items={STRUCTURES} />
