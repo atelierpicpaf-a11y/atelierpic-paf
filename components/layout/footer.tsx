@@ -56,6 +56,7 @@ export function Footer() {
           </div>
           <div>
             <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Contact</h5>
+            <FooterLink href="/a-propos">Qui est Ludivine ?</FooterLink>
             <FooterLink>atelierpicpaf@gmail.com</FooterLink>
             <FooterLink>06 21 07 35 36</FooterLink>
             <FooterLink>@atelier_picpaf</FooterLink>

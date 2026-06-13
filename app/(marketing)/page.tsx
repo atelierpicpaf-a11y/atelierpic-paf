@@ -64,7 +64,7 @@ export default async function HomePage() {
             Ateliers créatifs pour enfants dès 6 ans et adultes partout en Vienne et en Deux-Sèvres, journées créatives et retraites pour adultes à Fontaine-le-Comte.
           </p>
           <div style={{ display:'flex', gap:18, justifyContent:'center', flexWrap:'wrap' }}>
-            <a href="/ateliers-enfants" className="cta-pill">Voir les ateliers</a>
+            <a href="/ateliers" className="cta-pill">Voir les ateliers</a>
             <a href="/ateliers-adultes/journees-creatives" className="cta-ghost">Réserver une session</a>
           </div>
           <div style={{ marginTop:56, display:'flex', gap:40, justifyContent:'center', flexWrap:'wrap' }}>
@@ -157,6 +157,27 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* MOI C'EST LUDIVINE */}
+      <section style={{ padding:'90px 0', background:'var(--creme)' }}>
+        <div className="container" style={{ maxWidth:1040 }}>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:48, alignItems:'center' }}>
+            <div style={{ position:'relative', aspectRatio:'1 / 1', borderRadius:32, overflow:'hidden', boxShadow:'var(--shadow-framboise)', maxWidth:440, margin:'0 auto', width:'100%' }}>
+              <Image src="/images/brand/ludivine-portrait.jpg" alt="Ludivine, fondatrice de L'atelier Pic & Paf en Vienne et Deux-Sèvres" fill sizes="(max-width: 768px) 90vw, 440px" style={{ objectFit:'cover' }} />
+            </div>
+            <div>
+              <span className="h-caveat" style={{ fontSize:26, color:'var(--framboise)' }}>~ Qui suis-je ~</span>
+              <h2 className="h-fredoka" style={{ fontSize:'clamp(30px,3.8vw,44px)', color:'var(--framboise)', margin:'10px 0 20px', lineHeight:1.1 }}>Moi, c&apos;est Ludivine</h2>
+              <p style={{ fontSize:17, opacity:.88, lineHeight:1.75, marginBottom:16 }}>Couturière passionnée et diplômée (BPJEPS), j&apos;ai créé L&apos;atelier Pic &amp; Paf pour transmettre ce qui me fait vibrer : créer de ses mains, prendre le temps, partager. Je me déplace partout en Vienne (86) et Deux-Sèvres (79).</p>
+              <p style={{ fontSize:17, opacity:.88, lineHeight:1.75, marginBottom:22 }}>Pas de niveau requis, pas de jugement : juste l&apos;envie de créer ensemble, et de repartir fier de sa création.</p>
+              <div style={{ display:'flex', gap:14, flexWrap:'wrap' }}>
+                <a href="/a-propos" className="cta-pill">Faire connaissance</a>
+                <a href="/contact" className="cta-ghost">Me contacter</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* STRUCTURES */}
       <section style={{ padding:'100px 0', background:'var(--creme)' }}>
         <div className="container">
@@ -235,7 +256,7 @@ export default async function HomePage() {
             ))}
           </div>
           <div style={{ textAlign:'center', marginTop:48 }}>
-            <a href="/ateliers-enfants" className="cta-pill">Voir tous les ateliers</a>
+            <a href="/ateliers" className="cta-pill">Voir tous les ateliers</a>
           </div>
         </div>
       </section>

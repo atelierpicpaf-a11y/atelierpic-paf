@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/retraite-creative-entre-filles`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/weekend-bien-etre-couture-poitiers`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/boutique`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${base}/a-propos`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ]
 

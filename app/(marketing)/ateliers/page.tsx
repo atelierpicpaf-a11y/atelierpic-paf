@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SectionTitle } from '@/components/sections/section-title'
 import { CrossPromo } from '@/components/sections/cross-promo'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd } from '@/lib/seo/json-ld'
@@ -10,12 +9,11 @@ const PAGE_URL = 'https://atelierpicpaf.fr/ateliers'
 export const metadata: Metadata = {
   title: 'Tous nos ateliers couture & créatifs — enfants, adultes, journées, retraites',
   description:
-    "🧵 Découvre toutes les formules de L'atelier Pic & Paf : ateliers couture enfants dès 6 ans, journées créatives adultes (90€), retraites créatives week-end (390€), punch needle, anniversaires couture, interventions en structures. Partout en Vienne (86) et Deux-Sèvres (79). Pas la bonne date ? On crée un atelier sur-mesure.",
+    "🧵 Toutes les formules de L'atelier Pic & Paf en un coup d'œil : ateliers couture enfants dès 6 ans, journées créatives adultes (90€), retraites week-end (390€), punch needle, anniversaires, interventions en structures. Partout en Vienne (86) et Deux-Sèvres (79). Pas la bonne date ? On crée un atelier sur-mesure.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: 'Tous nos ateliers couture & créatifs — Pic & Paf',
-    description:
-      'Ateliers enfants, journées créatives, retraites, punch needle, anniversaires, interventions. Une vue d’ensemble de tout ce qu’il est possible de faire avec Ludivine en Vienne et Deux-Sèvres.',
+    description: 'Choisis pour qui : un enfant, un adulte, un groupe ou une structure. Couture, punch needle, journées, retraites.',
     url: PAGE_URL,
     siteName: "L'atelier Pic & Paf",
     locale: 'fr_FR',
@@ -23,76 +21,46 @@ export const metadata: Metadata = {
   },
 }
 
-type Offre = {
-  emoji: string
-  tag: string
-  tagColor: string
-  titre: string
-  desc: string
-  meta: string
-  prix: string
-  href: string
-  cta: string
+type Carte = { emoji: string; titre: string; desc: string; prix: string; href: string; cta: string }
+
+const ENFANTS: Carte[] = [
+  { emoji: '🧵', titre: 'Ateliers couture enfants', desc: 'Dès 6 ans, en cours réguliers ou en stage pendant les vacances.', prix: 'Sur demande', href: '/ateliers-enfants', cta: 'Découvrir' },
+  { emoji: '🎂', titre: 'Anniversaire couture', desc: 'Pour les 7-12 ans : chacun repart avec sa création. À domicile ou en salle.', prix: 'Sur devis', href: '/anniversaire-couture-enfant', cta: 'Découvrir' },
+]
+const ADULTES: Carte[] = [
+  { emoji: '✂️', titre: 'Journées créatives', desc: 'Une journée couture + punch needle entre copines, tout fourni, à Fontaine-le-Comte.', prix: '90€', href: '/ateliers-adultes/journees-creatives', cta: 'Voir les dates' },
+  { emoji: '🌿', titre: 'Retraites créatives', desc: 'Un week-end en gîte : couture, yoga, repas maison. Entre femmes.', prix: '390€', href: '/ateliers-adultes/retraites-creatives', cta: 'Voir les retraites' },
+  { emoji: '🪡', titre: 'Atelier punch needle', desc: 'La broderie en relief tendance : aiguille magique, laine colorée. Dès 6 ans et adultes.', prix: 'Selon format', href: '/punch-needle', cta: 'Découvrir' },
+]
+const STRUCTURES: Carte[] = [
+  { emoji: '🏫', titre: 'Interventions en structures', desc: 'Écoles, ALSH, médiathèques, associations, comités d’entreprise. Animation clé en main.', prix: 'Devis gratuit', href: '/interventions-structures', cta: 'Découvrir' },
+]
+
+function Cartes({ items }: { items: Carte[] }) {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 22, maxWidth: 1000, margin: '0 auto' }}>
+      {items.map((c) => (
+        <Link key={c.href} href={c.href} className="card" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', height: '100%', background: '#fff', padding: '26px 24px', gap: 10 }}>
+          <div style={{ fontSize: 40, lineHeight: 1 }}>{c.emoji}</div>
+          <h3 className="h-fredoka" style={{ fontSize: 21, color: 'var(--framboise)', margin: 0 }}>{c.titre}</h3>
+          <p style={{ fontSize: 14.5, lineHeight: 1.55, opacity: 0.82, margin: 0, flex: 1 }}>{c.desc}</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 6, paddingTop: 14, borderTop: '1.5px dashed rgba(200,54,92,.18)' }}>
+            <span className="h-fredoka" style={{ fontSize: 17, color: 'var(--framboise)' }}>{c.prix}</span>
+            <span className="h-fredoka" style={{ fontSize: 14, fontWeight: 600, color: 'var(--framboise)' }}>{c.cta} →</span>
+          </div>
+        </Link>
+      ))}
+    </div>
+  )
 }
 
-const OFFRES: Offre[] = [
-  {
-    emoji: '🧵', tag: 'Enfants dès 6 ans', tagColor: 'var(--menthe)',
-    titre: 'Ateliers couture enfants',
-    desc: 'Cours réguliers et stages pendant les vacances. Machine à coudre apprivoisée, projets concrets, et la fierté de repartir avec sa création.',
-    meta: 'Poitiers · Vouillé · Châtellerault · ou à domicile',
-    prix: 'Sur demande',
-    href: '/ateliers-enfants', cta: 'Voir les ateliers enfants',
-  },
-  {
-    emoji: '✂️', tag: 'Adultes · tous niveaux', tagColor: 'var(--rose)',
-    titre: 'Journées créatives',
-    desc: 'Une journée entière de couture et de punch needle, entre copines, dans une ambiance douce. Tissu, laine et matériel fournis.',
-    meta: 'Fontaine-le-Comte · 10h-17h · max 8 personnes',
-    prix: '90€ (150€ en duo)',
-    href: '/ateliers-adultes/journees-creatives', cta: 'Voir les dates',
-  },
-  {
-    emoji: '🌿', tag: 'Entre femmes · week-end', tagColor: 'var(--menthe)',
-    titre: 'Retraites créatives',
-    desc: 'Un week-end dans un gîte pour se ressourcer : couture, yoga, repas maison et déconnexion totale. La parenthèse que tu mérites.',
-    meta: 'Fontaine-le-Comte · max 9 · repas + yoga inclus',
-    prix: '390€',
-    href: '/ateliers-adultes/retraites-creatives', cta: 'Voir les retraites',
-  },
-  {
-    emoji: '🪡', tag: 'Dès 6 ans & adultes', tagColor: 'var(--rose)',
-    titre: 'Atelier punch needle',
-    desc: 'La technique chouchou de l’atelier : une aiguille magique, de la laine colorée, des motifs en relief. Bluffant et accessible à tous.',
-    meta: 'En cours, stage, journée ou anniversaire',
-    prix: 'Selon le format',
-    href: '/punch-needle', cta: 'Découvrir le punch needle',
-  },
-  {
-    emoji: '🎂', tag: 'Fête · 7-12 ans', tagColor: 'var(--menthe)',
-    titre: 'Anniversaire couture',
-    desc: 'Une fête qui change des goûters classiques : chaque enfant repart avec un objet cousu de ses mains. Le cadeau qui dure.',
-    meta: 'À domicile, salle des fêtes ou médiathèque',
-    prix: 'Sur devis',
-    href: '/anniversaire-couture-enfant', cta: 'Organiser un anniversaire',
-  },
-  {
-    emoji: '🏫', tag: 'Structures & entreprises', tagColor: 'var(--rose)',
-    titre: 'Interventions',
-    desc: 'Écoles, ALSH, médiathèques, associations, comités d’entreprise : une animation couture clé en main, adaptée à ton public.',
-    meta: 'Partout en Vienne (86) & Deux-Sèvres (79)',
-    prix: 'Devis gratuit',
-    href: '/interventions-structures', cta: 'Voir les interventions',
-  },
-  {
-    emoji: '🎁', tag: 'À faire chez toi', tagColor: 'var(--menthe)',
-    titre: 'Coffrets DIY + tutos',
-    desc: 'Tout le matériel réuni et un tuto vidéo offert, livré en point relais. Tu couds quand tu veux, à ton rythme.',
-    meta: 'Livraison Mondial Relay partout en France',
-    prix: 'dès 9,90€',
-    href: '/boutique', cta: 'Voir la boutique',
-  },
-]
+function GroupTitle({ emoji, children, id }: { emoji: string; children: React.ReactNode; id: string }) {
+  return (
+    <h2 id={id} className="h-fredoka" style={{ scrollMarginTop: 90, fontSize: 'clamp(26px,3.2vw,34px)', color: 'var(--framboise)', textAlign: 'center', margin: '0 0 32px' }}>
+      <span style={{ fontSize: '1.2em', marginRight: 8 }}>{emoji}</span>{children}
+    </h2>
+  )
+}
 
 export default function AteliersPage() {
   return (
@@ -107,90 +75,69 @@ export default function AteliersPage() {
             '@context': 'https://schema.org',
             '@type': 'ItemList',
             name: 'Ateliers couture & créatifs — L’atelier Pic & Paf',
-            itemListElement: OFFRES.map((o, i) => ({
-              '@type': 'ListItem',
-              position: i + 1,
-              name: o.titre,
-              url: `https://atelierpicpaf.fr${o.href}`,
+            itemListElement: [...ENFANTS, ...ADULTES, ...STRUCTURES].map((o, i) => ({
+              '@type': 'ListItem', position: i + 1, name: o.titre, url: `https://atelierpicpaf.fr${o.href}`,
             })),
           },
         ]}
       />
 
-      {/* HERO */}
-      <section style={{ padding: '90px 0 60px', background: 'var(--creme-pale)', textAlign: 'center' }}>
-        <div className="container" style={{ maxWidth: 820 }}>
-          <span className="h-caveat" style={{ fontSize: 28, color: 'var(--framboise)' }}>~ Une vue d&apos;ensemble ~</span>
-          <h1 className="sticker-title" style={{ fontSize: 'clamp(40px,6vw,72px)', margin: '14px 0 18px' }}>
-            Tous les ateliers Pic &amp; Paf
+      {/* HERO — orientation immédiate */}
+      <section style={{ padding: '88px 0 50px', background: 'var(--creme-pale)', textAlign: 'center' }}>
+        <div className="container" style={{ maxWidth: 760 }}>
+          <span className="h-caveat" style={{ fontSize: 28, color: 'var(--framboise)' }}>~ Toutes mes formules ~</span>
+          <h1 className="sticker-title" style={{ fontSize: 'clamp(42px,6vw,72px)', margin: '12px 0 16px' }}>
+            Quel atelier pour toi ?
           </h1>
-          <p style={{ fontSize: 18, lineHeight: 1.75, opacity: 0.85, maxWidth: 680, margin: '0 auto 30px' }}>
-            Couture pour les enfants comme pour les adultes, punch needle, journées créatives, retraites week-end,
-            anniversaires, interventions en structures… Voici <strong>tout ce qu&apos;il est possible de faire</strong> avec moi,
-            partout en Vienne (86) et Deux-Sèvres (79). Tu trouves la formule qui te parle, et on en discute&nbsp;!
+          <p style={{ fontSize: 18, lineHeight: 1.7, opacity: 0.85, maxWidth: 560, margin: '0 auto 32px' }}>
+            Couture, punch needle, journées, retraites… Dis-moi <strong>pour qui c&apos;est</strong>, je t&apos;emmène à la bonne formule.
           </p>
+          {/* 3 choix nets */}
           <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="#offres" className="cta-pill">Choisir mon atelier ↓</a>
-            <Link href="/contact" className="cta-ghost">Écrivez-moi, on discute</Link>
+            <a href="#enfants" className="cta-ghost">👶 Pour un enfant</a>
+            <a href="#adultes" className="cta-ghost">✨ Pour un adulte</a>
+            <a href="#structures" className="cta-ghost">🏫 Pour un groupe / une structure</a>
           </div>
         </div>
       </section>
 
-      {/* GRILLE DES OFFRES */}
-      <section id="offres" style={{ padding: '70px 0', background: 'var(--creme)' }}>
+      {/* ENFANTS */}
+      <section style={{ padding: '66px 0', background: 'var(--creme)' }}>
         <div className="container">
-          <SectionTitle kicker="Pour qui ? Quel format ?" align="center">Choisis ta formule</SectionTitle>
-          <div style={{ marginTop: 50, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 26, maxWidth: 1100, margin: '50px auto 0' }}>
-            {OFFRES.map((o) => (
-              <Link
-                key={o.href}
-                href={o.href}
-                className="card"
-                style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', height: '100%', background: '#fff', padding: 0, overflow: 'hidden' }}
-              >
-                <div style={{ background: o.tagColor, padding: '22px 24px 18px', display: 'flex', alignItems: 'center', gap: 14 }}>
-                  <span style={{ fontSize: 40, lineHeight: 1 }}>{o.emoji}</span>
-                  <span className="h-fredoka" style={{ fontSize: 13.5, color: '#3a1818', background: 'rgba(255,255,255,.7)', padding: '4px 12px', borderRadius: 999 }}>{o.tag}</span>
-                </div>
-                <div style={{ padding: '22px 24px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
-                  <h3 className="h-fredoka" style={{ fontSize: 22, color: 'var(--framboise)', margin: 0 }}>{o.titre}</h3>
-                  <p style={{ fontSize: 14.5, lineHeight: 1.6, opacity: 0.85, margin: 0, flex: 1 }}>{o.desc}</p>
-                  <div style={{ fontSize: 13.5, opacity: 0.7, display: 'flex', gap: 8 }}><span style={{ color: 'var(--framboise)' }}>📍</span> {o.meta}</div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8, paddingTop: 14, borderTop: '1.5px dashed rgba(200,54,92,.2)' }}>
-                    <span className="h-fredoka" style={{ fontSize: 18, color: 'var(--framboise)' }}>{o.prix}</span>
-                    <span className="h-fredoka" style={{ fontSize: 14, fontWeight: 600, color: 'var(--framboise)' }}>{o.cta} →</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <GroupTitle emoji="👶" id="enfants">Pour les enfants</GroupTitle>
+          <Cartes items={ENFANTS} />
         </div>
       </section>
 
-      {/* BAND — ATELIER PERSONNALISÉ (si aucune date ne convient) */}
-      <section style={{ padding: '90px 0', background: 'var(--framboise)', color: 'var(--creme)' }}>
+      {/* ADULTES */}
+      <section style={{ padding: '66px 0', background: 'var(--creme-pale)' }}>
+        <div className="container">
+          <GroupTitle emoji="✨" id="adultes">Pour les adultes</GroupTitle>
+          <Cartes items={ADULTES} />
+        </div>
+      </section>
+
+      {/* STRUCTURES */}
+      <section style={{ padding: '66px 0', background: 'var(--creme)' }}>
+        <div className="container">
+          <GroupTitle emoji="🏫" id="structures">Pour un groupe ou une structure</GroupTitle>
+          <Cartes items={STRUCTURES} />
+        </div>
+      </section>
+
+      {/* BAND — ATELIER PERSONNALISÉ */}
+      <section style={{ padding: '88px 0', background: 'var(--framboise)', color: 'var(--creme)' }}>
         <div className="container" style={{ maxWidth: 720, textAlign: 'center' }}>
-          <span className="h-caveat" style={{ fontSize: 26, color: 'var(--creme)', opacity: 0.9 }}>~ Rien ne te correspond ? ~</span>
-          <h2 className="h-fredoka" style={{ fontSize: 'clamp(28px,4vw,42px)', color: 'var(--creme)', margin: '10px 0 16px', lineHeight: 1.1 }}>
-            Aucune date ne te convient ? On s&apos;adapte.
+          <h2 className="h-fredoka" style={{ fontSize: 'clamp(28px,4vw,42px)', color: 'var(--creme)', margin: '0 0 16px', lineHeight: 1.1 }}>
+            Rien ne correspond ? On crée ton atelier sur-mesure.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.7, opacity: 0.95, marginBottom: 30 }}>
-            Tu veux un atelier rien que pour toi, ton groupe ou ta structure, à la date et au lieu qui t&apos;arrangent ?
-            Je crée des ateliers <strong>100% sur-mesure</strong>, partout en Vienne et Deux-Sèvres. Dis-moi ton envie, je construis le format.
+            Aucune date ne te convient, ou tu veux un format rien que pour toi, ton groupe ou ta structure ?
+            Dis-moi ton envie, je m&apos;adapte, partout en Vienne et Deux-Sèvres.
           </p>
           <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link
-              href="/contact?sujet=Atelier%20personnalis%C3%A9"
-              style={{ display: 'inline-block', padding: '16px 34px', borderRadius: 999, background: 'var(--creme)', color: 'var(--framboise)', fontWeight: 700, fontSize: 16, textDecoration: 'none', boxShadow: '0 8px 24px -10px rgba(0,0,0,.3)' }}
-            >
-              Organiser un atelier personnalisé ✨
-            </Link>
-            <a
-              href="tel:+33621073536"
-              style={{ display: 'inline-block', padding: '15px 30px', borderRadius: 999, background: 'transparent', color: 'var(--creme)', border: '2px solid var(--creme)', fontWeight: 700, fontSize: 16, textDecoration: 'none' }}
-            >
-              📞 06&nbsp;21&nbsp;07&nbsp;35&nbsp;36
-            </a>
+            <Link href="/contact?sujet=Atelier%20personnalis%C3%A9" style={{ display: 'inline-block', padding: '16px 34px', borderRadius: 999, background: 'var(--creme)', color: 'var(--framboise)', fontWeight: 700, fontSize: 16, textDecoration: 'none', boxShadow: '0 8px 24px -10px rgba(0,0,0,.3)' }}>Organiser un atelier personnalisé ✨</Link>
+            <a href="tel:+33621073536" style={{ display: 'inline-block', padding: '15px 30px', borderRadius: 999, background: 'transparent', color: 'var(--creme)', border: '2px solid var(--creme)', fontWeight: 700, fontSize: 16, textDecoration: 'none' }}>📞 06&nbsp;21&nbsp;07&nbsp;35&nbsp;36</a>
           </div>
         </div>
       </section>
