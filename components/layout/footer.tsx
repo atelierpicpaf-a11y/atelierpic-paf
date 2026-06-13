@@ -17,6 +17,7 @@ export function Footer() {
           </div>
           <div>
             <h5 className="h-fredoka" style={{ fontSize:16, color:'var(--creme)', margin:'0 0 14px' }}>Ateliers</h5>
+            <FooterLink href="/ateliers">✨ Tous les ateliers</FooterLink>
             <FooterLink href="/ateliers-enfants">Ateliers enfants</FooterLink>
             <FooterLink href="/ateliers-adultes/journees-creatives">Journées créatives</FooterLink>
             <FooterLink href="/ateliers-adultes/retraites-creatives">Retraites créatives</FooterLink>

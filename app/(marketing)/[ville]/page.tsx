@@ -227,8 +227,8 @@ export default async function VillePage({ params }: { params: Promise<Params> })
             >
               Organiser un atelier à {v.nom} ✨
             </Link>
-            <Link href="/ateliers-adultes/journees-creatives" className="cta-ghost">
-              📅 Découvrir les dates d&apos;atelier
+            <Link href="/ateliers" className="cta-ghost">
+              📅 Découvrir tous les ateliers
             </Link>
           </div>
         </div>
