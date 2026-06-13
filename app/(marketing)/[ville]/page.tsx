@@ -6,7 +6,7 @@ import { SectionTitle } from '@/components/sections/section-title'
 import { CrossPromo } from '@/components/sections/cross-promo'
 import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
-import { breadcrumbJsonLd, faqPageJsonLd, villeServiceJsonLd } from '@/lib/seo/json-ld'
+import { breadcrumbJsonLd, faqPageJsonLd, villeServiceJsonLd, personJsonLd } from '@/lib/seo/json-ld'
 import { VILLES, getVilleBySlug, getNearby, type Ville } from '@/content/villes'
 import villesDataJson from '@/content/villes-data.json'
 
@@ -65,7 +65,7 @@ export async function generateMetadata({
   const v = getVilleBySlug(ville)
   if (!v) return { title: 'Ville introuvable' }
 
-  const title = `Ateliers créatifs à ${v.nom} (${v.dept}) · Couture + punch needle dès 6 ans ⭐`
+  const title = `Atelier couture & créatif à ${v.nom} (${v.dept}) · enfants & adultes, punch needle ⭐`
   const description =
     v.metaDescription ??
     `🧵 Ateliers créatifs à ${v.nom} (${v.codePostal}), ${v.deptNom} : couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires, interventions écoles/ALSH. Une activité manuelle et un loisir créatif qui fait pétiller les yeux. Ludivine se déplace — contactez-la !`
@@ -193,8 +193,10 @@ export default async function VillePage({ params }: { params: Promise<Params> })
             url: pageUrl,
           }),
           faqPageJsonLd(faqs),
+          personJsonLd(),
           breadcrumbJsonLd([
             { name: 'Accueil', url: 'https://atelierpicpaf.fr' },
+            { name: 'Où nous trouver', url: 'https://atelierpicpaf.fr/ou-nous-trouver' },
             { name: v.nom, url: pageUrl },
           ]),
         ]}
@@ -611,6 +613,41 @@ export default async function VillePage({ params }: { params: Promise<Params> })
               <FaqItem key={i} q={f.q} r={f.r} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ───────── MAILLAGE INTERNE — pages à explorer ───────── */}
+      <section style={{ padding: '60px 0', background: 'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth: 920, textAlign: 'center' }}>
+          <SectionTitle kicker="Tout l'univers Pic & Paf" align="center">À explorer aussi</SectionTitle>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', marginTop: 36 }}>
+            {[
+              { href: '/ateliers-enfants', t: 'Ateliers enfants' },
+              { href: '/ateliers-adultes/journees-creatives', t: 'Journées créatives' },
+              { href: '/ateliers-adultes/retraites-creatives', t: 'Retraites créatives' },
+              { href: '/punch-needle', t: 'Atelier punch needle' },
+              { href: '/anniversaire-couture-enfant', t: 'Anniversaire couture' },
+              { href: '/interventions-structures', t: 'Interventions structures' },
+              { href: '/boutique', t: 'Boutique · coffrets DIY' },
+              { href: '/tuto-video', t: 'Tutos vidéos' },
+              { href: '/ou-nous-trouver', t: 'Toutes les communes (86 & 79)' },
+            ].map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                style={{ padding: '10px 18px', borderRadius: 999, background: '#fff', border: '1.5px solid rgba(200,54,92,.25)', color: 'var(--framboise)', fontFamily: 'var(--font-fredoka)', fontSize: 14, textDecoration: 'none' }}
+              >
+                {l.t}
+              </Link>
+            ))}
+          </div>
+          <p style={{ marginTop: 30, fontSize: 15.5, lineHeight: 1.7, opacity: 0.85 }}>
+            Ludivine intervient à {v.nom} et dans toute la Vienne (86) et les Deux-Sèvres (79).{' '}
+            Pour organiser un atelier :{' '}
+            <a href="tel:+33621073536" style={{ color: 'var(--framboise)', fontWeight: 700 }}>06&nbsp;21&nbsp;07&nbsp;35&nbsp;36</a>
+            {' · '}
+            <a href="mailto:atelierpicpaf@gmail.com" style={{ color: 'var(--framboise)', fontWeight: 700 }}>atelierpicpaf@gmail.com</a>
+          </p>
         </div>
       </section>
 

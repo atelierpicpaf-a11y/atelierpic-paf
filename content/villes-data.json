@@ -35,7 +35,7 @@
         "cp": "86550",
         "dept": "86",
         "population": 5229,
-        "distance": 5.0
+        "distance": 5
       },
       {
         "nom": "Biard",
@@ -125,7 +125,7 @@
     "codeInsee": "86066",
     "population": 31003,
     "surfaceHa": 5202.19,
-    "surfaceKm2": 52.0,
+    "surfaceKm2": 52,
     "densite": 596,
     "lat": 46.8147,
     "lon": 0.5583,
@@ -178,7 +178,7 @@
         "cp": "86100",
         "dept": "86",
         "population": 1148,
-        "distance": 8.0
+        "distance": 8
       }
     ]
   },
@@ -194,7 +194,7 @@
     "distanceCraon": 3.5,
     "distances": {
       "Poitiers": 25.9,
-      "Niort": 72.0,
+      "Niort": 72,
       "Châtellerault": 27.2,
       "Bressuire": 52.4
     },
@@ -247,7 +247,7 @@
     "codeInsee": "86115",
     "population": 7528,
     "surfaceHa": 4898.5,
-    "surfaceKm2": 49.0,
+    "surfaceKm2": 49,
     "densite": 154,
     "lat": 46.7274,
     "lon": 0.3642,
@@ -272,14 +272,14 @@
         "cp": "86130",
         "dept": "86",
         "population": 2908,
-        "distance": 7.0
+        "distance": 7
       },
       {
         "nom": "Dissay",
         "cp": "86130",
         "dept": "86",
         "population": 3101,
-        "distance": 7.0
+        "distance": 7
       },
       {
         "nom": "Chabournay",
@@ -300,7 +300,7 @@
         "cp": "86490",
         "dept": "86",
         "population": 1405,
-        "distance": 8.0
+        "distance": 8
       }
     ]
   },
@@ -437,7 +437,7 @@
     "codeEpci": "200069854",
     "distanceCraon": 38.2,
     "distances": {
-      "Poitiers": 23.0,
+      "Poitiers": 23,
       "Niort": 46.1,
       "Châtellerault": 53.3,
       "Bressuire": 64.3
@@ -491,7 +491,7 @@
     "codeInsee": "86070",
     "population": 7007,
     "surfaceHa": 9602.98,
-    "surfaceKm2": 96.0,
+    "surfaceKm2": 96,
     "densite": 73,
     "lat": 46.5528,
     "lon": 0.6714,
@@ -557,12 +557,12 @@
     "lat": 46.3274,
     "lon": -0.4613,
     "codeEpci": "200041317",
-    "distanceCraon": 69.0,
+    "distanceCraon": 69,
     "distances": {
       "Poitiers": 67.5,
       "Niort": 0.5,
       "Châtellerault": 94.5,
-      "Bressuire": 57.0
+      "Bressuire": 57
     },
     "limitrophes": [
       {
@@ -623,7 +623,7 @@
       "Poitiers": 44.6,
       "Niort": 39.7,
       "Châtellerault": 62.8,
-      "Bressuire": 29.0
+      "Bressuire": 29
     },
     "limitrophes": [
       {
@@ -683,7 +683,7 @@
     "distances": {
       "Poitiers": 69.7,
       "Niort": 60.2,
-      "Châtellerault": 78.0,
+      "Châtellerault": 78,
       "Bressuire": 3.1
     },
     "limitrophes": [
@@ -740,7 +740,7 @@
     "lat": 46.9765,
     "lon": -0.2466,
     "codeEpci": "247900798",
-    "distanceCraon": 37.0,
+    "distanceCraon": 37,
     "distances": {
       "Poitiers": 62.8,
       "Niort": 74.3,
@@ -760,7 +760,7 @@
         "cp": "79100",
         "dept": "79",
         "population": 1328,
-        "distance": 3.0
+        "distance": 3
       },
       {
         "nom": "Sainte-Verge",
@@ -803,7 +803,7 @@
     "codeEpci": "200069854",
     "distanceCraon": 29.6,
     "distances": {
-      "Poitiers": 9.0,
+      "Poitiers": 9,
       "Niort": 58.9,
       "Châtellerault": 39.5,
       "Bressuire": 66.5
@@ -857,7 +857,7 @@
     "codeInsee": "86158",
     "population": 6285,
     "surfaceHa": 2897.57,
-    "surfaceKm2": 29.0,
+    "surfaceKm2": 29,
     "densite": 217,
     "lat": 46.6307,
     "lon": 0.3008,
@@ -896,7 +896,7 @@
         "cp": "86580",
         "dept": "86",
         "population": 1910,
-        "distance": 5.0
+        "distance": 5
       },
       {
         "nom": "Vouneuil-sous-Biard",
@@ -936,21 +936,21 @@
         "cp": "86580",
         "dept": "86",
         "population": 6290,
-        "distance": 2.0
+        "distance": 2
       },
       {
         "nom": "Croutelle",
         "cp": "86240",
         "dept": "86",
         "population": 946,
-        "distance": 5.0
+        "distance": 5
       },
       {
         "nom": "Migné-Auxances",
         "cp": "86440",
         "dept": "86",
         "population": 6285,
-        "distance": 5.0
+        "distance": 5
       },
       {
         "nom": "Poitiers",
@@ -1049,7 +1049,7 @@
     "distances": {
       "Poitiers": 7.7,
       "Niort": 65.9,
-      "Châtellerault": 37.0,
+      "Châtellerault": 37,
       "Bressuire": 74.2
     },
     "limitrophes": [
@@ -1058,7 +1058,7 @@
         "cp": "86340",
         "dept": "86",
         "population": 2191,
-        "distance": 4.0
+        "distance": 4
       },
       {
         "nom": "Saint-Benoît",
@@ -1101,7 +1101,7 @@
     "codeInsee": "86113",
     "population": 2989,
     "surfaceHa": 2199.22,
-    "surfaceKm2": 22.0,
+    "surfaceKm2": 22,
     "densite": 136,
     "lat": 46.4812,
     "lon": 0.2904,
@@ -1109,7 +1109,7 @@
     "distanceCraon": 35.3,
     "distances": {
       "Poitiers": 11.7,
-      "Niort": 60.0,
+      "Niort": 60,
       "Châtellerault": 42.2,
       "Bressuire": 71.7
     },
@@ -1126,7 +1126,7 @@
         "cp": "86340",
         "dept": "86",
         "population": 1136,
-        "distance": 5.0
+        "distance": 5
       },
       {
         "nom": "Marçay",
@@ -1201,7 +1201,7 @@
         "cp": "86580",
         "dept": "86",
         "population": 1910,
-        "distance": 5.0
+        "distance": 5
       },
       {
         "nom": "Vouneuil-sous-Biard",
@@ -1241,7 +1241,7 @@
         "cp": "86580",
         "dept": "86",
         "population": 1910,
-        "distance": 2.0
+        "distance": 2
       },
       {
         "nom": "Quinçay",
@@ -1377,14 +1377,14 @@
         "cp": "86600",
         "dept": "86",
         "population": 1383,
-        "distance": 6.0
+        "distance": 6
       },
       {
         "nom": "Marçay",
         "cp": "86370",
         "dept": "86",
         "population": 1107,
-        "distance": 6.0
+        "distance": 6
       },
       {
         "nom": "Voulon",
@@ -1459,7 +1459,7 @@
         "cp": "86400",
         "dept": "86",
         "population": 390,
-        "distance": 7.0
+        "distance": 7
       }
     ]
   },
@@ -1467,7 +1467,7 @@
     "codeInsee": "86137",
     "population": 6839,
     "surfaceHa": 4398.62,
-    "surfaceKm2": 44.0,
+    "surfaceKm2": 44,
     "densite": 155,
     "lat": 47.0116,
     "lon": 0.1048,
@@ -1477,7 +1477,7 @@
       "Poitiers": 51.2,
       "Niort": 87.7,
       "Châtellerault": 40.2,
-      "Bressuire": 49.0
+      "Bressuire": 49
     },
     "limitrophes": [
       {
@@ -1485,7 +1485,7 @@
         "cp": "86200",
         "dept": "86",
         "population": 344,
-        "distance": 4.0
+        "distance": 4
       },
       {
         "nom": "Chalais",
@@ -1520,7 +1520,7 @@
         "cp": "86200",
         "dept": "86",
         "population": 565,
-        "distance": 7.0
+        "distance": 7
       }
     ]
   },
@@ -1842,7 +1842,7 @@
     "distances": {
       "Poitiers": 55.6,
       "Niort": 27.4,
-      "Châtellerault": 86.0,
+      "Châtellerault": 86,
       "Bressuire": 75.1
     },
     "limitrophes": [
@@ -1901,7 +1901,7 @@
     "codeEpci": "200041317",
     "distanceCraon": 89.6,
     "distances": {
-      "Poitiers": 87.0,
+      "Poitiers": 87,
       "Niort": 20.6,
       "Châtellerault": 114.8,
       "Bressuire": 73.1
@@ -1960,10 +1960,10 @@
     "lat": 46.2611,
     "lon": -0.5313,
     "codeEpci": "200041317",
-    "distanceCraon": 78.0,
+    "distanceCraon": 78,
     "distances": {
       "Poitiers": 75.7,
-      "Niort": 9.0,
+      "Niort": 9,
       "Châtellerault": 103.2,
       "Bressuire": 64.4
     },
@@ -2008,7 +2008,7 @@
         "cp": "79270",
         "dept": "79",
         "population": 760,
-        "distance": 6.0
+        "distance": 6
       }
     ]
   },
@@ -2102,7 +2102,7 @@
         "cp": "79700",
         "dept": "79",
         "population": 616,
-        "distance": 7.0
+        "distance": 7
       },
       {
         "nom": "Saint-Amand-sur-Sèvre",
@@ -2123,7 +2123,7 @@
         "cp": "79250",
         "dept": "79",
         "population": 5483,
-        "distance": 11.0
+        "distance": 11
       },
       {
         "nom": "Le Pin",
@@ -2138,7 +2138,7 @@
     "codeInsee": "86177",
     "population": 5513,
     "surfaceHa": 1702.95,
-    "surfaceKm2": 17.0,
+    "surfaceKm2": 17,
     "densite": 324,
     "lat": 46.6825,
     "lon": 0.2523,
@@ -2245,7 +2245,7 @@
         "cp": "86310",
         "dept": "86",
         "population": 550,
-        "distance": 6.0
+        "distance": 6
       },
       {
         "nom": "Fleix",
@@ -2265,7 +2265,7 @@
     "lat": 46.3371,
     "lon": -0.5848,
     "codeEpci": "200041317",
-    "distanceCraon": 75.0,
+    "distanceCraon": 75,
     "distances": {
       "Poitiers": 75.8,
       "Niort": 9.8,
@@ -2285,7 +2285,7 @@
         "cp": "79270",
         "dept": "79",
         "population": 760,
-        "distance": 5.0
+        "distance": 5
       },
       {
         "nom": "Saint-Rémy",
@@ -2339,7 +2339,7 @@
         "cp": "79400",
         "dept": "79",
         "population": 1062,
-        "distance": 3.0
+        "distance": 3
       },
       {
         "nom": "Saivres",
@@ -2389,7 +2389,7 @@
     "codeEpci": "200069748",
     "distanceCraon": 66.8,
     "distances": {
-      "Poitiers": 73.0,
+      "Poitiers": 73,
       "Niort": 20.3,
       "Châtellerault": 95.7,
       "Bressuire": 41.2
@@ -2421,7 +2421,7 @@
         "cp": "79160",
         "dept": "79",
         "population": 949,
-        "distance": 6.0
+        "distance": 6
       },
       {
         "nom": "Puihardy",
@@ -2436,6 +2436,67 @@
         "dept": "79",
         "population": 750,
         "distance": 7.3
+      }
+    ]
+  },
+  "chasseneuil-du-poitou": {
+    "codeInsee": "86062",
+    "population": 4743,
+    "surfaceHa": 1756.26,
+    "surfaceKm2": 17.56,
+    "densite": 270,
+    "lat": 46.6476,
+    "lon": 0.356,
+    "codeEpci": "200069854",
+    "distanceCraon": 28.7,
+    "distances": {
+      "Poitiers": 7.1,
+      "Niort": 72,
+      "Châtellerault": 24.1,
+      "Bressuire": 67.7
+    },
+    "limitrophes": [
+      {
+        "nom": "Avanton",
+        "cp": "86170",
+        "dept": "86",
+        "population": 2226,
+        "distance": 4.1
+      },
+      {
+        "nom": "Migné-Auxances",
+        "cp": "86440",
+        "dept": "86",
+        "population": 6285,
+        "distance": 4.6
+      },
+      {
+        "nom": "Buxerolles",
+        "cp": "86180",
+        "dept": "86",
+        "population": 10289,
+        "distance": 4.7
+      },
+      {
+        "nom": "Montamisé",
+        "cp": "86360",
+        "dept": "86",
+        "population": 3723,
+        "distance": 6.7
+      },
+      {
+        "nom": "Saint-Georges-lès-Baillargeaux",
+        "cp": "86130",
+        "dept": "86",
+        "population": 4385,
+        "distance": 7
+      },
+      {
+        "nom": "Poitiers",
+        "cp": "86000",
+        "dept": "86",
+        "population": 89916,
+        "distance": 7.1
       }
     ]
   }

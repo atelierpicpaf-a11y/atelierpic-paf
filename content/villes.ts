@@ -246,6 +246,22 @@ export const VILLES: Ville[] = [
   // ────────────────── WAVE 3 — extension (mai 2026) ──────────────────
   // VIENNE (86) — banlieue Poitiers
   {
+    slug: 'chasseneuil-du-poitou',
+    nom: 'Chasseneuil-du-Poitou',
+    dept: '86',
+    deptNom: 'Vienne',
+    codePostal: '86360',
+    statut: 'commune du Grand Poitiers, porte du Futuroscope',
+    kicker: 'Atelier couture & créatif · Vienne (86)',
+    titreH1: 'Atelier couture & créatif à Chasseneuil-du-Poitou',
+    intro:
+      "Chasseneuil-du-Poitou, commune dynamique du Grand Poitiers (Vienne 86) mondialement connue pour le Futuroscope et le Téléport, accueille volontiers mes ateliers couture et punch needle. À 7 minutes au nord de Poitiers, c'est un secteur jeune, familial et entreprenant où une activité manuelle de qualité a toute sa place. Pour les enfants dès 6 ans, mes cours de couture transmettent les bases de la machine à coudre dans la bienveillance : un projet concret, et la fierté de repartir avec sa création. Côté adultes, mes journées créatives à Fontaine-le-Comte (à 20 minutes) mêlent couture, punch needle et convivialité, et mes retraites week-end invitent à débrancher entre femmes. À Chasseneuil-du-Poitou, j'organise aussi des anniversaires couture (la formule chouchou des 7-12 ans), des stages pendant les vacances scolaires, et des interventions clé en main pour les écoles, ALSH, médiathèques et comités d'entreprise du Téléport. Habitantes et habitants de Chasseneuil, Migné-Auxances, Buxerolles, Avanton ou Jaunay-Marigny, raconte-moi ton projet : je construis le format qui te ressemble.",
+    villesProches: ['migne-auxances', 'buxerolles', 'jaunay-marigny', 'poitiers'],
+    wave: 3,
+    metaDescription:
+      "🧵 Atelier couture & créatif à Chasseneuil-du-Poitou (86360), près du Futuroscope : cours de couture enfants dès 6 ans, punch needle, journées créatives adultes, anniversaires, stages vacances, interventions écoles et comités d'entreprise. Ludivine se déplace dans tout le Grand Poitiers.",
+  },
+  {
     slug: 'migne-auxances',
     nom: 'Migné-Auxances',
     dept: '86',
