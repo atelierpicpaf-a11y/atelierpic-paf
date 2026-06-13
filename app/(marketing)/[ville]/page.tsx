@@ -220,12 +220,17 @@ export default async function VillePage({ params }: { params: Promise<Params> })
             On crée ensemble à {v.nom} : enfants, ados, adultes, groupes, structures.
             Je me déplace, on construit ensemble le format qui te va.
           </p>
-          <Link
-            href={`/contact?ville=${encodeURIComponent(v.nom)}&sujet=${encodeURIComponent('Atelier ' + v.nom)}`}
-            className="cta-pill"
-          >
-            Me contacter pour organiser un atelier à {v.nom} ✨
-          </Link>
+          <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link
+              href={`/contact?ville=${encodeURIComponent(v.nom)}&sujet=${encodeURIComponent('Atelier ' + v.nom)}`}
+              className="cta-pill"
+            >
+              Organiser un atelier à {v.nom} ✨
+            </Link>
+            <Link href="/ateliers-adultes/journees-creatives" className="cta-ghost">
+              📅 Découvrir les dates d&apos;atelier
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -503,6 +508,23 @@ export default async function VillePage({ params }: { params: Promise<Params> })
         </div>
       </section>
 
+      {/* ───────── CTA MILIEU DE PAGE ───────── */}
+      <section style={{ padding: '64px 0', background: 'var(--creme)' }}>
+        <div className="container" style={{ maxWidth: 760, textAlign: 'center' }}>
+          <span className="h-caveat" style={{ fontSize: 26, color: 'var(--framboise)' }}>~ On en parle ? ~</span>
+          <h2 className="h-fredoka" style={{ fontSize: 'clamp(26px,3.4vw,38px)', color: 'var(--framboise)', margin: '8px 0 14px', lineHeight: 1.15 }}>
+            Organise ton atelier à {v.nom}
+          </h2>
+          <p style={{ fontSize: 16.5, lineHeight: 1.7, opacity: 0.85, maxWidth: 600, margin: '0 auto 26px' }}>
+            Un anniversaire, un cours pour ton enfant, une journée entre copines, une animation pour ta structure ? Raconte-moi ton idée, je m&apos;adapte à ton projet, ton public et ton budget.
+          </p>
+          <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href={`/contact?ville=${encodeURIComponent(v.nom)}&sujet=${encodeURIComponent('Atelier ' + v.nom)}`} className="cta-pill">Écrivez-moi, on discute</Link>
+            <a href="tel:+33621073536" className="cta-ghost">📞 06&nbsp;21&nbsp;07&nbsp;35&nbsp;36</a>
+          </div>
+        </div>
+      </section>
+
       {/* ───────── AVEC LUDIVINE (humain / E-E-A-T) ───────── */}
       <section style={{ padding: '80px 0', background: 'var(--creme-pale)' }}>
         <div className="container" style={{ maxWidth: 1040 }}>
@@ -699,22 +721,40 @@ export default async function VillePage({ params }: { params: Promise<Params> })
             Écris-moi ton idée (public, format, période). Je te réponds avec une proposition
             adaptée à {v.nom} et au {v.deptNom} ({v.dept}).
           </p>
-          <Link
-            href={`/contact?ville=${encodeURIComponent(v.nom)}&sujet=${encodeURIComponent('Atelier ' + v.nom)}`}
-            style={{
-              display: 'inline-block',
-              padding: '16px 34px',
-              borderRadius: 999,
-              background: 'var(--creme)',
-              color: 'var(--framboise)',
-              fontWeight: 700,
-              fontSize: 16,
-              textDecoration: 'none',
-              boxShadow: '0 8px 24px -10px rgba(0,0,0,.3)',
-            }}
-          >
-            Me contacter ✨
-          </Link>
+          <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link
+              href={`/contact?ville=${encodeURIComponent(v.nom)}&sujet=${encodeURIComponent('Atelier ' + v.nom)}`}
+              style={{
+                display: 'inline-block',
+                padding: '16px 34px',
+                borderRadius: 999,
+                background: 'var(--creme)',
+                color: 'var(--framboise)',
+                fontWeight: 700,
+                fontSize: 16,
+                textDecoration: 'none',
+                boxShadow: '0 8px 24px -10px rgba(0,0,0,.3)',
+              }}
+            >
+              Contactez-moi ✨
+            </Link>
+            <a
+              href="tel:+33621073536"
+              style={{
+                display: 'inline-block',
+                padding: '15px 30px',
+                borderRadius: 999,
+                background: 'transparent',
+                color: 'var(--creme)',
+                border: '2px solid var(--creme)',
+                fontWeight: 700,
+                fontSize: 16,
+                textDecoration: 'none',
+              }}
+            >
+              📞 06&nbsp;21&nbsp;07&nbsp;35&nbsp;36
+            </a>
+          </div>
         </div>
       </section>
     </div>
