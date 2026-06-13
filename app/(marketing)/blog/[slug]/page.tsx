@@ -104,6 +104,26 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         </div>
       </section>
 
+      {/* SOURCES */}
+      {a.sources.length > 0 && (
+        <section style={{ padding: '24px 0 8px', background: 'var(--creme)' }}>
+          <div className="container" style={{ maxWidth: 720 }}>
+            <h2 className="h-fredoka" style={{ fontSize: 15, color: 'var(--framboise)', opacity: 0.85, margin: '0 0 10px' }}>Sources</h2>
+            <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, opacity: 0.65, lineHeight: 1.9 }}>
+              {a.sources.map((s, i) => {
+                let host = s
+                try { host = new URL(s).hostname.replace(/^www\./, '') } catch { /* garde l'URL brute */ }
+                return (
+                  <li key={i}>
+                    <a href={s} target="_blank" rel="noopener noreferrer nofollow" style={{ color: 'var(--framboise)' }}>{host}</a>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </section>
+      )}
+
       {/* AUTRES ARTICLES */}
       <section style={{ padding: '60px 0', background: 'var(--creme)' }}>
         <div className="container" style={{ maxWidth: 1000 }}>
