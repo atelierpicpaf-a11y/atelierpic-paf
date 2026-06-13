@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { SectionTitle } from '@/components/sections/section-title'
 import { CrossPromo } from '@/components/sections/cross-promo'
 import { AnimateOnScroll } from '@/components/ui/animate-on-scroll'
+import { DoodleSpool, DoodleNeedle, DoodleHeart, DoodleScissors } from '@/components/brand/doodles'
 import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd, faqPageJsonLd, villeServiceJsonLd, personJsonLd } from '@/lib/seo/json-ld'
@@ -206,6 +207,12 @@ export default async function VillePage({ params }: { params: Promise<Params> })
       {/* ───────── HERO ───────── */}
       <section style={{ position: 'relative', padding: '90px 0 70px', background: 'var(--creme)', overflow: 'hidden' }}>
         <div className="stripes-thin" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 18, opacity: 1 }} />
+        <div className="hidden-mobile" aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          <DoodleSpool size={64} className="floaty" style={{ position: 'absolute', top: 72, left: '6%', transform: 'rotate(-8deg)', opacity: 0.85 }} />
+          <DoodleNeedle size={56} className="floaty" style={{ position: 'absolute', top: 98, right: '7%', transform: 'rotate(10deg)', opacity: 0.85 }} />
+          <DoodleHeart size={32} style={{ position: 'absolute', bottom: 30, left: '13%', opacity: 0.8 }} />
+          <DoodleScissors size={48} style={{ position: 'absolute', bottom: 36, right: '13%', transform: 'rotate(-6deg)', opacity: 0.8 }} />
+        </div>
         <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 880 }}>
           <div style={{ marginBottom: 14 }}>
             <span className="h-caveat" style={{ fontSize: 26, color: 'var(--framboise)' }}>~ {v.kicker} ~</span>

@@ -4,6 +4,7 @@ import { CrossPromo } from '@/components/sections/cross-promo'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { ARTICLES } from '@/content/articles'
+import { DoodleSpool, DoodleScissors, DoodleFlower, DoodleNeedle } from '@/components/brand/doodles'
 
 const PAGE_URL = 'https://atelierpicpaf.fr/blog'
 
@@ -48,8 +49,14 @@ export default function BlogPage() {
       />
 
       {/* HERO */}
-      <section style={{ padding: '90px 0 50px', background: 'var(--creme-pale)', textAlign: 'center' }}>
-        <div className="container" style={{ maxWidth: 760 }}>
+      <section style={{ position: 'relative', overflow: 'hidden', padding: '90px 0 50px', background: 'var(--creme-pale)', textAlign: 'center' }}>
+        <div className="hidden-mobile" aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          <DoodleSpool size={66} className="floaty" style={{ position: 'absolute', top: 70, left: '8%', transform: 'rotate(-10deg)', opacity: 0.85 }} />
+          <DoodleScissors size={56} className="floaty" style={{ position: 'absolute', top: 96, right: '9%', transform: 'rotate(10deg)', opacity: 0.85 }} />
+          <DoodleFlower size={42} style={{ position: 'absolute', bottom: 26, left: '14%', opacity: 0.8 }} />
+          <DoodleNeedle size={52} style={{ position: 'absolute', bottom: 34, right: '14%', transform: 'rotate(8deg)', opacity: 0.8 }} />
+        </div>
+        <div className="container" style={{ position: 'relative', maxWidth: 760 }}>
           <span className="h-caveat" style={{ fontSize: 28, color: 'var(--framboise)' }}>~ Conseils &amp; idées créatives ~</span>
           <h1 className="sticker-title" style={{ fontSize: 'clamp(42px,6vw,72px)', margin: '12px 0 16px' }}>Le blog</h1>
           <p style={{ fontSize: 18, lineHeight: 1.7, opacity: 0.85, maxWidth: 600, margin: '0 auto' }}>

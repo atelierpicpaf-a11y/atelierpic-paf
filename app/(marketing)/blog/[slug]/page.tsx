@@ -6,6 +6,7 @@ import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd, faqPageJsonLd } from '@/lib/seo/json-ld'
 import { ARTICLES, getArticleBySlug } from '@/content/articles'
+import { DoodleScissors, DoodleSpool, DoodleFlower, DoodleNeedle, StitchDivider } from '@/components/brand/doodles'
 
 const PUBLISHED = '2026-06-13'
 
@@ -62,8 +63,14 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
       />
 
       {/* HERO */}
-      <section style={{ padding: '80px 0 40px', background: 'var(--creme-pale)' }}>
-        <div className="container" style={{ maxWidth: 760, textAlign: 'center' }}>
+      <section style={{ position: 'relative', overflow: 'hidden', padding: '80px 0 40px', background: 'var(--creme-pale)' }}>
+        <div className="hidden-mobile" aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          <DoodleScissors size={60} className="floaty" style={{ position: 'absolute', top: 56, left: '7%', transform: 'rotate(-12deg)', opacity: 0.9 }} />
+          <DoodleSpool size={68} className="floaty" style={{ position: 'absolute', top: 80, right: '8%', transform: 'rotate(10deg)', opacity: 0.9 }} />
+          <DoodleFlower size={44} style={{ position: 'absolute', bottom: 26, left: '12%', opacity: 0.85 }} />
+          <DoodleNeedle size={52} style={{ position: 'absolute', bottom: 36, right: '13%', transform: 'rotate(8deg)', opacity: 0.85 }} />
+        </div>
+        <div className="container" style={{ position: 'relative', maxWidth: 760, textAlign: 'center' }}>
           <Link href="/blog" className="h-caveat" style={{ fontSize: 22, color: 'var(--framboise)', textDecoration: 'none' }}>~ Le blog Pic &amp; Paf ~</Link>
           <h1 className="sticker-title" style={{ fontSize: 'clamp(34px,4.6vw,56px)', margin: '14px 0 22px' }}>{a.emoji} {a.h1}</h1>
           {/* Chapô — réponse directe citable (featured snippet / IA) */}
@@ -77,11 +84,16 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
       <section style={{ padding: '50px 0 60px', background: 'var(--creme)' }}>
         <article className="container" style={{ maxWidth: 720 }}>
           {a.sections.map((s, i) => (
-            <div key={i} style={{ marginBottom: 38 }}>
-              <h2 className="h-fredoka" style={{ fontSize: 'clamp(24px,3vw,30px)', color: 'var(--framboise)', margin: '0 0 16px', lineHeight: 1.2 }}>{s.h2}</h2>
-              {s.paragraphs.map((p, j) => (
-                <p key={j} style={{ fontSize: 17, lineHeight: 1.85, margin: '0 0 16px' }}>{p}</p>
-              ))}
+            <div key={i}>
+              <div style={{ marginBottom: 28 }}>
+                <h2 className="h-fredoka" style={{ fontSize: 'clamp(24px,3vw,30px)', color: 'var(--framboise)', margin: '0 0 16px', lineHeight: 1.2 }}>{s.h2}</h2>
+                {s.paragraphs.map((p, j) => (
+                  <p key={j} style={{ fontSize: 17, lineHeight: 1.85, margin: '0 0 16px' }}>{p}</p>
+                ))}
+              </div>
+              {i < a.sections.length - 1 && (
+                <StitchDivider motif={(['spool', 'flower', 'heart', 'scissors'] as const)[i % 4]} style={{ margin: '10px 0 30px' }} />
+              )}
             </div>
           ))}
 

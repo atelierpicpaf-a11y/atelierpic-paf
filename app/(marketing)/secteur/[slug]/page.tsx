@@ -6,6 +6,7 @@ import { CrossPromo } from '@/components/sections/cross-promo'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { CANTONS, getCantonBySlug } from '@/content/cantons'
+import { DoodleScissors, DoodleFlower, DoodleHoop, DoodleSpool } from '@/components/brand/doodles'
 
 const fmt = (n: number) => n.toLocaleString('fr-FR')
 const deptLabel = (depts: string[]) =>
@@ -70,6 +71,12 @@ export default async function SecteurPage({ params }: { params: Promise<Params> 
       {/* HERO */}
       <section style={{ position: 'relative', padding: '90px 0 64px', background: 'var(--creme)', overflow: 'hidden' }}>
         <div className="stripes-thin" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 18 }} />
+        <div className="hidden-mobile" aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          <DoodleHoop size={66} className="floaty" style={{ position: 'absolute', top: 70, left: '6%', transform: 'rotate(-6deg)', opacity: 0.85 }} />
+          <DoodleScissors size={54} className="floaty" style={{ position: 'absolute', top: 96, right: '7%', transform: 'rotate(10deg)', opacity: 0.85 }} />
+          <DoodleFlower size={40} style={{ position: 'absolute', bottom: 28, left: '13%', opacity: 0.8 }} />
+          <DoodleSpool size={50} style={{ position: 'absolute', bottom: 34, right: '13%', transform: 'rotate(8deg)', opacity: 0.8 }} />
+        </div>
         <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 880 }}>
           <span className="h-caveat" style={{ fontSize: 26, color: 'var(--framboise)' }}>~ {c.kicker} ~</span>
           <h1 className="sticker-title" style={{ fontSize: 'clamp(38px, 5.5vw, 66px)', margin: '12px 0 16px' }}>{c.titreH1}</h1>
