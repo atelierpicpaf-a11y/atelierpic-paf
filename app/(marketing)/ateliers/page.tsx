@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 type Carte = { emoji: string; pour: string; titre: string; desc: string; prix: string; href: string; cta: string }
 
 const ENFANTS: Carte[] = [
-  { emoji: '🧵', pour: 'Dès 6 ans', titre: 'Ateliers couture enfants', desc: 'Cours réguliers ou stages pendant les vacances. Machine à coudre, projets concrets, fierté garantie.', prix: 'Sur demande', href: '/ateliers-enfants', cta: 'Découvrir' },
+  { emoji: '🧵', pour: 'Dès 6 ans', titre: 'Ateliers couture enfants', desc: 'Cours et stages de couture ou de punch needle. Machine à coudre, projets concrets, fierté garantie.', prix: '25€ / atelier', href: '/ateliers-enfants', cta: 'Découvrir' },
   { emoji: '🎂', pour: 'Fête · 7-12 ans', titre: 'Anniversaire couture', desc: 'Une fête qui change : chacun repart avec sa création. À domicile ou en salle.', prix: 'Sur devis', href: '/anniversaire-couture-enfant', cta: 'Découvrir' },
 ]
 const ADULTES: Carte[] = [
@@ -32,7 +32,7 @@ const ADULTES: Carte[] = [
   { emoji: '🌿', pour: 'Entre femmes · week-end', titre: 'Retraites créatives', desc: 'Un week-end en gîte : couture, yoga, repas maison. Pour souffler et créer.', prix: '390€', href: '/ateliers-adultes/retraites-creatives', cta: 'Voir les retraites' },
 ]
 const TOUS: Carte[] = [
-  { emoji: '🪡', pour: 'Enfants & adultes', titre: 'Atelier punch needle', desc: 'La broderie en relief tendance : aiguille magique, laine colorée. Aussi simple pour les enfants que bluffant pour les adultes.', prix: 'Selon le format', href: '/punch-needle', cta: 'Découvrir' },
+  { emoji: '🪡', pour: 'Enfants & adultes', titre: 'Atelier punch needle', desc: 'La broderie en relief tendance : aiguille magique, laine colorée. Aussi simple pour les enfants que bluffant pour les adultes.', prix: 'dès 25€', href: '/punch-needle', cta: 'Découvrir' },
 ]
 const STRUCTURES: Carte[] = [
   { emoji: '🏫', pour: 'Écoles · ALSH · CE…', titre: 'Interventions en structures', desc: 'Écoles, ALSH, médiathèques, associations, comités d’entreprise. Animation clé en main.', prix: 'Devis gratuit', href: '/interventions-structures', cta: 'Découvrir' },
