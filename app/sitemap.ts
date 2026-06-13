@@ -33,6 +33,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/boutique`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/a-propos`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/mentions-legales`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
+    { url: `${base}/cgv`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
+    { url: `${base}/politique-confidentialite`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
   ]
 
   const villeRoutes: MetadataRoute.Sitemap = VILLES.map((v) => ({
