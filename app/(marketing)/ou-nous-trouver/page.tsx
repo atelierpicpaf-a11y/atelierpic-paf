@@ -5,6 +5,7 @@ import { CrossPromo } from '@/components/sections/cross-promo'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { getVillesByDept, type Ville } from '@/content/villes'
+import { CANTONS } from '@/content/cantons'
 
 const PAGE_URL = 'https://atelierpicpaf.fr/ou-nous-trouver'
 
@@ -86,6 +87,28 @@ export default function OuNousTrouverPage() {
           <p style={{ marginTop: 26, fontSize: 15, opacity: 0.7 }}>
             <strong>{villes86.length + villes79.length} communes</strong> couvertes · {villes86.length} en Vienne · {villes79.length} en Deux-Sèvres
           </p>
+        </div>
+      </section>
+
+      {/* PAR SECTEUR (intercommunalités) */}
+      <section style={{ padding: '60px 0', background: 'var(--creme)' }}>
+        <div className="container">
+          <SectionTitle kicker="Par secteur" align="center">Les intercommunalités du 86 &amp; 79</SectionTitle>
+          <p style={{ fontSize: 15.5, lineHeight: 1.7, textAlign: 'center', opacity: 0.8, maxWidth: 680, margin: '22px auto 0' }}>
+            Chaque secteur regroupe ses communes (même les petits villages). Clique sur le tien :
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', maxWidth: 960, margin: '34px auto 0' }}>
+            {CANTONS.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/secteur/${c.slug}`}
+                className="wiggle"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '9px 16px', borderRadius: 999, background: '#fff', border: '1.5px solid rgba(200,54,92,.25)', color: 'var(--framboise)', fontFamily: 'var(--font-fredoka)', fontSize: 14.5, textDecoration: 'none', boxShadow: 'var(--shadow-card)' }}
+              >
+                🗺️ {c.nomClean}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

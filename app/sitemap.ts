@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { VILLES } from '@/content/villes'
+import { CANTONS } from '@/content/cantons'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -54,5 +55,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     produitRoutes = []
   }
 
-  return [...staticRoutes, ...villeRoutes, ...produitRoutes]
+  const cantonRoutes: MetadataRoute.Sitemap = CANTONS.map((c) => ({
+    url: `${base}/secteur/${c.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...villeRoutes, ...cantonRoutes, ...produitRoutes]
 }
