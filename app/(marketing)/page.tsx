@@ -68,7 +68,7 @@ export default async function HomePage() {
             <a href="/ateliers-adultes/journees-creatives" className="cta-ghost">Réserver une session</a>
           </div>
           <div style={{ marginTop:56, display:'flex', gap:40, justifyContent:'center', flexWrap:'wrap' }}>
-            {[{n:'+250',l:'petits créateurs'},{n:'4',l:"villes d'atelier"},{n:'6 ans',l:'âge minimum'},{n:'100%',l:'fait main & magique'}].map((s,i) => (
+            {[{n:'+250',l:'petits créateurs'},{n:'86·79',l:'Vienne & Deux-Sèvres'},{n:'6 ans',l:'âge minimum'},{n:'100%',l:'fait main & magique'}].map((s,i) => (
               <div key={i} style={{ textAlign:'center' }}>
                 <div className="h-fredoka" style={{ fontSize:'clamp(42px,5vw,54px)', fontWeight:700, color:'var(--framboise)', lineHeight:1 }}>{s.n}</div>
                 <div style={{ fontSize:13, opacity:.7, marginTop:4 }}>{s.l}</div>
