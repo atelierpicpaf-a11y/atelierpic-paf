@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SectionTitle } from '@/components/sections/section-title'
 import { CrossPromo } from '@/components/sections/cross-promo'
+import { AnimateOnScroll } from '@/components/ui/animate-on-scroll'
 import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd, faqPageJsonLd, villeServiceJsonLd, personJsonLd } from '@/lib/seo/json-ld'
@@ -499,6 +500,42 @@ export default async function VillePage({ params }: { params: Promise<Params> })
             </Link>{' '}
             — je m&apos;adapte au public et au format.
           </p>
+        </div>
+      </section>
+
+      {/* ───────── AVEC LUDIVINE (humain / E-E-A-T) ───────── */}
+      <section style={{ padding: '80px 0', background: 'var(--creme-pale)' }}>
+        <div className="container" style={{ maxWidth: 1040 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 48, alignItems: 'center' }}>
+            <AnimateOnScroll variant="scale-in">
+              <div style={{ position: 'relative', aspectRatio: '1 / 1', borderRadius: 32, overflow: 'hidden', boxShadow: 'var(--shadow-framboise)', maxWidth: 440, margin: '0 auto', width: '100%' }}>
+                <Image
+                  src="/images/brand/ludivine-portrait.jpg"
+                  alt={`Ludivine, fondatrice de L'atelier Pic & Paf, anime les ateliers couture et punch needle à ${v.nom} (${v.deptNom})`}
+                  fill
+                  sizes="(max-width: 768px) 90vw, 440px"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll delay={150}>
+              <span className="h-caveat" style={{ fontSize: 26, color: 'var(--framboise)' }}>~ Qui suis-je ~</span>
+              <h2 className="h-fredoka" style={{ fontSize: 'clamp(28px,3.6vw,40px)', color: 'var(--framboise)', margin: '10px 0 22px', lineHeight: 1.1 }}>
+                <span className="anim-title-underline">Moi, c&apos;est Ludivine</span>
+              </h2>
+              <p style={{ fontSize: 17, opacity: 0.88, lineHeight: 1.75, marginBottom: 16 }}>
+                Couturière passionnée et diplômée (BPJEPS), j&apos;ai créé L&apos;atelier Pic &amp; Paf pour transmettre ce qui me fait vibrer : créer de ses mains, prendre le temps, partager. Je me déplace partout en Vienne (86) et Deux-Sèvres (79) — dont {v.nom} — pour amener la couture et le punch needle aux enfants comme aux adultes.
+              </p>
+              <p style={{ fontSize: 17, opacity: 0.88, lineHeight: 1.75, marginBottom: 20 }}>
+                Pas de niveau requis, pas de jugement : juste l&apos;envie de créer ensemble, dans la bonne humeur, et de repartir fier de sa création.
+              </p>
+              <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
+                <Link href={`/contact?ville=${encodeURIComponent(v.nom)}`} className="cta-pill">Me contacter</Link>
+                <a href="tel:+33621073536" className="cta-ghost">📞 06&nbsp;21&nbsp;07&nbsp;35&nbsp;36</a>
+              </div>
+              <p className="h-caveat" style={{ fontSize: 23, color: 'var(--framboise)', margin: '20px 0 0' }}>~ J&apos;ai hâte de te rencontrer à {v.nom} ✨ ~</p>
+            </AnimateOnScroll>
+          </div>
         </div>
       </section>
 
