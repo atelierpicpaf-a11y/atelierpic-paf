@@ -22,6 +22,10 @@ export const metadata: Metadata = {
 //   videoId : 'dQw4w9WgXcQ'
 interface Tuto {
   videoId: string
+  // ISO 8601 AVEC fuseau horaire (ex "2026-05-28T05:30:05-07:00"), et qui correspond à la
+  // VRAIE date de mise en ligne YouTube. Google compare le schema à la vidéo réelle → sinon
+  // Search Console signale "fuseau horaire manquant" + "valeur de date incorrecte".
+  uploadDate: string
   title: string
   description: string
   duree?: string
@@ -33,6 +37,7 @@ interface Tuto {
 const TUTOS: Tuto[] = [
   {
     videoId: 'Fpg-_glbkNY',
+    uploadDate: '2026-05-28T05:30:05-07:00',
     title: 'Tuto bandeau magique',
     description: "Apprends à coudre un bandeau magique avec Ludivine, pas à pas. Un projet ultra simple, ultra mignon, parfait pour démarrer la couture sans pression.",
     niveau: 'Débutant',
@@ -40,6 +45,7 @@ const TUTOS: Tuto[] = [
   },
   {
     videoId: 'nTHbXs896FM',
+    uploadDate: '2026-05-28T05:42:22-07:00',
     title: 'Tuto chouchou',
     description: "Le chouchou, le projet débutante par excellence. En quelques minutes, tu repars avec un accessoire fait main, et tu auras appris les bases d'une couture propre.",
     niveau: 'Débutant',
@@ -47,6 +53,7 @@ const TUTOS: Tuto[] = [
   },
   {
     videoId: '_-RvDJwpIxg',
+    uploadDate: '2026-05-28T05:47:02-07:00',
     title: 'Tuto marque-page',
     description: "Un marque-page créatif fait main, parfait pour offrir ou se faire plaisir. Tuto pas à pas accessible aux débutantes et aux enfants dès 6 ans.",
     niveau: 'Débutant',
@@ -54,6 +61,7 @@ const TUTOS: Tuto[] = [
   },
   {
     videoId: 'BVnOkm172sU',
+    uploadDate: '2026-05-29T09:16:50-07:00',
     title: 'Tuto lingette lavable',
     description: "Couds tes propres lingettes lavables, zéro déchet et ultra simples à réaliser. Le projet malin et écolo, parfait pour débuter la couture en réutilisant tes chutes de tissu.",
     niveau: 'Débutant',
@@ -62,14 +70,14 @@ const TUTOS: Tuto[] = [
 ]
 
 // JSON-LD VideoObject — pour rich snippets Google + indexation vidéo
-function videoObjectJsonLd(t: Tuto, idx: number) {
+function videoObjectJsonLd(t: Tuto) {
   const obj: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
     name: t.title,
     description: t.description,
     thumbnailUrl: `https://i.ytimg.com/vi/${t.videoId}/maxresdefault.jpg`,
-    uploadDate: new Date(Date.now() - idx * 7 * 86400000).toISOString().split('T')[0],
+    uploadDate: t.uploadDate,
     contentUrl: `https://www.youtube.com/watch?v=${t.videoId}`,
     embedUrl: `https://www.youtube.com/embed/${t.videoId}`,
     publisher: {
@@ -105,7 +113,7 @@ export default function TutoVideoPage() {
       <JsonLd
         id="ld-tutos"
         data={[
-          ...TUTOS.map((t, i) => videoObjectJsonLd(t, i)),
+          ...TUTOS.map((t) => videoObjectJsonLd(t)),
           breadcrumbJsonLd([
             { name: 'Accueil', url: 'https://atelierpicpaf.fr' },
             { name: 'Tutos vidéos', url: 'https://atelierpicpaf.fr/tuto-video' },

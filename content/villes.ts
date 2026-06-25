@@ -36,6 +36,10 @@ export interface Ville {
   wave: 1 | 2 | 3
   /** Meta description SEO custom — si absente, fallback sur le template générique. */
   metaDescription?: string
+  /** Contenu local RÉEL et unique (quartiers, lieux, contexte) — casse le duplicate-content. */
+  localSections?: Array<{ titre: string; corps: string }>
+  /** Sources web réelles des infos locales (E-E-A-T + règle "contenu toujours sourcé"). */
+  sources?: string[]
 }
 
 export const VILLES: Ville[] = [
@@ -55,6 +59,29 @@ export const VILLES: Ville[] = [
     wave: 1,
     metaDescription:
       "🧵 Atelier créatif à Poitiers (86) : cours de couture enfants dès 6 ans, journée créative adulte (90€) et retraite créative weekend (390€) à Fontaine-le-Comte, 5 min de Poitiers. Punch needle, anniversaires, stages vacances, interventions écoles. Paiement en 3× sans frais Klarna.",
+    localSections: [
+      {
+        titre: "Coudre à Poitiers, quartier par quartier",
+        corps:
+          "Poitiers, c'est dix quartiers et un vrai maillage de lieux où une activité créative a tout de suite sa place. J'interviens volontiers dans les structures du Grand Poitiers : le réseau des médiathèques (François-Mitterrand en centre-ville, Les Couronneries, La Blaiserie à l'ouest, Médiasud, Trois-Cités), les maisons de quartier et centres socioculturels (la M3Q des Trois-Quartiers, Le Local en centre-ville, Cap Sud, le Centre d'animation des Couronneries, la Maison de la Gibauderie…), ou les accueils de loisirs — chaque maison de quartier gère son propre ALSH. Que tu sois à Beaulieu, Saint-Éloi, au Pont-Neuf ou à la Gibauderie, il y a toujours une salle, une médiathèque ou un centre tout près pour monter un atelier couture ou punch needle.",
+      },
+      {
+        titre: "Une ville jeune, étudiante et créative",
+        corps:
+          "Avec près de 91 500 habitants — et tout le Grand Poitiers à près de 197 000 sur 40 communes — Poitiers est une ville jeune et familiale. C'est aussi l'une des plus étudiantes de France : environ 23 000 étudiants, soit près d'un Poitevin sur quatre. Un public curieux, ouvert au fait-main et au loisir créatif. L'artisanat d'art y a d'ailleurs ses rendez-vous : le Salon Maison & Créations réunit chaque automne des créateurs (tissu, cuir, déco), le Marché des Potiers fait vivre la céramique, et le Marché de Noël, place du Maréchal-Leclerc, met les artisans à l'honneur. Mes journées créatives et mes cours de couture s'inscrivent dans cette même envie : créer de ses mains, prendre le temps, repartir avec sa pièce.",
+      },
+      {
+        titre: "Et tout près : Fontaine-le-Comte",
+        corps:
+          "Pour mes journées créatives adultes et mes retraites couture en weekend, je pose mes machines à Fontaine-le-Comte, commune limitrophe de Poitiers — une dizaine de minutes par l'échangeur Poitiers-Sud, là où se rejoignent l'A10 et la RN10. L'idéal pour une parenthèse au calme sans s'éloigner de la ville : on vient de Poitiers centre, de Saint-Benoît, de Buxerolles ou de Migné-Auxances en quelques minutes. Et si tu reçois de la famille de plus loin, Poitiers est à 1h15 de Paris en TGV et à deux pas du Futuroscope — parfait pour combiner un weekend créatif et une sortie en famille.",
+      },
+    ],
+    sources: [
+      "https://www.poitiers.fr/maisons-de-quartier",
+      "https://www.mediatheques-grandpoitiers.fr/",
+      "https://www.grandpoitiers.fr/grand-poitiers/les-40-communes",
+      "https://marchedespotiers.fr/",
+    ],
   },
   {
     slug: 'fontaine-le-comte',
@@ -71,6 +98,29 @@ export const VILLES: Ville[] = [
     wave: 1,
     metaDescription:
       "🧵 Journées créatives couture et retraites weekend entre femmes à Fontaine-le-Comte (86), au cœur du Grand Poitiers. Ateliers couture enfants dès 6 ans, punch needle, anniversaires, interventions écoles/ALSH. Un gîte au calme, du yoga, des ateliers créatifs guidés — la parenthèse créative que tu cherchais.",
+    localSections: [
+      {
+        titre: "Fontaine-le-Comte, mon point d'ancrage",
+        corps:
+          "C'est ici, à Fontaine-le-Comte, que je pose mes machines pour mes journées créatives et mes retraites couture le temps d'un week-end. Tu comprends vite pourquoi en arrivant : le bourg s'est construit autour de son abbaye Notre-Dame, fondée entre 1126 et 1136 et posée sur le chemin de Saint-Jacques-de-Compostelle, avec sa lumière qui entre par sept fenêtres en plein cintre. À deux pas, la forêt de l'Épine déroule ses 600 hectares et ses petits étangs. Ce calme-là, cette nature verte tout autour, c'est exactement ce que je cherchais pour qu'on couse, qu'on respire et qu'on se pose loin du bruit. Mon atelier itinérant a trouvé sa maison.",
+      },
+      {
+        titre: "Côté familles et enfants à Fontaine",
+        corps:
+          "Fontaine-le-Comte, ce sont près de 4 000 habitants et une vraie vie de village où j'adore intervenir auprès des plus jeunes. La commune a son groupe scolaire Simone Veil et son accueil de loisirs, rue du Stade, et juste à côté la bibliothèque Brigitte-Ramel, des lieux parfaits pour un atelier couture, un éveil au punch needle ou un anniversaire créatif entre copains. Que tu sois parent, enseignante ou animatrice en accueil de loisirs, je viens à toi avec mes tissus, mes laines et de quoi occuper des petites mains. Mon but : que chaque enfant reparte fier d'avoir cousu son premier objet, même tout simple, de ses propres doigts.",
+      },
+      {
+        titre: "Venir jusqu'à moi, c'est tout simple",
+        corps:
+          "Fontaine-le-Comte, c'est à seulement 12 km au sud-ouest de Poitiers, et l'échangeur Poitiers-Sud entre l'A10 et la RN10 t'amène quasiment à la porte. Autant te dire que tu arrives sans stress, que tu viennes de Poitiers, de Niort par la nationale ou de plus loin pour une retraite. La commune fait partie de Grand Poitiers et touche Croutelle, Ligugé, Vouneuil-sous-Biard et Béruges : si tu habites l'un de ces villages, je suis à dix minutes de chez toi. Et comme mon atelier est itinérant, je rayonne aussi vers Coulombiers, Marçay et tout le sud poitevin pour mes interventions. Écris-moi, on trouve toujours une solution pour se retrouver.",
+      },
+    ],
+    sources: [
+      "https://fontaine-le-comte.fr/mon-quotidien/culture-et-patrimoine/labbaye-de-fontaine-le-comte/",
+      "https://fr.wikipedia.org/wiki/Fontaine-le-Comte",
+      "https://www.grandpoitiers.fr/information-transversale/annuaire-des-equipements/bibliotheque-brigitte-ramel-49023",
+      "https://www.tourisme-vienne.com/offres/toutes-offres-patrimoine-culture/abbaye-augustine-de-fontaine-le-comte/",
+    ],
   },
   {
     slug: 'vouille',
@@ -85,6 +135,29 @@ export const VILLES: Ville[] = [
       "À Vouillé, chef-lieu de canton dans la Vienne (86), j'anime régulièrement des ateliers couture pour enfants et pour adultes. Les familles du nord-ouest poitevin (Vouillé, Latillé, Neuville-de-Poitou, Mirebeau) sont souvent à la recherche d'une activité manuelle de qualité, et apprendre à coudre entre dans cette démarche. Mes cours de couture enfants démarrent dès 6 ans, avec des projets concrets pour donner confiance et repartir fier de ce qu'on a cousu soi-même. Côté adultes, je propose des journées créatives dans un cadre convivial, un vrai loisir créatif ouvert aux grandes débutantes. J'organise également des anniversaires couture à Vouillé, un super souvenir (et un cadeau original) pour les 7-12 ans, et des interventions pour les écoles et centres de loisirs du secteur. Contacte-moi avec ton idée, on choisit ensemble le format, le nombre de participants et la date qui t'arrange.",
     villesProches: ['poitiers', 'mirebeau', 'jaunay-marigny', 'fontaine-le-comte'],
     wave: 1,
+    localSections: [
+      {
+        titre: "Coudre à Vouillé, au plus près de chez toi",
+        corps:
+          "Vouillé, je la connais comme un point d'ancrage pour le créatif au nord-ouest de Poitiers. J'y interviens volontiers sur le terrain, là où la vie locale se rassemble : autour de la Médiathèque municipale, rue des Basses Rues, qui appartient au réseau des Bibliothèques en Haut-Poitou et accueille déjà petits et grands lecteurs. Je peux aussi animer un atelier couture ou punch needle à la salle polyvalente, rue de Braunsbach, ce lieu qui sert aux lotos, vide-greniers et au marché de Noël du bourg. Que tu sois une école, un accueil de loisirs ou une association vouglaisienne, je viens avec mes machines, mes tissus et ma laine — tout le matériel suit, toi tu apportes juste l'envie de fabriquer de tes mains.",
+      },
+      {
+        titre: "Une terre d'histoire où le fait-main a sa place",
+        corps:
+          "Tu le sais peut-être : Vouillé porte un nom inscrit dans l'Histoire de France. C'est ici, au printemps 507, que se joue la bataille de Vouillé, où Clovis et ses Francs l'emportent sur le roi wisigoth Alaric II, à l'ouest de Poitiers. La commune est traversée par l'Auxance, cette rivière née à Chalandray qui file rejoindre la Boivre du côté de Biard. Dans ce chef-lieu de canton qui compte près de 3 700 habitants et continue de grandir, je crois que les loisirs créatifs trouvent toute leur place : transmettre la couture aux enfants dès 6 ans, c'est prolonger, à ma façon, la longue mémoire d'un territoire qui sait faire de ses mains.",
+      },
+      {
+        titre: "Bien situé, et relié à mes journées créatives",
+        corps:
+          "Vouillé est facile d'accès : la commune est posée sur la D149, l'ancienne RN149, l'axe historique qui relie Poitiers à Parthenay puis file vers Nantes. On y vient sans peine depuis Latillé, Quinçay, Vouneuil-sous-Biard ou les villages alentour pour un anniversaire couture, un stage de vacances ou une intervention en structure. Et si tu veux pousser plus loin l'expérience adulte, mes journées créatives et mes retraites week-end se tiennent à Fontaine-le-Comte, à une vingtaine de minutes au sud, près de Poitiers : une journée entière de couture et de punch needle, en petit groupe, repas compris. Vouillé pour le quotidien créatif, Fontaine-le-Comte pour la parenthèse.",
+      },
+    ],
+    sources: [
+      "https://fr.wikipedia.org/wiki/Bataille_de_Vouill%C3%A9",
+      "https://francearchives.gouv.fr/fr/pages_histoire/39903",
+      "https://vouille86.fr/mairie/mediatheque/",
+      "https://bibliotheques-hautpoitou.departement86.fr/mediatheque-de-vouille-vouglaisien.aspx",
+    ],
   },
   {
     slug: 'chatellerault',
@@ -99,6 +172,29 @@ export const VILLES: Ville[] = [
       "Châtellerault, sous-préfecture de la Vienne (86), est une ville où la couture a toute sa place : héritage manufacturier, tissu associatif dynamique, familles en recherche d'activités créatives pour les enfants. J'y propose des ateliers couture pour les 6-12 ans (une activité manuelle concrète qui change vraiment des écrans), des cours pour ados, des journées créatives adultes et des anniversaires couture à Châtellerault pour fêter un enfant autrement, avec un cadeau original qu'il a cousu lui-même. Je me déplace aussi volontiers dans les écoles, centres sociaux, ALSH et médiathèques de Châtellerault, Thuré, Naintré ou Jaunay-Marigny pour des interventions clés en main. Chaque atelier est pensé pour donner envie de continuer : on fait ensemble quelque chose qu'on peut porter ou offrir, on apprend la machine à coudre sans stress, on repart avec l'envie de recommencer. Si tu as un projet (groupe d'amis, événement de structure, stage pendant les vacances), dis-le-moi.",
     villesProches: ['jaunay-marigny', 'mirebeau', 'poitiers', 'thouars'],
     wave: 1,
+    localSections: [
+      {
+        titre: "Coudre à Châtellerault, quartier par quartier",
+        corps:
+          "Deuxième ville de la Vienne après Poitiers, Châtellerault et ses Châtelleraudais ont tout pour accueillir un atelier créatif. J'interviens volontiers dans les structures du Grand Châtellerault, à commencer par le réseau des médiathèques — Les Halles des savoirs, place Dupleix, Le Château des histoires, ou les autres points du réseau, qui programment déjà des animations jeunesse. Que tu sois à Châteauneuf et au centre-ville, du côté du Lac et des Renardières, aux Minimes ou dans le quartier historique de Saint-Jacques, il y a toujours une salle, une médiathèque ou un centre à deux pas pour monter un cours de couture ou un atelier punch needle — en groupe, en famille, ou pour un anniversaire.",
+      },
+      {
+        titre: "La Manu, l'âme créative de Châtellerault",
+        corps:
+          "Châtellerault a une vraie fibre du faire. Son site emblématique, La Manu — l'ancienne Manufacture d'armes, au bord de la Vienne — est devenu un grand lieu culturel et patrimonial où l'esprit d'atelier est resté dans les murs. C'est exactement l'état d'esprit de mes journées créatives et de mes cours de couture : créer de ses mains, transmettre un savoir-faire, prendre le temps. Ville familiale et active, Châtellerault est idéale pour une activité manuelle qui pose les enfants et déconnecte les adultes — débutantes bienvenues, aucun niveau requis.",
+      },
+      {
+        titre: "À deux pas de Poitiers et des environs",
+        corps:
+          "Châtellerault se trouve à une trentaine de kilomètres au nord de Poitiers, facile d'accès par l'A10 et la N10, avec sa gare sur la grande ligne Paris–Bordeaux. Je rayonne dans toute l'agglomération et les communes voisines — Naintré, Cenon-sur-Vienne, Senillé-Saint-Sauveur, Availles-en-Châtellerault, Thuré ou Jaunay-Marigny. Et pour mes journées créatives adultes et mes retraites couture en weekend, je pose mes machines un peu plus au sud, à Fontaine-le-Comte, près de Poitiers : une parenthèse au calme à moins d'une heure de Châtellerault.",
+      },
+    ],
+    sources: [
+      "https://mediatheques.grand-chatellerault.fr/contacts",
+      "https://www.tourisme-chatellerault.fr/",
+      "https://www.chatellerault.fr/",
+      "https://fr.wikipedia.org/wiki/Ch%C3%A2tellerault",
+    ],
   },
   {
     slug: 'mirebeau',
@@ -141,6 +237,28 @@ export const VILLES: Ville[] = [
       "Saint-Benoît, commune du Grand Poitiers dans la Vienne (86), fait partie des secteurs où j'organise volontiers des ateliers couture, aussi bien pour les enfants dès 6 ans que pour les adultes. Les familles de Saint-Benoît, Poitiers Sud, Ligugé ou Fontaine-le-Comte trouvent ici une vraie occasion de s'initier à la couture dans un cadre chaleureux. Je propose des cours de couture enfants, des journées créatives adultes, des anniversaires couture à Saint-Benoît et des interventions pour les écoles, ALSH, médiathèques et structures associatives du secteur. Que tu cherches une activité manuelle régulière pour ton enfant, un moment créatif entre copines, ou un format pour ton centre de loisirs, on adapte l'atelier à ton public et à tes envies. Un loisir créatif qui fait du bien, et pour les enfants un vrai cadeau original à ramener fièrement à la maison. Contacte-moi avec ton idée : je reviens rapidement vers toi avec une proposition concrète et un format calé sur ta demande.",
     villesProches: ['poitiers', 'fontaine-le-comte', 'buxerolles', 'lusignan'],
     wave: 2,
+    localSections: [
+      {
+        titre: "Coudre à Saint-Benoît, au plus près des familles",
+        corps:
+          "Saint-Benoît, c'est une commune à taille humaine que j'aime sillonner avec ma machine et mes bobines. J'interviens volontiers dans tes quartiers, du Centre-bourg à l'Ermitage-La Varenne, de Chantejeau-Naintré à Flée-Fontarnaud : partout où il y a des enfants curieux et des grands qui ont envie de créer. Une salle des fêtes, un local d'association, l'Accueil de Loisirs Multisports près de la salle du Gravion, route de Poitiers, pendant les vacances… je m'adapte à ce que tu as sous la main. Pour un atelier couture dès 6 ans, un anniversaire cousu main ou une animation punch needle, je viens à toi, fil et patience compris.",
+      },
+      {
+        titre: "Une commune vivante où le fait-main a toute sa place",
+        corps:
+          "Avec environ 7 375 habitants au pied de l'ancienne abbaye bénédictine et de l'abbatiale Saint-André, Saint-Benoît cultive une vraie identité de bourg patrimonial blotti dans la vallée du Clain et du Miosson. Et ici, le créatif n'est pas un détail : entre la salle de spectacle La Hune, le Dortoir des Moines qui accueille Le Noël des Créateurs, la bibliothèque municipale et un Forum des Associations qui réunit des dizaines de structures, le tissu local est déjà tourné vers la culture et le partage. C'est exactement le terreau que j'aime : des familles qui ont envie d'apprendre à coudre, de transmettre, de fabriquer plutôt que d'acheter tout fait.",
+      },
+      {
+        titre: "Tout près de Poitiers, et un pas vers Fontaine-le-Comte",
+        corps:
+          "Saint-Benoît est à quelques minutes du centre de Poitiers, juste au sud, à la lisière de Ligugé, Mignaloux-Beauvoir, Nouaillé-Maupertuis et Smarves : autant dire que je rayonne facilement chez toi et dans les communes voisines pour mes interventions enfants, écoles, ALSH ou médiathèques. Et si tu veux aller plus loin que l'atelier ponctuel, mes journées créatives adultes et mes retraites week-end se déroulent à Fontaine-le-Comte, à deux pas de Saint-Benoît : une parenthèse couture et punch needle, tissu et laine, dans un cadre pensé pour souffler. De ton quartier bénédictin au gîte de Fontaine, il n'y a qu'un fil — et j'ai très envie de le tendre avec toi.",
+      },
+    ],
+    sources: [
+      "https://fr.wikipedia.org/wiki/Saint-Beno%C3%AEt_(Vienne)",
+      "https://www.ville-saint-benoit.fr/visiter-saint-benoit/presentation-generale.html",
+      "https://www.eterritoire.fr/evenements/nouvelle-aquitaine/vienne/saint-benoit(86280)/marche+de+noel/3942",
+    ],
   },
   {
     slug: 'buxerolles',
@@ -155,6 +273,28 @@ export const VILLES: Ville[] = [
       "À Buxerolles, commune du Grand Poitiers dans la Vienne (86), la couture créative a toute sa place auprès des familles, des ados et des adultes débutants. J'y anime des cours de couture enfants dès 6 ans, des journées créatives adultes, des anniversaires couture à Buxerolles et des interventions dans les écoles, centres de loisirs, médiathèques et associations du secteur. Mon approche : apprendre à coudre sans pression, avec des projets concrets, dans une ambiance bienveillante où on rigole autant qu'on coud. Un loisir créatif accessible dès 6 ans, et une activité manuelle qui fait vraiment pétiller les yeux des enfants. Les habitantes et habitants de Buxerolles, Poitiers Nord, Chasseneuil-du-Poitou ou Saint-Benoît font facilement le lien avec ce type d'atelier créatif. Tu as un projet ? Un anniversaire, un stage, un moment entre copines, une animation pour ta structure ? Explique-moi ton idée, je construis une proposition adaptée à ton public et à ton format, et on cale ensemble la suite.",
     villesProches: ['poitiers', 'saint-benoit', 'jaunay-marigny', 'fontaine-le-comte'],
     wave: 2,
+    localSections: [
+      {
+        titre: "Coudre à Buxerolles, sur le terrain",
+        corps:
+          "À Buxerolles, j'interviens volontiers au plus près des familles, dans les quartiers où la vie se passe — notamment du côté de Planty-Amandiers, le secteur le plus peuplé de la commune. Plusieurs lieux se prêtent à un atelier couture ou punch needle pour enfants comme pour adultes : la bibliothèque municipale Léopold Sédar Senghor, rue Maurice Ravel, rattachée au réseau des médiathèques de Grand Poitiers ; la Maison des projets, avenue de la Liberté, ce centre social tourné vers l'éducatif et le créatif ; ou encore l'accueil de loisirs extra-scolaire Le Planty pour les plus jeunes. Si tu animes l'un de ces lieux, écris-moi : je me déplace avec tout le matériel, fil, tissu et laine compris.",
+      },
+      {
+        titre: "Une ville jeune où le fait-main a sa place",
+        corps:
+          "Buxerolles, c'est près de 10 200 habitants — la troisième ville du Grand Poitiers et de la Vienne, juste après Poitiers et Châtellerault. Une commune vivante, familiale, posée sur le plateau calcaire de l'agglomération, dans la continuité immédiate de Poitiers. Cette densité de familles et d'associations, je la vois comme une vraie chance pour le loisir créatif : la couture rassemble les générations, ralentit le rythme et fait du bien. La ville a déjà cette fibre, avec ses rendez-vous comme le Marché de Noël où se côtoient artisans et créateurs, le Forum des associations ou la Fête des plantes portée par Flore et Art. Un atelier aiguille et machine y trouve naturellement son public.",
+      },
+      {
+        titre: "Tout près de Poitiers — et de Fontaine-le-Comte",
+        corps:
+          "Buxerolles borde directement Poitiers et touche aussi Chasseneuil-du-Poitou, Migné-Auxances et Montamisé : on est en plein cœur de l'agglomération, entre la vallée du Clain à l'ouest et la Vallée des Buis au nord. Très facile à rejoindre, donc, que tu viennes du centre de Poitiers ou des communes voisines. Pour mes journées créatives adultes et mes retraites couture du week-end, je t'accueille à Fontaine-le-Comte, autre commune du Grand Poitiers à quelques minutes au sud — l'occasion de prolonger une initiation faite à Buxerolles par une vraie parenthèse, tissu et punch needle, dans un cadre plus posé. Buxerolles pour la proximité au quotidien, Fontaine-le-Comte pour s'offrir une journée entière les mains dans la laine.",
+      },
+    ],
+    sources: [
+      "https://www.buxerolles.fr/loisirs-et-culture-sports-buxerolles/culture/bibliotheque/",
+      "https://mdpbuxerolles.centres-sociaux.fr/",
+      "https://fr.wikipedia.org/wiki/Buxerolles_(Vienne)",
+    ],
   },
   {
     slug: 'lusignan',
@@ -183,6 +323,28 @@ export const VILLES: Ville[] = [
       "Chauvigny, chef-lieu de canton dans la Vienne (86), côté est poitevin, est l'un des secteurs où j'organise volontiers des ateliers couture pour enfants et pour adultes. J'y propose des cours de couture enfants dès 6 ans, des journées créatives adultes, des anniversaires couture à Chauvigny et des interventions pour les écoles, ALSH, médiathèques et structures associatives. Les familles de Chauvigny, Saint-Julien-l'Ars, Valdivienne ou Poitiers Est y trouvent une activité manuelle pour enfants qui change des propositions classiques, un vrai loisir créatif dans une ambiance où on apprend en s'amusant. Les ados adorent customiser leurs vêtements, les enfants repartent fiers d'avoir cousu leur propre objet, les adultes débutants reprennent confiance devant la machine à coudre. Tu imagines un projet ? Un atelier de groupe, une animation d'anniversaire, un stage vacances, une intervention pour ta structure ? Raconte-moi, je t'envoie une proposition sur mesure.",
     villesProches: ['poitiers', 'chatellerault', 'saint-benoit', 'buxerolles'],
     wave: 2,
+    localSections: [
+      {
+        titre: "Coudre à Chauvigny, sur le terrain",
+        corps:
+          "À Chauvigny, j'interviens volontiers là où la vie créative se passe déjà. La bibliothèque municipale, rue de Châtellerault, fait partie du réseau des Médiathèques Grand Poitiers : un cadre idéal pour un atelier couture ou punch needle entre deux rayonnages. Je me déplace aussi dans les écoles, les accueils de loisirs et les associations du secteur pour animer des séances enfants dès 6 ans. Entre la cité médiévale perchée sur son éperon et la basse-ville le long de la Vienne, il y a toujours une salle ou une structure prête à accueillir un atelier. Tu portes un projet à Chauvigny ? Écris-moi, je construis la formule avec toi.",
+      },
+      {
+        titre: "Une cité médiévale où le fait-main a sa place",
+        corps:
+          "Chauvigny, c'est la ville aux cinq châteaux : le château Baronnial, le donjon de Gouzon, le château d'Harcourt, Mauléon et la tour de Flins, groupés sur un même éperon qui domine la vallée de la Vienne — un ensemble rare en Europe. En contrebas veille la collégiale Saint-Pierre et ses chapiteaux sculptés du XIIe siècle. Au Château des Évêques, les Géants du Ciel font voler leurs rapaces chaque saison. Dans une commune de plus de 7 000 habitants aussi attachée à son patrimoine et au geste d'autrefois, transmettre la couture et le punch needle me semble couler de source.",
+      },
+      {
+        titre: "Bien reliée, et un pont vers Fontaine-le-Comte",
+        corps:
+          "Chauvigny se trouve à l'est de Poitiers, une vingtaine de kilomètres le long de la Vienne, ce qui me permet de rayonner facilement vers les communes voisines : Valdivienne, Jardres, Bonnes, Pouillé, ou encore Bonneuil-Matours et Cenon-sur-Vienne dans le secteur. Rattachée à Grand Poitiers Communauté urbaine, la ville reste à portée de mes ateliers enfants et de mes interventions en structure. Et si tu veux pousser plus loin, mes journées créatives adultes et mes retraites week-end se déroulent à Fontaine-le-Comte, près de Poitiers : une journée tissu et laine, ou un séjour cousu main, à moins d'une heure de route de chez toi. De Chauvigny à Fontaine, le fil ne se coupe jamais.",
+      },
+    ],
+    sources: [
+      "https://www.chauvigny.fr/index.php/tourisme-patrimoine/se-divertir-en-famille-a-chauvigny/115-les-geants-du-ciel-chateau-des-eveques",
+      "https://www.insee.fr/fr/statistiques/1405599?geo=COM-86070",
+      "https://bm-chauvigny.departement86.fr/",
+    ],
   },
 
   // ────────────────── DEUX-SÈVRES (79) ──────────────────
@@ -199,6 +361,28 @@ export const VILLES: Ville[] = [
       "Niort, préfecture des Deux-Sèvres (79), est une ville créative où je propose régulièrement des ateliers couture pour enfants et pour adultes. Les familles niortaises cherchent des activités manuelles pour enfants qui changent des écrans, un loisir créatif qui a du sens, et mes cours de couture enfants dès 6 ans répondent exactement à cette attente : on coud vraiment quelque chose, on apprend la machine à coudre étape par étape, on repart avec un objet dont on est fier. Côté adultes, j'organise des journées créatives, des anniversaires couture à Niort et des interventions dans les écoles, médiathèques, ALSH et structures associatives de l'agglomération niortaise. Habitantes et habitants de Niort, Bessines, Aiffres, Chauray ou Échiré, si tu as une envie (apprendre à coudre, organiser un anniversaire différent, animer un groupe, monter un projet pour ta structure), contacte-moi avec ton idée et on construit ensemble le format qui te correspond.",
     villesProches: ['parthenay', 'bressuire', 'lusignan', 'fontaine-le-comte'],
     wave: 1,
+    localSections: [
+      {
+        titre: "Coudre à Niort, sur le terrain",
+        corps:
+          "Niort s'organise en neuf quartiers officiels — du Centre-ville à Souché, Sainte-Pezenne, Saint-Florent ou le Clou-Bouchet — et j'aime poser mes machines au plus près des familles, là où la vie de quartier bat son plein. Mon atelier est itinérant, alors je me déplace volontiers : un cours de couture enfants dès 6 ans, une initiation au punch needle ou un anniversaire créatif dans une structure qui m'accueille. Le réseau de lecture publique de Niort Agglo, autour de la médiathèque Pierre-Moinot et de ses antennes de Saint-Florent, Sainte-Pezenne et du Clou-Bouchet, est autant de lieux où j'interviens avec plaisir pour des ateliers ponctuels, en lien avec les équipes.",
+      },
+      {
+        titre: "Une ville créative, du Donjon au Marais poitevin",
+        corps:
+          "À Niort, le fil à la main a toute sa place. La ville veille sur un patrimoine fort — le Donjon, les berges de la Sèvre Niortaise — et s'ouvre, juste à côté, sur la Venise verte du Marais poitevin : un cadre qui donne envie de ralentir et de créer de ses mains. Avec près de 60 000 habitants, Niort entretient une vraie scène d'artisanat et de fait-main : j'y croise l'esprit du Salon des Créateurs, qui réunit créateurs et artisans locaux au Parc des expositions. C'est exactement ce terreau-là — déco, couture, textile, loisirs créatifs — que je viens enrichir avec mes ateliers, pour petits et grands.",
+      },
+      {
+        titre: "Bien reliée, à deux pas de mes journées créatives",
+        corps:
+          "Niort est facile à rejoindre : sa gare propose TGV et TER (Paris à moins de deux heures), et la ville se situe au croisement de deux autoroutes, l'A10 (Paris–Bordeaux) et l'A83 (vers Nantes). Poitiers n'est qu'à environ 75 km, ce qui rapproche les familles niortaises de mes rendez-vous adultes. Mes journées créatives et mes retraites week-end se tiennent en effet à Fontaine-le-Comte, tout près de Poitiers : un cocon où l'on coud, où l'on manie la laine en punch needle, où l'on souffle. Et pour les enfants comme pour les structures — écoles, ALSH, médiathèques — des Deux-Sèvres, je me déplace sur Niort et ses communes voisines, mes machines dans le coffre.",
+      },
+    ],
+    sources: [
+      "https://www.vivre-a-niort.com/cadre-de-vie/quartiers/index.html",
+      "https://mediatheques.niortagglo.fr/",
+      "https://www.insee.fr/fr/statistiques/1405599?geo=COM-79191",
+    ],
   },
   {
     slug: 'parthenay',
@@ -213,6 +397,29 @@ export const VILLES: Ville[] = [
       "Parthenay, sous-préfecture des Deux-Sèvres (79) et porte d'entrée de la Gâtine, est un secteur où j'organise avec plaisir des ateliers couture pour enfants comme pour adultes. J'y propose des cours de couture enfants dès 6 ans, des journées créatives adultes, des anniversaires couture à Parthenay et des interventions dans les écoles, centres de loisirs, médiathèques et structures associatives du bassin parthenaisien. Les familles de Parthenay, Châtillon-sur-Thouet, Secondigny ou Ménigoute aiment trouver près de chez elles un atelier qui apprend vraiment : machine à coudre, projet concret, résultat à ramener à la maison. Un cadeau original que l'enfant a cousu de ses mains. Mes formats s'adaptent à tous les niveaux : grandes débutantes, ados qui customisent, enfants qui découvrent, équipes d'associations qui veulent une animation créative. Raconte-moi ce que tu imagines, je construis avec toi le bon atelier pour ton public et ton timing.",
     villesProches: ['bressuire', 'thouars', 'niort', 'chatellerault'],
     wave: 2,
+    localSections: [
+      {
+        titre: "Coudre à Parthenay, sur le terrain",
+        corps:
+          "Parthenay, c'est cette cité médiévale accrochée au-dessus du Thouet, avec sa porte Saint-Jacques et la rue de la Vau Saint-Jacques où les pierres racontent déjà mille histoires de mains habiles. J'aime l'idée d'y poser mes machines et mon panier de laine, pas loin de ces ruelles. J'interviens volontiers dans les médiathèques du réseau souRces — à Parthenay, mais aussi à Pompaire ou Secondigny — où des ateliers et animations rythment déjà l'année. Je peux aussi imaginer des temps couture et punch needle au Pôle enfance Maurice-Caillon ou avec le centre socioculturel L'Arpentèle. Tu animes une de ces structures, une école ou un accueil de loisirs du coin ? Écris-moi, on construit ça ensemble.",
+      },
+      {
+        titre: "Une ville de jeux et de mains habiles",
+        corps:
+          "Parthenay porte un beau surnom : la capitale de la Gâtine poitevine, ce pays bocager au cœur des Deux-Sèvres. Et chaque été, la ville devient mondialement connue grâce au FLIP, le Festival Ludique International de Parthenay, qui investit gratuitement ses rues et ses places depuis 1986. Dans une commune d'environ 10 140 habitants aussi attachée au jeu, à la transmission et au fait-main, le loisir créatif a toute sa place. Coudre, piquer la laine colorée sur un cadre de punch needle, repartir avec un objet qu'on a fabriqué soi-même : c'est la même joie tranquille que devant un bon jeu de société. La ludothèque communautaire l'a bien compris, elle qui partage ses boîtes jusqu'à Secondigny.",
+      },
+      {
+        titre: "Itinérante entre Gâtine et Fontaine-le-Comte",
+        corps:
+          "Mon atelier est itinérant, alors la distance ne me fait pas peur : Parthenay est à une cinquantaine de kilomètres de Poitiers, reliée par la D743, et la ville se déplace même en Pybus, son réseau de bus gratuit. Je viens volontiers jusqu'en Gâtine pour un cours enfant, un anniversaire couture ou une intervention dans une structure, à Parthenay comme dans les communes voisines de Pompaire, Secondigny ou Châtillon-sur-Thouet. Et si tu as envie d'une parenthèse plus longue rien que pour toi, mes journées créatives et mes retraites week-end t'attendent à Fontaine-le-Comte, près de Poitiers : un cadre cousu main où l'on prend enfin le temps de créer, machine à coudre et laine à portée de main.",
+      },
+    ],
+    sources: [
+      "https://mediatheques-ludotheque.parthenay-gatine.fr/",
+      "https://www.cc-parthenay-gatine.fr/au-quotidien/accueils-de-loisirs",
+      "https://www.jeux-festival.com/",
+      "https://fr.wikipedia.org/wiki/Parthenay",
+    ],
   },
   {
     slug: 'bressuire',
@@ -227,6 +434,28 @@ export const VILLES: Ville[] = [
       "Bressuire, sous-préfecture des Deux-Sèvres (79), au cœur du Bocage bressuirais, est un secteur où je déplace volontiers mes ateliers couture. J'y propose des cours de couture enfants dès 6 ans, des journées créatives adultes, des anniversaires couture à Bressuire et des interventions pour les écoles, ALSH, médiathèques et centres sociaux du bassin bressuirais. Les familles de Bressuire, Cerizay, Mauléon, Nueil-les-Aubiers ou Argentonnay apprécient un loisir créatif qui vient jusqu'à elles, avec un vrai contenu pédagogique et une ambiance détendue. On apprend à coudre sans stress, on ose la machine à coudre, on repart avec un objet qu'on a fait soi-même. Tu as un projet ? Un anniversaire, un moment entre amies, un stage vacances, une animation pour une structure locale ? Envoie-moi un message, je reviens rapidement avec une proposition adaptée à ton format et à ton public.",
     villesProches: ['parthenay', 'thouars', 'niort', 'chatellerault'],
     wave: 2,
+    localSections: [
+      {
+        titre: "Coudre à Bressuire, sur le terrain",
+        corps:
+          "Bressuire, je la vois comme une vraie ville-atelier : deuxième commune des Deux-Sèvres par sa population, avec ses quartiers vivants comme la Valette, Bel-Air ou le tout neuf quartier des 4 Saisons qui sort de terre sur l'ancien collège Supervielle. Comme mon atelier est itinérant, je pose volontiers mes machines là où les familles se retrouvent déjà. J'interviens avec plaisir dans des lieux de proximité du Bocage bressuirais — je pense par exemple à la Médiathèque de Bressuire, rattachée au réseau de lecture publique de l'Agglo2B, ou à la bibliothèque du quartier de Saint-Sauveur. Initiation à la machine, premiers points à la main, punch needle : on s'installe près de chez toi, ateliers enfants dès 6 ans comme adultes.",
+      },
+      {
+        titre: "Une ville de caractère où le fait-main a sa place",
+        corps:
+          "Ce que j'aime à Bressuire, c'est ce mélange de patrimoine fort et d'énergie de territoire. Son château médiéval, l'un des plus vastes de l'Ouest avec son enceinte d'environ 700 mètres et ses 38 tours, domine encore la vallée — propriété de la commune depuis 1975, il rappelle un savoir-faire de bâtisseurs qui résonne bien avec le geste créatif. Et puis Bressuire est le siège de l'Agglo2B, l'agglomération du Bocage bressuirais qui réunit 33 communes et plus de 74 000 habitants : tout un bassin de vie, d'écoles, d'accueils de loisirs et de structures où le loisir créatif trouve naturellement sa place. Coudre ici, c'est inscrire un objet fait main dans une histoire de transmission bien ancrée.",
+      },
+      {
+        titre: "Accès facile et passerelle vers Fontaine-le-Comte",
+        corps:
+          "Bressuire reste très accessible : sa gare, sur la ligne reliant Les Sables-d'Olonne à Tours, et la liaison historique vers Poitiers par Parthenay m'amènent facilement jusqu'au cœur du bocage. Compte environ 80 km par la route depuis Poitiers, autant dire que je ne suis jamais loin pour un atelier en école, en médiathèque ou un anniversaire couture. Et si tu veux pousser l'expérience plus loin, mes journées créatives et mes retraites week-end se tiennent à Fontaine-le-Comte, près de Poitiers : l'occasion d'une vraie parenthèse machine, tissu et laine. Je rayonne aussi volontiers vers les communes voisines de l'Agglo2B — Cerizay, Mauléon, Nueil-les-Aubiers ou Moncoutant-sur-Sèvre — pour rapprocher l'atelier de chez toi.",
+      },
+    ],
+    sources: [
+      "https://fr.wikipedia.org/wiki/Bressuire",
+      "https://www.bibliotheques.agglo2b.fr/accueil/bressuire",
+      "https://www.tourisme-bocage.com/visiter/histoire-et-patrimoine/chateau-de-bressuire-643624",
+    ],
   },
   {
     slug: 'thouars',
@@ -241,6 +470,28 @@ export const VILLES: Ville[] = [
       "Thouars, sous-préfecture des Deux-Sèvres (79) au nord du département, est l'une des villes où j'organise volontiers des ateliers couture, que ce soit pour des enfants, des ados ou des adultes. Je propose des cours de couture enfants dès 6 ans, des journées créatives adultes, des anniversaires couture à Thouars et des interventions dans les écoles, médiathèques, ALSH et structures associatives du Thouarsais. Les familles de Thouars, Saint-Varent, Airvault ou Argentonnay cherchent souvent une activité manuelle pour enfants qui a du sens, et coudre de ses propres mains coche toutes les cases : geste utile, confiance en soi, objet fini à ramener à la maison. Tu rêves d'un anniversaire couture différent, d'un stage pendant les vacances, d'une animation pour ta structure, ou tu veux simplement apprendre à coudre en petit comité ? Écris-moi, je monte la proposition avec toi.",
     villesProches: ['bressuire', 'parthenay', 'chatellerault', 'niort'],
     wave: 2,
+    localSections: [
+      {
+        titre: "Coudre à Thouars, sur le terrain",
+        corps:
+          "Mon atelier est itinérant, alors je pose volontiers mes machines et mes bobines partout dans le Thouarsais. À Thouars, j'aimerais beaucoup intervenir au sein du Réseau Lecture Thouarsais et de la médiathèque intercommunale, deux lieux parfaits pour un atelier couture en famille. Côté enfants, je peux animer des ateliers avec les accueils de loisirs de la ville comme l'ALSH de Fleury ou l'ALSH L'île des enfants à Rigné. Le Centre Socioculturel du Thouarsais, rue Anne Desrays, est aussi un partenaire idéal pour toucher les habitants des quartiers des Capucins ou des Maligrettes. Écris-moi simplement, et on imagine ensemble une animation cousue main près de chez toi.",
+      },
+      {
+        titre: "Une ville d'histoire où le fait main a sa place",
+        corps:
+          "Thouars, c'est une cité née sur un éperon rocheux, lovée dans un méandre du Thouet, dominée par l'imposant château des ducs de la Trémoïlle et sa façade de 110 mètres, l'une des plus remarquables du XVIIe siècle en France. Dans une ville d'art et d'histoire comme celle-ci, riche de près de 13 600 habitants, le loisir créatif prolonge naturellement cet attachement au beau et au patrimoine. La couture, le punch needle et le fil y ajoutent une couleur douce, un geste transmis de mes mains aux tiennes, petites ou grandes — entre tradition textile et envie de créer.",
+      },
+      {
+        titre: "Bien reliée, à deux pas de mes journées créatives",
+        corps:
+          "Thouars se rejoint facilement : la gare de Thouars, sur la ligne TER vers Saumur, Bressuire et Niort, et les axes routiers comme la D938 vers Parthenay placent la ville à environ 66 kilomètres de Poitiers, soit moins d'une heure de route. Pratique, car mes journées créatives adultes et mes retraites week-end se déroulent à Fontaine-le-Comte, près de Poitiers : si tu viens de Thouars, de Sainte-Verge, de Louzy ou de Saint-Jean-de-Thouars, tu peux pousser jusqu'à moi pour une grande respiration créative. Et pour les enfants, les anniversaires couture et les interventions, c'est moi qui me déplace jusque dans le Thouarsais. On trouve toujours une solution pour coudre ensemble.",
+      },
+    ],
+    sources: [
+      "https://www.insee.fr/fr/statistiques/2011101?geo=COM-79329",
+      "https://thouars.fr/les-inscriptions-pour-les-accueils-de-loisirs-de-thouars-sont-ouvertes/",
+      "https://www.thouars-communaute.fr/culture-reseau-lecture-mediatheque",
+    ],
   },
 
   // ────────────────── WAVE 3 — extension (mai 2026) ──────────────────
@@ -274,6 +525,29 @@ export const VILLES: Ville[] = [
       "Migné-Auxances, commune dynamique du Grand Poitiers (86), accueille volontiers mes ateliers couture pour enfants comme pour adultes. Située aux portes nord de Poitiers, c'est un lieu idéal pour les familles qui veulent une activité manuelle de qualité sans se déplacer loin du centre-ville. Mes cours de couture enfants démarrent dès 6 ans, avec une vraie pédagogie pas-à-pas et la fierté de repartir avec une création. Côté adultes, je propose des journées créatives à Fontaine-le-Comte (à moins de 15 minutes) qui combinent couture et punch needle dans une ambiance entre copines, et des retraites créatives weekend pour celles qui veulent se ressourcer. À Migné-Auxances même, j'organise des anniversaires couture (un format qui change tout) et j'interviens dans les écoles, ALSH et associations locales avec des animations clé en main. Si tu cherches un atelier couture à Migné-Auxances ou à proximité (Poitiers, Buxerolles, Saint-Benoît), écris-moi avec ton projet — je te propose un format sur-mesure.",
     villesProches: ['poitiers', 'buxerolles', 'saint-benoit', 'biard'],
     wave: 3,
+    localSections: [
+      {
+        titre: "Coudre à Migné-Auxances, sur le terrain",
+        corps:
+          "À Migné-Auxances, j'interviens volontiers au plus près des familles, dans les lieux de vie de la commune. Le bourg réunit deux entités, Migné, blottie dans un méandre de la rivière, et Auxances, ce village-rue étiré le long de l'ancienne route nationale — autant de quartiers où une animation couture peut prendre place. La Bibliothèque municipale, rue du 8 mai 1945 et reliée au réseau Médiathèques & Ludothèques de Grand Poitiers, le Centre Socio-Culturel La Comberie ou la salle des fêtes Jean Ferrat sont le genre d'espaces où je peux poser mes machines pour un atelier enfants, un anniversaire créatif ou une initiation au punch needle. Une école, un ALSH, une association de Migné-Auxances a un projet ? Écris-moi, on cale ça ensemble.",
+      },
+      {
+        titre: "Une vallée verte où le créatif a toute sa place",
+        corps:
+          "Migné-Auxances, ce sont près de 6 300 habitants sur un vaste territoire d'environ 2 900 hectares déroulé tout le long de l'Auxance. Vallée, prairies humides, pelouses calcaires et coteaux qui montent jusqu'à 132 mètres : la commune a grandi aux portes de Poitiers sans rien perdre de son cadre naturel. Cette identité-là, attachée à la rivière et au fil de l'eau, parle forcément à quiconque aime le travail des matières. Avec une population jeune et familiale qui continue de s'installer, je trouve ici un beau terreau pour transmettre la couture aux enfants dès 6 ans et faire souffler les adultes une journée, aiguille en main, loin des écrans.",
+      },
+      {
+        titre: "Tout près de Poitiers, et de Fontaine-le-Comte",
+        corps:
+          "Migné-Auxances borde directement Poitiers, Avanton et Chasseneuil-du-Poitou, avec Buxerolles, Biard, Quinçay, Cissé ou Vouneuil-sous-Biard à quelques minutes : autant de communes voisines d'où l'on me rejoint facilement. Membre de Grand Poitiers Communauté urbaine, la commune est parfaitement reliée, ce qui rend simple le déplacement de mon atelier itinérant comme la venue jusqu'à mes rendez-vous fixes. Car si j'anime des ateliers chez toi, mes journées créatives adultes et mes retraites week-end, elles, se posent à Fontaine-le-Comte, de l'autre côté de Poitiers — une vingtaine de minutes depuis Migné-Auxances. De la couture enfants au gîte créatif d'un week-end, tout reste à portée.",
+      },
+    ],
+    sources: [
+      "https://www.migne-auxances.fr/Decouvrir-Migne-Auxances/Histoire/Deux-mots-d-histoire",
+      "https://www.grandpoitiers.fr/grand-poitiers/les-40-communes/migne-auxances",
+      "https://fr.wikipedia.org/wiki/Migné-Auxances",
+      "https://bibliotheque-migne-auxances.fr/",
+    ],
   },
   {
     slug: 'biard',
@@ -428,6 +702,29 @@ export const VILLES: Ville[] = [
       "Loudun, sous-préfecture de la Vienne (86), est la capitale du Loudunais — un secteur rural et culturel où j'aime emmener mes ateliers couture. Cette ville chargée d'histoire (la tour Carrée, le théâtre Sully) abrite un public familial et associatif qui cherche des activités manuelles de qualité hors du circuit poitevin classique. Mes cours de couture enfants démarrent dès 6 ans avec une vraie pédagogie : machine à coudre, projets adaptés, ambiance bienveillante. Pour les adultes, je propose des journées créatives à la demande (à Loudun, en salle communale, ou à Fontaine-le-Comte) qui mêlent couture et punch needle dans un format ressourçant. Les anniversaires couture marquent les esprits des 7-12 ans loudunais (et soulagent le portefeuille du cadeau original), et j'interviens régulièrement en école, ALSH, médiathèque et structures du Loudunais. Si tu veux organiser un atelier à Loudun, Mirebeau, Moncontour ou autour, écris-moi avec ton projet.",
     villesProches: ['mirebeau', 'thouars', 'chatellerault', 'vouille'],
     wave: 3,
+    localSections: [
+      {
+        titre: "Coudre à Loudun, sur le terrain",
+        corps:
+          "Atelier itinérant, je viens à ta rencontre dans le Loudunais avec ma machine et mes bobines. À Loudun, je peux animer un cours de couture pour les enfants dès 6 ans, une initiation au punch needle ou un atelier créatif adultes dans une salle municipale, une association ou une médiathèque. La Médiathèque municipale, place Sainte-Croix, et l'Espace culturel René Monory accueillent déjà la vie associative et culturelle de la ville : ce sont exactement le genre de lieux où j'interviens volontiers. Pour l'enfance, je travaille main dans la main avec les structures du Pays Loudunais — accueils périscolaires, ALSH, écoles — sur des stages vacances, des anniversaires couture ou des animations sur mesure.",
+      },
+      {
+        titre: "Une ville de patrimoine où le fait-main a sa place",
+        corps:
+          "Loudun, c'est presque 6 800 habitants au nord de la Vienne, et un patrimoine qui inspire. La Tour carrée, donjon classé Monument historique depuis 1877, domine la ville avec son jardin d'inspiration médiévale et ses plantes d'autrefois. La collégiale Sainte-Croix, elle, a une histoire qui me parle de près : ancienne église romane, elle est devenue marché couvert jusqu'en 1991, avant de renaître en espace d'expositions et de concerts. Loudun est aussi la ville natale de Théophraste Renaudot, né ici en 1586, à qui un musée est dédié. Dans une cité qui sait transformer et faire vivre ses lieux, transmettre la couture et le geste créatif a tout son sens.",
+      },
+      {
+        titre: "Accès, marché et lien avec mes journées près de Poitiers",
+        corps:
+          "Loudun se trouve à une cinquantaine de kilomètres au nord de Poitiers, bien reliée par la route ; je me déplace donc facilement sur la ville et tout le Loudunais. Si tu croises le marché du mardi matin, qui s'étire de la Porte de Chinon à la place Sainte-Croix, tu sens vite cet esprit d'artisans et de produits faits maison auquel j'aime me rattacher. Et pour celles et ceux qui veulent prolonger l'expérience une journée entière ou un week-end complet, je propose mes journées créatives et mes retraites couture à Fontaine-le-Comte, près de Poitiers. De Loudun, c'est une belle escapade créative, facile à organiser entre voisins du Loudunais ou en duo.",
+      },
+    ],
+    sources: [
+      "https://www.ville-loudun.fr/decouvrir-loudun-1/monuments-loudun/la-tour-carree-loudun-vienne",
+      "https://www.patrimoine-nouvelle-aquitaine.fr/default/doc/Dossier/2f9411af-21cd-4fe2-9680-95ffc14981e0/eglise-collegiale-sainte-croix-de-loudun-devenue-marche-couvert-puis-espace-culturel",
+      "https://www.insee.fr/fr/statistiques/2011101?geo=COM-86137",
+      "https://www.pays-loudunais.fr/au-quotidien/enfance-jeunesse/accueil-periscolaire/",
+    ],
   },
   {
     slug: 'montmorillon',
@@ -442,6 +739,29 @@ export const VILLES: Ville[] = [
       "Montmorillon, sous-préfecture de la Vienne (86), se distingue comme Cité de l'Écrit et du Métier d'Art : un terrain naturel pour les ateliers créatifs et la couture. Le bassin montmorillonnais, riche en familles et en structures associatives engagées dans le tissu local, accueille volontiers mes formats. Pour les enfants dès 6 ans, mes cours apprennent la machine à coudre et la confiance qui va avec : chaque enfant repart avec une création qu'il peut porter ou offrir. Côté adultes, je propose des journées créatives à la demande (Montmorillon en salle communale, ou à Fontaine-le-Comte pour les sessions régulières) qui combinent couture et punch needle dans la convivialité. Les anniversaires couture sont parfaits pour les 7-12 ans qui veulent une fête différente, et les interventions en école, médiathèque ou ALSH se construisent sur-mesure. Si tu rayonnes depuis Montmorillon, Lussac-les-Châteaux, Chauvigny ou Saint-Savin, écris-moi.",
     villesProches: ['chauvigny', 'saint-savin', 'poitiers', 'civray'],
     wave: 3,
+    localSections: [
+      {
+        titre: "Coudre à Montmorillon, sur le terrain",
+        corps:
+          "Atelier itinérant, je viens jusqu'à toi, à Montmorillon comme dans tout le Montmorillonnais. Avec mon matériel — machines, tissus, laine pour le punch needle — j'installe un vrai coin couture là où les enfants et les familles se retrouvent déjà : autour de la médiathèque Prosper Mérimée, avenue Pasteur, ou dans le cadre des accueils de loisirs portés par la communauté de communes Vienne et Gartempe. J'interviens volontiers en école, en ALSH, en médiathèque ou en association pour un cycle couture dès 6 ans, un anniversaire créatif ou une animation ponctuelle. Tu portes un projet à Montmorillon ou à Saulgé ? Écris-moi, on cale ensemble un atelier qui te ressemble.",
+      },
+      {
+        titre: "La Cité de l'Écrit, terre de mains qui créent",
+        corps:
+          "Montmorillon n'a pas volé son surnom de Cité de l'Écrit et des métiers du livre. Dans le vieux quartier médiéval, le long de la Gartempe, des bouquinistes et des artisans — relieurs, enlumineurs, calligraphes — font vivre le geste de la main, tout près du fameux Octogone de la Maison-Dieu, cette chapelle romane du XIIe siècle classée dès 1840. Ici, le fait-main n'est pas une mode, c'est une mémoire. Mon atelier couture y trouve naturellement sa place : même envie de prendre le temps, de transmettre un savoir-faire, de fabriquer du beau de ses doigts. Et puisqu'on parle de patience et de gourmandise, la ville cultive aussi son macaron, signé Rannou-Métivier depuis des générations. De quoi coudre l'esprit léger.",
+      },
+      {
+        titre: "Venir, et prolonger côté Poitiers",
+        corps:
+          "Montmorillon, sous-préfecture de la Vienne d'environ 6 000 habitants, est à une cinquantaine de kilomètres de Poitiers, par la N147 puis la D727, soit moins d'une heure de route. Je rayonne aussi vers les communes voisines : Saulgé, Saint-Savin et son abbaye inscrite à l'UNESCO, Lussac-les-Châteaux ou Lathus-Saint-Rémy. Et si tu veux pousser l'expérience plus loin que l'atelier près de chez toi, mes journées créatives adultes et mes retraites couture d'un week-end se déroulent à Fontaine-le-Comte, aux portes de Poitiers : une parenthèse tissu, laine et bonne humeur, repas compris. De Montmorillon, c'est tout proche — l'occasion de prolonger l'aiguille le temps d'une vraie pause créative.",
+      },
+    ],
+    sources: [
+      "https://www.montmorillon.fr/contacts/mediatheque-prosper-merimee/",
+      "https://www.tourisme-vienne.com/offres/sites-monuments-historiques/la-cite-de-lecrit-et-des-metiers-du-livre/",
+      "https://fr.wikipedia.org/wiki/Octogone_de_Montmorillon",
+      "https://www.museedumacaron.com/histoire/",
+    ],
   },
   {
     slug: 'saint-savin',
@@ -528,6 +848,28 @@ export const VILLES: Ville[] = [
       "Saint-Maixent-l'École, dans le centre des Deux-Sèvres (79), est une ville d'histoire célèbre pour son école militaire et son patrimoine roman. C'est aussi un secteur où mes ateliers couture rencontrent un beau public : familles, écoles, médiathèques. Mes cours de couture enfants démarrent dès 6 ans avec une vraie pédagogie pas-à-pas : machine à coudre apprivoisée, projets concrets, fierté de la création finie. Pour les adultes, je propose des journées créatives à Fontaine-le-Comte (au nord-est) ou à la demande à Saint-Maixent pour des groupes constitués. Les anniversaires couture sont parfaits pour les 7-12 ans saint-maixentais (et changent vraiment du cadeau classique), et j'interviens en école, ALSH, médiathèque ou structure associative pour des animations clé en main. Si tu rayonnes depuis Saint-Maixent, Soudan, Sainte-Eanne, La Mothe-Saint-Héray ou autour, écris-moi avec ton projet et ton public.",
     villesProches: ['niort', 'la-creche', 'chauray', 'melle'],
     wave: 3,
+    localSections: [
+      {
+        titre: "Coudre à Saint-Maixent-l'École, sur le terrain",
+        corps:
+          "Mon atelier est itinérant, alors je viens à toi : je pose mes machines et mes bobines là où la vie locale se passe. À Saint-Maixent-l'École, j'interviens volontiers du côté de la médiathèque intercommunale Aqua-Libris — cette ancienne piscine militaire reconvertie est un lieu que j'adore pour un atelier couture ou punch needle. Le tiers-lieu Quartiers Libres, avec son esprit fablab et coworking, se prête aussi très bien à un temps créatif partagé. Que tu sois au centre-ville historique ou vers le secteur de la Coiffe, je peux animer un cours enfants dès 6 ans, une initiation adultes, un anniversaire couture ou une intervention pour une école ou un accueil de loisirs.",
+      },
+      {
+        titre: "Une ville de patrimoine où les mains aiment créer",
+        corps:
+          "Saint-Maixent-l'École, c'est près de 7 600 habitants et une identité forte : son abbatiale romane, reconstruite dès la fin du XIe siècle et classée monument historique, et surtout l'ENSOA, l'École nationale des sous-officiers d'active qui marque la ville depuis des décennies. Cette commune des Deux-Sèvres, posée sur la Sèvre Niortaise au cœur de la Communauté de communes Haut Val de Sèvre, mêle histoire militaire, savoir-faire et vie de famille. Le loisir créatif y a toute sa place : entre les militaires en formation, leurs familles installées le temps d'un cycle et les Saint-Maixentais de toujours, j'aime proposer une pause couture qui crée du lien, transmet un geste et fait du bien aux mains comme à la tête.",
+      },
+      {
+        titre: "Bien reliée, à deux pas de mes journées créatives",
+        corps:
+          "Saint-Maixent-l'École est facile d'accès : sa gare, sur la ligne entre Saint-Benoît et La Rochelle, est desservie par les TER Nouvelle-Aquitaine et même par le TGV, et Niort n'est qu'à une vingtaine de minutes. Poitiers se rejoint en moins d'une heure de route, ce qui place mes journées créatives adultes et mes retraites week-end de Fontaine-le-Comte tout près pour qui veut prolonger l'expérience une journée entière, tissu et laine compris. Je rayonne aussi sur les communes voisines du Haut Val de Sèvre, comme Azay-le-Brûlé ou Nanteuil. Écris-moi pour caler une date à Saint-Maixent : médiathèque, école, structure ou domicile, on trouve ensemble le bon cadre.",
+      },
+    ],
+    sources: [
+      "https://cc-hautvaldesevre.fr/fonctionnement/les-communes/63:mediatheque-intercommunale-aqua-libris-saint-maixent-l-ecole.html",
+      "https://fr.wikipedia.org/wiki/Saint-Maixent-l'%C3%89cole",
+      "https://www.saint-maixent-lecole.fr",
+    ],
   },
   {
     slug: 'melle',

@@ -255,6 +255,42 @@ export default async function VillePage({ params }: { params: Promise<Params> })
         </div>
       </section>
 
+      {/* ───────── CONTENU LOCAL UNIQUE (anti-duplicate / E-E-A-T) ───────── */}
+      {v.localSections && v.localSections.length > 0 && (
+        <section style={{ padding: '70px 0', background: 'var(--creme)' }}>
+          <div className="container" style={{ maxWidth: 820 }}>
+            <SectionTitle kicker={`${v.nom}, concrètement`} align="center">
+              Le créatif à {v.nom}, sur le terrain
+            </SectionTitle>
+            <div style={{ marginTop: 42, display: 'flex', flexDirection: 'column', gap: 30 }}>
+              {v.localSections.map((s) => (
+                <div key={s.titre}>
+                  <h3 className="h-fredoka" style={{ fontSize: 21, color: 'var(--framboise)', margin: '0 0 10px' }}>
+                    {s.titre}
+                  </h3>
+                  <p style={{ fontSize: 16.5, lineHeight: 1.8, opacity: 0.88, margin: 0 }}>
+                    {s.corps}
+                  </p>
+                </div>
+              ))}
+            </div>
+            {v.sources && v.sources.length > 0 && (
+              <p style={{ marginTop: 34, fontSize: 12.5, opacity: 0.6, lineHeight: 1.7 }}>
+                Sources locales :{' '}
+                {[...new Set(v.sources)].map((src, i) => (
+                  <span key={src}>
+                    {i > 0 ? ' · ' : ''}
+                    <a href={src} target="_blank" rel="noopener noreferrer nofollow" style={{ color: 'inherit', textDecoration: 'underline' }}>
+                      {new URL(src).hostname.replace('www.', '')}
+                    </a>
+                  </span>
+                ))}
+              </p>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* ───────── NOUVEAU : VILLE EN CHIFFRES (INSEE) ───────── */}
       {data && (
         <section style={{ padding: '70px 0', background: 'var(--creme)' }}>
