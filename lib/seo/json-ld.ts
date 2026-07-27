@@ -35,7 +35,7 @@ export const BUSINESS_IDENTITY = {
   instagram: 'https://www.instagram.com/atelier_picpaf/',
   facebook: 'https://www.facebook.com/profile.php?id=100063693513024',
   googleBusinessProfile: 'https://maps.app.goo.gl/XXzDFzLEFNSjmNy79',
-  googleReviewUrl: 'https://g.page/r/CduaCQBuWIIsEBI/review',
+  googleReviewUrl: 'https://g.page/r/CduaCQBuWIIsECE/review',
   areasServed: [
     'Poitiers',
     'Fontaine-le-Comte',
@@ -286,5 +286,78 @@ export function webSiteJsonLd() {
     name: "L'atelier Pic & Paf",
     inLanguage: 'fr-FR',
     publisher: { '@id': `${SITE_URL}/#organization` },
+  }
+}
+
+// ────────────────────────────────────────────────────────────────
+// HowTo — tutoriel pas-à-pas (ex : débuter le punch needle)
+// ────────────────────────────────────────────────────────────────
+export interface HowToInput {
+  name: string
+  description: string
+  url: string
+  steps: string[]
+  supplies?: string[]
+  image?: string
+}
+
+export function howToJsonLd(input: HowToInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: input.name,
+    description: input.description,
+    ...(input.image && { image: input.image }),
+    ...(input.supplies && input.supplies.length > 0 && {
+      supply: input.supplies.map((name) => ({ '@type': 'HowToSupply', name })),
+    }),
+    step: input.steps.map((text, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      text,
+    })),
+  }
+}
+
+// ────────────────────────────────────────────────────────────────
+// Course — cours / atelier (référence l'organisation par @id)
+// ────────────────────────────────────────────────────────────────
+export interface CourseInput {
+  name: string
+  description: string
+  url: string
+  priceCentimes?: number
+  location?: string
+  minAge?: number
+}
+
+export function courseJsonLd(input: CourseInput) {
+  const priceEuros = input.priceCentimes ? (input.priceCentimes / 100).toFixed(2) : undefined
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    inLanguage: 'fr-FR',
+    provider: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: BUSINESS_IDENTITY.name,
+    },
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'onsite',
+      ...(input.location && { location: { '@type': 'Place', name: input.location } }),
+      ...(priceEuros && {
+        offers: {
+          '@type': 'Offer',
+          price: priceEuros,
+          priceCurrency: 'EUR',
+          availability: 'https://schema.org/InStock',
+          url: input.url,
+        },
+      }),
+    },
   }
 }

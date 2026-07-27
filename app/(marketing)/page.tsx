@@ -293,7 +293,7 @@ export default async function HomePage() {
               Ton avis aide d&apos;autres familles et passionnées à se lancer. Laisse-le sur Google (le plus utile pour me faire connaître) ou directement ici 👇
             </p>
             <a
-              href="https://g.page/r/CduaCQBuWIIsEBI/review"
+              href="https://g.page/r/CduaCQBuWIIsECE/review"
               target="_blank"
               rel="noopener noreferrer"
               className="cta-pill"
@@ -389,7 +389,7 @@ export default async function HomePage() {
                   ⭐ Voir sur Google
                 </a>
                 <a
-                  href="https://g.page/r/CduaCQBuWIIsEBI/review"
+                  href="https://g.page/r/CduaCQBuWIIsECE/review"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cta-ghost"

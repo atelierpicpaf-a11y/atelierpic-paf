@@ -7,7 +7,9 @@ import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import {
   breadcrumbJsonLd,
+  courseJsonLd,
   faqPageJsonLd,
+  howToJsonLd,
   serviceJsonLd,
 } from '@/lib/seo/json-ld'
 
@@ -62,6 +64,41 @@ const FAQS = [
     q: "Vous intervenez en école, ALSH ou médiathèque ?",
     r: "Oui, le punch needle est une technique idéale pour les interventions en structure : peu de matériel dangereux, résultat rapide, tout le monde y arrive. Devis gratuit sur demande.",
   },
+  {
+    q: "Quel tissu pour débuter le punch needle ?",
+    r: "Une toile au tissage aéré et régulier, type monk's cloth ou lin : elle laisse passer l'aiguille et retient bien les boucles. On évite un tissu trop serré. En atelier, je fournis la bonne toile.",
+  },
+  {
+    q: "On pique sur l'endroit ou sur l'envers ?",
+    r: "On pique depuis l'envers, où le motif est reporté en miroir. Les boucles en relief se forment sur l'endroit ; l'envers, lui, ressemble à de la broderie plate.",
+  },
+  {
+    q: "Comment éviter que les boucles se défassent ?",
+    r: "Trois réflexes : garder la toile bien tendue, laisser le fil lâche, et ne jamais soulever l'aiguille (on la remonte au ras du tissu). En finition, on peut fixer l'envers à la colle textile.",
+  },
+  {
+    q: "Punch needle ou broderie, quelle différence ?",
+    r: "La broderie fait des points plats en surface. Le punch needle pousse des boucles à travers la toile et crée un vrai relief épais, tout doux, proche du tapis.",
+  },
+]
+
+const MATERIEL = [
+  { nom: "Aiguille punch needle (poinçon)", role: "L'outil star : réglable, elle pousse le fil à travers la toile ; sa longueur fixe la hauteur des boucles." },
+  { nom: "Toile à tissage aéré (monk's cloth)", role: "Une toile régulière qui laisse passer l'aiguille et retient les boucles sans se déformer." },
+  { nom: "Tambour ou cadre", role: "Il maintient la toile tendue comme une peau de tambour, du début à la fin." },
+  { nom: "Laine ou fil à tapis", role: "Un fil qui glisse sans accrocher dans le tube de l'aiguille." },
+  { nom: "Ciseaux", role: "Pour couper et égaliser les fils." },
+  { nom: "Stylo effaçable", role: "Pour reporter le motif sur l'envers avant de commencer." },
+]
+
+const ETAPES = [
+  "Reporte ton motif sur l'envers de la toile (il apparaîtra en miroir à l'endroit).",
+  "Tends la toile sur le tambour, bien serrée comme une peau de tambour.",
+  "Règle la longueur des boucles sur l'aiguille (évite le réglage le plus court pour débuter).",
+  "Enfile l'aiguille et laisse le fil circuler librement, sans le tendre.",
+  "Tiens l'aiguille comme un crayon, le biseau vers l'avant, et pique depuis l'envers en l'enfonçant à fond.",
+  "Remonte l'aiguille au ras de la toile sans la soulever, puis avance à petits pas réguliers : d'abord les contours, ensuite le remplissage.",
+  "Termine par les finitions : coupe les fils au ras, noue ou fixe l'envers — et admire ton relief tout doux !",
 ]
 
 const POURQUOI = [
@@ -144,6 +181,23 @@ export default function PunchNeedlePage() {
             url: PAGE_URL,
             minAge: 6,
             category: 'Atelier punch needle',
+          }),
+          courseJsonLd({
+            name: 'Atelier punch needle',
+            description:
+              "Cours et ateliers punch needle pour enfants dès 6 ans et adultes débutants en Vienne (86) et Deux-Sèvres (79) : matériel fourni, initiation guidée pas à pas.",
+            url: PAGE_URL,
+            location: 'Fontaine-le-Comte',
+            minAge: 6,
+          }),
+          howToJsonLd({
+            name: 'Débuter le punch needle',
+            description:
+              "Le matériel de base et les étapes pas à pas pour réaliser sa première création en punch needle.",
+            url: PAGE_URL,
+            image: 'https://atelierpicpaf.fr/images/punch-needle/arc-en-ciel.jpg',
+            supplies: MATERIEL.map((m) => m.nom),
+            steps: ETAPES,
           }),
           faqPageJsonLd(FAQS),
           breadcrumbJsonLd([
@@ -302,6 +356,56 @@ export default function PunchNeedlePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* DÉBUTER — matériel + pas-à-pas (contenu informationnel sourcé) */}
+      <section style={{ padding: '80px 0', background: 'var(--creme)' }}>
+        <div className="container" style={{ maxWidth: 940 }}>
+          <SectionTitle kicker="Envie de te lancer ?" align="center">
+            Débuter le punch needle : le matériel et les étapes
+          </SectionTitle>
+          <p style={{ fontSize: 16.5, lineHeight: 1.7, textAlign: 'center', maxWidth: 680, margin: '24px auto 0', opacity: 0.85 }}>
+            Voici concrètement ce qu&apos;il faut et comment on s&apos;y prend. En atelier, pas de panique :{' '}
+            <strong>je fournis tout le matériel et je te guide pas à pas</strong> — tu n&apos;as rien à acheter.
+          </p>
+
+          <h3 className="h-fredoka" style={{ fontSize: 22, color: 'var(--framboise)', margin: '48px 0 20px', textAlign: 'center' }}>
+            🧰 Le matériel de base
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+            {MATERIEL.map((m) => (
+              <div key={m.nom} style={{ background: 'var(--creme-pale)', borderRadius: 16, padding: '18px 20px', border: '1.5px solid rgba(200,54,92,.15)' }}>
+                <div className="h-fredoka" style={{ fontSize: 15.5, color: 'var(--framboise)', marginBottom: 6 }}>{m.nom}</div>
+                <div style={{ fontSize: 14, lineHeight: 1.55, opacity: 0.82 }}>{m.role}</div>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="h-fredoka" style={{ fontSize: 22, color: 'var(--framboise)', margin: '48px 0 20px', textAlign: 'center' }}>
+            🪡 La technique, pas à pas
+          </h3>
+          <ol style={{ maxWidth: 720, margin: '0 auto', padding: 0, listStyle: 'none' }}>
+            {ETAPES.map((s, i) => (
+              <li key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', marginBottom: 16 }}>
+                <span className="h-fredoka" style={{ flexShrink: 0, width: 34, height: 34, borderRadius: 999, background: 'var(--framboise)', color: 'var(--creme)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>{i + 1}</span>
+                <span style={{ fontSize: 15.5, lineHeight: 1.6, paddingTop: 3 }}>{s}</span>
+              </li>
+            ))}
+          </ol>
+
+          <div style={{ marginTop: 40, display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link href="/tuto-video" className="cta-ghost">🎬 Le voir en vidéo (mes tutos)</Link>
+            <Link href="/ateliers-adultes/journees-creatives" className="cta-pill">✨ M&apos;initier en vrai — journée 90€ tout compris</Link>
+          </div>
+          <p style={{ marginTop: 24, fontSize: 12.5, opacity: 0.6, textAlign: 'center', lineHeight: 1.6 }}>
+            Sources technique&nbsp;:{' '}
+            <a href="https://sarahmaker.com/how-to-punch-needle/" target="_blank" rel="noopener noreferrer nofollow" style={{ color: 'inherit', textDecoration: 'underline' }}>sarahmaker.com</a>
+            {' · '}
+            <a href="https://vertcerise.com/2019/03/27/pourquoi-ca-marche-pas-les-8-erreurs-classiques-avec-une-punch-needle/" target="_blank" rel="noopener noreferrer nofollow" style={{ color: 'inherit', textDecoration: 'underline' }}>vertcerise.com</a>
+            {' · '}
+            <a href="https://www.lovecrafts.com/en-gb/c/article/punch-needle-embroidery-guide" target="_blank" rel="noopener noreferrer nofollow" style={{ color: 'inherit', textDecoration: 'underline' }}>lovecrafts.com</a>
+          </p>
         </div>
       </section>
 
