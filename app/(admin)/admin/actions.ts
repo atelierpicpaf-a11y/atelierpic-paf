@@ -65,11 +65,14 @@ export async function updateAtelierEnfant(id: string, updates: Partial<AtelierEn
 export async function deleteAtelierEnfant(id: string) {
   await requireAdmin()
   const db = createAdminClient()
+  // On retire d'abord les réservations liées (robuste même si la FK n'est pas ON DELETE CASCADE en prod)
+  await db.from('reservations').delete().eq('atelier_enfant_id', id)
   const { error } = await db
     .from('ateliers_enfants')
     .delete()
     .eq('id', id)
   if (error) throw new Error(error.message)
+  revalidatePath('/admin')
 }
 
 // ── JOURNEES CREATIVES ─────────────────────────────────────
@@ -113,8 +116,11 @@ export async function updateJournee(id: string, updates: Partial<Session>) {
 export async function deleteJournee(id: string) {
   await requireAdmin()
   const db = createAdminClient()
+  // On retire d'abord les réservations liées (robuste même si la FK n'est pas ON DELETE CASCADE en prod)
+  await db.from('reservations').delete().eq('session_id', id)
   const { error } = await db.from('sessions').delete().eq('id', id)
   if (error) throw new Error(error.message)
+  revalidatePath('/admin')
 }
 
 // ── RETRAITES CREATIVES ────────────────────────────────────
@@ -159,8 +165,11 @@ export async function updateRetraite(id: string, updates: Partial<Session>) {
 export async function deleteRetraite(id: string) {
   await requireAdmin()
   const db = createAdminClient()
+  // On retire d'abord les réservations liées (robuste même si la FK n'est pas ON DELETE CASCADE en prod)
+  await db.from('reservations').delete().eq('session_id', id)
   const { error } = await db.from('sessions').delete().eq('id', id)
   if (error) throw new Error(error.message)
+  revalidatePath('/admin')
 }
 
 // ── CONFIG ─────────────────────────────────────────────────

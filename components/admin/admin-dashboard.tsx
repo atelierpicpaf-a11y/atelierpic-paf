@@ -164,9 +164,11 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
   function handleDeleteJournee(id: string) {
     if (!confirm('Supprimer cette date ?')) return
     startTransition(async () => {
-      await deleteJournee(id)
-      setJournees(prev => prev.filter(j => j.id !== id))
-      setDirtyJournees(prev => { const s = new Set(prev); s.delete(id); return s })
+      try {
+        await deleteJournee(id)
+        setJournees(prev => prev.filter(j => j.id !== id))
+        setDirtyJournees(prev => { const s = new Set(prev); s.delete(id); return s })
+      } catch { setSaveStatus('error') }
     })
   }
 
@@ -188,9 +190,11 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
   function handleDeleteRetraite(id: string) {
     if (!confirm('Supprimer cette retraite ?')) return
     startTransition(async () => {
-      await deleteRetraite(id)
-      setRetraites(prev => prev.filter(r => r.id !== id))
-      setDirtyRetraites(prev => { const s = new Set(prev); s.delete(id); return s })
+      try {
+        await deleteRetraite(id)
+        setRetraites(prev => prev.filter(r => r.id !== id))
+        setDirtyRetraites(prev => { const s = new Set(prev); s.delete(id); return s })
+      } catch { setSaveStatus('error') }
     })
   }
 
