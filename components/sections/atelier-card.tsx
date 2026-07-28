@@ -1,6 +1,17 @@
 interface AtelierCardProps { badge?: string; badgeColor?: string; title: string; desc: string; meta?: string[]; price?: string; city?: string; emoji?: string; onAction?: () => void; actionLabel?: string; accent?: string; places?: number | null; placesMax?: number | null }
+// Ajoute "€" quand le prix est un nombre brut (ex "25" -> "25 €"),
+// mais garde intact ce qui a déjà un symbole ou du texte ("90€", "Sur demande", "—").
+function fmtPrix(p?: string): string | undefined {
+  if (!p) return undefined
+  const t = p.trim()
+  if (!t) return undefined
+  if (t.includes('€') || /[a-zA-Z]/.test(t) || !/\d/.test(t)) return t
+  return `${t} €`
+}
+
 export function AtelierCard({ badge, badgeColor, title, desc, meta = [], price, city, emoji, onAction, actionLabel = 'Découvrir', accent = 'var(--framboise)', places, placesMax }: AtelierCardProps) {
   const allMeta = [...meta, ...(places != null && placesMax != null ? [`${places}/${placesMax} places`] : [])]
+  const displayPrice = fmtPrix(price)
   return (
     <div className="card" style={{ padding: 0, display:'flex', flexDirection:'column' }}>
       <div style={{ height: 180, position:'relative', background: accent, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden' }}>
@@ -16,7 +27,7 @@ export function AtelierCard({ badge, badgeColor, title, desc, meta = [], price, 
         <p style={{ margin:0, fontSize:15, opacity:.82, lineHeight:1.55 }}>{desc}</p>
         {allMeta.length > 0 && <div style={{ display:'flex', gap:14, flexWrap:'wrap', fontSize:13, color:'var(--framboise)', fontWeight:600 }}>{allMeta.map((m,i) => <span key={i}>{m}</span>)}</div>}
         <div style={{ marginTop:'auto', display:'flex', justifyContent:'space-between', alignItems:'center', paddingTop:12 }}>
-          {price && <span className="h-fredoka" style={{ fontSize: 22, color:'var(--framboise)' }}>{price}</span>}
+          {displayPrice && <span className="h-fredoka" style={{ fontSize: 22, color:'var(--framboise)' }}>{displayPrice}</span>}
           <button className="cta-ghost" style={{ padding:'10px 18px', fontSize:14 }} onClick={onAction}>{actionLabel} →</button>
         </div>
       </div>
