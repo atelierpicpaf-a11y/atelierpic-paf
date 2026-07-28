@@ -72,7 +72,6 @@ export async function deleteAtelierEnfant(id: string) {
     .delete()
     .eq('id', id)
   if (error) throw new Error(error.message)
-  revalidatePath('/admin')
 }
 
 // ── JOURNEES CREATIVES ─────────────────────────────────────
@@ -120,7 +119,6 @@ export async function deleteJournee(id: string) {
   await db.from('reservations').delete().eq('session_id', id)
   const { error } = await db.from('sessions').delete().eq('id', id)
   if (error) throw new Error(error.message)
-  revalidatePath('/admin')
 }
 
 // ── RETRAITES CREATIVES ────────────────────────────────────
@@ -169,7 +167,6 @@ export async function deleteRetraite(id: string) {
   await db.from('reservations').delete().eq('session_id', id)
   const { error } = await db.from('sessions').delete().eq('id', id)
   if (error) throw new Error(error.message)
-  revalidatePath('/admin')
 }
 
 // ── CONFIG ─────────────────────────────────────────────────

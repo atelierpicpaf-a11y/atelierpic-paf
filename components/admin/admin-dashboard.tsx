@@ -407,7 +407,13 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                     <input
                       style={INPUT_S}
                       value={a.prix_texte ?? ''}
-                      onChange={e => updateEnfantField(a.id, 'prix_texte', e.target.value)}
+                      onChange={e => {
+                        const v = e.target.value
+                        updateEnfantField(a.id, 'prix_texte', v)
+                        // Synchro auto : le "Prix affiché" pilote le "Prix Stripe" (1er nombre trouvé)
+                        const m = v.match(/\d+(?:[.,]\d+)?/)
+                        if (m) updateEnfantField(a.id, 'prix_centimes', Math.round(parseFloat(m[0].replace(',', '.')) * 100))
+                      }}
                       placeholder="25€ / 1h30"
                     />
                   </FieldGroup>
