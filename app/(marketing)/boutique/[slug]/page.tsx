@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { SectionTitle } from '@/components/sections/section-title'
 import { AnimateOnScroll } from '@/components/ui/animate-on-scroll'
 import { ProductDetailClient } from '@/components/boutique/product-detail-client'
+import { YouTubeLite } from '@/components/sections/youtube-lite'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { createClient } from '@/lib/supabase/server'
@@ -104,6 +105,28 @@ export default async function ProduitPage({ params }: { params: Promise<Params> 
           </div>
         </div>
       </section>
+
+      {/* TUTO VIDÉO — embarqué & mis en avant */}
+      {produit.tuto_video_id && (
+        <section style={{ padding: '64px 0', background: 'var(--creme-pale)' }}>
+          <div className="container" style={{ maxWidth: 900 }}>
+            <SectionTitle kicker="🎬 Offert avec ton coffret" align="center">
+              <span className="anim-title-underline">Le tuto vidéo, pas à pas</span>
+            </SectionTitle>
+            <p style={{ fontSize: 16, opacity: 0.82, lineHeight: 1.7, textAlign: 'center', maxWidth: 600, margin: '20px auto 0' }}>
+              Ludivine te guide de A à Z — tu peux le regarder avant de commander. Il est inclus avec ton coffret.
+            </p>
+            <AnimateOnScroll variant="scale-in">
+              <div style={{ maxWidth: 340, margin: '34px auto 0' }}>
+                <YouTubeLite videoId={produit.tuto_video_id} title={`Tuto ${produit.nom} — L'atelier Pic & Paf`} aspect="9:16" />
+              </div>
+            </AnimateOnScroll>
+            <div style={{ textAlign: 'center', marginTop: 26 }}>
+              <Link href="/tuto-video" className="cta-ghost">Voir tous les tutos vidéos →</Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* DESCRIPTION LONGUE */}
       {produit.description_longue && (
