@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { SectionTitle } from '@/components/sections/section-title'
 import { AnimateOnScroll } from '@/components/ui/animate-on-scroll'
+import { YouTubeLite } from '@/components/sections/youtube-lite'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd } from '@/lib/seo/json-ld'
 import { createClient } from '@/lib/supabase/server'
@@ -153,6 +154,31 @@ export default async function BoutiquePage() {
           )}
         </div>
       </section>
+
+      {/* TUTOS EN BAS DE PAGE — les vidéos offertes avec les coffrets */}
+      {list.some((p) => p.tuto_video_id) && (
+        <section style={{ padding: '70px 0 90px', background: 'var(--creme)' }}>
+          <div className="container" style={{ maxWidth: 1100 }}>
+            <SectionTitle kicker="🎬 Offert avec chaque coffret" align="center">
+              <span className="anim-title-underline">Les tutos vidéo, pas à pas</span>
+            </SectionTitle>
+            <p style={{ fontSize: 16, opacity: 0.82, lineHeight: 1.7, textAlign: 'center', maxWidth: 620, margin: '20px auto 0' }}>
+              Chaque coffret vient avec son tuto vidéo : Ludivine te guide de A à Z. Regarde-les avant de commander&nbsp;!
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 26, maxWidth: 920, margin: '44px auto 0' }}>
+              {list.filter((p) => p.tuto_video_id).map((p) => (
+                <AnimateOnScroll key={p.id} variant="fade-up">
+                  <YouTubeLite videoId={p.tuto_video_id as string} title={`Tuto ${p.nom} — L'atelier Pic & Paf`} aspect="9:16" />
+                  <Link href={`/boutique/${p.slug}`} className="h-fredoka" style={{ display: 'block', fontSize: 15, color: 'var(--framboise)', textAlign: 'center', marginTop: 12, textDecoration: 'none' }}>{p.nom} →</Link>
+                </AnimateOnScroll>
+              ))}
+            </div>
+            <div style={{ textAlign: 'center', marginTop: 40 }}>
+              <Link href="/tuto-video" className="cta-ghost">Voir tous les tutos vidéos →</Link>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   )
 }
