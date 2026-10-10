@@ -23,9 +23,9 @@ const ARTICLE_IMAGES: Record<string, { src: string; alt: string; caption?: strin
   'activites-enfants-vacances-poitiers': [
     { src: '/images/ateliers/cours-couture-enfants.jpg', alt: 'Stage créatif de couture pour enfants pendant les vacances scolaires', caption: 'Un stage créatif qui change des écrans' },
   ],
-  'debuter-couture-adulte': [
-    { src: '/images/brand/ludivine-portrait.jpg', alt: 'Ludivine, animatrice des journées créatives couture en Vienne et Deux-Sèvres', caption: 'Ludivine t’accompagne pas à pas, sans jugement' },
-  ],
+  // debuter-couture-adulte : pas d'image éditoriale adaptée (la carte promo carrée
+  // ludivine-portrait.jpg se recadrait en bandeau 16:10 illisible). On laisse l'article
+  // en texte + séparateurs couture jusqu'à avoir une vraie photo de journée créative adulte.
 }
 
 export function generateStaticParams() {
