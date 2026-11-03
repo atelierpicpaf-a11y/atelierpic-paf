@@ -192,6 +192,7 @@ export const punchNeedleCestQuoi: Article = {
       h2: 'Débuter le punch needle en atelier, en Vienne et Deux-Sèvres',
       id: 'atelier',
       blocks: [
+        { type: 'quote', author: 'Ludivine', role: "fondatrice de L'atelier Pic & Paf", text: "En atelier, je vois toujours la même chose : les premières minutes, on a peur de mal faire, puis le geste se cale et on ne lâche plus l'aiguille. Le punch needle pardonne beaucoup, on défait et on recommence. Mon conseil : ne cherchez pas la perfection sur le premier ouvrage, choisissez un motif simple aux couleurs qui vous font plaisir." },
         { type: 'p', text: "Apprendre avec quelqu'un à côté de soi évite les erreurs du tableau ci-dessus dès le premier point : la bonne tension de toile, le bon angle, le bon fil. Ludivine anime des ateliers de [punch needle](/punch-needle) pour les adultes et les enfants, et le punch needle fait aussi partie des [journées créatives](/ateliers-adultes/journees-creatives) à Fontaine-le-Comte, près de Poitiers, avec tout le matériel fourni." },
         { type: 'cta', title: 'Envie de tester avec Ludivine ?', text: "Ateliers adultes et enfants, anniversaires et interventions en structure, en Vienne (86) et en Deux-Sèvres (79).", href: '/punch-needle', label: "Voir l'atelier punch needle" },
       ],
