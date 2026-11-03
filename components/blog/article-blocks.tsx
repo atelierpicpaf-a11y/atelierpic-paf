@@ -32,6 +32,11 @@ export function RichText({ text }: { text: string }) {
   return <>{out}</>
 }
 
+// Version texte brut du mini-markup, pour les cartes et extraits (sinon les ** s'affichent).
+export function plainText(text: string) {
+  return text.replace(/\[([^\]]+)\]\([^)\s]+\)/g, '$1').replace(/\*\*([^*]+)\*\*/g, '$1')
+}
+
 function euros(c: number) {
   return (c / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
 }

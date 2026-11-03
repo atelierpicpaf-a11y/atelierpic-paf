@@ -9,6 +9,8 @@ import { KlarnaBadge } from '@/components/sections/klarna-badge'
 import { AvisForm } from '@/components/sections/avis-form'
 import { CrossPromo } from '@/components/sections/cross-promo'
 import { DoodleHeart, DoodleFlower } from '@/components/brand/doodles'
+import { FeaturedArticle } from '@/components/blog/featured-article'
+import { featuredArticle } from '@/content/articles'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
@@ -18,6 +20,7 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
+  const featured = featuredArticle()
   const supabase = await createClient()
   const nowIso = new Date().toISOString()
   const { data: ateliers } = await supabase
@@ -263,6 +266,21 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* BLOG : dernier article à la une (lien depuis l'accueil = découverte rapide par Google) */}
+      {featured && (
+        <section style={{ padding:'90px 0', background:'var(--creme-pale)' }}>
+          <div className="container" style={{ maxWidth:1040 }}>
+            <SectionTitle kicker="Le blog de Ludivine">Le dernier article</SectionTitle>
+            <div style={{ marginTop:40 }}>
+              <FeaturedArticle article={featured} as="h3" />
+            </div>
+            <div style={{ textAlign:'center', marginTop:32 }}>
+              <a href="/blog" className="cta-ghost">Tous les articles →</a>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* DÉCOUVRIR AUSSI — tutos vidéos / photos Instagram / boutique */}
       <CrossPromo bg="var(--creme)" />

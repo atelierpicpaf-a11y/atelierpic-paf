@@ -91,7 +91,10 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const a = getArticleBySlug(slug)
   if (!a) return { title: 'Article introuvable' }
   const url = `${SITE}/blog/${a.slug}`
-  const og = a.ogImage ? [{ url: `${SITE}${a.ogImage}`, width: 1200, height: 630, alt: a.h1 }] : undefined
+  // Image de partage : visuel OG dédié, sinon la couverture de l'article.
+  const og = a.ogImage
+    ? [{ url: `${SITE}${a.ogImage}`, width: 1200, height: 630, alt: a.h1 }]
+    : a.heroImage ? [{ url: `${SITE}${a.heroImage.src}`, width: a.heroImage.width, height: a.heroImage.height, alt: a.heroImage.alt }] : undefined
   return {
     title: a.title,
     description: a.metaDescription,

@@ -276,3 +276,9 @@ export const ARTICLES: Article[] = [
 export function getArticleBySlug(slug: string): Article | undefined {
   return ARTICLES.find((a) => a.slug === slug)
 }
+
+// Article "à la une" (page blog + accueil) : le plus récent parmi ceux qui ont une couverture.
+export function featuredArticle(): Article | undefined {
+  const date = (a: Article) => a.dateModified ?? a.datePublished ?? ''
+  return ARTICLES.filter((a) => a.heroImage).sort((x, y) => date(y).localeCompare(date(x)))[0]
+}

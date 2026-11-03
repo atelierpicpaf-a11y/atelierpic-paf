@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { CrossPromo } from '@/components/sections/cross-promo'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd } from '@/lib/seo/json-ld'
-import { ARTICLES } from '@/content/articles'
+import { ARTICLES, featuredArticle } from '@/content/articles'
+import { FeaturedArticle } from '@/components/blog/featured-article'
+import { plainText } from '@/components/blog/article-blocks'
 import { DoodleSpool, DoodleScissors, DoodleFlower, DoodleNeedle } from '@/components/brand/doodles'
 
 const PAGE_URL = 'https://atelierpicpaf.fr/blog'
@@ -24,6 +27,8 @@ export const metadata: Metadata = {
 }
 
 export default function BlogPage() {
+  const featured = featuredArticle()
+  const others = ARTICLES.filter((a) => a !== featured)
   return (
     <div className="route-enter">
       <JsonLd
@@ -68,12 +73,22 @@ export default function BlogPage() {
       {/* GRILLE ARTICLES */}
       <section style={{ padding: '60px 0', background: 'var(--creme)' }}>
         <div className="container" style={{ maxWidth: 1000 }}>
+          {featured && (
+            <div style={{ marginBottom: 56 }}>
+              <FeaturedArticle article={featured} />
+            </div>
+          )}
+          {featured && others.length > 0 && (
+            <p className="h-caveat" style={{ fontSize: 26, color: 'var(--framboise)', textAlign: 'center', margin: '0 0 22px' }}>~ Les autres articles ~</p>
+          )}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 26 }}>
-            {ARTICLES.map((a) => (
+            {others.map((a) => (
               <Link key={a.slug} href={`/blog/${a.slug}`} className="card" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', height: '100%', background: '#fff', padding: '28px 26px', gap: 12 }}>
-                <div style={{ fontSize: 44, lineHeight: 1 }}>{a.emoji}</div>
+                {a.heroImage
+                  ? <Image src={a.heroImage.src} alt={a.heroImage.alt} width={a.heroImage.width} height={a.heroImage.height} sizes="(max-width: 768px) 90vw, 320px" style={{ width: '100%', height: 'auto', borderRadius: 16 }} />
+                  : <div style={{ fontSize: 44, lineHeight: 1 }}>{a.emoji}</div>}
                 <h2 className="h-fredoka" style={{ fontSize: 22, color: 'var(--framboise)', margin: 0, lineHeight: 1.25 }}>{a.h1}</h2>
-                <p style={{ fontSize: 14.5, lineHeight: 1.6, opacity: 0.82, margin: 0, flex: 1 }}>{a.chapo}</p>
+                <p style={{ fontSize: 14.5, lineHeight: 1.6, opacity: 0.82, margin: 0, flex: 1 }}>{plainText(a.chapo)}</p>
                 <span className="h-fredoka" style={{ fontSize: 14, fontWeight: 600, color: 'var(--framboise)', marginTop: 4 }}>Lire l&apos;article →</span>
               </Link>
             ))}
