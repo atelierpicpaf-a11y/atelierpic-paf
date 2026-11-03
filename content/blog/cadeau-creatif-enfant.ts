@@ -1,0 +1,196 @@
+import type { Article } from '@/content/articles'
+
+// Article pilier saisonnier "cadeau créatif pour un enfant de 6 à 12 ans, selon l'âge". Faits et prix
+// relevés le 3 novembre 2026 (SERP google.fr, Google Trends, marchands, textes officiels, études).
+// Ne pas affirmer : un âge "normal" pour enfiler une aiguille ou faire un nœud (aucune norme publiée),
+// que les activités manuelles "améliorent" les résultats scolaires (lien corrélationnel seulement),
+// que les 6-12 ans préfèrent les expériences (Chaplin et al. 2020 montre l'inverse avant l'adolescence),
+// une recommandation française d'âge pour le pistolet à colle, une part des fers dans les brûlures,
+// un âge "fabricant" pour Djeco, Avenue Mandarine, Sycomore ou Graine Créative (fiches revendeurs),
+// que nos kits conviennent à tel âge (en attente de la réponse de Ludivine).
+export const cadeauCreatifEnfant: Article = {
+  slug: 'cadeau-creatif-enfant',
+  emoji: '🧵',
+  title: "Cadeau créatif enfant 6-12 ans : les idées selon l'âge (2026)",
+  h1: "Cadeau créatif pour un enfant de 6 à 12 ans : les idées selon l'âge",
+  metaDescription:
+    "Quel cadeau créatif offrir à un enfant de 6 à 12 ans ? Les idées selon l'âge (couture, broderie, punch needle, tissage, crochet, machine), ce que veut dire l'âge sur la boîte, la sécurité et des prix relevés en novembre 2026.",
+  datePublished: '2026-11-03',
+  dateModified: '2026-11-03',
+  heroImage: {
+    src: '/images/blog/cadeau-creatif-enfant/cadeau-creatif-enfant.webp',
+    alt: "Cadeau créatif pour un enfant de 6 à 12 ans : marque-page cousu et kit de stickers en tissu de L'atelier Pic & Paf",
+    width: 1600,
+    height: 900,
+  },
+  ogImage: '/images/blog/cadeau-creatif-enfant/cadeau-creatif-enfant-og.jpg',
+  chapo:
+    "Un bon cadeau créatif suit ce que l'enfant sait faire de ses mains, et s'il lit déjà seul une notice. À **6-7 ans** : feutrine pré-percée et aiguille à bout rond, punch needle, perles, avec un tuto vidéo (de 11 à 20 € environ). À **8-9 ans** : la vraie aiguille, la broderie, le tissage, le crochet, et les premiers pas à la machine avec un adulte. À **10-12 ans** : de vrais outils de couturière et des projets qui durent. Prix relevés le 3 novembre 2026.",
+  enBref: [
+    "**L'âge sur la boîte** est un minimum fixé par le fabricant, pas une compétence : le même produit est marqué 7-12 ans chez un marchand et 8 ans chez un autre.",
+    "**6-7 ans** : feutrine pré-percée, aiguille à bout rond, punch needle, perles à repasser, de 11 à 20 €. Préférez un tuto vidéo : au début du CE1, 40 % des élèves lisent au rythme attendu en fin de CP.",
+    "**8-9 ans** : aiguille en métal, broderie, tissage, crochet, box tricotin, de 11 à 50 €. La machine est possible, avec un adulte à la pédale.",
+    "**10-12 ans** : une vraie boîte à couture (37 €), le string art, la pâte polymère, un livre de projets, une machine.",
+    "**Objet ou expérience ?** Avant l'adolescence, les enfants tirent plus de bonheur des objets que des expériences (Chaplin et al., 2020). Un atelier couture donne les deux : l'enfant repart avec ce qu'il a cousu.",
+  ],
+  sections: [
+    {
+      h2: "Quel cadeau créatif offrir selon l'âge ? Le tableau",
+      id: 'tableau-par-age',
+      blocks: [
+        { type: 'p', text: "Aucune grille officielle ne dit à quel âge un enfant sait enfiler une aiguille, faire un nœud ou coudre un point avant : nous n'en avons trouvé aucune. Les livrets de repérage du ministère donnent des minimums dont l'absence doit alerter, pas des moyennes ([livret de repérage avant 7 ans](https://handicap.gouv.fr/sites/handicap/files/2023-02/brochure_reperage_tnd_2020_formulaire.pdf)). Le tableau croise donc ces repères, les programmes scolaires, l'âge indiqué sur les boîtes et la pratique de Ludivine en atelier." },
+        { type: 'table', caption: 'Repères indicatifs : chaque enfant avance à son rythme. Prix relevés le 3 novembre 2026 chez les marchands cités plus bas.', head: ['Âge', 'Ce que beaucoup savent faire', 'Cadeau adapté', 'Budget', "Rôle de l'adulte"], rows: [
+          // Espaces insécables ( ) et trait d'union insécable (‑) : la colonne étroite coupait "€" et "10-12".
+          ['6-7 ans', "Fermer seul son vêtement, copier un triangle, rester une dizaine de minutes sur une activité qui lui plaît ; il apprend à lire", 'Couture sur feutrine pré-percée, punch needle, perles à repasser, première broderie', '11 à 20 €', "À côté : lit la notice, tient la pédale s'il y a une machine"],
+          ['8-9 ans', "Lire une notice simple, manier de nouveaux outils comme l'aiguille à coudre", 'Crochet, broderie, tissage, box tricotin, bracelets ; machine avec un adulte', '11 à 60 €', 'Proche : aide sur les étapes difficiles'],
+          ['10‑12 ans', "Utiliser le matériel de l'école (ciseaux, compas, règle), rester concentré plus longtemps", 'Vraie boîte à couture, string art, pâte polymère, livre de projets, machine', '14 à 130 €', 'Vérifie, garde la main sur le fer'],
+        ] },
+        { type: 'p', text: "D'où viennent ces repères : la grille de repérage à 6 ans (fermer seul son vêtement, copier un triangle, environ dix minutes d'attention sans recadrage, des minimums et non des moyennes), le programme de français du [BO du 31 octobre 2024](https://www.education.gouv.fr/bo/2024/Hebdo41/MENE2415135A), le [tableau de synthèse](https://educationspecialisee.ca/wp-content/uploads/2018/02/258_TableausynthAse6-12ans.pdf) tiré de l'ergothérapeute Francine Ferland, qui situe **entre 8 et 12 ans** l'usage de nouveaux outils comme l'aiguille à coudre, et le [questionnaire de repérage 7-12 ans](https://handicap.gouv.fr/sites/handicap/files/2022-04/Volet%20Famille%207-12%20ans_01.pdf), qui attend l'usage des ciseaux, du compas et de la règle." },
+        { type: 'img', src: '/images/blog/cadeau-creatif-enfant/progression-couture-enfant.webp', alt: "Infographie : la progression du geste en couture de 6 à 12 ans, de la feutrine pré-percée à la machine à coudre", width: 1280, height: 720, caption: 'Du premier point à la machine, chacun à son rythme' },
+      ],
+    },
+    {
+      h2: "Pourquoi un cadeau créatif plutôt qu'un jouet de plus ?",
+      id: 'pourquoi-creatif',
+      blocks: [
+        { type: 'p', text: "D'abord parce qu'il occupe les mains loin des écrans. La commission « Enfants et écrans » (avril 2024) recommande après 6 ans une exposition « modérée et contrôlée », et cite parmi les « alternatives stimulantes » le jeu libre, les jeux de société et les « activités créatives, sportives et artistiques » ([rapport de la commission](https://www.vie-publique.fr/files/rapport/pdf/293978.pdf))." },
+        { type: 'p', text: "Ensuite parce que la motricité fine compte. Une méta-analyse de 2025 (118 études, près de 80 000 enfants et adolescents de 3 à 16 ans) trouve un lien net entre motricité fine et réussite scolaire, plus fort encore pour l'écriture ([Suggate et al., 2025](https://epub.uni-regensburg.de/78230)). Les auteurs le précisent : faute d'études d'intervention, rien ne prouve que les activités manuelles **causent** de meilleurs résultats. Les deux vont ensemble, c'est tout ce qu'on peut dire." },
+        { type: 'p', text: "Enfin parce que les enfants aiment ça. À 5 ans et demi, une activité artistique, manuelle ou culturelle est l'activité préférée de l'enfant pour 22 % des parents, juste derrière les jeux d'extérieur (40 %), selon la cohorte Elfe suivie par le [ministère de la Culture](https://www.culture.gouv.fr/espace-documentation/service-statistique-ministeriel-deps/publications/collections-de-synthese/culture-etudes-2007-2026/les-univers-culturels-des-enfants-a-5-ans-et-demi-d-apres-la-cohorte-elfe-ce-2025-3)." },
+      ],
+    },
+    {
+      h2: "Que veut dire l'âge écrit sur la boîte ?",
+      id: 'age-sur-la-boite',
+      blocks: [
+        { type: 'p', text: "L'âge minimum fait partie des avertissements imposés par la réglementation des jouets, et ceux qui déterminent l'achat doivent être visibles sur l'emballage avant l'achat ([directive 2009/48/CE](https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=CELEX:32009L0048)). C'est le fabricant qui le fixe, selon les risques du produit : il ne garantit pas que votre enfant saura le faire seul." },
+        { type: 'p', text: "Une vraie aiguille n'empêche pas un kit d'être un jouet. La norme européenne EN 71-1 cite l'aiguille comme exemple de pointe « fonctionnelle », indispensable au jeu : elle est admise dans les jouets destinés aux enfants de 3 ans et plus, avec un avertissement sur l'emballage et dans la notice ([EN 71-1](https://law.resource.org/pub/eu/toys/en.71.1.2014.html))." },
+        { type: 'p', text: "Le même produit change d'âge selon le magasin. La gamme Buki Professional Studio Mode est présentée pour les 7-12 ans chez [Oxybul](https://www.oxybul.com/professional-studio-mode-128768) et à partir de 8 ans chez [Cultura](https://www.cultura.com/p-professional-studio-mode-deluxe-3700802104636.html). Dans le doute, fiez-vous à la mention imprimée sur la boîte, et à ce que vous savez de votre enfant." },
+        { type: 'callout', emoji: '📦', title: "Ce qui change d'ici 2030", text: "Le nouveau règlement européen sur la sécurité des jouets, (UE) 2025/2509, est en vigueur depuis le 1er janvier 2026 mais ne s'appliquera pleinement qu'au 1er août 2030. Il prévoit un passeport numérique pour chaque jouet et la mention « À utiliser sous la surveillance directe d'un adulte » sur les jouets dits fonctionnels ([EUR-Lex](https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=OJ:L_202502509))." },
+      ],
+    },
+    {
+      h2: '6-7 ans : des gestes simples et un résultat tout de suite',
+      id: '6-7-ans',
+      blocks: [
+        { type: 'p', text: "À cet âge, beaucoup d'enfants apprennent à lire. Le programme attend en fin de CP au moins 30 mots déchiffrés par minute ([BO](https://www.education.gouv.fr/bo/2024/Hebdo41/MENE2415135A)). En septembre 2025, au début du CE1, les élèves en lisaient 49 en moyenne, et seuls 40 % atteignaient l'attendu de fin de CP, 50 mots par minute ([DEPP, 2026](https://www.education.gouv.fr/sites/default/files/document/deppni-2026-31fluence-de-lecturepdf-518870.pdf)). Une notice uniquement écrite reste donc difficile pour beaucoup de 6-7 ans : choisissez un kit avec des schémas ou un tuto vidéo, et lisez les étapes avec lui." },
+        { type: 'p', text: "Visez aussi des projets courts. La grille de repérage attend à 6 ans une dizaine de minutes d'attention sur une activité qui plaît : c'est un minimum, pas une durée moyenne, mais un projet bouclé en une séance donne tout de suite le plaisir du résultat." },
+        { type: 'h3', text: 'Les idées qui marchent' },
+        { type: 'ul', items: [
+          "**Couture sur feutrine pré-percée** : le sac Miss Lapinette de Djeco, avec une aiguille sécurisée (10,99 €, dès 5 ans chez [La Poule à Pois](https://www.lapouleapois.fr/couture-broderie-enfant/28065-mon-petit-sac-a-creer-miss-lapinette-do-it-yourself-djeco-3070900079984.html)), ou les bracelets Meilleures copines, avec 4 aiguilles à bout rond ([11,99 €](https://www.lapouleapois.fr/fleurs-perles-et-bijoux-a-creer/24520-bracelets-a-creer-meilleures-copines-do-it-yourself-djeco-3070900079380.html))." ,
+          "**Punch needle enfant** : le kit renard de Sentosphère (12,99 €, dès 6 ans chez [Oxybul](https://www.oxybul.com/kit-punch-needle-renard-230375)) ou le toucan d'Avenue Mandarine (12,99 €, 6 ans chez [Cultura](https://www.cultura.com/p-un-tableau-a-broder-punch-needle-kit-point-de-croix-enfant-toucan-a-coudre-tissu-3609510541521.html)). Pour comprendre la technique : [le punch needle, c'est quoi ?](/blog/punch-needle-c-est-quoi)",
+          "**Perles à repasser** : une boîte Hama Midi d'environ 2 000 perles et 2 plaques (12,99 €, dès 5 ans chez [Cultura](https://www.cultura.com/p-midi-boite-pm-chien-et-chats-0028178034498.html)). Le coup de fer final revient à l'adulte.",
+          "**Première broderie** : la Broderie Paysage de Sycomore, avec cercle en bois et 9 écheveaux de coton (19,99 €, dès 7 ans chez [La Poule à Pois](https://www.lapouleapois.fr/couture-broderie-enfant/27977-broderie-paysage-sycomore-3760424921042.html)).",
+          "**Apprendre la machine** : Coutimini propose un kit de 9 « missions » pour débuter à la machine à coudre, dès 6 ans selon la marque (36 €, [coutimini.fr](https://coutimini.fr/products/kit-couture-enfant-mission-vitaminee)). Vérifiez sur la fiche ce qui est fourni.",
+        ] },
+        { type: 'quote', text: 'Les premiers pas : marque-page, lingette, mini coussin… Tout ce qui est en deux coutures maximum, rectangle ou carré.', author: 'Ludivine', role: "fondatrice de L'atelier Pic & Paf" },
+        { type: 'p', text: "En atelier, Ludivine fait coudre les enfants de 6 ans à la main, et les finitions à la machine : l'enfant guide le tissu, baisse le pied presseur et fait la marche arrière, pendant qu'elle gère la vitesse avec la pédale. Tout le détail dans notre guide [machine à coudre enfant](/blog/a-quel-age-enfant-couture)." },
+        { type: 'products', title: 'Les premiers projets de Ludivine, en kit avec tuto vidéo', slugs: ['kit-marque-page-a-fabriquer', 'kit-4-lingettes-lavables-a-fabriquer'] },
+        { type: 'p', text: "Ces kits contiennent le patron, le tissu, les épingles et le tutoriel : prévoyez du fil et une aiguille, ou une machine. Pour un enfant, on les coud avec un adulte." },
+      ],
+    },
+    {
+      h2: '8-9 ans : la vraie aiguille et les projets en plusieurs étapes',
+      id: '8-9-ans',
+      blocks: [
+        { type: 'p', text: "Vers 8 ans, beaucoup d'enfants lisent une notice simple : le programme vise 70 mots par minute en fin de CE1 et 90 en fin de CE2 ([BO](https://www.education.gouv.fr/bo/2024/Hebdo41/MENE2415135A)). C'est aussi à partir de 8 ans que Francine Ferland situe l'usage de nouveaux outils comme l'aiguille à coudre ([tableau de synthèse](https://educationspecialisee.ca/wp-content/uploads/2018/02/258_TableausynthAse6-12ans.pdf)). Les kits passent à l'aiguille en métal et aux projets en plusieurs étapes." },
+        { type: 'h3', text: 'Les idées qui marchent' },
+        { type: 'ul', items: [
+          "**Crochet** : le kit Easygurumi Abeille de Graine Créative, avec un crochet de 3 mm et une aiguille en métal (10,90 €, dès 8 ans chez [La Poule à Pois](https://www.lapouleapois.fr/couture-broderie-enfant/26651-kit-easygurumi-abeille-graine-creative-3532434204039.html)). C'est bien du crochet, pas de la couture, même si l'Aperçu IA de Google les mélange.",
+          "**Broderie au demi-point** : la coccinelle DMC (12,99 €, 8 ans chez [Cultura](https://www.cultura.com/p-dmc-kit-broderie-coccinelle-au-demi-point-3357995009172.html)).",
+          "**Tissage** : le tissage de fleurs Djeco, avec une aiguille à laine souple (21,99 €, 7-12 ans chez [La Poule à Pois](https://www.lapouleapois.fr/couture-broderie-enfant/27397-tissage-de-fleurs-un-hemisphere-dans-une-chevelure-djeco-3070900093546.html)), ou les bracelets et métier à tisser Minuscules (17,99 €, 8 ans chez [Cultura](https://www.cultura.com/p-bracelets-et-metier-a-tisser-minuscules-djeco-3070900098381.html)).",
+          "**Une box tout-en-un** : Ma box d'activités fils de Sycomore, avec tricotin, crochet, aiguilles à tricoter, aiguilles, épingles et dé à coudre (49,99 €, dès 7 ans chez [La Poule à Pois](https://www.lapouleapois.fr/loisirs-creatifs/25573-ma-box-d-activites-fils-sycomore-3517130014359.html)).",
+          "**Bracelets en perles Heishi** : le coffret Sentosphère (14,99 €, 8 ans chez [Cultura](https://www.cultura.com/p-bracelets-perles-heishi-sentosphere-11963642.html)).",
+        ] },
+        { type: 'h3', text: 'Et la machine à coudre ?' },
+        { type: 'p', text: "Les machines enfant des marques de jouets démarrent à 8 ans : la Maped Couture Design (34,99 €, dès 8 ans selon [Maped](https://fr.maped.com/product/machine-a-coudre-enfant-des-8-ans/)) ou la Buki Professional Studio Couture (59,99 € chez [Cultura](https://www.cultura.com/p-professional-studio-couture-buki-machine-a-coudre-pour-enfant-3700802102441.html)). Ludivine les déconseille : « Pas de machine jouet : elles sont peu précises et vibrent beaucoup. » Elle conseille une vraie machine mécanique simple, avec un adulte à la pédale au début. Modèles, prix et âges dans notre guide [machine à coudre enfant](/blog/a-quel-age-enfant-couture)." },
+      ],
+    },
+    {
+      h2: '10-12 ans : de vrais outils et des projets qui durent',
+      id: '10-12-ans',
+      blocks: [
+        { type: 'p', text: "Entre 7 et 12 ans, le questionnaire national de repérage attend que l'enfant utilise le matériel de l'école, ciseaux, compas et règle ([questionnaire 7-12 ans](https://handicap.gouv.fr/sites/handicap/files/2022-04/Volet%20Famille%207-12%20ans_01.pdf)), et la concentration progresse nettement vers 9-10 ans ([tableau de synthèse](https://educationspecialisee.ca/wp-content/uploads/2018/02/258_TableausynthAse6-12ans.pdf)). C'est le moment des vrais outils et des projets sur plusieurs séances." },
+        { type: 'ul', items: [
+          "**Une vraie boîte à couture** : Ma première boîte de couture de Bohin, avec aiguilles, épingles, découseur, dé et enfile-aiguille (37 €, [Bohin](https://www.bohin.com/products/ma-premiere-boite-de-couture-a-4-7-98780l)). Bohin n'indique pas d'âge : ce sont de vrais outils, pour un enfant qui coud déjà un peu.",
+          "**Le string art** : le kit Fils tendus animaux de Janod (27,15 € chez un vendeur partenaire de [Cultura](https://www.cultura.com/p-kit-creatif-fils-tendus-animaux-3700217379124.html), 10 ans).",
+          "**La pâte polymère** : le kit Fimo Kids de 6 pains (13,99 €, 8 ans chez [Cultura](https://www.cultura.com/p-kit-pate-fimo-kids-6-pains-4007817805176.html)).",
+          "**Un livre de projets** : « Atelier machine à coudre pour les enfants et les ados », 35 créations à partir de 7 ans (Marie Claire, 19,90 € chez [Cultura](https://www.cultura.com/p-atelier-machine-a-coudre-pour-les-enfants-et-les-ados-35-creations-a-partir-de-7-ans-9791032304716.html)), ou « Fiches couture pour petites mains » (Eyrolles, 19,90 € chez [Cultura](https://www.cultura.com/p-fiches-couture-pour-petites-mains-20-fiches-projets-15-fiches-techniques-des-creations-a-la-portee-des-enfants-9782212678536.html)).",
+          "**Le canevas** : l'Atelier 66 Canevas de Djeco (29,90 € chez [La Poule à Pois](https://www.lapouleapois.fr/couture-broderie-enfant/28188-atelier-66-canevas-atelier-grands-augustins-djeco-3070900100664.html)), présenté pour les adolescents et les adultes : pour un enfant de 12 ans déjà à l'aise.",
+          "**Une machine** : la Buki Professional Studio Couture Expert est réservée aux 10 ans et plus (de 99,90 à 130 € selon les marchands). Pour une vraie machine, voyez notre [guide machine à coudre enfant](/blog/a-quel-age-enfant-couture).",
+        ] },
+        { type: 'callout', emoji: '✂️', title: 'Les bons ciseaux, le petit cadeau qui sert à tout', text: "Des ciseaux enfant Fiskars de 13 cm coûtent 3,99 € ([Cultura](https://www.cultura.com/p-fiskars-kids-animal-scissors-bee-ciseaux-0078484125571.html)). Pour un enfant gaucher, il existe des ciseaux pour gaucher, comme les Maped Sensoft 3D de 16 cm (6,49 €, [Cultura](https://www.cultura.com/p-ciseaux-pour-gauchers-16-cm-sensoft-3d-maped-coloris-assortis-3154146965109.html))." },
+      ],
+    },
+    {
+      h2: 'Et pour un garçon ?',
+      id: 'garcons',
+      blocks: [
+        { type: 'p', text: "Tapez « cadeau créatif garçon 10 ans » sur Google : la réponse automatique propose maquettes, moulage, résine et cristaux, mais aucune activité de fil ou de tissu (relevé du 3 novembre 2026). Les fabricants de jouets se sont pourtant engagés en 2019, dans une charte signée à Bercy, à ne plus classer les jouets par genre et à éviter d'assigner des activités à chaque sexe ([ministère de l'Économie](https://www.economie.gouv.fr/actualites/signature-de-la-charte-dengagements-volontaires-pour-une-representation-mixte-des-jouets)). La charte a été renouvelée pour 2023-2026 ([DGE](https://www.entreprises.gouv.fr/la-dge/actualites/signature-de-la-charte-pour-une-representation-mixte-des-jouets-2023-2026))." },
+        { type: 'p', text: "Les habitudes restent fortes. À 5 ans et demi, parmi les enfants qui ont une activité encadrée, 57 % des filles en ont une artistique ou culturelle, contre 19 % des garçons, et les chercheuses y voient d'abord les choix des parents ([cohorte Elfe](https://www.culture.gouv.fr/espace-documentation/service-statistique-ministeriel-deps/publications/collections-de-synthese/culture-etudes-2007-2026/les-univers-culturels-des-enfants-a-5-ans-et-demi-d-apres-la-cohorte-elfe-ce-2025-3)). En Finlande, où les élèves choisissent entre textile et travail technique, une étude sur 300 élèves de 5e et 6e année comptait 92 filles et 6 garçons en textile ([Virtanen et Ikonen, 2011](https://jyx.jyu.fi/jyx/Record/jyx_123456789_37314))." },
+        { type: 'p', text: "Toutes les idées de cet article conviennent aussi aux garçons : le punch needle renard, un petit animal au crochet, le string art, le tissage de bracelets, une trousse cousue à la machine. Laissez-le choisir les tissus et les motifs." },
+      ],
+    },
+    {
+      h2: 'Offrir un objet ou une expérience ?',
+      id: 'objet-ou-experience',
+      blocks: [
+        { type: 'p', text: "Chez l'adulte, les cadeaux d'expérience renforcent davantage la relation que les objets (voir nos [idées cadeaux couture pour Noël](/blog/idees-cadeaux-couture-noel)). Chez l'enfant, c'est l'inverse : dans quatre études menées avec des jeunes de 3 à 17 ans, les 3-12 ans tiraient plus de bonheur des objets que des expériences. Le plaisir des expériences grandit avec l'âge, et seuls les adolescents plus âgés rejoignent le schéma adulte ([Chaplin et al., 2020](https://ideas.repec.org/a/eee/ijrema/v37y2020i3p572-586.html))." },
+        { type: 'p', text: "L'explication avancée tient à la mémoire : un jeune enfant apprécie l'expérience sur le moment, mais en garder un bonheur durable suppose de s'en souvenir. La chercheuse conseille des photos et des vidéos pour la revivre ([université de l'Illinois à Chicago](https://live.today.uic.edu/?p=103995))." },
+        { type: 'p', text: "Un atelier de couture coche les deux cases : l'enfant vit l'expérience et repart avec l'objet qu'il a cousu. Ludivine anime des [ateliers couture enfants](/ateliers-enfants) dès 6 ans, des stages pendant les vacances et des [anniversaires couture](/anniversaire-couture-enfant), en Vienne (86) et en Deux-Sèvres (79)." },
+        { type: 'img', src: '/images/blog/machine-a-coudre-enfant/atelier-couture-enfants-machines.webp', alt: "Enfants qui cousent à la machine pendant un atelier couture de L'atelier Pic & Paf, Ludivine à leurs côtés", width: 909, height: 1350, caption: 'En atelier, chacun repart avec ce qu\'il a cousu' },
+        { type: 'cta', title: 'Offrir un atelier couture à un enfant', text: 'Ateliers dès 6 ans, stages pendant les vacances et anniversaires, en Vienne (86) et Deux-Sèvres (79).', href: '/ateliers-enfants', label: 'Voir les ateliers enfants' },
+      ],
+    },
+    {
+      h2: 'Sécurité : aiguilles, colle chaude, fer et slime',
+      id: 'securite',
+      blocks: [
+        { type: 'ul', items: [
+          "**Aiguilles** : les kits pour les plus jeunes utilisent souvent une aiguille à bout rond et de la feutrine pré-percée. Aucune règle ne l'impose, c'est un confort pour débuter. Rangez les vraies aiguilles dans une boîte fermée.",
+          "**Colle chaude** : un guide de sécurité scolaire anglais réserve le pistolet à colle aux élèves de primaire les plus âgés, sous surveillance étroite, avec un modèle basse température ; il déconseille les modèles haute température en primaire et préfère la colle vinylique quand elle suffit ([Hampshire County Council, 2024](https://designandtechnology.hias.hants.gov.uk/mod/resource/view.php?id=700)). Nous n'avons trouvé aucune recommandation française d'âge.",
+          "**Fer à repasser** : les brûlures par un fer touchent surtout les tout-petits. Dans une étude britannique, les 42 enfants brûlés par un fer avaient en moyenne 25 mois, souvent après avoir tiré le cordon, et dans au moins un quart des cas le fer était éteint mais encore chaud ([Chipp et Pape, 2013](https://pmc.ncbi.nlm.nih.gov/articles/PMC3978587)). Quand un grand repasse ses perles ou ses coutures, éloignez les plus petits et le cordon.",
+          "**Slime** : le bore est limité dans les jouets, à 300 mg/kg pour une matière collante ([directive 2009/48/CE](https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=CELEX:32009L0048)). En 2018, 2 kits de slime sur 15 analysés par la DGCCRF dépassaient la limite et ont été rappelés ([DGCCRF](https://www.economie.gouv.fr/dgccrf/slime-pate-qui-nest-pas-sans-danger-pour-enfants)), et 42 slimes sur 100 testés par des associations européennes de consommateurs ([BEUC](https://www.beuc.eu/news/dangerous-slime-toys-consumer-groups-ask-eu-keep-kids-safe)). La DGCCRF signale aussi des atteintes de la peau avec le slime « maison » (colles, lessives, solutions pour lentilles).",
+          "**Achats en ligne** : en décembre 2025, la DGCCRF a acheté 70 jouets à bas prix sur cinq places de marché : 90 % étaient non conformes et plus de 60 % dangereux, souvent sans âge indiqué, avec des petites pièces ou des piles accessibles ([DGCCRF](https://www.economie.gouv.fr/actualites/commerce-en-ligne-90-de-jouets-non-conformes-et-60-de-jouets-dangereux-sur-les-plateformes)). L'échantillon était ciblé, donc pas représentatif, mais le réflexe reste bon : vérifiez le marquage CE et l'âge sur l'emballage.",
+        ] },
+      ],
+    },
+  ],
+  faq: [
+    { q: 'Que puis-je faire coudre à mon enfant ?', r: "Un projet en deux coutures maximum, en carré ou en rectangle : marque-page, lingette lavable, mini coussin. C'est ce que Ludivine fait coudre aux débutants : l'enfant voit le résultat dans la séance." },
+    { q: 'À partir de quel âge un enfant peut-il coudre avec une vraie aiguille ?', r: "Aucune norme officielle ne fixe cet âge. La norme EN 71-1 admet les aiguilles dans les jouets dès 3 ans, avec un avertissement, et les kits avec aiguille en métal sont souvent marqués 8 ans. En atelier, Ludivine fait coudre les enfants à la main dès 6 ans, accompagnés." },
+    { q: 'Quel kit créatif offrir à un enfant de 6 ans ?', r: "Un kit court, avec un tuto vidéo ou des schémas : couture sur feutrine pré-percée avec aiguille à bout rond, punch needle enfant ou perles à repasser, de 11 à 20 € en novembre 2026." },
+    { q: 'Quel cadeau créatif pour une fille ou un garçon de 8 ans ?', r: "À 8 ans, la vraie aiguille et les projets en plusieurs étapes : crochet, broderie au demi-point, tissage, box tricotin et crochet, de 11 à 50 €. Les mêmes idées valent pour une fille et pour un garçon." },
+    { q: 'Une machine à coudre est-elle un bon cadeau pour un enfant ?', r: "Oui, si un adulte l'accompagne au début. Ludivine déconseille les machines jouets, peu précises et qui vibrent beaucoup, et conseille une vraie machine mécanique simple. Les machines enfant des marques de jouets sont marquées 8 ans, ou 10 ans pour les modèles plus puissants." },
+    { q: 'Vaut-il mieux offrir un objet ou une expérience à un enfant ?', r: "Une étude de 2020 montre qu'avant l'adolescence, les enfants tirent plus de bonheur des objets que des expériences. Un atelier couture concilie les deux : l'enfant vit l'expérience et repart avec ce qu'il a cousu." },
+  ],
+  ctaText: 'Voir les ateliers enfants',
+  ctaHref: '/ateliers-enfants',
+  sources: [
+    'Délégation interministérielle TND, livret de repérage avant 7 ans (2020) | https://handicap.gouv.fr/sites/handicap/files/2023-02/brochure_reperage_tnd_2020_formulaire.pdf',
+    'Délégation interministérielle TND, questionnaire de repérage 7-12 ans (volet famille) | https://handicap.gouv.fr/sites/handicap/files/2022-04/Volet%20Famille%207-12%20ans_01.pdf',
+    'Bulletin officiel n° 41 du 31 octobre 2024, programme de français du cycle 2 | https://www.education.gouv.fr/bo/2024/Hebdo41/MENE2415135A',
+    'DEPP, note d\'information n° 26.31, fluence de lecture (2026) | https://www.education.gouv.fr/sites/default/files/document/deppni-2026-31fluence-de-lecturepdf-518870.pdf',
+    'Tableau de synthèse, le développement de l\'enfant de 6 à 12 ans (F. Ferland) | https://educationspecialisee.ca/wp-content/uploads/2018/02/258_TableausynthAse6-12ans.pdf',
+    'Suggate et al., « Keep the hands in mind », Educational Research Review (2025) | https://epub.uni-regensburg.de/78230',
+    'Ministère de la Culture (DEPS), les univers culturels des enfants à 5 ans et demi, cohorte Elfe (2025) | https://www.culture.gouv.fr/espace-documentation/service-statistique-ministeriel-deps/publications/collections-de-synthese/culture-etudes-2007-2026/les-univers-culturels-des-enfants-a-5-ans-et-demi-d-apres-la-cohorte-elfe-ce-2025-3',
+    'Commission « Enfants et écrans », rapport (avril 2024) | https://www.vie-publique.fr/files/rapport/pdf/293978.pdf',
+    'Chaplin et al., International Journal of Research in Marketing (2020) | https://ideas.repec.org/a/eee/ijrema/v37y2020i3p572-586.html',
+    'Université de l\'Illinois à Chicago, communiqué sur l\'étude Chaplin | https://live.today.uic.edu/?p=103995',
+    'EUR-Lex, directive 2009/48/CE relative à la sécurité des jouets | https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=CELEX:32009L0048',
+    'EUR-Lex, règlement (UE) 2025/2509 relatif à la sécurité des jouets | https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=OJ:L_202502509',
+    'Norme EN 71-1:2011+A3:2014, sécurité des jouets | https://law.resource.org/pub/eu/toys/en.71.1.2014.html',
+    'Ministère de l\'Économie, charte pour une représentation mixte des jouets (2019) | https://www.economie.gouv.fr/actualites/signature-de-la-charte-dengagements-volontaires-pour-une-representation-mixte-des-jouets',
+    'DGE, charte pour une représentation mixte des jouets 2023-2026 | https://www.entreprises.gouv.fr/la-dge/actualites/signature-de-la-charte-pour-une-representation-mixte-des-jouets-2023-2026',
+    'Virtanen et Ikonen, choix du textile à l\'école en Finlande (2011) | https://jyx.jyu.fi/jyx/Record/jyx_123456789_37314',
+    'Hampshire County Council (HIAS), évaluation des risques du pistolet à colle (2024) | https://designandtechnology.hias.hants.gov.uk/mod/resource/view.php?id=700',
+    'Chipp et Pape, brûlures d\'enfants par fer à repasser, Annals of Burns and Fire Disasters (2013) | https://pmc.ncbi.nlm.nih.gov/articles/PMC3978587',
+    'DGCCRF, slime : une pâte qui n\'est pas sans danger pour les enfants (2018) | https://www.economie.gouv.fr/dgccrf/slime-pate-qui-nest-pas-sans-danger-pour-enfants',
+    'BEUC, slimes dangereux (2018) | https://www.beuc.eu/news/dangerous-slime-toys-consumer-groups-ask-eu-keep-kids-safe',
+    'DGCCRF, jouets non conformes sur les places de marché (décembre 2025) | https://www.economie.gouv.fr/actualites/commerce-en-ligne-90-de-jouets-non-conformes-et-60-de-jouets-dangereux-sur-les-plateformes',
+    'La Poule à Pois, couture et broderie enfant | https://www.lapouleapois.fr/171-couture-broderie-enfant',
+    'Oxybul, kit punch needle renard Sentosphère | https://www.oxybul.com/kit-punch-needle-renard-230375',
+    'Maped, machine à coudre enfant dès 8 ans | https://fr.maped.com/product/machine-a-coudre-enfant-des-8-ans/',
+    'Coutimini, kit Mission vitaminée | https://coutimini.fr/products/kit-couture-enfant-mission-vitaminee',
+    'Bohin, Ma première boîte de couture | https://www.bohin.com/products/ma-premiere-boite-de-couture-a-4-7-98780l',
+  ],
+}

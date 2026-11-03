@@ -154,7 +154,7 @@ export const machineACoudreEnfant: Article = {
       id: 'atelier',
       blocks: [
         { type: 'p', text: "Avant d'investir de 100 à 230 € dans une machine, une séance en atelier permet de voir si votre enfant accroche, et sur quel type de machine il est à l'aise. Ludivine anime des [ateliers couture enfants](/ateliers-enfants) dès 6 ans à Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault, à 25 € l'atelier, matériel fourni. Les enfants y cousent sur de vraies machines, avec un adulte à côté, et repartent avec leur création." },
-        { type: 'p', text: "Pour un anniversaire, la couture fait aussi une activité qui change : chaque invité repart avec ce qu'il a fabriqué ([anniversaire couture](/anniversaire-couture-enfant), de 7 à 12 ans)." },
+        { type: 'p', text: "Pour un anniversaire, la couture fait aussi une activité qui change : chaque invité repart avec ce qu'il a fabriqué ([anniversaire couture](/anniversaire-couture-enfant), de 6 à 12 ans). Pour un cadeau, voyez aussi nos [idées de cadeaux créatifs selon l'âge](/blog/cadeau-creatif-enfant)." },
         { type: 'cta', title: 'Envie que votre enfant essaie ?', text: 'Ateliers couture enfants dès 6 ans, stages pendant les vacances et anniversaires, en Vienne (86) et Deux-Sèvres (79).', href: '/ateliers-enfants', label: 'Voir les ateliers enfants' },
       ],
     },

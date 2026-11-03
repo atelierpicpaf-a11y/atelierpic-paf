@@ -178,8 +178,8 @@ export const ideesCadeauxCoutureNoel: Article = {
       h2: 'Et pour un enfant qui veut coudre ?',
       id: 'pour-un-enfant',
       blocks: [
-        { type: 'p', text: "Pour un enfant, on choisit selon l'âge. Les machines enfant de marques de jouets indiquent un âge minimum : 8 ans et plus pour la Buki Studio Couture, 10 ans et plus pour la version Expert ([Buki](https://www.bukifrance.com/37-professional-studio-couture.html)). Un livre comme « Atelier machine à coudre pour les enfants et les ados » (40 créations, à partir de 7 ans, 19,90 €) est un bon complément." },
-        { type: 'p', text: "Pour aller plus loin : notre guide [machine à coudre enfant](/blog/a-quel-age-enfant-couture), et nos [ateliers couture enfants](/ateliers-enfants) dès 6 ans en Vienne et en Deux-Sèvres, qui s'offrent aussi en cadeau." },
+        { type: 'p', text: "Pour un enfant, on choisit selon l'âge. Les machines enfant de marques de jouets indiquent un âge minimum : 8 ans et plus pour la Buki Studio Couture, 10 ans et plus pour la version Expert ([Buki](https://www.bukifrance.com/37-professional-studio-couture.html)). Un livre comme « Atelier machine à coudre pour les enfants et les ados » (à partir de 7 ans, 19,90 €) est un bon complément." },
+        { type: 'p', text: "Pour aller plus loin : nos [idées de cadeaux créatifs selon l'âge, de 6 à 12 ans](/blog/cadeau-creatif-enfant), notre guide [machine à coudre enfant](/blog/a-quel-age-enfant-couture), et nos [ateliers couture enfants](/ateliers-enfants) dès 6 ans en Vienne et en Deux-Sèvres, qui s'offrent aussi en cadeau." },
       ],
     },
   ],
