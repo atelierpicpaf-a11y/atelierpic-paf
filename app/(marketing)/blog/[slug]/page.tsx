@@ -18,9 +18,6 @@ export const revalidate = 3600
 
 // Vraies photos du projet, par article (ancien format uniquement)
 const ARTICLE_IMAGES: Record<string, { src: string; alt: string; caption?: string }[]> = {
-  'a-quel-age-enfant-couture': [
-    { src: '/images/ateliers/cours-couture-enfants.jpg', alt: 'Enfants en cours de couture avec Ludivine, L’atelier Pic & Paf', caption: 'En atelier couture enfants, dès 6 ans ❤️' },
-  ],
   'activites-enfants-vacances-poitiers': [
     { src: '/images/ateliers/cours-couture-enfants.jpg', alt: 'Stage créatif de couture pour enfants pendant les vacances scolaires', caption: 'Un stage créatif qui change des écrans' },
   ],
