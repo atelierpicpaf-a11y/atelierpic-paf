@@ -1,6 +1,26 @@
+import { punchNeedleCestQuoi } from '@/content/blog/punch-needle-c-est-quoi'
+
 // Articles de blog (SEO + GEO) — L'atelier Pic & Paf.
 export interface ArticleFaq { q: string; r: string }
-export interface ArticleSection { h2: string; paragraphs: string[] }
+
+// Blocs riches (format "article pilier"). Dans les textes : [texte](url) pour un lien, **texte** pour du gras.
+export interface ArticleImage { src: string; alt: string; width: number; height: number; caption?: string }
+export type ArticleBlock =
+  | { type: 'p'; text: string }
+  | { type: 'h3'; text: string }
+  | { type: 'ul'; items: string[] }
+  | { type: 'ol'; items: string[] }
+  | { type: 'table'; caption?: string; head: string[]; rows: string[][] }
+  | ({ type: 'img' } & ArticleImage)
+  | { type: 'callout'; emoji?: string; title?: string; text: string }
+  | { type: 'quote'; text: string; author: string; role?: string }
+  | { type: 'cta'; title: string; text?: string; href: string; label: string }
+  | { type: 'products'; title?: string; slugs: string[] }
+  | { type: 'video'; videoId: string; title: string; aspect?: '16:9' | '9:16' }
+
+// Ancien format : `paragraphs`. Nouveau format : `blocks` (+ `id` pour l'ancre du sommaire).
+export interface ArticleSection { h2: string; id?: string; paragraphs?: string[]; blocks?: ArticleBlock[] }
+
 export interface Article {
   slug: string
   emoji: string
@@ -13,86 +33,17 @@ export interface Article {
   ctaText: string
   ctaHref: string
   sources: string[]
+  // Champs optionnels du format pilier
+  enBref?: string[]
+  datePublished?: string
+  dateModified?: string
+  heroImage?: ArticleImage
+  ogImage?: string
+  howTo?: { name: string; description: string; steps: string[]; supplies?: string[] }
 }
 
 export const ARTICLES: Article[] = [
-  {
-    "slug": "punch-needle-c-est-quoi",
-    "emoji": "🪡",
-    "title": "Le punch needle, c'est quoi ? Le guide simple et complet",
-    "h1": "Le punch needle, c'est quoi ?",
-    "chapo": "Le punch needle (ou broderie à l'aiguille perforante) est une technique de broderie en relief qui consiste à insérer des boucles de laine ou de fil à travers un tissu tendu, grâce à une aiguille creuse spéciale. C'est une activité manuelle accessible, rapide à apprendre et apaisante, à mi-chemin entre la broderie, le canevas et la peinture à la laine.",
-    "sections": [
-      {
-        "h2": "Une technique de broderie en relief, pas comme les autres",
-        "paragraphs": [
-          "Si tu as déjà vu ces petits tableaux tout doux, pleins de bouclettes de laine qui forment des motifs colorés et bien rebondis, tu as déjà croisé le punch needle. Le nom anglais se traduit par « aiguille à poinçonner », et c'est exactement ce qu'on fait : on poinçonne un tissu tendu pour y déposer du fil, boucle après boucle.",
-          "Ce qui rend cette technique si attachante, c'est qu'elle se situe pile entre trois univers : la broderie pour le côté fil et aiguille, le canevas pour le motif qu'on remplit, et la peinture pour cette sensation de « dessiner » avec de la laine. Le résultat est un ouvrage texturé, en volume, qu'on a tout de suite envie de toucher.",
-          "Chez L'atelier Pic & Paf, Ludivine propose des ateliers de punch needle en Vienne (86) et dans les Deux-Sèvres (79), pour les adultes comme pour les enfants dès 6 ans. C'est l'une des activités les plus douces pour débuter le textile créatif, justement parce qu'elle pardonne beaucoup et qu'elle avance vite."
-        ]
-      },
-      {
-        "h2": "D'où vient le punch needle ? Une tradition très ancienne",
-        "paragraphs": [
-          "Les origines du punch needle sont discutées, mais plusieurs sources la font remonter à plusieurs siècles. Certaines évoquent même l'Égypte ancienne, où des brodeuses auraient utilisé des plumes d'oiseau creuses en guise d'aiguilles. D'autres pointent vers le Moyen Âge, l'Europe de l'Est et le Moyen-Orient, pour la création de tapisseries.",
-          "La technique s'est surtout développée et popularisée au 19e siècle en Grande-Bretagne, notamment dans le Yorkshire, pendant la révolution industrielle. On s'en servait alors pour fabriquer des tapis rustiques (les fameux « hooked rugs » ou tapis crochetés) en Amérique du Nord, et des tapisseries maison en Europe.",
-          "Très ancienne, donc, mais remise au goût du jour aux 20e et 21e siècles : le punch needle est devenu une vraie tendance du DIY (le « do it yourself », ou loisir créatif fait maison). Sa promesse n'a pas changé : créer des motifs expressifs et texturés, sans matériel compliqué."
-        ]
-      },
-      {
-        "h2": "Le matériel : l'aiguille magique, le tambour et le bon tissu",
-        "paragraphs": [
-          "L'outil vedette, c'est l'aiguille « magique » (ou poinçon). Elle est creuse sur toute sa longueur, avec une extrémité pointue et une extrémité ouverte par une encoche dans laquelle la laine coulisse. On l'appelle « magique » parce qu'elle forme automatiquement une boucle à l'arrière du tissu, sans qu'on ait à faire de nœud.",
-          "Il faut ensuite un support de tension : le tissu doit être fortement tendu pour que l'aiguille passe en douceur. On utilise un tambour rond (comme en broderie classique) ou un cadre rectangulaire. Côté tissu, on choisit une matière à maille ouverte et résistante : la toile de jute (parfaite pour les tapis en relief), le Monk's Cloth (un tissu à gros grains, idéal pour débuter) ou une toile de coton bien tendue.",
-          "Enfin, le fil : on travaille surtout avec de la laine, épaisse ou moyenne, mais on peut aussi piocher dans le fil de coton, la frange ou le ruban selon l'effet recherché. Pas de panique pour la liste de courses : dans les ateliers de Ludivine, tout le matériel est fourni, tu arrives les mains dans les poches."
-        ]
-      },
-      {
-        "h2": "Comment ça marche, concrètement (recto et verso)",
-        "paragraphs": [
-          "Le principe est aussi ingénieux que simple. On commence par enfiler la laine dans le trou de l'aiguille puis dans l'encoche du manche. Ensuite, on pique l'aiguille de l'avant vers l'arrière, du recto vers le verso, à travers le tissu tendu, jusqu'à la profondeur voulue.",
-          "Au moment où on retire l'aiguille, la laine reste accrochée et forme une jolie bouclette sur le verso, l'arrière du tissu. Sur l'endroit, le recto, le fil apparaît au contraire comme des points plats bien réguliers. À toi de choisir quelle face tu mets en avant : les deux sont très belles.",
-          "Il ne reste plus qu'à répéter le mouvement le long du motif. En jouant sur la longueur de l'aiguille ou la tension du fil, on règle la hauteur des boucles, et c'est ce qui crée tout le volume et la texture. C'est un peu comme dessiner avec de la laine, point par point."
-        ]
-      },
-      {
-        "h2": "Punch needle ou broderie traditionnelle : la vraie différence",
-        "paragraphs": [
-          "En broderie traditionnelle, on passe l'aiguille en avant et en arrière à travers le tissu pour créer des points plats (point de croix, point de satin, etc.). Le fil est « tiré » pour former le point, et le résultat reste à plat sur l'endroit.",
-          "En punch needle, la logique s'inverse : on ne repasse jamais l'aiguille en arrière, on poinçonne, tout simplement. Le fil n'est pas tiré mais poussé, ce qui crée systématiquement une boucle à l'arrière. D'où cet effet 3D, ce relief si caractéristique, et une vitesse d'exécution bien plus rapide.",
-          "C'est précisément ce qui rend le punch needle si rassurant quand on débute : pas de point compliqué à mémoriser, un geste qui se répète, et un résultat qui prend forme sous tes yeux en quelques minutes. Idéal pour un premier atelier textile, seul, en duo ou en famille."
-        ]
-      }
-    ],
-    "faq": [
-      {
-        "q": "À partir de quel âge un enfant peut-il faire du punch needle ?",
-        "r": "Le punch needle est recommandé dès 5 ans (environ la moyenne section de maternelle), à condition d'avoir une motricité fine suffisante pour tenir l'aiguille et tirer légèrement le fil. C'est une activité éducative et apaisante, très appréciée des enfants car elle est rapide et donne des résultats visuels immédiats. Chez L'atelier Pic & Paf, les ateliers accueillent les enfants dès 6 ans, en Vienne et dans les Deux-Sèvres."
-      },
-      {
-        "q": "Quelle est la différence entre le punch needle et la broderie ?",
-        "r": "En broderie, on passe l'aiguille en avant et en arrière pour former des points plats, et le fil est tiré. En punch needle, on ne repasse jamais l'aiguille en arrière : on poinçonne le tissu, le fil est poussé et forme une boucle à l'arrière. Résultat : un effet en relief (3D) et un travail beaucoup plus rapide."
-      },
-      {
-        "q": "De quel matériel a-t-on besoin pour commencer ?",
-        "r": "Il te faut une aiguille à punch needle (l'aiguille « magique » creuse), un support de tension comme un tambour rond ou un cadre rectangulaire, un tissu à maille ouverte et résistant (toile de jute, Monk's Cloth ou coton bien tendu) et de la laine. En atelier, tout est fourni : tu n'as rien à acheter ni à préparer."
-      },
-      {
-        "q": "Le punch needle, est-ce difficile à apprendre ?",
-        "r": "Non, c'est l'une des techniques textiles les plus accessibles. Le geste est simple et se répète, il n'y a pas de point compliqué à mémoriser, et l'ouvrage prend forme très vite. C'est aussi une activité reconnue comme apaisante, parfaite pour débuter ou pour décompresser."
-      }
-    ],
-    "metaDescription": "🧵 Le punch needle, c'est quoi ? Une broderie en relief qui dépose des boucles de laine dans un tissu tendu. Origine, matériel et technique expliqués simplement.",
-    "ctaText": "Découvrir l'atelier punch needle",
-    "ctaHref": "/punch-needle",
-    "sources": [
-      "https://moomzart.com/fr/histoire-et-origines-du-punch-needle/",
-      "https://www.lafabriqueatisser.com/2024/01/30/le-punch-needle-une-forme-dart-textile-en-pleine-expansion/",
-      "https://etoffeetmotif.fr/le-punch-needle-tout-savoir-sur-la-tendance-diy-qui-fait-fureur/",
-      "https://www.perlesandco.com/ressources/ft24771-broderie-laine-quel-materiel-pour-la-punch-needle.html",
-      "https://www.c-reparti.fr/presentation-punch-needle/"
-    ]
-  },
+  punchNeedleCestQuoi,
   {
     "slug": "a-quel-age-enfant-couture",
     "emoji": "🧒",
