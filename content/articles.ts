@@ -1,5 +1,6 @@
 import { punchNeedleCestQuoi } from '@/content/blog/punch-needle-c-est-quoi'
 import { machineACoudreEnfant } from '@/content/blog/a-quel-age-enfant-couture'
+import { ideesCadeauxCoutureNoel } from '@/content/blog/idees-cadeaux-couture-noel'
 
 // Articles de blog (SEO + GEO) — L'atelier Pic & Paf.
 export interface ArticleFaq { q: string; r: string }
@@ -44,6 +45,7 @@ export interface Article {
 }
 
 export const ARTICLES: Article[] = [
+  ideesCadeauxCoutureNoel,
   punchNeedleCestQuoi,
   machineACoudreEnfant,
   {

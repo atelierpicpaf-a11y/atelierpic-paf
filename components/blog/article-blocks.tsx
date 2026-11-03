@@ -132,7 +132,7 @@ export function ArticleBlocks({ blocks, products = {} }: { blocks: ArticleBlock[
             return (
               <div key={i} style={{ margin: '10px 0 30px' }}>
                 {b.title && <p className="h-fredoka" style={{ fontSize: 19, color: 'var(--framboise)', margin: '0 0 14px' }}>{b.title}</p>}
-                <div style={{ display: 'grid', gridTemplateColumns: list.length === 1 ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))', gap: 18 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: list.length === 1 ? '1fr' : list.length === 4 ? 'repeat(auto-fit, minmax(max(220px, 40%), 1fr))' : 'repeat(auto-fit, minmax(220px, 1fr))', gap: 18 }}>
                   {list.map((p) => (
                     <Link key={p.slug} href={`/boutique/${p.slug}`} className="card" style={{ padding: 0, overflow: 'hidden', textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: list.length === 1 ? 'row' : 'column', flexWrap: list.length === 1 ? 'wrap' : 'nowrap' }}>
                       <div style={{ position: 'relative', aspectRatio: '4 / 3', background: 'var(--creme)', ...(list.length === 1 && { flex: '1 1 240px', maxWidth: 320 }) }}>
