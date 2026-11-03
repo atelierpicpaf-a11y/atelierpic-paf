@@ -170,7 +170,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
     },
     {
       q: `Comment organiser un anniversaire couture à ${v.nom} ?`,
-      r: `L'anniversaire couture, c'est la formule chouchou des 7-12 ans à ${v.nom}. Je me déplace chez toi (ou en salle des fêtes, médiathèque, ALSH). Chaque enfant repart avec un objet cousu par ses soins : c'est le cadeau original par excellence (et qui dure plus longtemps qu'une boîte de bonbons). Voir les détails et les formats sur la page anniversaire couture, ou contacte-moi directement avec ton projet.`,
+      r: `L'anniversaire couture, c'est la formule chouchou des 6-12 ans à ${v.nom}. Je me déplace chez toi (ou en salle des fêtes, médiathèque, ALSH). Chaque enfant repart avec un objet cousu par ses soins : c'est le cadeau original par excellence (et qui dure plus longtemps qu'une boîte de bonbons). Voir les détails et les formats sur la page anniversaire couture, ou contacte-moi directement avec ton projet.`,
     },
     {
       q: `Intervenez-vous dans les écoles et ALSH de ${v.nom} ?`,

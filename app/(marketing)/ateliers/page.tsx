@@ -26,7 +26,7 @@ type Carte = { emoji: string; pour: string; titre: string; desc: string; prix: s
 
 const ENFANTS: Carte[] = [
   { emoji: '🧵', pour: 'Dès 6 ans', titre: 'Ateliers couture enfants', desc: 'Cours et stages de couture ou de punch needle. Machine à coudre, projets concrets, fierté garantie.', prix: '25€ / atelier', href: '/ateliers-enfants', cta: 'Découvrir' },
-  { emoji: '🎂', pour: 'Fête · 7-12 ans', titre: 'Anniversaire couture', desc: 'Une fête qui change : chacun repart avec sa création. À domicile ou en salle.', prix: 'Sur devis', href: '/anniversaire-couture-enfant', cta: 'Découvrir' },
+  { emoji: '🎂', pour: 'Fête · 6-12 ans', titre: 'Anniversaire couture', desc: 'Une fête qui change : chacun repart avec sa création. À domicile ou en salle.', prix: 'Sur devis', href: '/anniversaire-couture-enfant', cta: 'Découvrir' },
 ]
 const ADULTES: Carte[] = [
   { emoji: '✂️', pour: 'Adultes · ou enfant accompagné', titre: 'Journées créatives', desc: 'Une journée couture + punch needle, tout fourni, à Fontaine-le-Comte. Les enfants sont les bienvenus accompagnés d’un adulte.', prix: '90€', href: '/ateliers-adultes/journees-creatives', cta: 'Voir les dates' },
