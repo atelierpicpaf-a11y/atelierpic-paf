@@ -1,0 +1,212 @@
+import type { Article } from '@/content/articles'
+
+// Article pilier "machine à coudre enfant" (refonte de l'ancien "À quel âge un enfant peut-il
+// commencer la couture ?", même URL pour garder son historique Google). Faits vérifiés le
+// 3 novembre 2026 (fabricants, notices, marchands, directive jouets), prix relevés le même jour.
+// Avis et méthode de Ludivine : ses réponses écrites du 03/11/2026.
+// Ne pas affirmer : "les machines jouets n'ont qu'un fil", "sans contact avec l'aiguille",
+// "Brother conseille la Little Angel dès 8 ans", "la FS40s a un protège-doigts",
+// "canette horizontale indispensable", un âge "scientifique" pour la machine.
+export const machineACoudreEnfant: Article = {
+  slug: 'a-quel-age-enfant-couture',
+  emoji: '🧵',
+  title: 'Machine à coudre enfant : dès quel âge, laquelle choisir ?',
+  h1: 'Machine à coudre enfant : à partir de quel âge, et laquelle choisir ?',
+  metaDescription:
+    "Machine à coudre pour enfant : à partir de quel âge (6, 8, 10 ans), jouet ou vraie machine, modèles et prix relevés en novembre 2026, sécurité, premiers projets. Les conseils de Ludivine.",
+  datePublished: '2026-06-13',
+  dateModified: '2026-11-03',
+  heroImage: {
+    src: '/images/blog/machine-a-coudre-enfant/machine-a-coudre-enfant-guide.webp',
+    alt: "Atelier couture enfants de L'atelier Pic & Paf : des enfants cousent sur de vraies machines à coudre avec Ludivine",
+    width: 1600,
+    height: 900,
+  },
+  ogImage: '/images/blog/machine-a-coudre-enfant/machine-a-coudre-enfant-og.jpg',
+  chapo:
+    "Un enfant peut découvrir la machine à coudre **dès 6 ans, si un adulte gère la vitesse** : l'enfant guide le tissu, l'adulte tient la pédale. Les fabricants situent un usage plus autonome **vers 8 à 10 ans**, toujours sous surveillance. Pour l'achat, une vraie machine mécanique simple (de 99 à 169 € environ en novembre 2026) vaut mieux qu'une machine jouet, légère et peu précise. Voici les repères par âge, les types de machines, les modèles conseillés par Ludivine, les prix, les règles de sécurité et les premiers projets.",
+  enBref: [
+    "**Dès 6 ans**, on coud surtout à la main et la machine sert aux finitions : l'enfant guide le tissu, un adulte gère la vitesse avec la pédale. C'est la méthode de Ludivine en atelier.",
+    "**Vers 8 à 10 ans**, l'enfant gagne en autonomie : Singer situe l'âge idéal entre 8 et 10 ans, et les machines enfant de marques de jouets indiquent presque toutes 8 ans et plus.",
+    "**Machine jouet ou vraie machine** : les machines enfant actuelles ont souvent une canette, mais elles sont légères, peu puissantes et vibrent. Ludivine conseille une vraie machine simple.",
+    "**Les modèles conseillés** : la Brother Little Angel (de 99 à 149 €) pour débuter avec un adulte à la pédale, ou la Brother FS40s (de 180 à 232 € environ) pour son variateur de vitesse. Prix relevés le 3 novembre 2026.",
+    "**Premiers projets** : deux coutures maximum, en carré ou en rectangle. Marque-page, lingette, mini coussin.",
+  ],
+  sections: [
+    {
+      h2: 'À partir de quel âge un enfant peut-il utiliser une machine à coudre ?',
+      id: 'quel-age',
+      blocks: [
+        { type: 'p', text: "Aucune étude ne fixe d'âge officiel pour la machine à coudre : nous n'en avons trouvé aucune. Les repères viennent des fabricants, des enseignants de couture et de l'expérience en atelier. Ils se rejoignent assez bien." },
+        { type: 'table', caption: "Repères indicatifs, d'après Ludivine (atelier), [Singer France](https://www.singerfrance.com/content/30-la-machine-a-coudre-pour-les-enfants), les fabricants et le programme scolaire romand. Chaque enfant avance à son rythme.", head: ['Âge', "Ce que l'enfant peut faire", "Rôle de l'adulte"], rows: [
+          ['Avant 6 ans', 'Couture à la main avec une grosse aiguille à bout rond, laçage, canevas', 'Montre le geste et surveille'],
+          ['6-7 ans', "Couture à la main, et finitions à la machine : guider le tissu, baisser le pied presseur, faire la marche arrière", 'Gère la vitesse avec la pédale, reste à côté'],
+          ['8-10 ans', 'Coudre seul des lignes droites et des projets simples, sur une machine adaptée', 'Reste à proximité, rappelle les consignes de sécurité'],
+          ['10-12 ans et plus', 'Enfiler la machine, poser la canette, coudre au point droit et au zigzag', 'Vérifie et aide sur les étapes difficiles'],
+        ] },
+        { type: 'p', text: "Chez Singer, l'experte couture de la marque répond qu'« à partir de 7 ans un enfant peut commencer à utiliser une machine à coudre à condition qu'il soit encadré d'un adulte », et que l'âge idéal « se situe entre 8 et 10 ans » ([Singer France](https://www.singerfrance.com/content/30-la-machine-a-coudre-pour-les-enfants)). Les machines enfant vendues en magasin de jouets vont dans le même sens : 8 ans et plus pour la [Maped](https://fr.maped.com/product/machine-a-coudre-enfant-des-8-ans/) et la [Buki Studio Couture](https://www.bukifrance.com/37-professional-studio-couture.html), 10 ans et plus pour la [Buki Expert](https://www.bukifrance.com/604-professional-studio-couture-expert.html)." },
+        { type: 'p', text: "Côté développement, un tableau de synthèse tiré de l'ouvrage de l'ergothérapeute Francine Ferland situe **entre 8 et 12 ans** l'usage de nouveaux outils comme l'aiguille à coudre, et vers 9-10 ans une nette progression de la concentration et du temps de réaction ([tableau de synthèse](https://educationspecialisee.ca/wp-content/uploads/2018/02/258_TableausynthAse6-12ans.pdf)). Le meilleur indicateur reste simple : votre enfant respecte-t-il une consigne de sécurité, et reste-t-il concentré quelques minutes ? Si oui, il est prêt pour une première séance accompagnée." },
+        { type: 'callout', emoji: '⚠️', title: 'Pourquoi Brother écrit « 14 ans » sur la Little Angel', text: "Sur la fiche de sa machine Little Angel, Brother indique « Ne convient pas aux enfants de moins de 14 ans » ([Brother](https://sewingcraft.brother.eu/fr-fr/produits/machines/machines-a-coudre/machines-a-coudre-pour-couturiers-debutants/kd144s)), alors que sa notice autorise les enfants de 8 ans ou plus « s'ils sont encadrés » ([notice Brother](https://www.mondialtissus.fr/media/wysiwyg/notices/BROTHER%20Little%20Angel.pdf)). Brother n'explique pas ce chiffre, mais il correspond au seuil de la réglementation européenne des jouets (moins de 14 ans). Retenez ceci : une machine sur secteur se partage avec un adulte, jamais en autonomie pour un jeune enfant." },
+      ],
+    },
+    {
+      h2: 'Machine jouet, machine enfant ou vraie machine : les différences',
+      id: 'jouet-ou-vraie-machine',
+      blocks: [
+        { type: 'p', text: "La frontière est d'abord réglementaire. Un jouet est un produit destiné aux enfants de **moins de 14 ans**, et il doit être alimenté en **24 volts au maximum** ([directive 2009/48/CE](https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=CELEX:32009L0048)). D'où les machines enfant à piles ou à adaptateur basse tension, soumises à la norme des jouets électriques [EN IEC 62115](https://genorma.com/en/standards/en-iec-62115-2020). Une machine branchée sur le secteur relève de la norme des machines à coudre domestiques, l'[EN IEC 60335-2-28](https://genorma.com/en/standards/en-iec-60335-2-28-2025) : c'est un appareil électroménager, avec une vraie aiguille et un vrai moteur." },
+        { type: 'table', caption: 'Prix relevés le 3 novembre 2026 chez les fabricants et marchands cités. Ils changent souvent.', head: ['Type', 'Exemples et prix', 'Points forts', 'Limites'], rows: [
+          ['Machine enfant de marque de jouets (piles ou adaptateur)', 'Maped 34,99 € ; Buki Studio Couture 54,90 à 59,99 € ; Action 12 points 29,95 €', 'Légère ; 2 vitesses et protection d\'aiguille sur certains modèles', 'Peu puissante, peu de réglages, glisse ou vibre ; tissus fins seulement'],
+          ['Vraie machine mécanique compacte', 'Brother KE14S Little Angel 99 à 122 € ; Brother KD144s 134 à 149 € ; Singer Start 169 €', 'Robuste, coud le coton sans peine, protège-doigts sur ces trois modèles', 'Pas de variateur : la vitesse dépend de la pression sur la pédale'],
+          ['Machine électronique d\'entrée de gamme', 'Brother FS40s 179,99 à 231,72 € ; Brother KD40s 305 à 339 €', 'Variateur de vitesse, 40 points, enfile-aiguille sur la FS40s', 'Plus chère ; protège-doigts non mentionné pour la FS40s'],
+        ] },
+        { type: 'p', text: "On lit souvent que les machines jouets n'ont qu'un fil et que leurs coutures se défont. C'était le cas des anciens modèles à **point de chaînette**, un point qui se défait facilement ([Wikipédia](https://en.wikipedia.org/wiki/Chain_stitch)). Les machines enfant vendues aujourd'hui par Maped, Buki ou Klein cousent avec un fil du dessus et une **canette**, comme une vraie machine ([Maped](https://fr.maped.com/product/machine-a-coudre-enfant-des-8-ans/), [Buki](https://www.bukifrance.com/37-professional-studio-couture.html)). Leur limite tient au reste : peu de puissance, peu de réglages, et un poids plume. Testée par le magazine allemand F.A.Z. Kaufkompass, une machine enfant Klein glissait sur la table ([testberichte.de](https://www.testberichte.de/p/klein-toys-tests/naehmaschine-fuer-kinder-testbericht.html))." },
+        { type: 'quote', text: "Pas de machine jouet : elles sont peu précises et vibrent beaucoup.", author: 'Ludivine', role: "animatrice couture, L'atelier Pic & Paf" },
+        { type: 'img', src: '/images/blog/machine-a-coudre-enfant/atelier-couture-enfants-machines.webp', alt: "Atelier couture enfants de L'atelier Pic & Paf : des enfants autour de vraies machines à coudre, Ludivine les accompagne", width: 909, height: 1350, caption: "En atelier chez Pic & Paf : de vraies machines, et un adulte à côté" },
+        { type: 'p', text: "Dans ses ateliers, Ludivine fait coudre les enfants sur de **vraies machines mécaniques basiques**, de marque Singer. Une vraie machine pèse plus lourd, ne bouge pas sur la table et coud un coton sans forcer : l'enfant voit tout de suite un résultat net, et c'est ce qui donne envie de continuer." },
+      ],
+    },
+    {
+      h2: 'Quelle machine à coudre choisir pour un enfant ?',
+      id: 'quelle-machine',
+      blocks: [
+        { type: 'p', text: "Ludivine conseille deux machines, selon le budget et l'âge de l'enfant. Nous avons vérifié leurs caractéristiques et relevé leurs prix le 3 novembre 2026." },
+        { type: 'h3', text: 'Pour débuter : la Brother Little Angel' },
+        { type: 'p', text: "« Little Angel » désigne une famille de machines Brother. En France, on trouve surtout la **KE14S** dans les grandes enseignes ([Cultura](https://www.cultura.com/p-machine-a-coudre-mecanique-brother-ke14s-little-angel-4977766750271.html) à 99 €, [Boulanger](https://www.boulanger.com/ref/1103191) à 122,43 €) et la **KD144s** chez les revendeurs spécialisés Brother (prix conseillé de 149 €, 134 € chez [Coudre et Broder](https://coudreetbroder.com/machines-coudre/brother/brother-kd144s-little-angel.html)). C'est une machine **mécanique** à 14 fonctions : point droit, zigzag, boutonnière en 4 étapes et ourlet invisible, en plusieurs longueurs et largeurs. Elle a une canette horizontale chargée par le haut, un **protège-doigts** fourni, un éclairage LED et une garantie de 3 ans ([Brother](https://sewingcraft.brother.eu/fr-fr/produits/machines/machines-a-coudre/machines-a-coudre-pour-couturiers-debutants/kd144s))." },
+        { type: 'p', text: "Son seul vrai défaut pour un enfant : **pas de variateur de vitesse**, la vitesse dépend uniquement de la pédale ([Coudre et Broder](https://coudreetbroder.com/machines-coudre/brother/brother-kd144s-little-angel.html)). C'est pour cela que Ludivine la conseille « en accompagnant les enfants pour la gestion de la vitesse » : l'adulte garde le pied sur la pédale." },
+        { type: 'h3', text: 'Avec un budget plus élevé : la Brother FS40s' },
+        { type: 'p', text: "La **FS40s** est une machine **électronique** à 40 points, dont 5 boutonnières automatiques. Son atout pour un enfant : un **variateur de vitesse**, avec une vitesse maximale de 750 points par minute, plus un enfile-aiguille et une canette à plat ([Darty](https://www.darty.com/nav/achat/petit_electromenager/repassage-couture_entretien/machine_coudre/brother_fs40s.html), [Boulanger](https://www.boulanger.com/ref/1158393)). L'adulte règle la vitesse au plus lent, et l'enfant peut prendre la pédale sans risque d'emballement. Boulanger mentionne aussi une touche marche/arrêt pour coudre sans pédale. Comptez de 179,99 à 231,72 € selon le marchand. Le protège-doigts n'apparaît dans aucune des fiches que nous avons consultées : vérifiez ce point en magasin." },
+        { type: 'h3', text: "L'alternative Singer : la Start" },
+        { type: 'p', text: "Pour rester sur une mécanique de marque Singer, comme en atelier, la **Singer Start** (169 €) est présentée par la marque comme « conçue pour les enfants et les débutants ». Elle a 6 points, un protège-doigts intégré, une boutonnière en 4 temps et un bras libre, pour 5,6 kg et une garantie de 2 ans ([Singer France](https://www.singerfrance.com/machines-a-coudre-mecaniques/199-machines-a-coudre-mecaniquesmachine-a-coudre-start-cours-artesane-offert-7393033160180.html)). Sa canette se charge à la verticale, par l'avant." },
+        { type: 'table', caption: 'Prix relevés le 3 novembre 2026 (Cultura, Boulanger, Brother, Coudre et Broder, Singer France, Darty, La Redoute, Cdiscount).', head: ['Modèle', 'Type', 'Vitesse', 'Protège-doigts', 'Prix'], rows: [
+          ['Brother KE14S / KD144s Little Angel', 'Mécanique, 14 fonctions', 'Pédale seule', 'Oui', '99 à 149 €'],
+          ['Singer Start', 'Mécanique, 6 points', 'Pédale seule', 'Oui, intégré', '169 €'],
+          ['Brother FS40s', 'Électronique, 40 points', 'Variateur, 750 points/min max', 'Non mentionné', '179,99 à 231,72 €'],
+        ] },
+        { type: 'h3', text: 'Les critères qui comptent vraiment' },
+        { type: 'ul', items: [
+          "**La vitesse** : un variateur, ou à défaut un adulte à la pédale. Un réglage de vitesse est utile pour débuter ([Que Choisir](https://www.quechoisir.org/guide-d-achat-machine-a-coudre-n22061/)).",
+          "**Le protège-doigts** : présent sur la Little Angel, la Singer Start et plusieurs machines enfant. Il gêne un peu l'enfilage ([Petite ancre](https://petite-ancre.fr/2025/03/25/https-petite-ancre-fr-conseils-machine-a-coudre-enfant/)) : c'est l'adulte qui le retire et le remet.",
+          "**La stabilité** : une machine trop légère glisse et vibre. Les machines à coudre pèsent en général de 5 à 10 kg ([Que Choisir](https://www.quechoisir.org/guide-d-achat-machine-a-coudre-n22061/)).",
+          "**Peu de points, mais les bons** : point droit, zigzag et boutonnière suffisent largement pour commencer ([Que Choisir](https://www.quechoisir.org/guide-d-achat-machine-a-coudre-n22061/)).",
+          "**La canette** : une canette chargée par le haut, sous un capot transparent, montre le fil restant. C'est un confort, sans être obligatoire : la Singer Start, pensée pour les enfants, a une canette verticale.",
+          "**Un chemin de fil numéroté**, pour que l'enfant apprenne à enfiler seul, et un service après-vente proche : garantie de 2 à 3 ans selon la marque, entretien d'environ 60 à 80 € par an hors garantie ([Que Choisir](https://www.quechoisir.org/guide-d-achat-machine-a-coudre-n22061/)).",
+        ] },
+      ],
+    },
+    {
+      h2: 'Comment Ludivine fait coudre les enfants de 6 ans à la machine',
+      id: 'methode-atelier',
+      blocks: [
+        { type: 'p', text: "En atelier, Ludivine accueille les enfants dès 6 ans. À cet âge, le gros du travail se fait **à la main**, et la machine sert aux **finitions**. Les rôles sont partagés : l'enfant fait les gestes de couturier, l'adulte garde le contrôle de la vitesse." },
+        { type: 'img', src: '/images/blog/machine-a-coudre-enfant/machine-a-coudre-enfant-qui-fait-quoi.webp', alt: "Infographie : à 6 ans à la machine, l'enfant guide le tissu, baisse le pied presseur et fait la marche arrière ; l'adulte gère la vitesse avec la pédale", width: 1280, height: 720, caption: "Qui fait quoi à la machine, dès 6 ans" },
+        { type: 'quote', text: "À partir de 6 ans, ils font à la main et les finitions à la machine : ils gèrent le tissu, le pied presseur, la marche arrière. Je gère la vitesse avec la pédale.", author: 'Ludivine', role: "fondatrice de L'atelier Pic & Paf" },
+        { type: 'p', text: "Ce partage a un avantage : l'enfant apprend les vrais gestes (guider le tissu sans le tirer, arrêter sa couture avec la marche arrière) sans jamais être surpris par la vitesse. Il prendra la pédale plus tard, idéalement sur une machine à variateur réglé au plus lent." },
+        { type: 'callout', emoji: '📄', title: 'Un exercice avant même de mettre du fil', text: "À l'école, en Suisse romande, les élèves s'entraînent à piquer à la machine **sans fil**, sur une feuille de papier où l'on a tracé une ligne droite, puis un zigzag, une courbe et un cercle ([fiche d'évaluation](https://www.bdrp.ch/system/files/docs/2021-08-25/technique.pdf)). Les trous dans le papier montrent tout de suite si l'enfant suit la ligne. C'est un excellent premier exercice à la maison." },
+      ],
+    },
+    {
+      h2: 'Sécurité : les règles à poser dès la première séance',
+      id: 'securite',
+      blocks: [
+        { type: 'ol', items: [
+          "**Un adulte à côté, toujours.** Singer France juge sa présence « indispensable » ([Singer](https://www.singerfrance.com/content/30-la-machine-a-coudre-pour-les-enfants)) ; les machines enfant de Maped et Buki portent la même consigne.",
+          "**On n'allume pas la machine le pied sur la pédale** : elle démarrerait d'un coup ([notice Brother](https://www.mondialtissus.fr/media/wysiwyg/notices/BROTHER%20Little%20Angel.pdf)).",
+          "**On éteint avant de changer l'aiguille ou le pied**, et c'est l'adulte qui s'en charge.",
+          "**On guide le tissu sans le tirer** : tirer tord ou casse l'aiguille ([notice Brother](https://www.mondialtissus.fr/media/wysiwyg/notices/BROTHER%20Little%20Angel.pdf)).",
+          "**Les doigts restent à plat, de chaque côté du pied**, loin de l'aiguille, et le protège-doigts reste en place.",
+          "**Rien sur la pédale** quand on ne coud pas.",
+        ] },
+        { type: 'callout', emoji: '🪡', title: 'Une machine enfant présente aussi des risques', text: "Certains guides affirment que les risques sont « limités voire inexistants ». Les fabricants écrivent l'inverse : Maped signale des « pointes fonctionnelles acérées » sur sa machine enfant ([Maped](https://fr.maped.com/product/machine-a-coudre-enfant-des-8-ans/)), Buki des « pointes et bords coupants » ([Buki](https://www.bukifrance.com/37-professional-studio-couture.html)). Une piqûre au doigt arrive vite : la surveillance s'applique à toutes les machines." },
+        { type: 'p', text: "Enfin, pensez à l'installation : une table à hauteur de coude, les pieds à plat ou sur un repose-pied pour atteindre la pédale, et la lumière du côté opposé à la main qui guide le tissu ([Couture Enfant](https://www.coutureenfant.fr/machine-a-coudre-enfant/))." },
+      ],
+    },
+    {
+      h2: 'Les premiers projets à la machine',
+      id: 'premiers-projets',
+      blocks: [
+        { type: 'p', text: "La règle de Ludivine pour les premiers pas : **deux coutures maximum, en carré ou en rectangle**. Pas de courbe, pas de pièce à assembler en dix étapes : l'enfant voit son objet terminé dans la séance, et il a appris à coudre droit." },
+        { type: 'ul', items: [
+          '**Un marque-page** : deux rectangles de tissu, une couture tout autour.',
+          '**Une lingette lavable** : un carré, une couture, utile tout de suite.',
+          '**Un mini coussin** : deux carrés, une couture, un peu de rembourrage.',
+          "Ensuite : une trousse, une pochette ou un chouchou, que Singer cite aussi parmi les premiers projets ([Singer](https://www.singerfrance.com/content/30-la-machine-a-coudre-pour-les-enfants)).",
+        ] },
+        { type: 'products', title: 'Nos kits pour un premier projet, avec tuto vidéo', slugs: ['kit-marque-page-a-fabriquer', 'kit-4-lingettes-lavables-a-fabriquer'] },
+        { type: 'p', text: "Côté tissu, commencez par un **coton tissé** (popeline, cretonne), qui ne glisse pas et ne se déforme pas. Gardez le jersey et la viscose pour plus tard ([Couture Enfant](https://www.coutureenfant.fr/machine-a-coudre-enfant/)), et évitez les matières trop épaisses sur une petite machine ([Coudre et Broder](https://coudreetbroder.com/machines-coudre/machines-coudre-enfant/))." },
+      ],
+    },
+    {
+      h2: 'Les erreurs de débutant les plus fréquentes',
+      id: 'erreurs',
+      blocks: [
+        { type: 'table', caption: "D'après le tableau de dépannage de la [notice Brother Little Angel](https://www.mondialtissus.fr/media/wysiwyg/notices/BROTHER%20Little%20Angel.pdf).", head: ['Ce qui se passe', 'Cause probable', 'Solution'], rows: [
+          ["Le fil fait des nœuds sous le tissu", "Fil du dessus mal enfilé, souvent avec le pied presseur baissé", "Relever le pied presseur, remonter l'aiguille avec le volant, puis réenfiler"],
+          ["L'aiguille casse", 'On tire sur le tissu', 'Guider le tissu légèrement, sans tirer'],
+          ['La machine démarre brusquement', "Pied posé sur la pédale à l'allumage", 'Allumer la machine pied levé'],
+          ['Le fil du dessous casse ou s\'emmêle', 'Canette mal bobinée, mal placée ou non adaptée à la machine', 'Rebobiner, replacer, utiliser les canettes prévues pour la machine'],
+          ['Le fil casse en cousant', 'Tension trop forte, ou aiguille et fil mal assortis au tissu', 'Baisser la tension, assortir aiguille, fil et tissu'],
+        ] },
+        { type: 'p', text: "Du côté des projets, les écueils classiques sont un patron trop ambitieux, une coupe faite trop vite et un tissu glissant dès le départ ([Couture Enfant](https://www.coutureenfant.fr/machine-a-coudre-enfant/)). D'où l'intérêt de la règle des deux coutures." },
+      ],
+    },
+    {
+      h2: "Tester la machine en atelier avant d'acheter, en Vienne et Deux-Sèvres",
+      id: 'atelier',
+      blocks: [
+        { type: 'p', text: "Avant d'investir de 100 à 230 € dans une machine, une séance en atelier permet de voir si votre enfant accroche, et sur quel type de machine il est à l'aise. Ludivine anime des [ateliers couture enfants](/ateliers-enfants) dès 6 ans à Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault, à 25 € l'atelier, matériel fourni. Les enfants y cousent sur de vraies machines, avec un adulte à côté, et repartent avec leur création." },
+        { type: 'p', text: "Pour un anniversaire, la couture fait aussi une activité qui change : chaque invité repart avec ce qu'il a fabriqué ([anniversaire couture](/anniversaire-couture-enfant), de 7 à 12 ans)." },
+        { type: 'cta', title: 'Envie que votre enfant essaie ?', text: 'Ateliers couture enfants dès 6 ans, stages pendant les vacances et anniversaires, en Vienne (86) et Deux-Sèvres (79).', href: '/ateliers-enfants', label: 'Voir les ateliers enfants' },
+      ],
+    },
+  ],
+  faq: [
+    { q: 'À partir de quel âge un enfant peut-il utiliser une vraie machine à coudre ?', r: "Dès 6 ans, avec un adulte qui gère la pédale, comme en atelier chez Pic & Paf. Singer situe l'âge idéal entre 8 et 10 ans, et la plupart des machines enfant de marques de jouets indiquent 8 ans et plus. Dans tous les cas, un adulte reste à côté." },
+    { q: 'Quelle machine à coudre choisir pour un enfant de 8 ans ?', r: "Une vraie machine mécanique simple avec protège-doigts, comme la Brother Little Angel (de 99 à 149 € en novembre 2026), avec un adulte à la pédale au début. Pour plus d'autonomie, une machine à variateur de vitesse comme la Brother FS40s (de 180 à 232 € environ)." },
+    { q: 'Une machine à coudre jouet permet-elle de vraiment coudre ?', r: "Les modèles actuels (Maped, Buki, Klein) cousent avec un fil et une canette, sur des tissus fins. Ils restent légers, peu puissants et peu réglables. Ludivine les déconseille : ils sont peu précis et vibrent beaucoup." },
+    { q: 'Pourquoi la Brother Little Angel indique-t-elle « 14 ans » ?', r: "Brother écrit « Ne convient pas aux enfants de moins de 14 ans » sur sa fiche, mais sa notice autorise les enfants de 8 ans ou plus s'ils sont encadrés. En pratique : un jeune enfant ne l'utilise jamais seul, toujours avec un adulte." },
+    { q: 'Quel premier projet coudre à la machine avec un enfant ?', r: "Un projet en deux coutures maximum, en carré ou en rectangle : marque-page, lingette lavable, mini coussin. L'enfant termine son objet dans la séance et apprend à coudre droit." },
+    { q: 'Le protège-doigts est-il indispensable ?', r: "Il est vivement conseillé pour débuter. Il est fourni sur la Brother Little Angel et la Singer Start. Comme il gêne un peu l'enfilage, c'est l'adulte qui le retire et le remet." },
+  ],
+  howTo: {
+    name: 'Première séance de machine à coudre avec un enfant',
+    description: "Les étapes d'une première séance de machine à coudre avec un enfant de 6 à 8 ans, l'adulte gérant la vitesse.",
+    supplies: ['Machine à coudre mécanique simple', 'Chutes de coton tissé', 'Feuilles de papier', 'Fil et canettes adaptés à la machine', 'Ciseaux'],
+    steps: [
+      "Installer l'enfant à une table à hauteur de coude, les pieds à plat.",
+      "Montrer la machine éteinte : aiguille, pied presseur, marche arrière, pédale.",
+      'Faire piquer sans fil sur une feuille de papier : ligne droite, zigzag, courbe.',
+      "Enfiler la machine et poser la canette (l'adulte s'en charge au début).",
+      "Coudre sur une chute de coton : l'enfant guide le tissu, l'adulte gère la vitesse avec la pédale.",
+      'Faire les points d\'arrêt avec la marche arrière, au début et à la fin de chaque couture.',
+      'Passer à un premier projet en deux coutures : marque-page, lingette ou mini coussin.',
+    ],
+  },
+  ctaText: 'Voir les ateliers enfants',
+  ctaHref: '/ateliers-enfants',
+  sources: [
+    'Singer France, la machine à coudre pour les enfants | https://www.singerfrance.com/content/30-la-machine-a-coudre-pour-les-enfants',
+    'Brother, KD144s Little Angel (fiche fabricant) | https://sewingcraft.brother.eu/fr-fr/produits/machines/machines-a-coudre/machines-a-coudre-pour-couturiers-debutants/kd144s',
+    'Brother, manuel d\'instructions Little Angel (FR) | https://www.mondialtissus.fr/media/wysiwyg/notices/BROTHER%20Little%20Angel.pdf',
+    'Cultura, Brother KE14S Little Angel | https://www.cultura.com/p-machine-a-coudre-mecanique-brother-ke14s-little-angel-4977766750271.html',
+    'Boulanger, Brother KE14S | https://www.boulanger.com/ref/1103191',
+    'Coudre et Broder, Brother KD144S Little Angel | https://coudreetbroder.com/machines-coudre/brother/brother-kd144s-little-angel.html',
+    'Darty, Brother FS40s | https://www.darty.com/nav/achat/petit_electromenager/repassage-couture_entretien/machine_coudre/brother_fs40s.html',
+    'Boulanger, Brother FS40s | https://www.boulanger.com/ref/1158393',
+    'Singer France, machine à coudre Start | https://www.singerfrance.com/machines-a-coudre-mecaniques/199-machines-a-coudre-mecaniquesmachine-a-coudre-start-cours-artesane-offert-7393033160180.html',
+    'Maped, machine à coudre enfant dès 8 ans | https://fr.maped.com/product/machine-a-coudre-enfant-des-8-ans/',
+    'Buki France, Professional Studio Couture | https://www.bukifrance.com/37-professional-studio-couture.html',
+    'Buki France, Professional Studio Couture Expert | https://www.bukifrance.com/604-professional-studio-couture-expert.html',
+    'Action, machine à coudre 12 points | https://www.action.com/fr-fr/p/3224302/machine-a-coudre/',
+    'testberichte.de, test F.A.Z. Kaufkompass de la machine enfant Klein | https://www.testberichte.de/p/klein-toys-tests/naehmaschine-fuer-kinder-testbericht.html',
+    'Wikipédia (en), Chain stitch | https://en.wikipedia.org/wiki/Chain_stitch',
+    'EUR-Lex, directive 2009/48/CE relative à la sécurité des jouets | https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=CELEX:32009L0048',
+    'Norme EN IEC 62115:2020, jouets électriques | https://genorma.com/en/standards/en-iec-62115-2020',
+    'Norme EN IEC 60335-2-28:2025, machines à coudre domestiques | https://genorma.com/en/standards/en-iec-60335-2-28-2025',
+    'Que Choisir, comment choisir sa machine à coudre | https://www.quechoisir.org/guide-d-achat-machine-a-coudre-n22061/',
+    'Couture Enfant, quelle machine à coudre pour un enfant | https://www.coutureenfant.fr/machine-a-coudre-enfant/',
+    'Petite ancre, quelle machine à coudre choisir pour un enfant (2025) | https://petite-ancre.fr/2025/03/25/https-petite-ancre-fr-conseils-machine-a-coudre-enfant/',
+    'Coudre et Broder, machines à coudre pour enfant | https://coudreetbroder.com/machines-coudre/machines-coudre-enfant/',
+    'Tableau de synthèse, le développement de l\'enfant de 6 à 12 ans (F. Ferland) | https://educationspecialisee.ca/wp-content/uploads/2018/02/258_TableausynthAse6-12ans.pdf',
+    'BDRP (Suisse), fiche d\'évaluation technique 5P | https://www.bdrp.ch/system/files/docs/2021-08-25/technique.pdf',
+  ],
+}

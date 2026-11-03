@@ -134,13 +134,13 @@ export function ArticleBlocks({ blocks, products = {} }: { blocks: ArticleBlock[
                 {b.title && <p className="h-fredoka" style={{ fontSize: 19, color: 'var(--framboise)', margin: '0 0 14px' }}>{b.title}</p>}
                 <div style={{ display: 'grid', gridTemplateColumns: list.length === 1 ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))', gap: 18 }}>
                   {list.map((p) => (
-                    <Link key={p.slug} href={`/boutique/${p.slug}`} className="card" style={{ padding: 0, overflow: 'hidden', textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: list.length === 1 ? 'row' : 'column', flexWrap: 'wrap' }}>
+                    <Link key={p.slug} href={`/boutique/${p.slug}`} className="card" style={{ padding: 0, overflow: 'hidden', textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: list.length === 1 ? 'row' : 'column', flexWrap: list.length === 1 ? 'wrap' : 'nowrap' }}>
                       <div style={{ position: 'relative', aspectRatio: '4 / 3', background: 'var(--creme)', ...(list.length === 1 && { flex: '1 1 240px', maxWidth: 320 }) }}>
                         {p.image
                           ? <Image src={p.image} alt={p.nom} fill sizes="(max-width: 768px) 90vw, 360px" style={{ objectFit: 'cover' }} unoptimized />
                           : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 48 }}>🎁</div>}
                       </div>
-                      <div style={{ padding: '14px 16px 16px', display: 'flex', flexDirection: 'column', gap: 6, flex: '1 1 240px', justifyContent: 'center' }}>
+                      <div style={{ padding: '14px 16px 16px', display: 'flex', flexDirection: 'column', gap: 6, ...(list.length === 1 ? { flex: '1 1 240px', justifyContent: 'center' } : { flex: 1 }) }}>
                         <span className="h-fredoka" style={{ fontSize: 18, color: 'var(--framboise)', lineHeight: 1.25 }}>{p.nom}</span>
                         {p.description && <span style={{ fontSize: 14, opacity: 0.78, lineHeight: 1.5, flex: 1 }}>{p.description}</span>}
                         <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 6 }}>

@@ -1,4 +1,5 @@
 import { punchNeedleCestQuoi } from '@/content/blog/punch-needle-c-est-quoi'
+import { machineACoudreEnfant } from '@/content/blog/a-quel-age-enfant-couture'
 
 // Articles de blog (SEO + GEO) — L'atelier Pic & Paf.
 export interface ArticleFaq { q: string; r: string }
@@ -44,83 +45,7 @@ export interface Article {
 
 export const ARTICLES: Article[] = [
   punchNeedleCestQuoi,
-  {
-    "slug": "a-quel-age-enfant-couture",
-    "emoji": "🧒",
-    "title": "À quel âge un enfant peut-il commencer la couture ?",
-    "h1": "À quel âge un enfant peut-il commencer la couture ?",
-    "chapo": "Un enfant peut s'initier à la couture à la main très tôt : dès 2 à 3 ans avec des cartes à lacer et des activités de pré-couture, puis vers 3 à 6 ans pour de vrais gestes simples à l'aiguille sous surveillance rapprochée. Pour la machine à coudre, l'âge se situe plutôt entre 6 et 8 ans, 8 ans étant le repère le plus prudent, toujours accompagné d'un adulte. Le vrai critère reste la capacité de l'enfant à suivre une consigne et à se concentrer, plus que son âge sur le papier.",
-    "sections": [
-      {
-        "h2": "La couture à la main : on commence dès 2-3 ans",
-        "paragraphs": [
-          "Bonne nouvelle : tu n'as pas besoin d'attendre que ton enfant soit « grand » pour lui faire découvrir le plaisir de coudre. Dès 2 ans, on peut l'initier avec des cartes à lacer ou des exercices où l'on fait passer un fil dans des trous déjà percés. Pas d'aiguille libre, pas de risque : juste le geste de tirer, croiser, recommencer. C'est de la pré-couture, et ça travaille déjà la motricité fine en douceur.",
-          "Entre 3 et 6 ans, ton enfant peut passer aux vraies bases de la couture à la main. On choisit des matières souples et faciles à piquer, comme la feutrine, qui pardonne les petites erreurs et ne s'effiloche pas. Certains professionnels situent un démarrage confortable autour de 5 ans pour de simples activités à l'aiguille, à condition que l'enfant soit prêt et bien accompagné.",
-          "Dans tous les cas, la surveillance d'un adulte reste constante. On montre le geste lentement, on laisse l'enfant observer avant de manipuler, et on avance pas à pas. L'idée n'est pas de réussir un chef-d'œuvre du premier coup, mais de prendre goût au fil et à l'aiguille."
-        ]
-      },
-      {
-        "h2": "La machine à coudre : plutôt entre 6 et 8 ans",
-        "paragraphs": [
-          "Pour la machine à coudre, les repères convergent vers 6 à 8 ans comme âge où l'enfant peut commencer à gagner en autonomie. L'approche la plus prudente recommande de viser plutôt 8 ans, même si certains enfants déjà très à l'aise peuvent débuter un peu avant. Dans tous les cas : jamais seul, toujours avec un adulte à côté.",
-          "Pour les plus jeunes, il existe une astuce simple et rassurante : l'adulte gère la pédale pendant que l'enfant s'occupe uniquement du positionnement du tissu. L'enfant guide, l'adulte contrôle la vitesse. C'est une belle façon de découvrir la machine sans être débordé.",
-          "Le critère décisif n'est pas seulement l'âge inscrit sur l'état civil. C'est la capacité de ton enfant à suivre des consignes, à coordonner ses gestes et à rester attentif quelques minutes. Si tu choisis une machine, privilégie un modèle simple, idéalement avec un réglage de vitesse pour les débutants, et fais toujours tester les premiers points sur des chutes de tissu avant de se lancer sur un vrai projet."
-        ]
-      },
-      {
-        "h2": "Pourquoi la couture fait tant de bien aux enfants",
-        "paragraphs": [
-          "Au-delà du plaisir de créer, la couture développe des compétences précieuses. D'abord la motricité fine et la dextérité des doigts : enfiler, tenir, aligner, piquer, découper, rembourrer, autant de gestes précis qui musclent la coordination œil-main.",
-          "Elle soutient aussi la concentration et l'attention, parce que coudre demande de suivre une séquence d'actions dans le bon ordre. C'est un vrai entraînement à la patience et au calme, dans un quotidien souvent rapide. Beaucoup d'enfants trouvent dans la couture un moment de détente où le temps ralentit.",
-          "Et puis il y a la fierté. Quand un enfant tient entre ses mains un objet qu'il a fabriqué lui-même, sa confiance en lui grandit d'un coup. La couture renforce l'estime de soi et l'autonomie : ton enfant peut choisir les couleurs, participer au rembourrage, à l'assemblage, selon son niveau. Il n'est plus spectateur, il devient acteur de sa création."
-        ]
-      },
-      {
-        "h2": "Les premiers projets simples pour bien démarrer",
-        "paragraphs": [
-          "Pour les plus jeunes, on commence par les cartes à lacer ou cartes à coudre : parfaites pour apprendre le passage du fil en toute sécurité, sans aiguille pointue. Vient ensuite la feutrine ou de petits morceaux de toile faciles à manipuler, parce que le tissu souple est plus tolérant avec les débutants.",
-          "Comme tout premier vrai projet, on conseille souvent un petit coussin ou un doudou carré : peu d'étapes, un résultat visible et concret, de quoi donner envie de continuer. Ensuite, les possibilités s'élargissent : une pochette, un chouchou, un petit doudou, bref une création utile et courte que l'enfant pourra garder ou offrir.",
-          "Pour aller un peu plus loin, coudre des boutons, assembler deux tissus ensemble ou rembourrer une petite forme sont d'excellents exercices intermédiaires avant des projets plus ambitieux. On progresse par étapes, sans brûler les étapes."
-        ]
-      },
-      {
-        "h2": "Et chez Pic & Paf, on commence à quel âge ?",
-        "paragraphs": [
-          "À L'atelier Pic & Paf, Ludivine accueille les enfants en ateliers couture dès 6 ans. C'est l'âge où l'enfant a déjà une bonne motricité fine, suit volontiers une consigne et prend un vrai plaisir à voir son projet prendre forme. Les ateliers se déroulent en petit groupe, dans une ambiance douce et bienveillante, à Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault, en Vienne (86) et Deux-Sèvres (79).",
-          "Chaque séance coûte 25€ et l'enfant repart avec sa création. Tout le matériel est fourni, et le rythme s'adapte à chacun : on prend le temps, on accompagne le geste, on encourage. C'est l'occasion idéale pour ton enfant de découvrir la couture en confiance, entouré d'autres enfants et guidé par une animatrice passionnée.",
-          "Que ce soit en atelier hebdomadaire, en stage pendant les vacances ou pour un anniversaire couture, l'envie de créer est toujours au rendez-vous. Et si ton enfant n'a pas encore 6 ans, garde en tête tous les jeux de pré-couture à faire à la maison : ils préparent déjà le terrain en douceur."
-        ]
-      }
-    ],
-    "faq": [
-      {
-        "q": "À partir de quel âge peut-on coudre à la main ?",
-        "r": "Dès 2 à 3 ans avec des cartes à lacer et des activités de pré-couture sans aiguille libre, puis vers 3 à 6 ans pour de vrais gestes simples à l'aiguille, toujours sous la surveillance d'un adulte. Certains professionnels situent un démarrage confortable autour de 5 ans."
-      },
-      {
-        "q": "À quel âge un enfant peut-il utiliser une machine à coudre ?",
-        "r": "Généralement entre 6 et 8 ans, 8 ans étant le repère le plus prudent. Toujours accompagné d'un adulte. Pour les plus jeunes, l'adulte peut gérer la pédale pendant que l'enfant s'occupe du positionnement du tissu."
-      },
-      {
-        "q": "Quel est le meilleur premier projet de couture pour un enfant ?",
-        "r": "Les cartes à lacer pour les plus petits, puis la feutrine, et comme premier vrai projet un petit coussin ou un doudou carré : peu d'étapes, un résultat visible et la fierté d'avoir créé quelque chose soi-même."
-      },
-      {
-        "q": "À quel âge commencent les ateliers couture enfants de Pic & Paf ?",
-        "r": "Les ateliers couture enfants de L'atelier Pic & Paf démarrent dès 6 ans, en petit groupe et avec tout le matériel fourni, pour 25€ la séance. Ils ont lieu à Poitiers, Vouillé, Fontaine-le-Comte et Châtellerault, en Vienne (86) et Deux-Sèvres (79)."
-      }
-    ],
-    "metaDescription": "🧵 À quel âge commencer la couture ? À la main dès 2-3 ans, à la machine vers 6-8 ans. Bienfaits, premiers projets et ateliers enfants Pic & Paf dès 6 ans.",
-    "ctaText": "Voir les ateliers couture enfants",
-    "ctaHref": "/ateliers-enfants",
-    "sources": [
-      "https://teteamodeler.ouest-france.fr/couture-enfant/quel-age-couture-enfant",
-      "https://momes.parents.fr/activites/pourquoi-et-a-quel-age-apprendre-la-couture-a-un-enfant-945835",
-      "https://www.edisaxe.com/blog/apprendre-couture-enfants-n576",
-      "https://enconfianceavecmontessori.com/apprendre-couture-plus-jeune-age/",
-      "https://letoffeenfolie.fr/la-couture-par-les-enfants-pourquoi-cest-important-et-comment-le-faire/"
-    ]
-  },
+  machineACoudreEnfant,
   {
     "slug": "activites-enfants-vacances-poitiers",
     "emoji": "🎒",
