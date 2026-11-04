@@ -15,7 +15,7 @@ export const ideesCadeauxCoutureNoel: Article = {
   metaDescription:
     "Quel cadeau couture offrir à Noël ? Des idées classées par budget (moins de 20 €, 20 à 50 €, 50 à 100 €, plus de 100 €) et par niveau, avec des prix relevés en novembre 2026, ce qu'il vaut mieux éviter et les cadeaux de dernière minute.",
   datePublished: '2026-11-03',
-  dateModified: '2026-11-03',
+  dateModified: '2026-11-04',
   heroImage: {
     src: '/images/blog/cadeaux-couture-noel/idees-cadeaux-couture-noel.webp',
     alt: "Idées cadeaux couture pour Noël : ouvrages en punch needle et kit lingettes à coudre de L'atelier Pic & Paf",
@@ -38,7 +38,7 @@ export const ideesCadeauxCoutureNoel: Article = {
       id: 'tableau-par-budget',
       blocks: [
         { type: 'table', caption: 'Prix relevés le 3 novembre 2026 chez les fabricants et marchands cités plus bas. Ils peuvent changer, surtout autour du Black Friday (27 novembre 2026).', head: ['Budget', 'Idée cadeau', 'Prix relevé', 'Pour qui'], rows: [
-          ['Moins de 20 €', 'Kit à coudre avec tuto vidéo (bandeau, chouchou, marque-page, lingettes)', '12,90 à 14,90 €', 'Veut s\'y mettre'],
+          ['Moins de 20 €', 'Kit à coudre avec tuto, à la main ou à la machine (bandeau, chouchou, marque-page, lingettes)', '12,90 à 14,90 €', 'Veut s\'y mettre'],
           ['Moins de 20 €', 'Coupe-fil, découseur ou bracelet porte-épingles aimanté Bohin', '6 à 15 €', 'Toutes'],
           ['Moins de 20 €', 'Livre pour débuter à la machine', '5,90 à 19,90 €', 'Débutante'],
           ['20 à 50 €', 'Ciseaux de couturière (Fiskars, Bohin)', '22,50 à 29,90 €', 'Débutante et confirmée'],
@@ -82,7 +82,7 @@ export const ideesCadeauxCoutureNoel: Article = {
           "**Un coffret de 8 bobines Gütermann** avec réglette à ourlet : 17,90 € ([Coudre et broder](https://coudreetbroder.com/fils/coffret-de-fil-a-coudre/gutermann/kit-de-8-fils-a-coudre-polyester-gutermann-avec-reglette-a-ourlet.html)).",
           "**Un livre pour débuter** : « Coudre à la machine Spécial Débutantes » (Marie Debuisson) à 5,90 €, parmi les meilleures ventes couture d'Amazon, ou « Des cadeaux en couture sans patrons » (Huguette Paillettes) à 19,90 € ([Éditions de Saxe](https://www.edisaxe.com/des-cadeaux-en-couture-sans-patrons)).",
         ] },
-        { type: 'p', text: "Pour quelqu'un qui veut s'y mettre, un **kit à coudre** fait encore mieux : tout le matériel d'un projet, et un tuto vidéo pour le réaliser. Nos kits Pic & Paf sont pensés pour les débutants : un petit projet, du matériel prêt à coudre et un tuto vidéo." },
+        { type: 'p', text: "Pour quelqu'un qui veut s'y mettre, un **kit à coudre** fait encore mieux : tout le matériel d'un projet, et un tuto vidéo pour le réaliser. Nos kits Pic & Paf sont pensés pour les débutants : un petit projet, du matériel prêt à coudre et un tuto vidéo. Chaque kit contient un tuto pour coudre à la main et un tuto pour la machine : pas besoin d'avoir une machine pour s'y mettre." },
         { type: 'products', title: 'Nos kits à coudre, avec tuto vidéo', slugs: ['kit-bandeau-a-fabriquer', 'kit-chouchou-a-fabriquer', 'kit-marque-page-a-fabriquer', 'kit-4-lingettes-lavables-a-fabriquer'] },
       ],
     },
@@ -135,6 +135,8 @@ export const ideesCadeauxCoutureNoel: Article = {
       blocks: [
         { type: 'p', text: "En 2017, deux chercheuses, Cindy Chan et Cassie Mogilner, ont comparé les cadeaux d'expérience (un cours, une sortie, un séjour) aux cadeaux matériels. Sur quatre études, les cadeaux d'expérience **renforcent davantage la relation** entre celui qui offre et celui qui reçoit, et cela même quand l'offrant ne vit pas l'expérience avec le destinataire ([Journal of Consumer Research](https://academic.oup.com/jcr/article/43/6/913/2737411)). L'explication avancée : l'émotion ressentie au moment où l'on vit l'expérience." },
         { type: 'p', text: "L'autre argument est plus terre à terre. Selon le baromètre eBay et Kantar de 2025, **48 % des Français ont déjà revendu au moins un cadeau de Noël**, d'abord parce qu'il ne correspondait pas à leurs goûts (48 %) ou parce qu'ils possédaient déjà l'objet (34 %) ([eBay](https://www.ebayinc.com/stories/press-room/fr/revente-des-cadeaux-2025/)). Une journée de couture ne finit pas en double sur une étagère." },
+        { type: 'p', text: "Quand on demande à Ludivine quel cadeau fait vraiment plaisir, elle ne cite pas un objet :" },
+        { type: 'quote', text: 'Le moment unique à créer, chez soi ou lors des ateliers.', author: 'Ludivine', role: "fondatrice de L'atelier Pic & Paf" },
         { type: 'img', src: '/images/blog/cadeaux-couture-noel/gite-retraite-creative.webp', alt: "Salle à manger lumineuse du gîte des retraites créatives à Fontaine-le-Comte, ouverte sur le jardin", width: 896, height: 1200, caption: 'Le gîte des retraites créatives, à Fontaine-le-Comte' },
         { type: 'p', text: "Chez L'atelier Pic & Paf, deux expériences s'offrent à Noël, à Fontaine-le-Comte, à 5 minutes au sud de Poitiers :" },
         { type: 'ul', items: [
@@ -166,7 +168,7 @@ export const ideesCadeauxCoutureNoel: Article = {
       blocks: [
         { type: 'p', text: "Vous n'êtes pas seul : selon le baromètre Havas Market et YouGov, 8 % des Français achètent leurs cadeaux la dernière semaine avant Noël. Les cadeaux dématérialisés sauvent la mise :" },
         { type: 'ul', items: [
-          "**Le bon cadeau Pic & Paf** : montant au choix, en PDF personnalisé envoyé dans la journée, valable 1 an. Elle choisit sa date.",
+          "**Le bon cadeau Pic & Paf** : montant au choix, en PDF personnalisé envoyé dans la journée, valable 1 an, sur toutes les activités : ateliers, journées créatives, retraites et kits de la boutique. Elle choisit sa date.",
           "**Une carte cadeau de cours en ligne** : chez Artesane, à partir de 10 € ([Artesane](https://www.artesane.com/arts-du-fil/catalogue/cartescadeaux-physiques-numeriques/1)).",
           "**Une carte cadeau de mercerie en ligne** : Coudre et broder en propose de 20, 50 et 100 € ; Ma Petite Mercerie de 10 à 200 €, avec un code utilisable une seule fois ([Ma Petite Mercerie](https://www.mapetitemercerie.com/fr/cheques-cadeaux/86789-carte-cadeau-100.html)).",
           "**La box Craftine** : une carte imprimable pour l'annoncer, et la première box expédiée sous 48 heures ([Craftine](https://www.craftine.com/offrir-box-couture.html)).",
@@ -188,7 +190,7 @@ export const ideesCadeauxCoutureNoel: Article = {
     { q: 'Quel cadeau offrir à une débutante en couture ?', r: "Un kit à coudre avec tuto vidéo (dès 12,90 €) pour un premier projet réussi, une paire de vrais ciseaux de couturière, un livre spécial débutantes ou une journée en atelier où tout le matériel est fourni." },
     { q: 'Quels accessoires pour commencer la couture ?', r: "Des ciseaux réservés au tissu, un découseur, des épingles et un porte-épingles, un mètre ruban, un feutre ou une craie pour tissu et du fil de bonne qualité. Un kit débutant comme le Prym Love (32 à 46 €) les réunit." },
     { q: 'Quelle box couture offrir ?', r: "La box Craftine s'offre sans abonnement : 39,99 € la box avec 2 patrons, le tissu d'un modèle, la mercerie et un guide pas à pas. La destinataire choisit sa taille, et la première box part sous 48 heures (prix relevé le 3 novembre 2026)." },
-    { q: "Quel cadeau couture offrir quand on n'a pas d'idée ?", r: "Une carte cadeau de mercerie ou de cours en ligne, ou un bon cadeau pour un atelier. Une étude de 2017 montre que les cadeaux d'expérience renforcent davantage la relation que les objets, même quand on ne les vit pas ensemble." },
+    { q: "Quel cadeau couture offrir quand on n'a pas d'idée ?", r: "Une carte cadeau de mercerie ou de cours en ligne, ou un bon cadeau Pic & Paf, valable sur les ateliers, les journées, les retraites et les kits. Une étude de 2017 montre que les cadeaux d'expérience renforcent davantage la relation que les objets, même quand on ne les vit pas ensemble." },
     { q: 'Quelle marque de ciseaux de couture offrir ?', r: "Fiskars et Bohin proposent de bons ciseaux de couturière entre 22,50 et 29,90 € (relevé du 3 novembre 2026). Demandez d'abord si la personne est droitière ou gauchère : beaucoup de couturières préfèrent choisir les leurs." },
   ],
   ctaText: 'Offrir un atelier',

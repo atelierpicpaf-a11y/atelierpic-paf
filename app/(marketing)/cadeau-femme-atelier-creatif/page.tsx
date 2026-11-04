@@ -38,7 +38,7 @@ const OCCASIONS = [
 const FAQS = [
   {
     q: "Vous avez des bons cadeaux ?",
-    r: "Oui, sur demande je peux émettre un bon cadeau au montant de ton choix (75€, 90€, 150€, 180€...). Tu me contactes, je te l'envoie en PDF beau et personnalisé, valable 1 an. Pour offrir une journée précise, tu peux aussi réserver directement la date et indiquer le prénom de la bénéficiaire."
+    r: "Oui, sur demande je peux émettre un bon cadeau au montant de ton choix (75€, 90€, 150€, 180€...). Tu me contactes, je te l'envoie en PDF beau et personnalisé, valable 1 an, sur toutes mes activités : ateliers, journées créatives, retraites et kits de la boutique. Pour offrir une journée précise, tu peux aussi réserver directement la date et indiquer le prénom de la bénéficiaire."
   },
   {
     q: "Combien ça coûte selon les formules ?",

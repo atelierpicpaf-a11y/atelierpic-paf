@@ -16,7 +16,7 @@ export const cadeauCreatifEnfant: Article = {
   metaDescription:
     "Quel cadeau créatif offrir à un enfant de 6 à 12 ans ? Les idées selon l'âge (couture, broderie, punch needle, tissage, crochet, machine), ce que veut dire l'âge sur la boîte, la sécurité et des prix relevés en novembre 2026.",
   datePublished: '2026-11-03',
-  dateModified: '2026-11-03',
+  dateModified: '2026-11-04',
   heroImage: {
     src: '/images/blog/cadeau-creatif-enfant/cadeau-creatif-enfant.webp',
     alt: "Cadeau créatif pour un enfant de 6 à 12 ans : marque-page cousu et kit de stickers en tissu de L'atelier Pic & Paf",
@@ -84,8 +84,8 @@ export const cadeauCreatifEnfant: Article = {
         ] },
         { type: 'quote', text: 'Les premiers pas : marque-page, lingette, mini coussin… Tout ce qui est en deux coutures maximum, rectangle ou carré.', author: 'Ludivine', role: "fondatrice de L'atelier Pic & Paf" },
         { type: 'p', text: "En atelier, Ludivine fait coudre les enfants de 6 ans à la main, et les finitions à la machine : l'enfant guide le tissu, baisse le pied presseur et fait la marche arrière, pendant qu'elle gère la vitesse avec la pédale. Tout le détail dans notre guide [machine à coudre enfant](/blog/a-quel-age-enfant-couture)." },
-        { type: 'products', title: 'Les premiers projets de Ludivine, en kit avec tuto vidéo', slugs: ['kit-marque-page-a-fabriquer', 'kit-4-lingettes-lavables-a-fabriquer'] },
-        { type: 'p', text: "Ces kits contiennent le patron, le tissu, les épingles et le tutoriel : prévoyez du fil et une aiguille, ou une machine. Pour un enfant, on les coud avec un adulte." },
+        { type: 'products', title: 'Les premiers projets de Ludivine, en kit, à la main ou à la machine', slugs: ['kit-marque-page-a-fabriquer', 'kit-4-lingettes-lavables-a-fabriquer'] },
+        { type: 'p', text: "Chaque kit contient le patron, le tissu, les épingles, un tuto pour coudre à la main et un tuto pour la machine : on choisit. Prévoyez du fil et une aiguille, ou une machine. Pour un enfant, on les coud avec un adulte." },
       ],
     },
     {
@@ -136,7 +136,7 @@ export const cadeauCreatifEnfant: Article = {
       blocks: [
         { type: 'p', text: "Chez l'adulte, les cadeaux d'expérience renforcent davantage la relation que les objets (voir nos [idées cadeaux couture pour Noël](/blog/idees-cadeaux-couture-noel)). Chez l'enfant, c'est l'inverse : dans quatre études menées avec des jeunes de 3 à 17 ans, les 3-12 ans tiraient plus de bonheur des objets que des expériences. Le plaisir des expériences grandit avec l'âge, et seuls les adolescents plus âgés rejoignent le schéma adulte ([Chaplin et al., 2020](https://ideas.repec.org/a/eee/ijrema/v37y2020i3p572-586.html))." },
         { type: 'p', text: "L'explication avancée tient à la mémoire : un jeune enfant apprécie l'expérience sur le moment, mais en garder un bonheur durable suppose de s'en souvenir. La chercheuse conseille des photos et des vidéos pour la revivre ([université de l'Illinois à Chicago](https://live.today.uic.edu/?p=103995))." },
-        { type: 'p', text: "Un atelier de couture coche les deux cases : l'enfant vit l'expérience et repart avec l'objet qu'il a cousu. Ludivine anime des [ateliers couture enfants](/ateliers-enfants) dès 6 ans, des stages pendant les vacances et des [anniversaires couture](/anniversaire-couture-enfant), en Vienne (86) et en Deux-Sèvres (79)." },
+        { type: 'p', text: "Un atelier de couture coche les deux cases : l'enfant vit l'expérience et repart avec l'objet qu'il a cousu. Pour Ludivine, ce qui fait plaisir, c'est « le moment unique à créer, chez soi ou lors des ateliers ». Elle anime des [ateliers couture enfants](/ateliers-enfants) dès 6 ans, des stages pendant les vacances et des [anniversaires couture](/anniversaire-couture-enfant), en Vienne (86) et en Deux-Sèvres (79). Un [bon cadeau Pic & Paf](/contact?sujet=Bon%20cadeau) s'utilise sur toutes ces activités, et aussi sur les kits de la boutique." },
         { type: 'img', src: '/images/blog/machine-a-coudre-enfant/atelier-couture-enfants-machines.webp', alt: "Enfants qui cousent à la machine pendant un atelier couture de L'atelier Pic & Paf, Ludivine à leurs côtés", width: 909, height: 1350, caption: 'En atelier, chacun repart avec ce qu\'il a cousu' },
         { type: 'cta', title: 'Offrir un atelier couture à un enfant', text: 'Ateliers dès 6 ans, stages pendant les vacances et anniversaires, en Vienne (86) et Deux-Sèvres (79).', href: '/ateliers-enfants', label: 'Voir les ateliers enfants' },
       ],
