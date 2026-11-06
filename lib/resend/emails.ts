@@ -128,7 +128,17 @@ interface OrderEmailData {
   relaisVille: string | null
   montantTotalCentimes: number
   montantLivraisonCentimes: number
+  remiseCentimes?: number
   lignes: Array<{ produitNom: string; varianteNom: string; prixUnitaireCentimes: number; quantite: number }>
+}
+
+// Ligne "carte cadeau / code promo" (rien si aucune remise)
+function remiseHtml(data: OrderEmailData): string {
+  if (!data.remiseCentimes) return ''
+  return `<tr>
+          <td style="padding:8px 0;opacity:.7;">Carte cadeau ou code promo</td>
+          <td style="padding:8px 0;text-align:right;">-${euros(data.remiseCentimes)}</td>
+        </tr>`
 }
 
 function lignesHtml(lignes: OrderEmailData['lignes']): string {
@@ -178,9 +188,10 @@ export async function sendOrderConfirmationClient(data: OrderEmailData) {
           <td style="padding:8px 0;opacity:.7;">Livraison Mondial Relay</td>
           <td style="padding:8px 0;text-align:right;">${euros(data.montantLivraisonCentimes)}</td>
         </tr>
+        ${remiseHtml(data)}
         <tr>
-          <td style="padding:12px 0 0;font-weight:bold;font-size:17px;color:#C8365C;">Total</td>
-          <td style="padding:12px 0 0;text-align:right;font-weight:bold;font-size:17px;color:#C8365C;">${euros(data.montantTotalCentimes)}</td>
+          <td style="padding:12px 0 0;font-weight:bold;font-size:17px;color:#C8365C;">${data.remiseCentimes ? 'Total payé' : 'Total'}</td>
+          <td style="padding:12px 0 0;text-align:right;font-weight:bold;font-size:17px;color:#C8365C;">${euros(data.montantTotalCentimes - (data.remiseCentimes ?? 0))}</td>
         </tr>
       </table>
 
@@ -232,9 +243,10 @@ export async function sendOrderNotificationAdmin(data: OrderEmailData) {
           <td style="padding:8px 0;opacity:.7;">Livraison</td>
           <td style="padding:8px 0;text-align:right;">${euros(data.montantLivraisonCentimes)}</td>
         </tr>
+        ${remiseHtml(data)}
         <tr>
-          <td style="padding:12px 0 0;font-weight:bold;font-size:17px;color:#C8365C;">Total</td>
-          <td style="padding:12px 0 0;text-align:right;font-weight:bold;font-size:17px;color:#C8365C;">${euros(data.montantTotalCentimes)}</td>
+          <td style="padding:12px 0 0;font-weight:bold;font-size:17px;color:#C8365C;">${data.remiseCentimes ? 'Total payé' : 'Total'}</td>
+          <td style="padding:12px 0 0;text-align:right;font-weight:bold;font-size:17px;color:#C8365C;">${euros(data.montantTotalCentimes - (data.remiseCentimes ?? 0))}</td>
         </tr>
       </table>
 

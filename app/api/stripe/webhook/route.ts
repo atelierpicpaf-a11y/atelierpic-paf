@@ -287,6 +287,8 @@ async function handleBoutiqueOrder(session: Stripe.Checkout.Session, commandeId:
       relaisVille: commande.mondial_relay_ville,
       montantTotalCentimes: commande.montant_total_centimes,
       montantLivraisonCentimes: commande.montant_livraison_centimes,
+      // Carte cadeau / code promo saisi sur la page Stripe (montant_total_centimes reste le prix avant remise)
+      remiseCentimes: session.total_details?.amount_discount ?? 0,
       lignes: (lignes ?? []).map((l) => ({
         produitNom: l.produit_nom,
         varianteNom: l.variante_nom,
