@@ -168,6 +168,8 @@ export async function POST(req: Request) {
       payment_method_types: ['card', 'klarna'],
       customer_email: data.email,
       line_items: lineItems,
+      // Champ "Ajouter un code promotionnel" : cartes cadeaux (codes créés dans le Dashboard Stripe)
+      allow_promotion_codes: true,
       metadata: {
         commande_id: commande.id,
         numero,
