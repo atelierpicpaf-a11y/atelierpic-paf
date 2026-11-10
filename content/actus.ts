@@ -13,6 +13,7 @@
  */
 import type { ArticleBlock, ArticleImage } from '@/content/articles'
 import { rendezVousDesCreateurs2026 } from '@/content/actus/rendez-vous-des-createurs-neuville-de-poitou-2026'
+import { mediathequeQuincay2026 } from '@/content/actus/ateliers-punch-needle-couture-mediatheque-quincay-2026'
 
 export interface ActuSection {
   h2: string
@@ -60,6 +61,11 @@ export interface Actu {
   chapo: string
   /** Date de publication, ISO 8601 avec fuseau. */
   date: string
+  /**
+   * Date du moment raconté (AAAA-MM-JJ), quand l'actu revient sur un moment plus ancien
+   * que sa publication : sert au tri et s'affiche sur les cartes. Sinon, la date de publication.
+   */
+  dateMoment?: string
   dateModified?: string
   /** Libellé du lieu affiché sur les cartes. */
   lieu: string
@@ -77,9 +83,14 @@ export interface Actu {
   sources: string[]
 }
 
-/** Les actus, de la plus récente à la plus ancienne. */
-export const ACTUS: Actu[] = [rendezVousDesCreateurs2026].sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+/** Date affichée sur les cartes et utilisée pour le tri. */
+export function dateCarte(a: Actu): string {
+  return a.dateMoment ?? a.date
+}
+
+/** Les actus, du moment le plus récent au plus ancien. */
+export const ACTUS: Actu[] = [rendezVousDesCreateurs2026, mediathequeQuincay2026].sort(
+  (a, b) => new Date(dateCarte(b)).getTime() - new Date(dateCarte(a)).getTime(),
 )
 
 export function getActuBySlug(slug: string): Actu | undefined {
