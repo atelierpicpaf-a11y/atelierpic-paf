@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { href: '/ateliers-adultes/retraites-creatives', label: 'Retraites créatives' },
   { href: '/boutique', label: 'Boutique' },
   { href: '/tuto-video', label: 'Tutos vidéos' },
+  { href: '/actus', label: 'Actus' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -16,7 +17,7 @@ export function MobileNav() {
   const [open, setOpen] = useState(false)
   return (
     <>
-      <button className="mobile-only" onClick={() => setOpen(true)} style={{ width:46, height:46, borderRadius:14, background:'var(--framboise)', color:'#fff', fontSize:22 }}>☰</button>
+      <button className="nav-burger" aria-label="Ouvrir le menu" onClick={() => setOpen(true)} style={{ width:46, height:46, borderRadius:14, background:'var(--framboise)', color:'#fff', fontSize:22 }}>☰</button>
       {open && (
         <div className="burger-panel">
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:30 }}>

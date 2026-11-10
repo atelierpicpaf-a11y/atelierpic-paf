@@ -11,6 +11,8 @@ import { CrossPromo } from '@/components/sections/cross-promo'
 import { DoodleHeart, DoodleFlower } from '@/components/brand/doodles'
 import { FeaturedArticle } from '@/components/blog/featured-article'
 import { featuredArticle } from '@/content/articles'
+import { ActuList } from '@/components/actus/actu-card'
+import { ACTUS } from '@/content/actus'
 import { createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 
@@ -266,6 +268,24 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ACTUS : salons, marchés, nouveautés (les 3 dernières) */}
+      {ACTUS.length > 0 && (
+        <>
+          <section style={{ padding:'90px 0', background:'var(--creme-pale)' }}>
+            <div className="container" style={{ maxWidth:1100 }}>
+              <SectionTitle kicker="Salons, marchés, nouveautés" align="center">Les actus de l&apos;atelier</SectionTitle>
+              <div style={{ marginTop:40 }}>
+                <ActuList actus={ACTUS.slice(0, 3)} as="h3" />
+              </div>
+              <div style={{ textAlign:'center', marginTop:32 }}>
+                <a href="/actus" className="cta-ghost">Toutes les actus →</a>
+              </div>
+            </div>
+          </section>
+          {featured && <div className="stripes-band" />}
+        </>
+      )}
 
       {/* BLOG : dernier article à la une (lien depuis l'accueil = découverte rapide par Google) */}
       {featured && (
