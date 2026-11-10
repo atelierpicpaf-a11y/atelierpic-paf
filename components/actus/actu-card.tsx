@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import type { Actu } from '@/content/actus'
+import { dateCarte, type Actu } from '@/content/actus'
 import { plainText } from '@/components/blog/article-blocks'
 
 export function frDateActu(iso: string) {
@@ -22,7 +22,7 @@ export function ActuCard({ actu: a, layout = 'card', as: Heading = 'h3' }: Props
   const img = a.cardImage
   const meta = (
     <p style={{ fontSize: 14, opacity: 0.7, margin: '0 0 10px' }}>
-      <time dateTime={a.date}>{frDateActu(a.date)}</time> · 📍 {a.lieu}
+      <time dateTime={dateCarte(a)}>{frDateActu(dateCarte(a))}</time> · 📍 {a.lieu}
     </p>
   )
 
