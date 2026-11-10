@@ -10,6 +10,8 @@ import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd, faqPageJsonLd, villeServiceJsonLd, personJsonLd } from '@/lib/seo/json-ld'
 import { VILLES, getVilleBySlug, getNearby, type Ville } from '@/content/villes'
+import { getActusByVille } from '@/content/actus'
+import { ActuList } from '@/components/actus/actu-card'
 import villesDataJson from '@/content/villes-data.json'
 
 // ────────────────────────────────────────────────────────────────
@@ -147,6 +149,7 @@ export default async function VillePage({ params }: { params: Promise<Params> })
 
   const proches = getNearby(v)
   const data = VILLES_DATA[v.slug]
+  const actusVille = getActusByVille(v.slug)
   const pageUrl = `https://atelierpicpaf.fr/${v.slug}`
 
   // Description "type" de la commune basée sur sa densité
@@ -287,6 +290,20 @@ export default async function VillePage({ params }: { params: Promise<Params> })
                 ))}
               </p>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* ───────── ACTUS DE L'ATELIER DANS CETTE VILLE (seulement s'il y en a) ───────── */}
+      {actusVille.length > 0 && (
+        <section style={{ padding: '70px 0', background: 'var(--creme)' }}>
+          <div className="container" style={{ maxWidth: 1040 }}>
+            <SectionTitle kicker="Salons, marchés, nouveautés" align="center">
+              L&apos;atelier à {v.nom} : les dernières actus
+            </SectionTitle>
+            <div style={{ marginTop: 40 }}>
+              <ActuList actus={actusVille.slice(0, 3)} as="h3" />
+            </div>
           </div>
         </section>
       )}

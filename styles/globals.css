@@ -144,6 +144,17 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-link:hover, .nav-link.active { color: var(--framboise); background: rgba(200,54,92,.08); }
 
+/* En-tête : le menu complet (7 entrées) tient sur une ligne à partir de 1240 px ; en dessous, menu burger */
+.nav-desktop { display: flex; gap: 2px; align-items: center; }
+.nav-desktop .nav-link { white-space: nowrap; padding: 10px 11px; }
+.nav-burger { display: none; }
+@media (max-width: 1239px) {
+  .nav-desktop { display: none !important; }
+  .nav-burger { display: initial !important; }
+}
+/* Tablette : panier et bouton Réserver collés au burger, à droite */
+@media (min-width: 861px) and (max-width: 1239px) { .header-actions { margin-left: auto; } }
+
 /* ── Speech bubble ── */
 .bubble {
   position: relative;

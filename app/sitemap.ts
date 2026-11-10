@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { VILLES } from '@/content/villes'
 import { CANTONS } from '@/content/cantons'
 import { ARTICLES } from '@/content/articles'
+import { ACTUS } from '@/content/actus'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -22,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/ou-nous-trouver`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${base}/tuto-video`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${base}/actus`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${base}/journee-creative-mere-fille`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/se-reconnecter-avec-ma-fille`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/journee-creative-entre-copines`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
@@ -74,5 +76,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...villeRoutes, ...cantonRoutes, ...blogRoutes, ...produitRoutes]
+  const actuRoutes: MetadataRoute.Sitemap = ACTUS.map((a) => ({
+    url: `${base}/actus/${a.slug}`,
+    lastModified: new Date(a.dateModified ?? a.date),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...villeRoutes, ...cantonRoutes, ...blogRoutes, ...actuRoutes, ...produitRoutes]
 }
