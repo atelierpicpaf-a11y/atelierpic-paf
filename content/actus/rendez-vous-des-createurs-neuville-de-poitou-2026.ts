@@ -5,9 +5,10 @@ const SOURCE_OT = 'https://tourisme-hautpoitou.fr/articles/les-rendez-vous-des-c
 
 /**
  * Faits vérifiés :
- *  - dates, horaires, lieu, "plus de 50 créateurs et artisans" : Office de Tourisme du Haut-Poitou (SOURCE_OT) ;
+ *  - dates, horaires, lieu, "plus de 50 créateurs et artisans", animations : Office de Tourisme du Haut-Poitou (SOURCE_OT) ;
+ *  - organisateur : règlement du jeu concours du salon (Régie Tourisme en Haut-Poitou) ;
  *  - prix, coffrets, affiches, miroir : photos du stand prises par l'atelier ;
- *  - citation, jeu des cartes, validité de la carte cadeau : Ludivine.
+ *  - citation, jeu des cartes, validité de la carte cadeau, entrée gratuite : Ludivine.
  */
 export const rendezVousDesCreateurs2026: Actu = {
   slug: 'rendez-vous-des-createurs-neuville-de-poitou-2026',
@@ -30,6 +31,15 @@ export const rendezVousDesCreateurs2026: Actu = {
     postalCode: '86170',
     locality: 'Neuville-de-Poitou',
     url: SOURCE_OT,
+    // Règlement du jeu concours du salon : « la Régie Tourisme en Haut-Poitou, service de la CCHP ».
+    organizer: { name: 'Office de Tourisme du Haut-Poitou', url: 'https://tourisme-hautpoitou.fr/' },
+    // Animations annoncées par l'Office de Tourisme (SOURCE_OT).
+    performers: [
+      { type: 'PerformingGroup', name: 'Compagnie les Bras Cassés' },
+      { type: 'MusicGroup', name: 'Pictonky Tonk' },
+    ],
+    // Entrée gratuite : confirmé par l'atelier (exposant), 11/11/2026.
+    offerPrice: '0',
   },
   heroImage: {
     src: `${IMG}/stand-pic-paf-ludivine-rendez-vous-createurs-neuville-de-poitou.webp`,

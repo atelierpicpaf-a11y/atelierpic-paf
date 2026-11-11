@@ -34,6 +34,12 @@ export interface ActuEvent {
   locality: string
   /** Page officielle de l'événement. */
   url: string
+  /** Organisateur, tel que nommé par la source officielle. */
+  organizer?: { name: string; url: string }
+  /** Artistes ou animations annoncés par la source officielle. */
+  performers?: { type: 'PerformingGroup' | 'MusicGroup' | 'Person'; name: string }[]
+  /** Entrée visiteurs : prix en euros ('0' si gratuite). Seulement si une source le confirme. */
+  offerPrice?: string
 }
 
 export interface ActuVideo {
