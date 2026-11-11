@@ -103,6 +103,21 @@ export default async function ActuPage({ params }: { params: Promise<{ slug: str
           description: a.metaDescription,
           image: `${SITE}${a.heroImage.src}`,
           url: a.event.url,
+          ...(a.event.organizer && {
+            organizer: { '@type': 'Organization', name: a.event.organizer.name, url: a.event.organizer.url },
+          }),
+          ...(a.event.performers?.length && {
+            performer: a.event.performers.map((p) => ({ '@type': p.type, name: p.name })),
+          }),
+          ...(a.event.offerPrice !== undefined && {
+            offers: {
+              '@type': 'Offer',
+              price: a.event.offerPrice,
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: a.event.url,
+            },
+          }),
         },
       }),
       ...(a.video && { video: { '@id': `${url}#video` } }),
