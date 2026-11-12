@@ -10,7 +10,7 @@ import { FaqItem } from '@/components/sections/faq-item'
 import { JsonLd } from '@/components/seo/json-ld'
 import { breadcrumbJsonLd, faqPageJsonLd, villeServiceJsonLd, personJsonLd } from '@/lib/seo/json-ld'
 import { VILLES, getVilleBySlug, getNearby, type Ville } from '@/content/villes'
-import { getActusByVille } from '@/content/actus'
+import { ACTUS, getActusByVille, type Actu } from '@/content/actus'
 import { ActuList } from '@/components/actus/actu-card'
 import villesDataJson from '@/content/villes-data.json'
 
@@ -38,6 +38,37 @@ type VilleData = {
 }
 
 const VILLES_DATA = villesDataJson as Record<string, VilleData>
+
+/** Distance à vol d'oiseau (km) entre deux communes du site, si leurs coordonnées sont connues. */
+function distanceKm(slugA: string, slugB: string): number | undefined {
+  const a = VILLES_DATA[slugA] as { lat?: number; lon?: number } | undefined
+  const b = VILLES_DATA[slugB] as { lat?: number; lon?: number } | undefined
+  if (a?.lat == null || a?.lon == null || b?.lat == null || b?.lon == null) return undefined
+  const rad = (d: number) => (d * Math.PI) / 180
+  const dLat = rad(b.lat - a.lat)
+  const dLon = rad(b.lon - a.lon)
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2
+  return 6371 * 2 * Math.asin(Math.sqrt(h))
+}
+
+/** Rayon dans lequel une actu est présentée comme « près de » la commune. */
+const RAYON_ACTUS_KM = 40
+
+/**
+ * Actus à montrer sur une page ville : d'abord celles de la commune, puis celles des
+ * communes proches (de la plus proche à la plus lointaine). Sans actu proche, les dernières actus.
+ */
+function actusPourVille(slug: string) {
+  const locales = getActusByVille(slug)
+  const proches = ACTUS.filter((a) => a.villeSlug && a.villeSlug !== slug)
+    .map((a) => ({ actu: a, km: distanceKm(slug, a.villeSlug as string) }))
+    .filter((x): x is { actu: Actu; km: number } => x.km !== undefined && x.km <= RAYON_ACTUS_KM)
+    .sort((x, y) => x.km - y.km)
+  const liste = locales.length + proches.length > 0 ? [...locales, ...proches.map((x) => x.actu)] : ACTUS
+  const affichees = liste.slice(0, 3)
+  const prochesAffichees = proches.filter((x) => affichees.includes(x.actu))
+  return { affichees, locales, prochesAffichees }
+}
 
 // ────────────────────────────────────────────────────────────────
 // Helpers
@@ -149,7 +180,16 @@ export default async function VillePage({ params }: { params: Promise<Params> })
 
   const proches = getNearby(v)
   const data = VILLES_DATA[v.slug]
-  const actusVille = getActusByVille(v.slug)
+  const actus = actusPourVille(v.slug)
+  const titreActus =
+    actus.locales.length > 0 && actus.prochesAffichees.length === 0
+      ? <>L&apos;atelier à {v.nom} : les dernières actus</>
+      : actus.locales.length > 0
+        ? <>Les actus de l&apos;atelier à {v.nom} et autour</>
+        : actus.prochesAffichees.length > 0
+          ? <>Les actus de l&apos;atelier près de {v.nom}</>
+          : <>Les dernières actus de l&apos;atelier</>
+  const lieuSansDept = (a: Actu) => a.lieu.replace(/\s*\(\d+\)$/, '')
   const pageUrl = `https://atelierpicpaf.fr/${v.slug}`
 
   // Description "type" de la commune basée sur sa densité
@@ -294,16 +334,27 @@ export default async function VillePage({ params }: { params: Promise<Params> })
         </section>
       )}
 
-      {/* ───────── ACTUS DE L'ATELIER DANS CETTE VILLE (seulement s'il y en a) ───────── */}
-      {actusVille.length > 0 && (
+      {/* ───────── ACTUS : dans la commune, sinon autour, sinon les dernières ───────── */}
+      {actus.affichees.length > 0 && (
         <section style={{ padding: '70px 0', background: 'var(--creme)' }}>
           <div className="container" style={{ maxWidth: 1040 }}>
-            <SectionTitle kicker="Salons, marchés, nouveautés" align="center">
-              L&apos;atelier à {v.nom} : les dernières actus
+            <SectionTitle kicker="Salons, ateliers, nouveautés" align="center">
+              {titreActus}
             </SectionTitle>
+            {actus.prochesAffichees.length > 0 && (
+              <p style={{ fontSize: 16, lineHeight: 1.7, opacity: 0.8, textAlign: 'center', maxWidth: 720, margin: '20px auto 0' }}>
+                {actus.prochesAffichees
+                  .map((x, i) => `${i === 0 ? '' : ', '}${lieuSansDept(x.actu)} ${i === 0 ? 'est ' : ''}à environ ${Math.max(1, Math.round(x.km))} km${i === 0 ? ` de ${v.nom}` : ''}`)
+                  .join('')}
+                .
+              </p>
+            )}
             <div style={{ marginTop: 40 }}>
-              <ActuList actus={actusVille.slice(0, 3)} as="h3" />
+              <ActuList actus={actus.affichees} as="h3" />
             </div>
+            <p style={{ textAlign: 'center', margin: '32px 0 0' }}>
+              <Link href="/actus" className="cta-ghost">Toutes les actus de l&apos;atelier</Link>
+            </p>
           </div>
         </section>
       )}
