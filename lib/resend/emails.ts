@@ -1,4 +1,5 @@
 import { resend, EMAIL_FROM, ADMIN_EMAIL } from './client'
+import { normaliserLieu } from '@/lib/data/lieux'
 
 interface ReservationEmailData {
   nom: string
@@ -9,9 +10,32 @@ interface ReservationEmailData {
   nomEnfant: string | null
   ageEnfant: number | null
   atelierTitre: string
-  atelierDate: string  // formaté "Mercredi 15 mai"
+  atelierDate: string  // créneau complet, ex. « samedi 19 décembre 2026, de 14h à 15h30 »
   atelierLieu: string
   montantCentimes: number
+  /** « l'atelier », « la journée créative », « la retraite créative » */
+  typeLabel?: string
+  /** Jour et heure séparés (voir jourEtHeureFr). */
+  jour?: string
+  heure?: string
+  plusieursJours?: boolean
+  /** Adresse exacte saisie dans l'admin (rue, salle). Vide = seulement la commune. */
+  adresse?: string | null
+}
+
+function escapeHtml(t: string): string {
+  return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
+/** Adresse + commune, et lien carte quand l'adresse exacte est connue. */
+function adresseHtml(data: ReservationEmailData): string {
+  const adresse = (data.adresse ?? '').trim()
+  const lieu = (data.atelierLieu ?? '').trim()
+  if (!adresse) return escapeHtml(lieu || 'Lieu à confirmer')
+  const complet = lieu && !normaliserLieu(adresse).includes(normaliserLieu(lieu)) ? `${adresse}, ${lieu}` : adresse
+  // Le lien carte ignore les précisions entre parenthèses (« devant le GEDIMAT »).
+  const carte = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(complet.replace(/\s*\([^)]*\)/g, ''))}`
+  return `${escapeHtml(complet)}<br><a href="${carte}" style="color:#C8365C;font-size:14px;">Voir sur la carte</a>`
 }
 
 function euros(centimes: number): string {
@@ -19,10 +43,14 @@ function euros(centimes: number): string {
 }
 
 // ── Email client : confirmation de réservation ──
+// Texte voulu par Ludivine : elle se présente, puis donne l'adresse, le jour exact et l'heure exacte.
 export async function sendClientConfirmationEmail(data: ReservationEmailData) {
   const participantLine = data.prenomEnfant
-    ? `<p><strong>Enfant inscrit :</strong> ${data.prenomEnfant}${data.nomEnfant ? ' ' + data.nomEnfant : ''}${data.ageEnfant ? ` (${data.ageEnfant} ans)` : ''}</p>`
+    ? `<p style="margin:10px 0 0;"><strong>👧 Enfant inscrit :</strong> ${escapeHtml(data.prenomEnfant)}${data.nomEnfant ? ' ' + escapeHtml(data.nomEnfant) : ''}${data.ageEnfant ? ` (${data.ageEnfant} ans)` : ''}</p>`
     : ''
+  const quoi = data.typeLabel ?? "l'atelier"
+  const jour = data.jour ?? data.atelierDate
+  const heure = data.heure ?? ''
 
   const html = `
 <!DOCTYPE html>
@@ -31,22 +59,24 @@ export async function sendClientConfirmationEmail(data: ReservationEmailData) {
 <body style="font-family:Arial,sans-serif;background:#FBF4E4;margin:0;padding:30px;color:#2A1313;">
   <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px rgba(200,54,92,.15);">
     <div style="background:#C8365C;padding:32px 28px;color:#FBF4E4;text-align:center;">
-      <h1 style="margin:0;font-size:28px;">Merci ${data.prenom} ! 🧵</h1>
-      <p style="margin:8px 0 0;opacity:.9;">Ta réservation est confirmée</p>
+      <h1 style="margin:0;font-size:28px;">Merci ${escapeHtml(data.prenom)} ! 🧵</h1>
+      <p style="margin:8px 0 0;opacity:.9;">Votre réservation est confirmée</p>
     </div>
-    <div style="padding:28px;">
-      <p>Bonjour ${data.prenom},</p>
-      <p>Ta place est réservée pour l'atelier <strong>${data.atelierTitre}</strong>. Je t'attends avec impatience !</p>
+    <div style="padding:28px;font-size:16px;line-height:1.6;">
+      <p style="margin:0 0 14px;">Bonjour ${escapeHtml(data.prenom)},</p>
+      <p style="margin:0 0 14px;">C'est Ludivine ! Vous allez bien ?</p>
+      <p style="margin:0;">Votre place est bien réservée : <strong>${escapeHtml(data.atelierTitre)}</strong>.</p>
+      <p style="margin:14px 0 0;">Voici l'adresse où me rejoindre, le jour exact et l'heure exacte de ${quoi} :</p>
 
       <div style="background:#FFFAF0;border:2px dashed rgba(200,54,92,.25);border-radius:14px;padding:20px;margin:24px 0;">
-        <p style="margin:0 0 10px;"><strong>📅 Date :</strong> ${data.atelierDate}</p>
-        <p style="margin:0 0 10px;"><strong>📍 Lieu :</strong> ${data.atelierLieu}</p>
+        <p style="margin:0 0 12px;"><strong>📍 Adresse :</strong><br>${adresseHtml(data)}</p>
+        <p style="margin:0 0 12px;"><strong>📅 ${data.plusieursJours ? 'Dates' : 'Jour'} :</strong> ${escapeHtml(jour)}</p>
+        ${heure ? `<p style="margin:0 0 12px;"><strong>🕐 ${data.plusieursJours ? 'Horaires' : 'Heure'} :</strong> ${escapeHtml(heure)}</p>` : ''}
         <p style="margin:0;"><strong>💳 Montant payé :</strong> ${euros(data.montantCentimes)}</p>
         ${participantLine}
       </div>
 
-      <p>Tu recevras un petit rappel quelques jours avant l'atelier avec toutes les infos pratiques.</p>
-      <p>Si tu as la moindre question, réponds simplement à cet email.</p>
+      <p style="margin:0 0 14px;">Si vous avez la moindre question, répondez simplement à cet e-mail ou appelez-moi au 06 21 07 35 36.</p>
       <p style="margin-top:30px;">À très vite,<br>
       <strong>Ludivine</strong><br>
       L'atelier Pic &amp; Paf</p>
@@ -61,7 +91,7 @@ export async function sendClientConfirmationEmail(data: ReservationEmailData) {
   return resend.emails.send({
     from: EMAIL_FROM,
     to: data.email,
-    subject: `✨ Ta place est réservée — ${data.atelierTitre}`,
+    subject: `✨ Votre place est réservée : ${data.atelierTitre}`,
     html,
     replyTo: ADMIN_EMAIL,
   })
@@ -91,7 +121,7 @@ export async function sendAdminNotificationEmail(data: ReservationEmailData) {
 
       <h2 style="margin:24px 0 16px;font-size:18px;color:#C8365C;">L'atelier</h2>
       <p style="margin:6px 0;"><strong>📅</strong> ${data.atelierDate}</p>
-      <p style="margin:6px 0;"><strong>📍</strong> ${data.atelierLieu}</p>
+      <p style="margin:6px 0;"><strong>📍</strong> ${adresseHtml(data)}</p>
       ${participantLine}
 
       <div style="margin-top:24px;padding:16px;background:#A8D5CC;border-radius:12px;text-align:center;">
@@ -107,7 +137,7 @@ export async function sendAdminNotificationEmail(data: ReservationEmailData) {
   return resend.emails.send({
     from: EMAIL_FROM,
     to: ADMIN_EMAIL,
-    subject: `🎉 Nouvelle résa — ${data.prenom} ${data.nom} · ${data.atelierTitre}`,
+    subject: `🎉 Nouvelle résa : ${data.prenom} ${data.nom} · ${data.atelierTitre}`,
     html,
     replyTo: data.email,
   })

@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server'
 import type Stripe from 'stripe'
 import { stripe } from '@/lib/stripe/client'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { creneauFr, finDepuisDescription } from '@/lib/utils/date-paris'
+import { creneauFr, finDepuisDescription, jourEtHeureFr } from '@/lib/utils/date-paris'
+import { adresseParDefaut } from '@/lib/data/lieux'
 import { sendClientConfirmationEmail, sendAdminNotificationEmail, sendOrderConfirmationClient, sendOrderNotificationAdmin } from '@/lib/resend/emails'
 
 export const runtime = 'nodejs'
@@ -71,6 +72,9 @@ export async function POST(req: Request) {
       let atelierTitre = ''
       let atelierDate = ''
       let atelierLieu = ''
+      let typeLabel = "l'atelier"
+      let adresse: string | null = null
+      let jh = jourEtHeureFr(null)
 
       if (atelierId) {
         // ── Atelier enfant ──
@@ -87,8 +91,11 @@ export async function POST(req: Request) {
 
         atelierTitre = atelier.titre
         // Fin lue dans la description saisie par Ludivine (« De 14h à 15h30 »), jamais devinée.
-        atelierDate = creneauFr(atelier.date_atelier, finDepuisDescription(atelier.date_atelier, atelier.description))
+        const finAtelier = finDepuisDescription(atelier.date_atelier, atelier.description)
+        atelierDate = creneauFr(atelier.date_atelier, finAtelier)
+        jh = jourEtHeureFr(atelier.date_atelier, finAtelier)
         atelierLieu = atelier.ville
+        adresse = atelier.adresse || adresseParDefaut(atelier.ville)
 
         const { error: insertError } = await db.from('reservations').insert({
           atelier_enfant_id: atelierId,
@@ -135,7 +142,10 @@ export async function POST(req: Request) {
 
         atelierTitre = sess.titre
         atelierDate = creneauFr(sess.date_debut, sess.date_fin)
+        jh = jourEtHeureFr(sess.date_debut, sess.date_fin)
         atelierLieu = sess.lieu || sess.ville || ''
+        adresse = sess.adresse || adresseParDefaut(sess.lieu)
+        typeLabel = sess.type === 'retraite_creative' ? 'la retraite créative' : sess.type === 'journee_creative' ? 'la journée créative' : "l'atelier"
 
         // Duo journées créatives : nb_personnes peut être 1 ou 2
         const nbPersonnes = metadata.nb_personnes === '2' ? 2 : 1
@@ -193,6 +203,11 @@ export async function POST(req: Request) {
         atelierDate,
         atelierLieu,
         montantCentimes: montantCentimes || 0,
+        typeLabel,
+        adresse,
+        jour: jh.jour,
+        heure: jh.heure,
+        plusieursJours: jh.plusieursJours,
       }
 
       try {
