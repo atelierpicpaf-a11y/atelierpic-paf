@@ -90,3 +90,27 @@ export function creneauFr(debut: string | null | undefined, fin?: string | null)
   if (a.ymd === b.ymd) return `${jourFr(debut)}, de ${heureFr(debut)} à ${heureFr(finValide)}`
   return `du ${jourFr(debut, a.annee !== b.annee)} à ${heureFr(debut)} au ${jourFr(finValide)} à ${heureFr(finValide)}`
 }
+
+/**
+ * Lit un horaire saisi dans l'admin (« De 14h à 15h30 », « 10H→ 17H ») : rien n'est deviné,
+ * on renvoie null si le texte ne contient pas clairement une heure de début et une heure de fin.
+ */
+export function horaireDepuisTexte(texte: string | null | undefined): { debut: string; fin: string } | null {
+  if (!texte) return null
+  const m = texte.match(/(\d{1,2})\s*[hH]\s*(\d{2})?\s*(?:à|a|->|→|-)\s*(\d{1,2})\s*[hH]\s*(\d{2})?/)
+  if (!m) return null
+  const hh = (h: string, mm?: string) => `${h.padStart(2, '0')}:${mm ?? '00'}`
+  const debut = hh(m[1], m[2]), fin = hh(m[3], m[4])
+  return debut < fin && Number(m[1]) < 24 && Number(m[3]) < 24 ? { debut, fin } : null
+}
+
+/**
+ * Fin d'un atelier d'après l'horaire écrit dans sa description, seulement si l'heure
+ * de début écrite correspond à l'heure enregistrée (sinon on n'affiche que le début).
+ */
+export function finDepuisDescription(debutIso: string | null | undefined, description: string | null | undefined): string | null {
+  if (!debutIso) return null
+  const h = horaireDepuisTexte(description)
+  if (!h || h.debut !== heureInputParis(debutIso)) return null
+  return isoDepuisParis(dateInputParis(debutIso), h.fin)
+}
