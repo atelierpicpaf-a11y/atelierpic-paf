@@ -1,4 +1,5 @@
 import { resend, EMAIL_FROM, ADMIN_EMAIL } from './client'
+import { normaliserLieu } from '@/lib/data/lieux'
 
 interface ReservationEmailData {
   nom: string
@@ -31,8 +32,9 @@ function adresseHtml(data: ReservationEmailData): string {
   const adresse = (data.adresse ?? '').trim()
   const lieu = (data.atelierLieu ?? '').trim()
   if (!adresse) return escapeHtml(lieu || 'Lieu à confirmer')
-  const complet = lieu && !adresse.toLowerCase().includes(lieu.toLowerCase()) ? `${adresse}, ${lieu}` : adresse
-  const carte = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(complet)}`
+  const complet = lieu && !normaliserLieu(adresse).includes(normaliserLieu(lieu)) ? `${adresse}, ${lieu}` : adresse
+  // Le lien carte ignore les précisions entre parenthèses (« devant le GEDIMAT »).
+  const carte = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(complet.replace(/\s*\([^)]*\)/g, ''))}`
   return `${escapeHtml(complet)}<br><a href="${carte}" style="color:#C8365C;font-size:14px;">Voir sur la carte</a>`
 }
 
@@ -61,7 +63,8 @@ export async function sendClientConfirmationEmail(data: ReservationEmailData) {
       <p style="margin:8px 0 0;opacity:.9;">Votre réservation est confirmée</p>
     </div>
     <div style="padding:28px;font-size:16px;line-height:1.6;">
-      <p style="margin:0 0 14px;">Bonjour ${escapeHtml(data.prenom)}, c'est moi, c'est Ludivine. Vous allez bien ?</p>
+      <p style="margin:0 0 14px;">Bonjour ${escapeHtml(data.prenom)},</p>
+      <p style="margin:0 0 14px;">C'est Ludivine ! Vous allez bien ?</p>
       <p style="margin:0;">Votre place est bien réservée : <strong>${escapeHtml(data.atelierTitre)}</strong>.</p>
       <p style="margin:14px 0 0;">Voici l'adresse où me rejoindre, le jour exact et l'heure exacte de ${quoi} :</p>
 

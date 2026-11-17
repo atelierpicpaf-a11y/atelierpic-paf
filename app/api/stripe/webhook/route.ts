@@ -3,6 +3,7 @@ import type Stripe from 'stripe'
 import { stripe } from '@/lib/stripe/client'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { creneauFr, finDepuisDescription, jourEtHeureFr } from '@/lib/utils/date-paris'
+import { adresseParDefaut } from '@/lib/data/lieux'
 import { sendClientConfirmationEmail, sendAdminNotificationEmail, sendOrderConfirmationClient, sendOrderNotificationAdmin } from '@/lib/resend/emails'
 
 export const runtime = 'nodejs'
@@ -94,7 +95,7 @@ export async function POST(req: Request) {
         atelierDate = creneauFr(atelier.date_atelier, finAtelier)
         jh = jourEtHeureFr(atelier.date_atelier, finAtelier)
         atelierLieu = atelier.ville
-        adresse = atelier.adresse ?? null
+        adresse = atelier.adresse || adresseParDefaut(atelier.ville)
 
         const { error: insertError } = await db.from('reservations').insert({
           atelier_enfant_id: atelierId,
@@ -143,7 +144,7 @@ export async function POST(req: Request) {
         atelierDate = creneauFr(sess.date_debut, sess.date_fin)
         jh = jourEtHeureFr(sess.date_debut, sess.date_fin)
         atelierLieu = sess.lieu || sess.ville || ''
-        adresse = sess.adresse ?? null
+        adresse = sess.adresse || adresseParDefaut(sess.lieu)
         typeLabel = sess.type === 'retraite_creative' ? 'la retraite créative' : sess.type === 'journee_creative' ? 'la journée créative' : "l'atelier"
 
         // Duo journées créatives : nb_personnes peut être 1 ou 2
