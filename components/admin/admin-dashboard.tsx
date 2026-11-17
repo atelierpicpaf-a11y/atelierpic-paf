@@ -444,6 +444,18 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                   </FieldGroup>
                 </div>
 
+                {/* Adresse exacte : envoyée dans l'e-mail de confirmation */}
+                <div style={{ ...S.row, gridTemplateColumns: '1fr' }}>
+                  <FieldGroup label="Adresse exacte (envoyée dans l'e-mail de confirmation)">
+                    <input
+                      style={INPUT_S}
+                      value={a.adresse ?? ''}
+                      onChange={e => updateEnfantField(a.id, 'adresse', e.target.value || null)}
+                      placeholder="Salle, numéro et rue, code postal, commune"
+                    />
+                  </FieldGroup>
+                </div>
+
                 {/* Prix Stripe (€) | Places dispo | Places max */}
                 <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr', marginBottom: 12 }}>
                   <FieldGroup label="Prix Stripe (€)">
@@ -556,6 +568,11 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                     </select>
                   </FieldGroup>
                 </div>
+                <div style={{ ...S.row, gridTemplateColumns: '1fr' }}>
+                  <FieldGroup label="Adresse exacte (envoyée dans l'e-mail de confirmation)">
+                    <input style={INPUT_S} value={j.adresse ?? ''} onChange={e => updateJourneeField(j.id, 'adresse', e.target.value || null)} placeholder="Salle, numéro et rue, code postal, commune" />
+                  </FieldGroup>
+                </div>
               </div>
             ))}
           </>
@@ -653,6 +670,11 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                     <select style={SELECT_S} value={r.statut} onChange={e => updateRetraiteField(r.id, 'statut', e.target.value)}>
                       {STATUTS.map(s => <option key={s.val} value={s.val}>{s.label}</option>)}
                     </select>
+                  </FieldGroup>
+                </div>
+                <div style={{ ...S.row, gridTemplateColumns: '1fr' }}>
+                  <FieldGroup label="Adresse exacte (envoyée dans l'e-mail de confirmation)">
+                    <input style={INPUT_S} value={r.adresse ?? ''} onChange={e => updateRetraiteField(r.id, 'adresse', e.target.value || null)} placeholder="Nom du gîte, numéro et rue, code postal, commune" />
                   </FieldGroup>
                 </div>
               </div>

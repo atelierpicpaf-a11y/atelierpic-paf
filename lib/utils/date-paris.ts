@@ -114,3 +114,22 @@ export function finDepuisDescription(debutIso: string | null | undefined, descri
   if (!h || h.debut !== heureInputParis(debutIso)) return null
   return isoDepuisParis(dateInputParis(debutIso), h.fin)
 }
+
+/**
+ * Jour et heure séparés, pour l'e-mail de confirmation :
+ *  - un jour : { jour: « samedi 19 décembre 2026 », heure: « de 14h à 15h30 » }
+ *  - plusieurs jours : { jour: « du vendredi 12 mars au dimanche 14 mars 2027 »,
+ *    heure: « arrivée le vendredi à 18h, départ le dimanche à 16h » }
+ */
+export function jourEtHeureFr(debut: string | null | undefined, fin?: string | null): { plusieursJours: boolean; jour: string; heure: string } {
+  if (!debut) return { plusieursJours: false, jour: 'Date à confirmer', heure: 'Heure à confirmer' }
+  const finValide = fin && new Date(fin).getTime() > new Date(debut).getTime() ? fin : null
+  if (!finValide) return { plusieursJours: false, jour: jourFr(debut), heure: `à ${heureFr(debut)}` }
+  const a = partsParis(debut), b = partsParis(finValide)
+  if (a.ymd === b.ymd) return { plusieursJours: false, jour: jourFr(debut), heure: `de ${heureFr(debut)} à ${heureFr(finValide)}` }
+  return {
+    plusieursJours: true,
+    jour: `du ${jourFr(debut, a.annee !== b.annee)} au ${jourFr(finValide)}`,
+    heure: `arrivée le ${JOURS[a.jourSemaine]} à ${heureFr(debut)}, départ le ${JOURS[b.jourSemaine]} à ${heureFr(finValide)}`,
+  }
+}
