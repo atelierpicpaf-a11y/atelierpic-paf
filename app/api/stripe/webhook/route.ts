@@ -2,35 +2,12 @@ import { NextResponse } from 'next/server'
 import type Stripe from 'stripe'
 import { stripe } from '@/lib/stripe/client'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { creneauFr } from '@/lib/utils/date-paris'
 import { sendClientConfirmationEmail, sendAdminNotificationEmail, sendOrderConfirmationClient, sendOrderNotificationAdmin } from '@/lib/resend/emails'
 
 export const runtime = 'nodejs'
 // Webhook: Stripe envoie le raw body, Next ne doit pas le parser
 export const dynamic = 'force-dynamic'
-
-function formatDateFr(iso: string | null): string {
-  if (!iso) return 'Date à confirmer'
-  const d = new Date(iso)
-  const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi']
-  const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
-  const heure = d.getHours().toString().padStart(2, '0')
-  const minute = d.getMinutes().toString().padStart(2, '0')
-  return `${jours[d.getDay()]} ${d.getDate()} ${mois[d.getMonth()]} ${d.getFullYear()} à ${heure}h${minute}`
-}
-
-function formatDateRangeFr(debut: string, fin: string | null): string {
-  const d1 = new Date(debut)
-  const mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']
-  if (!fin) return `${d1.getDate()} ${mois[d1.getMonth()]} ${d1.getFullYear()}`
-  const d2 = new Date(fin)
-  if (d1.toDateString() === d2.toDateString()) {
-    return `${d1.getDate()} ${mois[d1.getMonth()]} ${d1.getFullYear()}`
-  }
-  if (d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear()) {
-    return `${d1.getDate()} — ${d2.getDate()} ${mois[d1.getMonth()]} ${d1.getFullYear()}`
-  }
-  return `${d1.getDate()} ${mois[d1.getMonth()]} — ${d2.getDate()} ${mois[d2.getMonth()]} ${d1.getFullYear()}`
-}
 
 export async function POST(req: Request) {
   const signature = req.headers.get('stripe-signature')
@@ -109,7 +86,7 @@ export async function POST(req: Request) {
         }
 
         atelierTitre = atelier.titre
-        atelierDate = formatDateFr(atelier.date_atelier)
+        atelierDate = creneauFr(atelier.date_atelier)
         atelierLieu = atelier.ville
 
         const { error: insertError } = await db.from('reservations').insert({
@@ -156,7 +133,7 @@ export async function POST(req: Request) {
         }
 
         atelierTitre = sess.titre
-        atelierDate = formatDateRangeFr(sess.date_debut, sess.date_fin)
+        atelierDate = creneauFr(sess.date_debut, sess.date_fin)
         atelierLieu = sess.lieu || sess.ville || ''
 
         // Duo journées créatives : nb_personnes peut être 1 ou 2

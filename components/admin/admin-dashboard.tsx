@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import type { AtelierEnfantRow, Session, ConfigAtelier, Reservation } from '@/types/supabase'
+import { dateInputParis, heureInputParis, isoDepuisParis, partsParis } from '@/lib/utils/date-paris'
 
 export type ReservationWithAtelier = Reservation & {
   atelier_titre: string | null
@@ -210,8 +211,22 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
   }
 
   // ── Helpers date ─────────────────────────────────────────
-  function toDateInput(iso: string | null | undefined) { return iso ? iso.split('T')[0] : '' }
-  function fromDateInput(val: string, time = '09:30') { return val ? `${val}T${time}:00+01:00` : '' }
+  // Dates et heures toujours à l'heure de Paris (le serveur tourne en UTC).
+  const toDateInput = dateInputParis
+  const toTimeInput = heureInputParis
+  /** Nouvelle date en gardant l'heure déjà saisie (sinon l'heure par défaut). */
+  function withDate(iso: string | null | undefined, ymd: string, heureDefaut: string) {
+    return ymd ? isoDepuisParis(ymd, toTimeInput(iso) || heureDefaut) : ''
+  }
+  /** Nouvelle heure sur la date déjà saisie. */
+  function withTime(iso: string | null | undefined, hm: string) {
+    const ymd = toDateInput(iso)
+    return ymd && hm ? isoDepuisParis(ymd, hm) : iso ?? ''
+  }
+  /** Journée : la fin suit toujours le jour du début. */
+  function finMemeJour(debut: string, fin: string | null | undefined, heureDefaut = '17:00') {
+    return isoDepuisParis(toDateInput(debut), toTimeInput(fin) || heureDefaut)
+  }
 
   // ── Styles locaux (dans le composant, pas de composant enfant → pas de bug de focus) ──
   const S = {
@@ -376,14 +391,24 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                   <button style={S.deleteBtn} onClick={() => handleDeleteEnfant(a.id)}>Supprimer</button>
                 </div>
 
-                {/* Date | Lieu | Catégorie | Prix */}
-                <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr' }}>
+                {/* Date | Heure | Lieu | Catégorie | Prix */}
+                <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr' }}>
                   <FieldGroup label="Date de l'atelier">
                     <input
                       style={INPUT_S}
                       type="date"
                       value={toDateInput(a.date_atelier)}
-                      onChange={e => updateEnfantField(a.id, 'date_atelier', fromDateInput(e.target.value, '14:00'))}
+                      onChange={e => updateEnfantField(a.id, 'date_atelier', withDate(a.date_atelier, e.target.value, '14:00'))}
+                    />
+                  </FieldGroup>
+                  <FieldGroup label="Heure de début">
+                    <input
+                      style={INPUT_S}
+                      type="time"
+                      step={900}
+                      disabled={!a.date_atelier}
+                      value={toTimeInput(a.date_atelier)}
+                      onChange={e => updateEnfantField(a.id, 'date_atelier', withTime(a.date_atelier, e.target.value))}
                     />
                   </FieldGroup>
                   <FieldGroup label="Lieu / Ville">
@@ -497,9 +522,24 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                   />
                   <button style={S.deleteBtn} onClick={() => handleDeleteJournee(j.id)}>Supprimer</button>
                 </div>
-                <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr' }}>
+                <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr' }}>
                   <FieldGroup label="Date">
-                    <input style={INPUT_S} type="date" value={toDateInput(j.date_debut)} onChange={e => updateJourneeField(j.id, 'date_debut', fromDateInput(e.target.value, '09:30'))} />
+                    <input style={INPUT_S} type="date" value={toDateInput(j.date_debut)} onChange={e => {
+                      if (!e.target.value) return
+                      const debut = withDate(j.date_debut, e.target.value, '10:00')
+                      updateJourneeField(j.id, 'date_debut', debut)
+                      updateJourneeField(j.id, 'date_fin', finMemeJour(debut, j.date_fin))
+                    }} />
+                  </FieldGroup>
+                  <FieldGroup label="Horaires (début, fin)">
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <input style={INPUT_S} type="time" step={900} aria-label="Heure de début" value={toTimeInput(j.date_debut)} onChange={e => {
+                        const debut = withTime(j.date_debut, e.target.value)
+                        updateJourneeField(j.id, 'date_debut', debut)
+                        updateJourneeField(j.id, 'date_fin', finMemeJour(debut, j.date_fin))
+                      }} />
+                      <input style={INPUT_S} type="time" step={900} aria-label="Heure de fin" value={toTimeInput(j.date_fin)} onChange={e => updateJourneeField(j.id, 'date_fin', isoDepuisParis(toDateInput(j.date_debut), e.target.value))} />
+                    </div>
                   </FieldGroup>
                   <FieldGroup label="Lieu">
                     <input style={INPUT_S} value={j.lieu} onChange={e => updateJourneeField(j.id, 'lieu', e.target.value)} placeholder="Fontaine-le-Comte" />
@@ -588,11 +628,17 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
                   <button style={S.deleteBtn} onClick={() => handleDeleteRetraite(r.id)}>Supprimer</button>
                 </div>
                 <div style={{ ...S.row, gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr' }}>
-                  <FieldGroup label="Début">
-                    <input style={INPUT_S} type="date" value={toDateInput(r.date_debut)} onChange={e => updateRetraiteField(r.id, 'date_debut', fromDateInput(e.target.value, '18:00'))} />
+                  <FieldGroup label="Début (jour, heure)">
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <input style={INPUT_S} type="date" value={toDateInput(r.date_debut)} onChange={e => updateRetraiteField(r.id, 'date_debut', withDate(r.date_debut, e.target.value, '18:00'))} />
+                      <input style={{ ...INPUT_S, maxWidth: 110 }} type="time" step={900} aria-label="Heure de début" value={toTimeInput(r.date_debut)} onChange={e => updateRetraiteField(r.id, 'date_debut', withTime(r.date_debut, e.target.value))} />
+                    </div>
                   </FieldGroup>
-                  <FieldGroup label="Fin">
-                    <input style={INPUT_S} type="date" value={toDateInput(r.date_fin)} onChange={e => updateRetraiteField(r.id, 'date_fin', fromDateInput(e.target.value, '16:00'))} />
+                  <FieldGroup label="Fin (jour, heure)">
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <input style={INPUT_S} type="date" value={toDateInput(r.date_fin)} onChange={e => updateRetraiteField(r.id, 'date_fin', withDate(r.date_fin, e.target.value, '16:00'))} />
+                      <input style={{ ...INPUT_S, maxWidth: 110 }} type="time" step={900} aria-label="Heure de fin" value={toTimeInput(r.date_fin)} onChange={e => updateRetraiteField(r.id, 'date_fin', withTime(r.date_fin, e.target.value))} />
+                    </div>
                   </FieldGroup>
                   <FieldGroup label="Lieu">
                     <input style={INPUT_S} value={r.lieu} onChange={e => updateRetraiteField(r.id, 'lieu', e.target.value)} placeholder="Gîte, Fontaine-le-Comte" />
@@ -688,12 +734,10 @@ export function AdminDashboard({ initialEnfants, initialJournees, initialRetrait
 // ── Panel Réservations (hors composant principal) ────────────
 function formatDateTime(iso: string | null | undefined): string {
   if (!iso) return '—'
-  const d = new Date(iso)
+  const p = partsParis(iso)
   const jours = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam']
   const mois = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.']
-  const h = d.getHours().toString().padStart(2, '0')
-  const m = d.getMinutes().toString().padStart(2, '0')
-  return `${jours[d.getDay()]} ${d.getDate()} ${mois[d.getMonth()]} ${d.getFullYear()} · ${h}h${m}`
+  return `${jours[p.jourSemaine]} ${p.jour} ${mois[p.mois]} ${p.annee} · ${p.hm.replace(':', 'h')}`
 }
 
 function formatEuros(centimes: number | null | undefined): string {
