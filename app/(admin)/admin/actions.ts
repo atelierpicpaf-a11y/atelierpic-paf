@@ -4,6 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
+import { isoDepuisParis } from '@/lib/utils/date-paris'
 import type { AtelierEnfantRow, Session, ConfigAtelier, Produit, VarianteProduit, Commande } from '@/types/supabase'
 
 // ── Auth guard ─────────────────────────────────────────────
@@ -93,8 +94,8 @@ export async function createJournee(): Promise<Session> {
     .insert({
       ...JOURNEE_DEFAULTS,
       titre: 'Nouvelle journée créative',
-      date_debut: today + 'T09:30:00+01:00',
-      date_fin: today + 'T17:30:00+01:00',
+      date_debut: isoDepuisParis(today, '10:00'),
+      date_fin: isoDepuisParis(today, '17:00'),
     })
     .select()
     .single()
@@ -141,8 +142,8 @@ export async function createRetraite(): Promise<Session> {
     .insert({
       ...RETRAITE_DEFAULTS,
       titre: 'Nouvelle retraite créative',
-      date_debut: today + 'T18:00:00+01:00',
-      date_fin: sunday + 'T12:00:00+01:00',
+      date_debut: isoDepuisParis(today, '18:00'),
+      date_fin: isoDepuisParis(sunday, '16:00'),
     })
     .select()
     .single()
