@@ -3,7 +3,7 @@ import type Stripe from 'stripe'
 import { stripe } from '@/lib/stripe/client'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { creneauFr, finDepuisDescription, jourEtHeureFr } from '@/lib/utils/date-paris'
-import { adresseParDefaut } from '@/lib/data/lieux'
+import { adresseParDefaut, ADRESSE_JOURNEES_RETRAITES } from '@/lib/data/lieux'
 import { sendClientConfirmationEmail, sendAdminNotificationEmail, sendOrderConfirmationClient, sendOrderNotificationAdmin } from '@/lib/resend/emails'
 
 export const runtime = 'nodejs'
@@ -144,7 +144,8 @@ export async function POST(req: Request) {
         atelierDate = creneauFr(sess.date_debut, sess.date_fin)
         jh = jourEtHeureFr(sess.date_debut, sess.date_fin)
         atelierLieu = sess.lieu || sess.ville || ''
-        adresse = sess.adresse || adresseParDefaut(sess.lieu)
+        // Journées et retraites : toujours à Fontaine-le-Comte, sauf adresse saisie dans l'admin.
+        adresse = sess.adresse || ADRESSE_JOURNEES_RETRAITES
         typeLabel = sess.type === 'retraite_creative' ? 'la retraite créative' : sess.type === 'journee_creative' ? 'la journée créative' : "l'atelier"
 
         // Duo journées créatives : nb_personnes peut être 1 ou 2

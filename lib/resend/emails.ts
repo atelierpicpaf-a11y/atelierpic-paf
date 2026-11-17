@@ -32,7 +32,8 @@ function adresseHtml(data: ReservationEmailData): string {
   const adresse = (data.adresse ?? '').trim()
   const lieu = (data.atelierLieu ?? '').trim()
   if (!adresse) return escapeHtml(lieu || 'Lieu à confirmer')
-  const complet = lieu && !normaliserLieu(adresse).includes(normaliserLieu(lieu)) ? `${adresse}, ${lieu}` : adresse
+  // Une adresse avec code postal est complète : on n'y recolle pas le lieu (« Gîte, Fontaine-le-Comte (86) »).
+  const complet = lieu && !/\b\d{5}\b/.test(adresse) && !normaliserLieu(adresse).includes(normaliserLieu(lieu)) ? `${adresse}, ${lieu}` : adresse
   // Le lien carte ignore les précisions entre parenthèses (« devant le GEDIMAT »).
   const carte = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(complet.replace(/\s*\([^)]*\)/g, ''))}`
   return `${escapeHtml(complet)}<br><a href="${carte}" style="color:#C8365C;font-size:14px;">Voir sur la carte</a>`
