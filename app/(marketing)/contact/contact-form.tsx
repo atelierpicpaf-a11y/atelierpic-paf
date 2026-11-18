@@ -11,8 +11,9 @@ const SUJETS = [
 ] as const
 
 export function ContactForm() {
-  const [sent, setSent] = useState(false)
-  const [form, setForm] = useState({ nom: '', email: '', sujet: '', message: '' })
+  const [statut, setStatut] = useState<'idle' | 'envoi' | 'envoye' | 'erreur'>('idle')
+  const [erreur, setErreur] = useState('')
+  const [form, setForm] = useState({ nom: '', email: '', sujet: '', message: '', site_web: '' })
 
   // Pré-remplissage depuis ?ville= et ?sujet= (venant des pages villes).
   // On lit côté client pour éviter d'imposer un <Suspense> au parent server.
@@ -45,12 +46,31 @@ export function ContactForm() {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }))
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setSent(true)
+    if (statut === 'envoi') return
+    setStatut('envoi')
+    setErreur('')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
+      if (res.ok && data.ok) {
+        setStatut('envoye')
+        return
+      }
+      setErreur(data.error ?? "Le message n'a pas pu être envoyé.")
+      setStatut('erreur')
+    } catch {
+      setErreur("Le message n'a pas pu être envoyé (connexion interrompue).")
+      setStatut('erreur')
+    }
   }
 
-  if (sent) {
+  if (statut === 'envoye') {
     return (
       <div style={{ padding:'40px 32px', background:'var(--menthe)', borderRadius:28, textAlign:'center' }}>
         <div style={{ fontSize:48, marginBottom:16 }}>🎉</div>
@@ -61,7 +81,11 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', gap:18 }}>
+    <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', gap:18, position:'relative' }}>
+      {/* Piège à robots : invisible pour les visiteurs, laissé vide par eux */}
+      <div aria-hidden="true" style={{ position:'absolute', left:-10000, top:'auto', width:1, height:1, overflow:'hidden' }}>
+        <label>Ne pas remplir<input name="site_web" tabIndex={-1} autoComplete="off" value={form.site_web} onChange={handleChange} /></label>
+      </div>
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
         <div>
           <label style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--framboise)', marginBottom:6 }}>Nom *</label>
@@ -85,7 +109,14 @@ export function ContactForm() {
         <label style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--framboise)', marginBottom:6 }}>Message *</label>
         <textarea name="message" required value={form.message} onChange={handleChange} className="input-admin" rows={6} placeholder="Dites-moi tout !" style={{ resize:'vertical' }} />
       </div>
-      <button type="submit" className="cta-pill" style={{ width:'100%', justifyContent:'center' }}>Envoyer mon message ✉️</button>
+      {statut === 'erreur' && (
+        <div role="alert" style={{ padding:'14px 18px', borderRadius:16, background:'#fde8ec', color:'var(--framboise-dark)', fontSize:15, lineHeight:1.6 }}>
+          {erreur} Vous pouvez joindre Ludivine directement au <a href="tel:+33621073536" style={{ color:'inherit', fontWeight:700 }}>06 21 07 35 36</a> ou à <a href="mailto:atelierpicpaf@gmail.com" style={{ color:'inherit', fontWeight:700 }}>atelierpicpaf@gmail.com</a>.
+        </div>
+      )}
+      <button type="submit" className="cta-pill" disabled={statut === 'envoi'} style={{ width:'100%', justifyContent:'center', opacity: statut === 'envoi' ? 0.7 : 1 }}>
+        {statut === 'envoi' ? 'Envoi en cours…' : 'Envoyer mon message ✉️'}
+      </button>
     </form>
   )
 }

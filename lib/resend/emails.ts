@@ -299,3 +299,41 @@ export async function sendOrderNotificationAdmin(data: OrderEmailData) {
     replyTo: data.email,
   })
 }
+
+// ══════════════════════════════════════════════════════════
+//  FORMULAIRE DE CONTACT : message reçu par Ludivine
+// ══════════════════════════════════════════════════════════
+export async function sendContactMessageAdmin(data: { nom: string; email: string; sujet: string | null; message: string }) {
+  const sujet = data.sujet || 'Sans sujet'
+  const html = `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="utf-8"></head>
+<body style="font-family:Arial,sans-serif;background:#FBF4E4;margin:0;padding:30px;color:#2A1313;">
+  <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;">
+    <div style="background:#C8365C;padding:24px 28px;color:#FBF4E4;">
+      <h1 style="margin:0;font-size:22px;">✉️ Nouveau message du site</h1>
+      <p style="margin:6px 0 0;opacity:.9;font-size:14px;">${escapeHtml(sujet)}</p>
+    </div>
+    <div style="padding:28px;font-size:15px;line-height:1.6;">
+      <p style="margin:0 0 6px;"><strong>Nom :</strong> ${escapeHtml(data.nom)}</p>
+      <p style="margin:0 0 6px;"><strong>E-mail :</strong> <a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a></p>
+      <p style="margin:0 0 18px;"><strong>Sujet :</strong> ${escapeHtml(sujet)}</p>
+      <div style="background:#FFFAF0;border:2px dashed rgba(200,54,92,.25);border-radius:14px;padding:18px;white-space:pre-wrap;">${escapeHtml(data.message)}</div>
+      <p style="margin-top:22px;font-size:13px;opacity:.7;">Pour répondre, cliquez simplement sur « Répondre » : la réponse part directement à ${escapeHtml(data.email)}.</p>
+    </div>
+  </div>
+</body>
+</html>`
+
+  const r = await resend.emails.send({
+    from: EMAIL_FROM,
+    to: ADMIN_EMAIL,
+    subject: `✉️ Message du site : ${sujet} · ${data.nom}`,
+    html,
+    text: `Nom : ${data.nom}\nE-mail : ${data.email}\nSujet : ${sujet}\n\n${data.message}`,
+    replyTo: data.email,
+  })
+  if (r.error) throw new Error(r.error.message)
+  return r
+}
